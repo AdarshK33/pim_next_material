@@ -21,7 +21,7 @@ function AdminDashBoard() {
 
     return (
         <div className="page-container dashBoard">
-            <h4 className="offset-md-2 px-2 text-uppercase heading">{heading}</h4>
+            {/* <h4 className="offset-md-2 px-2 text-uppercase heading">{heading}</h4> */}
             <div className="row mx-0 pe-md-5">
                 <div className="col-md-2 pe-0">
                     <DashBoardSideBar defaultValue={query.name} />

@@ -20,7 +20,7 @@ function Login() {
 
     return (
         <div className="page-container d-flex p-2">
-            <img src="/logo.png" alt="una-brands" className="login-logo" />
+            {/* <img src="/logo.png" alt="RI-brands" className="login-logo" /> */}
             <div className="m-auto">
                 <img src="/login-concept.png" alt="login-concept" className="login-concept-logo" />
             </div>

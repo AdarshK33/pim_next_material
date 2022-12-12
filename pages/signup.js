@@ -5,7 +5,7 @@ import Link from 'next/link';
 function Login() {
     return (
         <div className="page-container d-flex p-2">
-            <img src="/logo.png" alt="una-brands" className="login-logo" />
+            {/* <img src="/logo.png" alt="RI" className="login-logo" /> */}
             <div className="m-auto">
                 <img src="/sign-in-logo.png" alt="sign-up" className="login-concept-logo" />
             </div>
