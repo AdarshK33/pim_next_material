@@ -208,9 +208,9 @@ function ActionView({ currentPgNo }) {
             </div>
           </div>
         </div>
-        {loading ? (
+        {/* {loading ? (
           <PageLoader />
-        ) : (
+        ) : ( */}
           <CustomTable
             tableName="publis-list"
             head={tableHeadings}
@@ -219,7 +219,7 @@ function ActionView({ currentPgNo }) {
             pushTheId={pushTheId}
             tableContainarClass="my-3 catalog-list"
           />
-        )}
+        {/* )} */}
         {itemsCount && totalItems}
       </div>
     </Fragment>

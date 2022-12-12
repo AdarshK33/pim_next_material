@@ -110,9 +110,9 @@ function ProductList({ currentPgNo }) {
             <img src="/icons/add.png" alt="add-icon" />
           </button>
         </div>
-        {loading ? (
+        {/* {loading ? (
           <PageLoader />
-        ) : (
+        ) : ( */}
           <>
             <CustomTable
               tableName="product-list"
@@ -122,7 +122,7 @@ function ProductList({ currentPgNo }) {
               tableContainarClass="my-3 catalog-list"
             />
           </>
-        )}
+        {/* )} */}
         {itemsCount && totalItems}
       </div>
       {Object.entries(itemData).length !== 0 && (

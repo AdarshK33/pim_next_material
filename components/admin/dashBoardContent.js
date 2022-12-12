@@ -6,7 +6,8 @@ import PermissionView from "./settings/permissionView";
 import ActionsView from "./catalog/actionsView";
 import ProductList from "./catalog/productList";
 import BulkUpload from "./catalog/bulkUpload";
-import ClassifyingCategory from "./brands/classifyingCategory";
+import Category from "./catalog/categories/classifyingCategory";
+import ClassifyingBrand from "./brands/classifyingBrand";
 
 function DashBoardContent() {
 
@@ -20,7 +21,8 @@ function DashBoardContent() {
             case 'publish': return <ActionsView />;
             case 'products': return <ProductList />;
             case 'uploads': return <BulkUpload />;
-            case 'brands_categories': return <ClassifyingCategory />;
+            case 'categories': return <Category />;
+            case 'brands_categories': return <ClassifyingBrand />;
             default : return <DashBoardView />;
         }
     }, [query]);

@@ -1,5 +1,5 @@
 {
-  "name": "una_brands_frontend",
+  "name": "ti_pim_frontend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/sales_retail/una_brands_frontend.git"
+    "url": "git+https://gitlab.com/retail_pim/retail_pim_frontend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/sales_retail/una_brands_frontend/issues"
+    "url": "https://gitlab.com/retail_pim/retail_pim_frontend/issues"
   },
-  "homepage": "https://gitlab.com/sales_retail/una_brands_frontend#readme",
+  "homepage": "https://gitlab.com/retail_pim/retail_pim_frontend/#readme",
   "dependencies": {
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",

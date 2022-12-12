@@ -10,22 +10,26 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   const notify = (type) => {
     if (!toast.isActive(toastId.current)) {
       if (type !== "err") {
-        toastId.current = toast("Brand Name added Successfully !!!");
+        toastId.current = toast.success("Brand added Successfully !!!");
       } else {
-        toastId.current = toast("Brand Name cannot be empty !!!");
+        toastId.current = toast.error("Brand fields cannot be empty !!!");
       }
     }
   };
   const initialValues = {
     name: "",
+    discription: ""
   };
 
   const onSubmit = async (values, formik) => {
     let brndName = {
       name: values.name.trim(),
     };
+    let brndDiscription = {
+      name: values.discription.trim(),
+    };
     console.log("val", brndName);
-    if (brndName.name === "") {
+    if (brndName.name === "" || brndDiscription.name === "" ) {
       notify("err");
     } else {
       const apiRes = await createBrandApi(brndName);
@@ -53,6 +57,16 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   label="Enter the Brand Name"
                   name="name"
                   id="brandName"
+                />
+
+                <FormikControl
+                  control="text-area"
+                  type="text"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm bb_only px-0 py-2"
+                  label="Enter the Brand Discription"
+                  name="discription"
+                  id="brandDiscription"
                 />
 
                 <div className="col-12 text-end pt-5">

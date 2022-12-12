@@ -15,10 +15,15 @@ function DashBoardSideBar({ defaultValue }) {
           link: "/dashboard/catalog?list=catalog_list",
           list_name: "catalog_list",
         },
+        // {
+        //   name: "Catalog Versions",
+        //   link: "/dashboard/catalog?list=catelog_version",
+        //   list_name: "catelog_version",
+        // },
         {
-          name: "Catalog Versions",
-          link: "/dashboard/catalog?list=catelog_version",
-          list_name: "catelog_version",
+          name: "Brand",
+          link: "/dashboard/brands?list=brands_categories",
+          list_name: "brands_categories",
         },
         {
           name: "Categories",
@@ -42,47 +47,47 @@ function DashBoardSideBar({ defaultValue }) {
         },
       ],
     },
-    {
-      name: "BRANDS",
-      icon: "/icons/brands.png",
-      id: "brands",
-      list: [
-        {
-          name: "Classifying Category",
-          link: "/dashboard/brands?list=brands_categories",
-          list_name: "brands_categories",
-        },
-        {
-          name: "Features List",
-          link: "/dashboard/brands?list=features_list",
-          list_name: "features_list",
-        },
-        {
-          name: "Features Values",
-          link: "/dashboard/brands?list=features_values",
-          list_name: "features_values",
-        },
-        {
-          name: "Classification Units",
-          link: "/dashboard/brands?list=classifications",
-          list_name: "classifications",
-        },
-      ],
-    },
-    {
-      name: "MULTI MEDIA",
-      icon: "/icons/email.png",
-      id: "multiMedia",
-      list: [],
-    },
-    { name: "PRICE", icon: "/icons/contacts.png", id: "price", list: [] },
-    {
-      name: "SETTINGS",
-      icon: "/icons/deals.png",
-      id: "settings",
-      list: [],
-      link: "/dashboard/settings?list=permission",
-    },
+    // {
+    //   name: "BRANDS",
+    //   icon: "/icons/brands.png",
+    //   id: "brands",
+    //   list: [
+    //     {
+    //       name: "Classifying Category",
+    //       link: "/dashboard/brands?list=brands_categories",
+    //       list_name: "brands_categories",
+    //     },
+    //     {
+    //       name: "Features List",
+    //       link: "/dashboard/brands?list=features_list",
+    //       list_name: "features_list",
+    //     },
+    //     {
+    //       name: "Features Values",
+    //       link: "/dashboard/brands?list=features_values",
+    //       list_name: "features_values",
+    //     },
+    //     {
+    //       name: "Classification Units",
+    //       link: "/dashboard/brands?list=classifications",
+    //       list_name: "classifications",
+    //     },
+    //   ],
+    // },
+    // {
+    //   name: "MULTI MEDIA",
+    //   icon: "/icons/email.png",
+    //   id: "multiMedia",
+    //   list: [],
+    // },
+    // { name: "PRICE", icon: "/icons/contacts.png", id: "price", list: [] },
+    // {
+    //   name: "SETTINGS",
+    //   icon: "/icons/deals.png",
+    //   id: "settings",
+    //   list: [],
+    //   link: "/dashboard/settings?list=permission",
+    // },
   ];
 
   return (defaultValue ? <Accordion flush className="dashboard-side-filter" defaultActiveKey={defaultValue} >

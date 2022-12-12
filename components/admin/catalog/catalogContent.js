@@ -81,9 +81,9 @@ function CatalogContent({ currentPgNo }) {
                 Company: <span className="txt_blue">All</span>
               </p>
             </div>
-            {loading ? (
+            {/* {loading ? (
               <PageLoader />
-            ) : (
+            ) : ( */}
               <Fragment>
                 <CatalogList
                   list={list}
@@ -100,7 +100,7 @@ function CatalogContent({ currentPgNo }) {
                   />
                 )}
               </Fragment>
-            )}
+            {/* )} */}
           </Fragment>
         )}
       </div>
