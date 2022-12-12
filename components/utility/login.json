@@ -1,0 +1,56 @@
+{
+    "singupJson": [
+        {
+            "control": "input",
+            "type": "text",
+            "classprops": "form-group mb-3",
+            "className": "form-control",
+            "label":"Name",
+            "name":"name",
+            "id":"signInName",
+            "placeholder":"Full Name"
+        },
+        {
+            "control": "input",
+            "type": "email",
+            "classprops": "form-group mb-3",
+            "className": "form-control",
+            "label":"Email",
+            "name":"email",
+            "id":"signInUser",
+            "placeholder":"mail@unabrands.com"
+        },
+        {
+            "control": "input",
+            "type": "password",
+            "classprops": "form-group mb-0",
+            "className": "form-control",
+            "label":"Password",
+            "name":"password",
+            "id":"signInPasspord",
+            "placeholder":"........."
+        }
+    ],
+    "singnInJson": [
+        {
+            "control": "input",
+            "type": "email",
+            "classprops": "form-group mb-3 w-100 p-0",
+            "className": "form-control",
+            "label":"Email",
+            "name":"email",
+            "id":"signInUser",
+            "placeholder":"mail@unabrands.com"
+        },
+        {
+            "control": "input",
+            "type": "password",
+            "classprops": "form-group w-100 p-0",
+            "className": "form-control",
+            "label":"Password",
+            "name":"password",
+            "id":"signInPasspord",
+            "placeholder":"........."
+        }     
+    ]
+}
