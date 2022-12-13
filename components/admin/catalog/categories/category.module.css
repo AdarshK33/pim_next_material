@@ -1,0 +1,26 @@
+.dash_board_pagination{
+  display: flex;
+  justify-content: center;
+}
+ /* tr{
+ background-color:  #f5f6f8;
+} */
+
+
+.submitButton {
+  display: flex;
+  justify-content: center;
+}
+
+.addButton {
+  display: flex;
+  justify-content: end;
+}
+
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}

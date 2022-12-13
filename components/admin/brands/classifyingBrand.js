@@ -19,6 +19,15 @@ import ToastComponenet from "../../public/toastComponenet";
 import PageLoader from "../../public/pageLoader";
 import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
+import Link from 'next/link'
+import Breadcrumb from "../../public/breadcrumb"
+import styles from "./brand.module.css";
+// import CommonPaginationTable from "../../public/commonPaginationTable"
+import TABLE_HEADERS  from "../../public/tableHeader";
+import Pagination from "react-js-pagination";
+import { Edit2, Eye, Search, AlertCircle } from "react-feather";
+import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
+import  CommonUpdateForm from "../../public/commonUpdateForm";
 
 function classifyingBrand({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
@@ -119,14 +128,39 @@ function classifyingBrand({ currentPgNo }) {
     </Fragment>
   );
 
+  const tableData = [];
+
+  for (let i = 1; i <= 10; i++) {
+    tableData.push({
+      id: "11100"+i,
+      name: "Brand" + i,
+      discription: "discription" + (i),
+    });
+  }
+ //   /*-----------------Pagination------------------*/
+ const [currentPage, setCurrentPage] = useState(1);
+ const recordPerPage = 10;
+ const totalRecords = tableData.length;
+ const pageRange = 10;
+ const indexOfLastRecord = currentPage * recordPerPage;
+ const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+ const currentRecords = tableData;
+
+ const handlePageChange = pageNumber => {
+   setCurrentPage(pageNumber);
+ }
+ /*-----------------Pagination------------------*/
+
   return (
     <Fragment>
       <ToastComponenet ref={toastRef} />
       <div className="row mx-0 font14">
         <div className="col-10 p-0">
-          <div className="catelog-search font12 txt_gray">Search</div>
+        <Breadcrumb title="BRAND" parent="BRAND LIST" />
+
+          {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
-        <div className="col-2 p-0 text-end align-self-end">
+        <div className="col-2 p-0 text-end align-self-center">
           <button
             onClick={() => setShowBrandCreationForm(true)}
             className="btn btn-sm btn-icons"
@@ -134,17 +168,100 @@ function classifyingBrand({ currentPgNo }) {
             <img src="/icons/add.png" alt="add-icon" />
           </button>
         </div>
+
+        <div className="card" style={{ borderRadius: "1rem" }}>
+        <div className="card-body">
+          <div className="table-responsive">
+            <Table id="table-to-xls" className="table table-hover">
+              <thead
+                className="thead-light"
+                style={{ backgroundColor: "#2f3c4e" }}
+              >
+                <tr style={{ backgroundColor: "#f5f6f8" }}>
+                  <th scope="col">S. No</th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.id} </th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.name}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.discription}</th>
+                  <th scope="col">Action</th>
+
+                </tr>
+              </thead>
+                {tableData !== null &&
+                  tableData.length > 0
+                  ? (
+                    tableData.map((item, i) => {
+
+                      return (
+                        <tbody key={i}>
+                          <tr>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                            <td>{item.discription}</td>
+                            <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
+                              {/* <Link href={`/${item.id}`}> */}
+                                <Edit2
+                                  onClick={() => {
+                                    setShowBrandCreationForm(true)
+                                  }}
+                                />
+                              {/* </Link> */}
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    })
+                  ) : (
+                    <tbody>
+                      <tr>
+                        <td colSpan="12">No Record Found</td>
+                      </tr>
+                    </tbody>
+                  )}
+            </Table>
+          </div>
+
+          <div className={styles.dash_board_pagination}>
+            <Pagination
+              itemClass="page-item"
+              linkClass="page-link"
+              activePage={currentPage}
+              itemsCountPerPage={recordPerPage}
+              totalItemsCount={totalRecords}
+              pageRangeDisplayed={pageRange}
+              onChange={handlePageChange}
+              firstPageText="First"
+              lastPageText="Last"
+            />
+          </div>
+        </div>
+      </div>
         {/* {loading ? (
           <PageLoader />
         ) : ( */}
-          <CustomTable
+          {/* <CustomTable
             tableName="product-list"
             head={tableHeadings}
             content={tableContent}
             totalPages={list.totalPages}
             tableContainarClass="my-3 catalog-list"
-          />
+          /> */}
         {/* )} */}
+        <CustomModal
+            show={showBrandCreationForm}
+            closeModal={() => setShowBrandCreationForm(false)}
+            size="md"
+            centered={true}
+            body={
+              <CommonUpdateForm
+                table={TABLE_HEADERS[0].Brand.table}
+                classModal={() => setShowBrandCreationForm(false)}
+                onSuccess={onBrandCreationSuccess}
+                notifySucess={() => notify(true)}
+              />
+        }
+      />
+
         {itemsCount && totalItems}
       </div>
       {Object.entries(itemData).length !== 0 && (
