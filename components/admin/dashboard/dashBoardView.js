@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Breadcrumb from "../../public/breadcrumb"
 import styles from "./dashBoard.module.css";
 import CommonPaginationTable from "../../public/commonPaginationTable"
-import tableHeader from "../../public/tableHeader"
+import TABLE_HEADERS  from "../../public/tableHeader"
 
 function DashBoardView() {
   // Table data
@@ -43,7 +43,7 @@ function DashBoardView() {
         <Row>
           <Col sm={12}>
           <Breadcrumb title="DASHBOARD" parent="DASHBOARD LIST" />
-            <CommonPaginationTable 
+            {/* <CommonPaginationTable 
             header={tableHeader[0].DashBoard}
             tableData={tableData}
             indexOfFirstRecord={indexOfFirstRecord}
@@ -52,7 +52,74 @@ function DashBoardView() {
             totalRecords={totalRecords}
             pageRange={pageRange}
             handlePageChange={handlePageChange}
-            ></CommonPaginationTable>
+            ></CommonPaginationTable> */}
+        <div className="card" style={{ borderRadius: "1rem" }}>
+        <div className="card-body">
+          <div className="table-responsive">
+            <Table id="table-to-xls" className="table table-hover">
+              <thead
+                className="thead-light"
+                style={{ backgroundColor: "#2f3c4e" }}
+              >
+                <tr style={{ backgroundColor: "#f5f6f8" }}>
+                  {/* <th scope="col">S. No</th> */}
+                  <th scope="col">{TABLE_HEADERS[0].DashBoard.id} </th>
+                  <th scope="col">{TABLE_HEADERS[0].DashBoard.name}</th>
+                  <th scope="col">{TABLE_HEADERS[0].DashBoard.discription}</th>
+                  <th scope="col">Action</th>
+
+                </tr>
+              </thead>
+                {tableData !== null &&
+                  tableData.length > 0
+                  ? (
+                    tableData.map((item, i) => {
+
+                      return (
+                        <tbody key={i}>
+                          <tr>
+                            {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                            <td>{item.discription}</td>
+                            <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
+                              <Link href={`/${item.id}`}>
+                                <Edit2
+                                  onClick={() => {
+                                    null
+                                  }}
+                                />
+                              </Link>
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    })
+                  ) : (
+                    <tbody>
+                      <tr>
+                        <td colSpan="12">No Record Found</td>
+                      </tr>
+                    </tbody>
+                  )}
+            </Table>
+          </div>
+
+          <div className={styles.dash_board_pagination}>
+            <Pagination
+              itemClass="page-item"
+              linkClass="page-link"
+              activePage={currentPage}
+              itemsCountPerPage={recordPerPage}
+              totalItemsCount={totalRecords}
+              pageRangeDisplayed={pageRange}
+              onChange={handlePageChange}
+              firstPageText="First"
+              lastPageText="Last"
+            />
+          </div>
+        </div>
+      </div>
           </Col>
        </Row>
       </Container>

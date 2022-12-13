@@ -19,6 +19,14 @@ import ToastComponenet from "../../../public/toastComponenet";
 import PageLoader from "../../../public/pageLoader";
 import PaginationView from "../../../public/paginationView";
 import actions from "../../../../redux/action";
+import Link from 'next/link'
+import Breadcrumb from "../../../public/breadcrumb"
+import styles from "./category.module.css";
+// import CommonPaginationTable from "../../public/commonPaginationTable"
+import TABLE_HEADERS  from "../../../public/tableHeader";
+import Pagination from "react-js-pagination";
+import { Edit2, Eye, Search, AlertCircle } from "react-feather";
+import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 
 function classifyingCategory({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
@@ -127,14 +135,42 @@ function classifyingCategory({ currentPgNo }) {
     </Fragment>
   );
 
+  const tableData = [];
+
+  for (let i = 1; i <= 10; i++) {
+    tableData.push({
+      id: "11100"+i,
+      Parent_Category_Id: "Parent Category Id" + i,
+      CategoryL1: "Category" + (i),
+      CategoryL2: "Category" + (i),
+      CategoryL3: "Category" + (i),
+
+    });
+  }
+ //   /*-----------------Pagination------------------*/
+ const [currentPage, setCurrentPage] = useState(1);
+ const recordPerPage = 10;
+ const totalRecords = tableData.length;
+ const pageRange = 10;
+ const indexOfLastRecord = currentPage * recordPerPage;
+ const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+ const currentRecords = tableData;
+
+ const handlePageChange = pageNumber => {
+   setCurrentPage(pageNumber);
+ }
+ /*-----------------Pagination------------------*/
+
   return (
     <Fragment>
       <ToastComponenet ref={toastRef} />
       <div className="row mx-0 font14">
         <div className="col-10 p-0">
-          <div className="catelog-search font12 txt_gray">Search</div>
+        <Breadcrumb title="CATEGORY" parent="CATEGORY LIST" />
+
+          {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
-        <div className="col-2 p-0 text-end align-self-end">
+        <div className="col-2 p-0 text-end align-self-center">
           <button
             onClick={() => setShowBrandCreationForm(true)}
             className="btn btn-sm btn-icons"
@@ -142,16 +178,86 @@ function classifyingCategory({ currentPgNo }) {
             <img src="/icons/add.png" alt="add-icon" />
           </button>
         </div>
+        <div className="card" style={{ borderRadius: "1rem" }}>
+        <div className="card-body">
+          <div className="table-responsive">
+            <Table id="table-to-xls" className="table table-hover">
+              <thead
+                className="thead-light"
+                style={{ backgroundColor: "#2f3c4e" }}
+              >
+                <tr style={{ backgroundColor: "#f5f6f8" }}>
+                  <th scope="col">S. No</th>
+                  <th scope="col">{TABLE_HEADERS[0].Catergory.id} </th>
+                  <th scope="col">{TABLE_HEADERS[0].Catergory.Parent_Category_Id}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Catergory.CategoryL1}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Catergory.CategoryL2}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Catergory.CategoryL3}</th>
+                  <th scope="col">Action</th>
+
+                </tr>
+              </thead>
+                {tableData !== null &&
+                  tableData.length > 0
+                  ? (
+                    tableData.map((item, i) => {
+                      return (
+                        <tbody key={i}>
+                          <tr>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
+                            <td>{item.id}</td>
+                            <td>{item.Parent_Category_Id}</td>
+                            <td>{item.CategoryL1}</td>
+                            <td>{item.CategoryL2}</td>
+                            <td>{item.CategoryL3}</td>
+                            <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
+                              <Link href={`/${item.id}`}>
+                                <Edit2
+                                  onClick={() => {
+                                    null
+                                  }}
+                                />
+                              </Link>
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    })
+                  ) : (
+                    <tbody>
+                      <tr>
+                        <td colSpan="12">No Record Found</td>
+                      </tr>
+                    </tbody>
+                  )}
+            </Table>
+          </div>
+
+          <div className={styles.dash_board_pagination}>
+            <Pagination
+              itemClass="page-item"
+              linkClass="page-link"
+              activePage={currentPage}
+              itemsCountPerPage={recordPerPage}
+              totalItemsCount={totalRecords}
+              pageRangeDisplayed={pageRange}
+              onChange={handlePageChange}
+              firstPageText="First"
+              lastPageText="Last"
+            />
+          </div>
+        </div>
+      </div>
         {/* {loading ? (
           <PageLoader />
         ) : ( */}
-          <CustomTable
+          {/* <CustomTable
             tableName="product-list"
             head={tableHeadings}
             content={tableContent}
             totalPages={list.totalPages}
             tableContainarClass="my-3 catalog-list"
-          />
+          /> */}
         {/* )} */}
         {itemsCount && totalItems}
       </div>
