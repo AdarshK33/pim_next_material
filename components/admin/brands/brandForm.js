@@ -1,12 +1,31 @@
 import { Form, Formik } from "formik";
-import React, { useRef } from "react";
+import React, {
+  Fragment,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import SubmitButton from "../../public/formik/submitButton";
-import { createBrandApi } from "../../utility/apiUtility";
+// import { createBrandApi } from "../../utility/apiUtility";
+import * as Yup from "yup";
+import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import { useDispatch, useSelector } from "react-redux";
 
 function BrandForm({ classModal, onSuccess, notifySucess }) {
+  const [itemData, setItemData] = useState();
   const toastId = React.useRef(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("itemData",itemData);
+    dispatch(createBrandApi(itemData));
+    // dispatch(getBrandApi()); 
+  }, [itemData]);
+
   const notify = (type) => {
     if (!toast.isActive(toastId.current)) {
       if (type !== "err") {
@@ -18,24 +37,41 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   };
   const initialValues = {
     name: "",
-    discription: ""
+    discription: "",
+    email:""
   };
 
   const onSubmit = async (values, formik) => {
+    console.log("values",values);
     let brndName = {
       name: values.name.trim(),
     };
     let brndDiscription = {
       name: values.discription.trim(),
     };
+    let brandEmail = {
+      name: values.email.trim(),
+    };
     console.log("val", brndName);
-    if (brndName.name === "" || brndDiscription.name === "" ) {
+    if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" ) {
       notify("err");
     } else {
-      const apiRes = await createBrandApi(brndName);
+      let infoData={
+        brandId: 0,
+        brandName: brndName.name,
+        description:brndDiscription.name,
+        address: null,
+        contactPerson: null,
+        emailId: brandEmail.name,
+        mobile: null,
+        imageUrl: null,
+        brandShortcode: null,
+      }
+      setItemData(infoData)
+      // const apiRes = await createBrandApi(brndName);
       if (apiRes === "err") {
         formik.setSubmitting(false);
-      } else {
+      } else {    
         notifySucess(true);
         classModal();
       }
@@ -54,9 +90,19 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   type="text"
                   classprops="form-group mb-3 col-md-12"
                   className="form-control form-control-sm bb_only px-0 py-2"
-                  label="Enter the Brand Name"
+                  label="Brand Name"
                   name="name"
                   id="brandName"
+                />
+
+                <FormikControl
+                  control="input"
+                  type="text"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm bb_only px-0 py-2"
+                  label="Email Id"
+                  name="email"
+                  id="email"
                 />
 
                 <FormikControl
@@ -64,7 +110,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   type="text"
                   classprops="form-group mb-3 col-md-12"
                   className="form-control form-control-sm bb_only px-0 py-2"
-                  label="Enter the Brand Discription"
+                  label="Brand Discription"
                   name="discription"
                   id="brandDiscription"
                 />
