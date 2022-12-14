@@ -78,7 +78,7 @@ export const getBrandApi = () => {
         //   console.log("api response",response)
         //   console.log(response)
           if (response.status === 200) {
-            // console.log("API SUCCESS", response.data);
+             console.log("API SUCCESS", response.data);
             dispatch(getBrandDataSuccess(response.data));
           }
         })
