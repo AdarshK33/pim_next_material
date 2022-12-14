@@ -18,3 +18,4 @@ export const logoutUser = `${tokenUrl}`;
 // export const categoriesLists = `${catUrl}${cookies.get("tenantId")}`;
 // export const productsLists = `${prdUrl}products/${cookies.get("tenantId")}`;
 // export const brandList = `${brndUrl}${cookies.get("tenantId")}`;
+export const ONBOARD_SERVICE_URL = 'http://onboard-apis.theretailinsightsdemos.com/api/v1';
