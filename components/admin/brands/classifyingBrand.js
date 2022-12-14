@@ -29,7 +29,7 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  CommonUpdateForm from "../../public/commonUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand/brand";
+import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
 
 
 function classifyingBrand({ currentPgNo }) {
@@ -59,7 +59,7 @@ let dataObj={
 
 }
   useEffect(() => {
-    // dispatch(createBrandApi(dataObj));
+    //  dispatch(createBrandApi(dataObj));
     dispatch(getBrandApi());
    
   }, []);

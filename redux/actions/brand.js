@@ -7,8 +7,8 @@ import {
     GET_BRAND_DATA_LOADING,
     GET_BRAND_DATA_SUCCESS,
     GET_BRAND_DATA_FAILURE
-} from "../../types/types";
-import { client } from "../../../utils/axios";
+} from "../types/types";
+import { client } from "../../utils/axios";
 
 
 export const createBrandDataLoading = () => {
