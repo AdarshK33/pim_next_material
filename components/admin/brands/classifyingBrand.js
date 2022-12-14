@@ -28,6 +28,9 @@ import Pagination from "react-js-pagination";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  CommonUpdateForm from "../../public/commonUpdateForm";
+import { useDispatch, useSelector } from "react-redux";
+import { createBrandApi, getBrandApi } from "../../../redux/actions/brand/brand";
+
 
 function classifyingBrand({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
@@ -37,7 +40,35 @@ function classifyingBrand({ currentPgNo }) {
   const toastRef = useRef(null);
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
+  const dispatch = useDispatch();
 
+
+let dataObj={
+  "brandId": 0,
+  "brandName": "Avasaa321",
+  "brandNo": 0,
+  "address": "OMBR",
+  "contactPerson": "sai",
+  "emailId": "sai@gmail.com",
+  "mobile": "8743698546",
+  "imageUrl": "string",
+  "brandShortcode": "string",
+  "version": 0,
+  "createdBy": "string",
+  "updatedBy": "string"
+
+}
+  useEffect(() => {
+    // dispatch(createBrandApi(dataObj));
+    dispatch(getBrandApi());
+   
+  }, []);
+
+  const { isLogin } = useSelector(state => {
+    console.log("hello state",state)
+		return state.brandReducer;
+	});
+console.log("hello brandGet",isLogin)
   const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);

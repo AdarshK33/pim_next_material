@@ -38,91 +38,25 @@ function DashBoardView() {
 
   return (
     <>
-    
-     <Container fluid>
-        <Row>
-          <Col sm={12}>
+     <div className="row mx-0 font14">
           <Breadcrumb title="DASHBOARD" parent="DASHBOARD LIST" />
-            {/* <CommonPaginationTable 
-            header={tableHeader[0].DashBoard}
-            tableData={tableData}
-            indexOfFirstRecord={indexOfFirstRecord}
-            currentPage={currentPage}
-            recordPerPage={recordPerPage}
-            totalRecords={totalRecords}
-            pageRange={pageRange}
-            handlePageChange={handlePageChange}
-            ></CommonPaginationTable> */}
-        <div className="card" style={{ borderRadius: "1rem" }}>
+          <div className="card" style={{ borderRadius: "1rem" }}>
         <div className="card-body">
-          <div className="table-responsive">
-            <Table id="table-to-xls" className="table table-hover">
-              <thead
-                className="thead-light"
-                style={{ backgroundColor: "#2f3c4e" }}
-              >
-                <tr style={{ backgroundColor: "#f5f6f8" }}>
-                  {/* <th scope="col">S. No</th> */}
-                  <th scope="col">{TABLE_HEADERS[0].DashBoard.id} </th>
-                  <th scope="col">{TABLE_HEADERS[0].DashBoard.name}</th>
-                  <th scope="col">{TABLE_HEADERS[0].DashBoard.discription}</th>
-                  <th scope="col">Action</th>
-
-                </tr>
-              </thead>
-                {tableData !== null &&
-                  tableData.length > 0
-                  ? (
-                    tableData.map((item, i) => {
-
-                      return (
-                        <tbody key={i}>
-                          <tr>
-                            {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
-                            <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>{item.discription}</td>
-                            <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
-                              <Link href={`/${item.id}`}>
-                                <Edit2
-                                  onClick={() => {
-                                    null
-                                  }}
-                                />
-                              </Link>
-                            </td>
-                          </tr>
-                        </tbody>
-                      );
-                    })
-                  ) : (
-                    <tbody>
-                      <tr>
-                        <td colSpan="12">No Record Found</td>
-                      </tr>
-                    </tbody>
-                  )}
-            </Table>
-          </div>
-
-          <div className={styles.dash_board_pagination}>
-            <Pagination
-              itemClass="page-item"
-              linkClass="page-link"
-              activePage={currentPage}
-              itemsCountPerPage={recordPerPage}
-              totalItemsCount={totalRecords}
-              pageRangeDisplayed={pageRange}
-              onChange={handlePageChange}
-              firstPageText="First"
-              lastPageText="Last"
-            />
-          </div>
-        </div>
-      </div>
-          </Col>
-       </Row>
-      </Container>
+             <div className="w-100 row mx-0 p-0">
+                <img src="/dashBoard1.png" alt="dashBoard1" className="p-0 mb-3" />
+                <div className="col-md-4 ps-md-0 pe-md-5">
+                    <img src="/dashBoard2.png" alt="dashBoard2" width="100%" />
+                </div>
+                <div className="col-md-4 ps-md-0 pe-md-5">
+                    <img src="/dashBoard3.png" alt="dashBoard3" width="100%" />
+                </div>
+                <div className="col-md-4 pe-md-0 ps-md-5">
+                    <img src="/dashBoard4.png" alt="dashBoard4" width="100%" />
+                </div>
+            </div>
+            </div>
+            </div>
+       </div>
     </>
   )
 }
