@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
   ) : (
     <Fragment>
       <Auth.Provider value={{ loginState: LoginStat }}>
-        {router.route !== "/login" && router.route !== "/signup" && (
+        {router.route !== "/login" && router.route !== "/signup" &&router.route !== "/dashboard/dashboard" && (
           <PublicHeader />
         )}
         {/* <RouteGuard> */}

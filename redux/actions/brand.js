@@ -6,7 +6,13 @@ import {
 
     GET_BRAND_DATA_LOADING,
     GET_BRAND_DATA_SUCCESS,
-    GET_BRAND_DATA_FAILURE
+    GET_BRAND_DATA_FAILURE,
+
+    UPDATE_BRAND_DATA_LOADING,
+    UPDATE_BRAND_DATA_SUCCESS,
+    UPDATE_BRAND_DATA_FAILURE
+
+    
 } from "../types/types";
 import { client } from "../../utils/axios";
 
@@ -48,8 +54,26 @@ export const getBrandDataFailure = (error) => {
         payload: error,
     };
 };
- 
- 
+
+
+export const updateBrandDataLoading = () => {
+    return {
+        type: UPDATE_BRAND_DATA_LOADING
+    };
+};
+export const updateBrandDataSuccess = (data) => {
+    return {
+        type: UPDATE_BRAND_DATA_SUCCESS,
+        payload: data,
+    };
+};
+export const updateBrandDataFailure = (error) => {
+    return {
+        type: UPDATE_BRAND_DATA_FAILURE,
+        payload: error,
+    };
+};
+
 export const createBrandApi = (data) => {
     // console.log("hello  brandPageApi called",data)
     return (dispatch) => {
@@ -64,7 +88,7 @@ export const createBrandApi = (data) => {
             })
             .catch((err) => {
                 console.log("error caught in -> actions/brand/brand", err);
-                dispatch(createBrandDataFailure(err, 'Something went wrong', 'BRAND'));
+                dispatch(createBrandDataFailure(err, 'Something went wrong', 'BRAND CREATE'));
             });
     };
 };
@@ -88,4 +112,23 @@ export const getBrandApi = () => {
         });
     };
   };
+
+export const updateBrandApi = (data) => {
+    // console.log("hello  brandPageApi called",data)
+    return (dispatch) => {
+        dispatch(updateBrandDataLoading('BRAND....', 'BRAND'));
+        client
+            .post("/api/onboard/updateBrand",data)
+        .then((response) => {
+                if (response.status === 200) {
+                    console.log("BrandGreat==>", response.data);
+                    dispatch(updateBrandDataSuccess(response.data, 'Brand Update Successfully', 'BRAND UPDATE'));
+                } else throw new Error("")
+            })
+            .catch((err) => {
+                console.log("error caught in -> actions/brand/brand", err);
+                dispatch(updateBrandDataFailure(err, 'Something went wrong', 'BRAND UPDATE'));
+            });
+    };
+};
   

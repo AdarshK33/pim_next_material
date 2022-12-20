@@ -39,7 +39,7 @@ function DashBoardView() {
   return (
     <>
      <div className="row mx-0 font14">
-          <Breadcrumb title="DASHBOARD" parent="DASHBOARD LIST" />
+          {/* <Breadcrumb title="DASHBOARD" parent="DASHBOARD LIST" /> */}
           <div className="card" style={{ borderRadius: "1rem" }}>
         <div className="card-body">
              <div className="w-100 row mx-0 p-0">

@@ -2,12 +2,24 @@ import React, { Fragment } from "react";
 import { Accordion } from "react-bootstrap";
 import SidebarContent from "./sidebarContent";
 import Link from "next/link";
+import styles from "../../styles/Home.module.css";
+import Image from 'next/image';
+
+
+import brand from "../../assets/icons/brand-image.svg";
+import catalogue from "../../assets/icons/catalogue.svg"
+import distribution from "../../assets/icons/distribution.svg"
+import inventory from "../../assets/icons/inventory.svg"
+import upload from "../../assets/icons/upload.svg"
+import process from "../../assets/icons/process.svg"
+
+
 
 function DashBoardSideBar({ defaultValue }) {
   const allTabs = [
     {
       name: "CATALOG",
-      icon: "/icons/catalog.png",
+      icon: catalogue,
       id: "catalog",
       list: [
         {
@@ -15,6 +27,7 @@ function DashBoardSideBar({ defaultValue }) {
           link: "/dashboard/catalog?list=catalog_list",
           list_name: "catalog_list",
         },
+        
         // {
         //   name: "Catalog Versions",
         //   link: "/dashboard/catalog?list=catelog_version",
@@ -47,62 +60,77 @@ function DashBoardSideBar({ defaultValue }) {
         },
       ],
     },
-    // {
-    //   name: "BRANDS",
-    //   icon: "/icons/brands.png",
-    //   id: "brands",
-    //   list: [
-    //     {
-    //       name: "Classifying Category",
-    //       link: "/dashboard/brands?list=brands_categories",
-    //       list_name: "brands_categories",
-    //     },
-    //     {
-    //       name: "Features List",
-    //       link: "/dashboard/brands?list=features_list",
-    //       list_name: "features_list",
-    //     },
-    //     {
-    //       name: "Features Values",
-    //       link: "/dashboard/brands?list=features_values",
-    //       list_name: "features_values",
-    //     },
-    //     {
-    //       name: "Classification Units",
-    //       link: "/dashboard/brands?list=classifications",
-    //       list_name: "classifications",
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: "MULTI MEDIA",
-    //   icon: "/icons/email.png",
-    //   id: "multiMedia",
-    //   list: [],
-    // },
-    // { name: "PRICE", icon: "/icons/contacts.png", id: "price", list: [] },
-    // {
-    //   name: "SETTINGS",
-    //   icon: "/icons/deals.png",
-    //   id: "settings",
-    //   list: [],
-    //   link: "/dashboard/settings?list=permission",
-    // },
+    {
+      name: "BRANDS",
+      icon: brand,
+      id: "brands",
+      list: [
+        {
+          name: "Classifying Category",
+          link: "/dashboard/brands?list=brands_categories",
+          list_name: "brands_categories",
+        },
+        {
+          name: "Features List",
+          link: "/dashboard/brands?list=features_list",
+          list_name: "features_list",
+        },
+        {
+          name: "Features Values",
+          link: "/dashboard/brands?list=features_values",
+          list_name: "features_values",
+        },
+        {
+          name: "Classification Units",
+          link: "/dashboard/brands?list=classifications",
+          list_name: "classifications",
+        },
+      ],
+    },
+    {
+      name: "MULTI MEDIA",
+      icon:upload ,
+      id: "multiMedia",
+      list: [],
+    },
+    { name: "PRICE", icon: inventory, id: "price", list: [] },
+    {
+      name: "SETTINGS",
+      icon: upload,
+      id: "settings",
+      list: [],
+      link: "/dashboard/settings?list=permission",
+    },
   ];
 
-  return (defaultValue ? <Accordion flush className="dashboard-side-filter" defaultActiveKey={defaultValue} >
+  return (defaultValue ? 
+  <Accordion flush className="dashboard-side-filter" defaultActiveKey={defaultValue} >
     {allTabs.map((item) => (
       <Accordion.Item key={`dashboardSidebar${item.id}`} eventKey={item.id}>
         {item.link ? (
           <Link href={item.link}>
             <Accordion.Header>
-              <img src={item.icon} alt={item.name} className="px-2" />
+              {/* <img src={item.icon} alt={item.name} className="px-2" /> */}
+              <Image
+              className="px-2"
+							src={item.icon}
+							alt="logo"
+              width={40}
+							height={30}
+						/>
               {item.name}
             </Accordion.Header>
           </Link>
         ) : (
           <Accordion.Header>
-            <img src={item.icon} alt={item.name} className="px-2" />
+            {/* <img src={item.icon} alt={item.name} className="px-2" /> */}
+            <Image
+              className="px-2"
+							src={item.icon}
+							alt="logo"
+              width={40}
+							height={30}
+						/>
             {item.name}
           </Accordion.Header>
         )}
@@ -113,6 +141,7 @@ function DashBoardSideBar({ defaultValue }) {
     ))}
   </Accordion> : <Fragment />
   );
+
 }
 
 export default React.memo(DashBoardSideBar);
