@@ -67,7 +67,7 @@ a {
 }
 
 .page-container {
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   min-height: 100vh;
 }
 
@@ -165,7 +165,7 @@ a {
 
 .dashBoard {
   background-color: var(--lightGray);
-  padding: 2.5rem;
+  /* padding: 2.5rem; */
 }
 
 .catelog-search {

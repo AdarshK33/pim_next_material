@@ -8,7 +8,7 @@ const TABLE_HEADERS = [{
     },
     Brand: {
       tableName:"Brand",
-        id: "ID",
+        id: "Email Id",
         name: "Brand Name",
         discription: "Brand Discription",
         action: "Action",
@@ -22,7 +22,6 @@ const TABLE_HEADERS = [{
          CategoryL3: "Catergory L3",
         action: "Action",
     },
-   
   }];
    
   export default TABLE_HEADERS;
