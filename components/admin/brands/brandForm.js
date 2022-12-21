@@ -20,6 +20,11 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
 
+  const selectOpts = [
+    { value: "active", label: "Active" },
+    { value: "inactive", label: "InActive" }
+  ];
+
   useEffect(() => {
     console.log("itemData",itemData);
     dispatch(createBrandApi(itemData));
@@ -106,6 +111,16 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                 />
 
                 <FormikControl
+                  control="input"
+                  type="text"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm bb_only px-0 py-2"
+                  label="Contact Info"
+                  name="contact"
+                  id="contact"
+                />
+
+                <FormikControl
                   control="text-area"
                   type="text"
                   classprops="form-group mb-3 col-md-12"
@@ -113,6 +128,14 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   label="Brand Discription"
                   name="discription"
                   id="brandDiscription"
+                />
+
+              <p>Status</p>
+                <FormikControl
+                  control="reactSelect"
+                  selectOpts={selectOpts}
+                  placeholder="Status"
+                  isMulti={false}
                 />
 
                 <div className="col-12 text-end pt-5">

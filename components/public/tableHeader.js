@@ -8,9 +8,14 @@ const TABLE_HEADERS = [{
     },
     Brand: {
       tableName:"Brand",
-        id: "Email Id",
-        name: "Brand Name",
+        // id: "Email Id",
+        name: "Name",
         discription: "Brand Discription",
+        email: "Email",
+        contact: "Contact Info",
+        category: "Total Categories",
+        sku: "Total SKU's",
+        status:"Status",
         action: "Action",
       },
     Catergory: {

@@ -18,26 +18,26 @@ import process from "../../assets/icons/process.svg"
 function DashBoardSideBar({ defaultValue }) {
   const allTabs = [
     {
-      name: "CATALOG",
+      name: "Catalog",
       icon: catalogue,
       id: "catalog",
       list: [
-        {
-          name: "Catalogs",
-          link: "/dashboard/catalog?list=catalog_list",
-          list_name: "catalog_list",
-        },
+        // {
+        //   name: "Catalogs",
+        //   link: "/dashboard/catalog?list=catalog_list",
+        //   list_name: "catalog_list",
+        // },
         
         // {
         //   name: "Catalog Versions",
         //   link: "/dashboard/catalog?list=catelog_version",
         //   list_name: "catelog_version",
         // },
-        {
-          name: "Brand",
-          link: "/dashboard/brands?list=brands_categories",
-          list_name: "brands_categories",
-        },
+        // {
+        //   name: "Brand",
+        //   link: "/dashboard/brands?list=brands_categories",
+        //   list_name: "brands_categories",
+        // },
         {
           name: "Categories",
           link: "/dashboard/catalog?list=categories",
@@ -48,56 +48,70 @@ function DashBoardSideBar({ defaultValue }) {
           link: "/dashboard/catalog?list=products",
           list_name: "products",
         },
-        {
-          name: "Uploads",
-          link: "/dashboard/catalog?list=uploads",
-          list_name: "uploads",
-        },
-        {
-          name: "Publish",
-          link: "/dashboard/catalog?list=publish",
-          list_name: "publish",
-        },
+        // {
+        //   name: "Uploads",
+        //   link: "/dashboard/catalog?list=uploads",
+        //   list_name: "uploads",
+        // },
+        // {
+        //   name: "Publish",
+        //   link: "/dashboard/catalog?list=publish",
+        //   list_name: "publish",
+        // },
       ],
     },
     {
-      name: "BRANDS",
+      name: "Brands",
       icon: brand,
       id: "brands",
+      link: "/dashboard/brands?list=brands_categories",
       list: [
-        {
-          name: "Classifying Category",
-          link: "/dashboard/brands?list=brands_categories",
-          list_name: "brands_categories",
-        },
-        {
-          name: "Features List",
-          link: "/dashboard/brands?list=features_list",
-          list_name: "features_list",
-        },
-        {
-          name: "Features Values",
-          link: "/dashboard/brands?list=features_values",
-          list_name: "features_values",
-        },
-        {
-          name: "Classification Units",
-          link: "/dashboard/brands?list=classifications",
-          list_name: "classifications",
-        },
+        // {
+        //   name: "Classifying Category",
+        //   link: "/dashboard/brands?list=brands_categories",
+        //   list_name: "brands_categories",
+        // },
+        // {
+        //   name: "Features List",
+        //   link: "/dashboard/brands?list=features_list",
+        //   list_name: "features_list",
+        // },
+        // {
+        //   name: "Features Values",
+        //   link: "/dashboard/brands?list=features_values",
+        //   list_name: "features_values",
+        // },
+        // {
+        //   name: "Classification Units",
+        //   link: "/dashboard/brands?list=classifications",
+        //   list_name: "classifications",
+        // },
       ],
     },
     {
-      name: "MULTI MEDIA",
-      icon:upload ,
-      id: "multiMedia",
+      name: "Channels",
+      icon:distribution ,
+      id: "channel",
       list: [],
     },
-    { name: "PRICE", icon: inventory, id: "price", list: [] },
     {
-      name: "SETTINGS",
+      name: "User Management",
+      icon:process ,
+      id: "usermanagement",
+      link: "/dashboard/settings?list=permission",
+      list: [],
+    },
+    { 
+    name: "Bulk Upload", 
+    icon: inventory, 
+    id: "bulkupload", 
+    link: "/dashboard/catalog?list=uploads",
+    list: [] 
+    },
+    {
+      name: "Media",
       icon: upload,
-      id: "settings",
+      id: "media",
       list: [],
       link: "/dashboard/settings?list=permission",
     },
