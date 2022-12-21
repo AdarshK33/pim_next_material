@@ -5,3 +5,27 @@
  /* tr{
  background-color:  #f5f6f8;
 } */
+
+.listing_space {
+  padding: 30px;
+}
+
+.listing_border{
+  padding: 0;
+  border-radius: 11px;
+}
+
+.title_name{
+  font-size: 20px;
+  font-weight: bold;
+  color: #419794;
+}
+
+
+.brand_title_name{
+  font-size: 20px;
+    font-weight: bold;
+    color: #399996;
+    width: 20%;
+    border-bottom: 2px solid #ffcf76;
+}
