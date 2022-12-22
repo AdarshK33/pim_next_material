@@ -397,7 +397,7 @@ const onSelect = (selectedKeys, info) => {
       <div className={styles.main_category}>
       <div className="row">
       <div className="col-10">
-      <Breadcrumb title="CATEGORY" parent="CATEGORY LIST" />
+      <p className={styles.title_name}>Categories</p>
       </div>
       <div className="col-2 p-0 text-end align-self-center">
           <button
