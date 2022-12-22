@@ -29,7 +29,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Gill", "Sans";
 }
 
 a {
@@ -140,6 +140,10 @@ a {
   font-size: 12px;
 }
 
+.font15 {
+  font-size: 15px;
+}
+
 .font13 {
   font-size: 13px;
 }
@@ -247,6 +251,11 @@ td {
   position: relative;
 }
 
+td{ 
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .catelogTabContent {
   background-color: var(--white);
   box-shadow: var(--shadow2);
@@ -306,13 +315,13 @@ td {
 .dashboard-side-filter .accordion-button {
   background-color: transparent;
   padding: 10px 0;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--accentBlue);
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--white);
 }
 
 .dashboard-side-filter .accordion-button.collapsed {
-  color: var(--darkBlue);
+  color:  var(--white);
 }
 
 .dashboard-side-filter .accordion-button:focus {
@@ -321,8 +330,9 @@ td {
 }
 
 .dashboard-side-filter .accordion-button:not(.collapsed) {
-  background-color: unset;
-  box-shadow: unset;
+  background-color: #d1d2d3;
+    box-shadow: unset;
+    color: #009996;
 }
 
 .dashBoard .heading {
@@ -333,6 +343,11 @@ td {
 .list_style_circle {
   list-style-type: circle;
 }
+
+.list_style_none {
+  list-style-type: none;
+}
+
 
 .list_style_circle li::marker {
   color: var(--accentBlue);
@@ -345,8 +360,8 @@ td {
 }
 
 .activeSubtxt {
-  color: black;
-  font-weight: 600;
+  color:#fff;
+  font-weight: bold;
 }
 
 .paginate-btn {
@@ -499,4 +514,17 @@ td span {
 .px-1.txt_gray.btn.btn-sm {
   margin-left: 12px;
   font-weight: bolder;
+}
+
+tbody:nth-child(even) {
+  background-color: rgba(65, 151, 148, 0.28);
+}
+
+.dashboard-side-filter{
+  margin-top: 30%;
+}
+
+.accordion-flush .accordion-collapse {
+  border-width: 0;
+  color: #ffffff;
 }

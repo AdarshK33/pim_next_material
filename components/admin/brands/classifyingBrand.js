@@ -30,6 +30,10 @@ import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  CommonUpdateForm from "../../public/commonUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
 import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import Image from 'next/image';
+
+
+import marker from "../../../assets/icons/marker 1.svg";
 
 
 function classifyingBrand({ currentPgNo }) {
@@ -185,13 +189,13 @@ console.log("hello brandGet",isLogin)
   return (
     <Fragment>
       <ToastComponenet ref={toastRef} />
-      <div className="row mx-0 font14">
+      <div className={`row mx-0 font14 ${styles.listing_space}`}>
         <div className="col-10 p-0">
-        <Breadcrumb title="BRAND" parent="BRAND LIST" />
-
+        {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
+        <p className={styles.brand_title_name}>Brands</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
-        <div className="col-2 p-0 text-end align-self-center">
+        <div className="col-2 p-3 text-end align-self-center">
           <button
             onClick={() => setShowBrandCreationForm(true)}
             className="btn btn-sm btn-icons"
@@ -200,19 +204,24 @@ console.log("hello brandGet",isLogin)
           </button>
         </div>
 
-        <div className="card" style={{ borderRadius: "1rem" }}>
-        <div className="card-body">
-          <div className="table-responsive">
-            <Table id="table-to-xls" className="table table-hover">
+        <div className="card p-0" style={{ borderRadius: "1rem" }}>
+        <div className="card-body p-0">
+          <div className={`table-responsive ${styles.listing_border}`}>
+            <table id="table-to-xls" className="table" >
               <thead
                 className="thead-light"
                 style={{ backgroundColor: "#2f3c4e" }}
               >
                 <tr style={{ backgroundColor: "#f5f6f8" }}>
-                  <th scope="col">S. No</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.id} </th>
+                  {/* <th scope="col">S. No</th> */}
+                  {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
                   <th scope="col">{TABLE_HEADERS[0].Brand.name}</th>
                   <th scope="col">{TABLE_HEADERS[0].Brand.discription}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.email}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.contact}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.category}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.sku}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.status}</th>
                   <th scope="col">Action</th>
 
                 </tr>
@@ -223,19 +232,36 @@ console.log("hello brandGet",isLogin)
                     tableData.map((item, i) => {
 
                       return (
-                        <tbody key={i}>
+                        <tbody style={{borderTop: "0px"}}
+                        
+                    key={i}>
                           <tr>
-                            <td>{i + 1 + indexOfFirstRecord}</td>
-                            <td>{item.id}</td>
+                            {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
+                            {/* <td>{item.id}</td> */}
                             <td>{item.name}</td>
                             <td>{item.discription}</td>
+                            <td>{item.email}</td>
+                            <td>{item.contact}</td>
+                            <td>{item.category}</td>
+                            <td>{item.sku}</td>
+                            <td>{item.status}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/${item.id}`}> */}
-                                <Edit2
+                            <Image
+                              className="px-2"
+							                src={marker}
+							                alt="edit"
+                              width={35}
+							                height={30}
+                              onClick={() => {
+                                setShowBrandCreationForm(true)
+                              }}
+						                  />
+                              {/* <marker
                                   onClick={() => {
                                     setShowBrandCreationForm(true)
                                   }}
-                                />
+                                /> */}
                               {/* </Link> */}
                             </td>
                           </tr>
@@ -249,7 +275,7 @@ console.log("hello brandGet",isLogin)
                       </tr>
                     </tbody>
                   )}
-            </Table>
+            </table>
           </div>
 
           <div className={styles.dash_board_pagination}>

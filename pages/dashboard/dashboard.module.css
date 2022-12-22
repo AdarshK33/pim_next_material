@@ -1,5 +1,6 @@
 .bg_color{
-    background-color: #419794
+    background-color: #419794;
+    list-style-type: none;
 }
 .header{
     display: flex;
@@ -9,10 +10,11 @@
     background-color: #ffff;
 }
 .header_logo{
-    width: 30%;
+    /* width: 30%; */
     /* text-align: center; */
     display: flex;
     margin-top: 15px;
+    justify-content: center;
 }
 
 
