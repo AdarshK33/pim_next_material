@@ -24,3 +24,13 @@
     flex-direction: column;
   }
 }
+
+.main_category{
+  padding: 35px;
+}
+
+.category_menu_overflow{
+  overflow-y: auto;
+  max-height: 555px;
+
+}
