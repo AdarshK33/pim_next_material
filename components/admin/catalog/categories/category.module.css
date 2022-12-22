@@ -24,3 +24,21 @@
     flex-direction: column;
   }
 }
+
+.main_category{
+  padding: 35px;
+}
+
+.category_menu_overflow{
+  overflow-y: auto;
+  max-height: 555px;
+
+}
+
+.title_name{
+  font-size: 20px;
+    font-weight: bold;
+    color: #399996;
+    width: 20%;
+    border-bottom: 2px solid #ffcf76;
+}

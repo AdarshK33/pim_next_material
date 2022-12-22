@@ -27,7 +27,8 @@ import TABLE_HEADERS  from "../../../public/tableHeader";
 import Pagination from "react-js-pagination";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-
+import { DownOutlined } from '@ant-design/icons';
+import { Tree } from 'antd';
 function classifyingCategory({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
@@ -161,16 +162,244 @@ function classifyingCategory({ currentPgNo }) {
  }
  /*-----------------Pagination------------------*/
 
+ const treeData1 = [
+  {
+    title: "Health & Nutrition",
+    key: "MainStructure",
+    children: [
+      {
+        title: "Health Drinks",
+        key: "layoutFolder",
+        children: [ //child element
+          {
+            title: "Coconut Drinks.js",
+            key: "coconut Drinks.js"
+          }
+        ]
+      },
+      {
+        title: "Kids Nutrition",
+        key: "layoutFolder Kids Nutrition",
+        children: [ //child element
+          {
+            title: "MIlk Drinks.js",
+            key: " milk Kids Nutrition"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    title: "women & health care",
+    key: "MainStructure women",
+    children: [
+      {
+        title: "Health health care",
+        key: "layoutFolder no",
+        children: [ //child element
+          {
+            title: "women health care.js",
+            key: "coconut Drinks.NodeNo"
+          }
+        ]
+      },
+
+
+    ]
+  },
+
+  {
+    title: "Personal Care",
+    key: "MainStructure Personal Care",
+    children: [
+      {
+        title: "Health health Personal Care",
+        key: "layoutFolder Personal Care",
+        children: [ //child element
+          {
+            title: "women Personal Care care.js",
+            key: "coconut DrinksPersonal Care"
+          }
+        ]
+      },
+
+
+    ]
+  },
+  {
+    title: "Ayurveda",
+    key: "MainStructure Ayurveda",
+    children: [ 
+    ]
+  },
+  {
+    title: "Health Devices",
+    key: "MainStructure Health Devices",
+    children: [ 
+    ]
+  },
+];
+
+const treeData = [
+  {
+    title: 'Health & Nutrition',
+    key: '0-0',
+    children: [
+      {
+        title: 'H&N',
+        key: '0-0-0',
+        children: [
+          {
+            title: 'Health Drinks',
+            key: '0-0-0-0',
+          },
+          {
+            title: 'Health Drinks2',
+            key: '0-0-0-1',
+          },
+          {
+            title: 'Health Drinks3',
+            key: '0-0-0-2',
+          },
+        ],
+      },
+      {
+        title: 'parent 1-1',
+        key: '0-0-1',
+        children: [
+          {
+            title: 'leaf',
+            key: '0-0-1-0',
+          },
+        ],
+      },
+      {
+        title: 'parent 1-2',
+        key: '0-0-2',
+        children: [
+          {
+            title: 'leaf',
+            key: '0-0-2-0',
+          },
+          {
+            title: 'leaf',
+            key: '0-0-2-1',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    title: 'Women Care',
+    key: 'Women Care 0-0',
+    children: [
+      {
+        title: 'W&C',
+        key: 'Women Care 0-0-0',
+        children: [
+          {
+            title: 'Women Care',
+            key: 'Women Care 0-0-0-0',
+          },
+          {
+            title: 'Women Care2',
+            key: 'Women Care 0-0-0-1',
+          },
+          {
+            title: 'Health Drinks3',
+            key: 'Women Care 0-0-0-2',
+          },
+        ],
+      },
+      {
+        title: ' Women Careparent 1-1',
+        key: 'Women Care0-0-1',
+        children: [
+          {
+            title: ' Women Careleaf',
+            key: 'Women Care 0-0-1-0',
+          },
+        ],
+      },
+      {
+        title: ' Women Careparent 1-2',
+        key: 'Women Care 0-0-2',
+        children: [
+          {
+            title: 'Women Care leaf',
+            key: 'Women Care 0-0-2-0',
+          },
+          {
+            title: 'Women Care leaf',
+            key: 'Women Care 0-0-2-1',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    title: 'Personal Care',
+    key: 'Personal Care 0-0',
+    children: [
+      {
+        title: 'W&C',
+        key: 'Personal Care0-0-0',
+        children: [
+          {
+            title: 'Personal Care',
+            key: 'Personal Care 0-0-0-0',
+          },
+          {
+            title: 'Personal Care2',
+            key: 'Personal Care 0-0-0-1',
+          },
+          {
+            title: 'Personal Care3',
+            key: 'Personal Care 0-0-0-2',
+          },
+        ],
+      },
+      {
+        title: ' Personal Care 1-1',
+        key: 'Personal Care0-0-1',
+        children: [
+          {
+            title: ' Personal Careleaf',
+            key: 'Personal Care 0-0-1-0',
+          },
+        ],
+      },
+      {
+        title: 'Personal Care 1-2',
+        key: 'Personal Care 0-0-2',
+        children: [
+          {
+            title: 'Personal Care leaf',
+            key: 'Personal Care 0-0-2-0',
+          },
+          {
+            title: 'Personal Care leaf',
+            key: 'Personal Care 0-0-2-1',
+          },
+        ],
+      },
+    ],
+  },
+];
+const onSelect = (selectedKeys, info) => {
+  console.log('hello selected', selectedKeys, info);
+};
   return (
     <Fragment>
       <ToastComponenet ref={toastRef} />
-      <div className="row mx-0 font14">
-        <div className="col-10 p-0">
-        <Breadcrumb title="CATEGORY" parent="CATEGORY LIST" />
-
-          {/* <div className="catelog-search font12 txt_gray">Search</div> */}
-        </div>
-        <div className="col-2 p-0 text-end align-self-center">
+      <div className={styles.main_category}>
+      <div className="row">
+      <div className="col-10">
+      <p className={styles.title_name}>Categories</p>
+      </div>
+      <div className="col-2 p-0 text-end align-self-center">
           <button
             onClick={() => setShowBrandCreationForm(true)}
             className="btn btn-sm btn-icons"
@@ -178,6 +407,26 @@ function classifyingCategory({ currentPgNo }) {
             <img src="/icons/add.png" alt="add-icon" />
           </button>
         </div>
+      </div>
+     
+      <div className="row">
+        <div className="col-3">
+        <div className={styles.category_menu_overflow}>
+        <Tree
+      showLine
+      switcherIcon={<DownOutlined />}
+      defaultExpandedKeys={['0-0-0']}
+      onSelect={onSelect}
+      treeData={treeData}
+    />
+        </div>
+        </div>
+      <div className="col-9">
+      <div className="row mx-0 font14">
+        <div className="col-10 p-0">
+          {/* <div className="catelog-search font12 txt_gray">Search</div> */}
+        </div>
+       
         <div className="card" style={{ borderRadius: "1rem" }}>
         <div className="card-body">
           <div className="table-responsive">
@@ -283,6 +532,10 @@ function classifyingCategory({ currentPgNo }) {
           />
         }
       />
+      
+      </div>
+</div>
+</div>
       <ToastContainer />
     </Fragment>
   );
