@@ -451,9 +451,11 @@ const onSubmit = async (values, formik) => {
           <Tree
             showLine
             switcherIcon={<DownOutlined />}
-            defaultExpandedKeys={['0-0-0']}
+            // defaultExpandedKeys={['0-0-0']}
             onSelect={onSelect}
             treeData={treeData}
+            autoExpandParent ={false}
+            defaultExpandAll={false}
           />
         </div>
         </div>
@@ -559,7 +561,7 @@ const onSubmit = async (values, formik) => {
                     isLoading={isSubmitting}
                     type="submit"
                     name="Submit"
-                    className={`btn btn-sm py-1 px-5 br3 mx-2 ${styles.submit_button}`}
+                    className={`btn btn-sm py-1 px-4 br3 mx-2 ${styles.submit_button}`}
                   />
             </div>
         </div>
