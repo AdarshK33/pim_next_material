@@ -9,10 +9,12 @@ function Checkbox(props) {
     return (
         <div className={classprops}>
             <FastField type="checkbox" name={name} id={id} {...rest} />
-            <label className={labelProps} htmlFor={id}>{label} {extraLabel && extraLabel}</label>
+             <label className={labelProps} htmlFor={id}>{label} {extraLabel && extraLabel}</label>
             <ErrorMessage name={name} component={FormErrorText} />
         </div>
     )
 };
 
 export default React.memo(Checkbox);
+
+  
