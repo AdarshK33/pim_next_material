@@ -29,7 +29,10 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Gill", "Sans";
+  font-family: 'Gill Sans' !important;
+  /* overflow: hidden; */
+  /* overflow-y: hidden; */
+  overflow-x: hidden;
 }
 
 a {
@@ -528,3 +531,69 @@ tbody:nth-child(even) {
   border-width: 0;
   color: #ffffff;
 }
+
+/* category list  */
+.ant-tree-list-holder-inner{
+  background: #F6F4F4 !important;
+}
+.ant-tree-switcher_close{
+  background:#F6F4F4 !important;
+}
+.ant-tree-switcher .ant-tree-switcher_open{
+  background: #F6F4F4 !important;
+
+}
+.ant-tree-switcher .ant-tree-switcher_open
+{
+  background: #F6F4F4 !important;
+
+}
+
+.ant-tree-switcher{
+  background: #F6F4F4 !important;
+}
+ .ant-tree-switcher_open{
+  background: #F6F4F4 !important;
+ }
+
+ .category_dropZone .dropZone-container .dropzone{
+  display: flex;
+  width: 100%;
+  text-align: center;
+  vertical-align: center;
+  min-height: 120px !important;
+ }
+/* category list  end */
+
+
+.category_dropZone .dropZone-container {
+  display: flex;
+  position: relative;
+  border: 1px dashed var(--gray);
+  border-radius: 15px;
+  background-color: white;
+}
+/* switch btn */
+
+button[aria-checked="false"]{
+  background-color: rgba(69, 75, 75, 0.35) !important;
+ 
+}
+button[aria-checked="true"]{
+  background-color: rgba(65, 151, 148, 0.35) !important;
+ 
+}
+.ant-switch-checked .ant-switch-handle::before {
+ 
+  background-color: #419794  !important;
+  
+}
+.ant-switch-inner-checked{
+  color: black !important;
+  font-weight: 500;
+}
+.ant-switch-inner-unchecked{
+  color: black !important;
+  font-weight: 500;
+}
+/* switch btn end*/

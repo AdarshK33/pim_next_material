@@ -1,18 +1,20 @@
 import React from "react";
 import { FastField, ErrorMessage } from "formik";
 import FormErrorText from "./formErrorText";
+import { Formik, Form, useField } from "formik";
 
-function textArea(props) {
+function TextArea(props) {
 
-    const { name, label, id, classprops, ...rest } = props;
-
+    const { control,name, label, id, classprops, ...rest } = props;
+    const [field, meta] = useField(props);
     return (
         <div className={classprops}>
             <label htmlFor={id}>{label}</label>
-            <FastField name={name} id={id} {...rest} />
+            <textarea className="text-area"  control ={control} name={name} id={id} {...field}  {...rest} />
+            {/* <FastField  control ={control} name={name} id={id} {...rest} /> */}
             <ErrorMessage name={name} component={FormErrorText} />
         </div>
     )
 };
 
-export default React.memo(textArea);
+export default React.memo(TextArea);

@@ -26,9 +26,17 @@ import styles from "./category.module.css";
 import TABLE_HEADERS  from "../../../public/tableHeader";
 import Pagination from "react-js-pagination";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
-import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
+// import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import { DownOutlined } from '@ant-design/icons';
 import { Tree } from 'antd';
+import { Form, Formik } from "formik";
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Switch, Space } from 'antd';
+
+import FormikControl from "../../../public/formik/formikControl"
+import SubmitButton from "../../../public/formik/submitButton";
+
+
 function classifyingCategory({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
@@ -242,7 +250,7 @@ function classifyingCategory({ currentPgNo }) {
 
 const treeData = [
   {
-    title: 'Health & Nutrition',
+    title: 'Health & Nutrition ',
     key: '0-0',
     children: [
       {
@@ -389,8 +397,34 @@ const treeData = [
   },
 ];
 const onSelect = (selectedKeys, info) => {
-  console.log('hello selected', selectedKeys, info);
+  console.log('hello selected', selectedKeys,'hello info',info);
 };
+const initialValues = {
+  name: "",
+  discription: ""
+};
+
+const onSubmit = async (values, formik) => {
+  let brndName = {
+    name: values.name.trim(),
+  };
+  let brndDiscription = {
+    name: values.discription.trim(),
+  };
+  console.log("val", brndName);
+  if (brndName.name === "" || brndDiscription.name === "" ) {
+    notify("err");
+  } else {
+    const apiRes = await createBrandApi(brndName);
+    if (apiRes === "err") {
+      formik.setSubmitting(false);
+    } else {
+      notifySucess(true);
+      classModal();
+    }
+  }
+};
+
   return (
     <Fragment>
       <ToastComponenet ref={toastRef} />
@@ -402,23 +436,29 @@ const onSelect = (selectedKeys, info) => {
       <div className="col-2 p-0 text-end align-self-center">
           <button
             onClick={() => setShowBrandCreationForm(true)}
-            className="btn btn-sm btn-icons"
+            className="btn btn-sm btn-icons border-0"
           >
-            <img src="/icons/add.png" alt="add-icon" />
+            + Add New
           </button>
         </div>
       </div>
      
       <div className="row">
         <div className="col-3">
+        <div className={`card ${styles.category_list} `}>
+        <div className="card-body" style={{maxHeight: "376px"}}>
         <div className={styles.category_menu_overflow}>
-        <Tree
-      showLine
-      switcherIcon={<DownOutlined />}
-      defaultExpandedKeys={['0-0-0']}
-      onSelect={onSelect}
-      treeData={treeData}
-    />
+          <Tree
+            showLine
+            switcherIcon={<DownOutlined />}
+            // defaultExpandedKeys={['0-0-0']}
+            onSelect={onSelect}
+            treeData={treeData}
+            autoExpandParent ={false}
+            defaultExpandAll={false}
+          />
+        </div>
+        </div>
         </div>
         </div>
       <div className="col-9">
@@ -427,74 +467,111 @@ const onSelect = (selectedKeys, info) => {
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
        
-        <div className="card" style={{ borderRadius: "1rem" }}>
+        <div className={`card ${styles.category_card}`}>
         <div className="card-body">
-          <div className="table-responsive">
-            <Table id="table-to-xls" className="table table-hover">
-              <thead
-                className="thead-light"
-                style={{ backgroundColor: "#2f3c4e" }}
-              >
-                <tr style={{ backgroundColor: "#f5f6f8" }}>
-                  <th scope="col">S. No</th>
-                  <th scope="col">{TABLE_HEADERS[0].Catergory.id} </th>
-                  <th scope="col">{TABLE_HEADERS[0].Catergory.Parent_Category_Id}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Catergory.CategoryL1}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Catergory.CategoryL2}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Catergory.CategoryL3}</th>
-                  <th scope="col">Action</th>
+         <div className="row">
+         <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          {({ isSubmitting }) => {
+            return (
+              
+              <Form className="mx-0 font12">
+                <div className="row">
+                <div className="col-4 my-2">
+                <FormikControl
+                  control="input"
+                  type="input"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm px-0 py-2 text-center border-0"
+                  placeholder="Name"
+                  name="Name"
+                  id="Name"
+                />
+                </div>
+                <div className="col-4 mt-4 my-2">
+                <FormikControl
+                  control="reactSelect"
+                  selectOpts={null}
+                  placeholder="Parent Category"
+                  isMulti={false}
+                />
+                </div>
+                <div className="col-4 mt-4 my-2">
+                <FormikControl
+                  control="reactSelect"
+                  selectOpts={null}
+                  placeholder="Sub Category"
+                  isMulti={false}
+                />
+                </div>
+                </div>
+                <div className="row">
+                <div className="col-4 my-2">
+                <FormikControl
+                  control="input"
+                  type="input"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm px-0 py-2 text-center border-0"
+                  placeholder="Slug"
+                  name="Slug"
+                  id="Slug"
+                />
+                </div>
+                <div className="col-4 mt-4 my-2">
+                <FormikControl
+                  control="reactSelect"
+                  selectOpts={null}
+                  placeholder="Brand (Multi Select)"
+                  isMulti={true}
+                />
+                </div>
+                </div>
+                <div className="row">
+                <div className={`col-4 category_dropZone my-3`}>
+                <FormikControl
+                  control="dropZone"
+                  name="category drop Images/file"
+                  setFieldValue="Image Upload"
+                />
+                </div>
+              
+                <div className="col-8 my-0">
+                 <FormikControl
+                  // label="First Name"
+                  control="text-area"
+                  type="text"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm px-0 py-2 text-center border-0"
+                  placeholder="Category descriptions..."
+                  name="CategoryDescriptions"
+                  id="Category_descriptions"
+                  rows="5"
+                />
+                </div>
+                </div>
 
-                </tr>
-              </thead>
-                {tableData !== null &&
-                  tableData.length > 0
-                  ? (
-                    tableData.map((item, i) => {
-                      return (
-                        <tbody key={i}>
-                          <tr>
-                            <td>{i + 1 + indexOfFirstRecord}</td>
-                            <td>{item.id}</td>
-                            <td>{item.Parent_Category_Id}</td>
-                            <td>{item.CategoryL1}</td>
-                            <td>{item.CategoryL2}</td>
-                            <td>{item.CategoryL3}</td>
-                            <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
-                              <Link href={`/${item.id}`}>
-                                <Edit2
-                                  onClick={() => {
-                                    null
-                                  }}
-                                />
-                              </Link>
-                            </td>
-                          </tr>
-                        </tbody>
-                      );
-                    })
-                  ) : (
-                    <tbody>
-                      <tr>
-                        <td colSpan="12">No Record Found</td>
-                      </tr>
-                    </tbody>
-                  )}
-            </Table>
-          </div>
 
-          <div className={styles.dash_board_pagination}>
-            <Pagination
-              itemClass="page-item"
-              linkClass="page-link"
-              activePage={currentPage}
-              itemsCountPerPage={recordPerPage}
-              totalItemsCount={totalRecords}
-              pageRangeDisplayed={pageRange}
-              onChange={handlePageChange}
-              firstPageText="First"
-              lastPageText="Last"
-            />
-          </div>
+<div className={styles.btn_section}>
+  <div className={styles.switch_btn}>
+        <Space >
+          <Switch checkedChildren="Active" unCheckedChildren="Not Active" />
+        </Space>
+            </div>
+            <div className={styles.submit_btn}>
+                  <SubmitButton
+                    isLoading={isSubmitting}
+                    type="submit"
+                    name="Submit"
+                    className={`btn btn-sm py-1 px-4 br3 mx-2 ${styles.submit_button}`}
+                  />
+            </div>
+        </div>
+                
+              </Form>
+            );
+          }}
+        </Formik>  
+         
+         </div>
         </div>
       </div>
         {/* {loading ? (
