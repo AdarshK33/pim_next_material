@@ -446,7 +446,7 @@ const onSubmit = async (values, formik) => {
       <div className="row">
         <div className="col-3">
         <div className={`card ${styles.category_list} `}>
-        <div className="card-body" style={{maxHeight: "376px"}}>
+        <div className="card-body" style={{maxHeight: "392px"}}>
         <div className={styles.category_menu_overflow}>
           <Tree
             showLine

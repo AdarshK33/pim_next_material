@@ -32,7 +32,7 @@
 
 .category_menu_overflow{
   overflow-y: auto;
-  max-height: 340px;
+  max-height: 370px;
 
 }
 
@@ -71,3 +71,4 @@
 .category_dropZone{
   padding-top: 10px  !important;
 }
+

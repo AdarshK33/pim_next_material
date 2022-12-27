@@ -18,7 +18,7 @@ import key from "../assets/icons/loginkey.svg"
 
 
 
-function Login() {
+function Login() { 
     const LoginStat = {
         isLogin: useSelector((state) => state.reducer.isLogin),
         token: useSelector((state) => state.reducer.token),
@@ -35,19 +35,19 @@ function Login() {
 
 
     const initialValues = {
-      name: "",
-      discription: ""
+      userName: "",
+      password: ""
     };
   
     const onSubmit = async (values, formik) => {
-      let brndName = {
-        name: values.name.trim(),
+      let userName = {
+        name: values.userName.trim(),
       };
-      let brndDiscription = {
-        name: values.discription.trim(),
+      let userPassword = {
+        name: values.password.trim(),
       };
-      console.log("val", brndName);
-      if (brndName.name === "" || brndDiscription.name === "" ) {
+      console.log("val", userName);
+      if (userName.name === "" || userPassword.name === "" ) {
         notify("err");
       } else {
         const apiRes = await createBrandApi(brndName);
@@ -62,31 +62,31 @@ function Login() {
 
     return (
         <div className="page-container d-flex p-2">
-            {/* <img src="/logo.png" alt="RI-brands" className="login-logo" /> */}
+           
             <div className="m-auto">
-                {/* <img src="/login-concept.png" alt="login-concept" className="login-concept-logo" /> */}
+              
                 <div className={styles.left_box}>
                
                          <Image
                             className="login-concept-logo"
-							src={loginLeft}
-							alt="loginLeft"
-							width={600}
-							height={600}
-						/>
-                        </div>
+                        src={loginLeft}
+                        alt="loginLeft"
+                        width={666}
+                        height={666}
+                      />
+                 </div>
             </div>
             <div className={styles.mid_box}>
                          <Image
                             className="login-concept-logo"
 							src={loginLine1}
 							alt="loginLeft"
-							width={555}
-							height={555}
+							width={600}
+							height={600}
 						/>
                         </div>
             <div className={`login-main-container ${styles.last_box}`}>
-                {/* <img src="/logo2.png" alt="login-header-logo" className="login-logo-header" /> */}
+               
                <div className={styles.apollo_login_logo}>
                 <Image
                     className="login-logo-header"
@@ -103,44 +103,48 @@ function Login() {
           {({ isSubmitting }) => {
             return (
               
-              <Form className="row mx-0 font12">
-                {/* <div className={styles.login_icon}>
-                <Image
-                    className="login-concept-logo"
+              <Form className="row mx-0 font16">
+                <div className={styles.login_icon_user}>
+                {/* <Image
+                    // className={}
                     src={user}
                     alt="loginUser"
                     width={40}
                     height={35}
-                  />
-                </div> */}
-                 <i class="fa fa-user icon"></i>
+                  /> */}
+                </div>
+                <div className="login_username">
                 <FormikControl
                   control="input"
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
-                  className="form-control form-control-sm bb_only px-0 py-2 text-center"
+                  classprops="form-group"
+                  className={`form-control form-control bb_only px-0 py-2 text-center`}
                   placeholder="Username"
                   name="userName"
                   id="userName"
                 />
-                 {/* <div className={styles.login_icon}>
-                   <Image
+                </div>
+                 <div className={styles.login_icon_key}>
+                   {/* <Image
                     className="login-concept-logo"
                     src={key}
                     alt="loginKey"
                     width={40}
                     height={35}
-                  />
-                  </div> */}
-                <FormikControl
-                  control="text-area"
+                  /> */}
+                  </div>
+                  
+                  <div className="login_password">
+                  <FormikControl
+                  control="input"
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
-                  className="form-control form-control-sm bb_only px-0 py-2 text-center"
+                  classprops="form-group"
+                  className={`form-control form-control bb_only px-0 py-2 text-center`}
                   placeholder="Password"
                   name="password"
                   id="password"
                 />
+               </div>
 
                 <div className="col-12 text-center pt-5">
                   <SubmitButton
@@ -155,7 +159,13 @@ function Login() {
           }}
         </Formik>   
                 <div>
-                    <div className="w-100 text-end not-registered"> <Link href="/signup"><a className={`txt_black px-1 ${styles.forget_pasword}`}>Forget Password</a></Link></div>
+                    <div className="w-100 text-end not-registered"> 
+                    {/* <Link href="/signup"> */}
+                      <a href="/signup" className={`txt_black px-1 ${styles.forget_pasword}`}>
+                        Forget Password
+                        </a>
+                    {/* </Link> */}
+                    </div>
                 </div>
                   </div>
                 </div>      
