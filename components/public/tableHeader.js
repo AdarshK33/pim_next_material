@@ -18,6 +18,19 @@ const TABLE_HEADERS = [{
         status:"Status",
         action: "Action",
       },
+      Product: {
+        tableName:"Proucts",
+          // id: "Email Id",
+          image: "Image",
+          productName: "Product Name",
+          sku: "SKU",
+          brand: "Brand",
+          channels: "Channels",
+          category: "Category",
+          subcategory:"Sub-Category",
+          status: "Status",
+          action:"Action"
+        },
     Catergory: {
       tableName:"Catergory",
          id: "Catergory ID",
@@ -26,6 +39,16 @@ const TABLE_HEADERS = [{
          CategoryL2: "Catergory L2",
          CategoryL3: "Catergory L3",
         action: "Action",
+    },
+    Channels: {
+      tableName:"Channels",
+         name: "Name",
+         discription: "Discription",
+         lastUploaded: "Last Uploaded",
+         totalProductsActive: "Total Products Active",
+         totalProductsInactive: "Total Products InActive",
+         status: "Status",
+         action: "Action",
     },
   }];
    

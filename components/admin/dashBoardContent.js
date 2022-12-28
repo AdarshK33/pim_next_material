@@ -8,6 +8,7 @@ import ProductList from "./catalog/productList";
 import BulkUpload from "./catalog/bulkUpload";
 import Category from "./catalog/categories/classifyingCategory";
 import ClassifyingBrand from "./brands/classifyingBrand";
+import ClassifyingChannel from "./channels/classifyingChannel";
 
 function DashBoardContent() {
 
@@ -23,6 +24,8 @@ function DashBoardContent() {
             case 'uploads': return <BulkUpload />;
             case 'categories': return <Category />;
             case 'brands_categories': return <ClassifyingBrand />;
+            case 'channels': return <ClassifyingChannel />;
+            
             default : return <DashBoardView />;
         }
     }, [query]);
