@@ -27,11 +27,12 @@
 
 .main_category{
   padding: 35px;
+  height: 100vh;
 }
 
 .category_menu_overflow{
   overflow-y: auto;
-  max-height: 555px;
+  max-height: 340px;
 
 }
 
@@ -41,4 +42,32 @@
     color: #399996;
     width: 20%;
     border-bottom: 2px solid #ffcf76;
+}
+.category_list{
+  border-radius: 10px;
+  background-color: #F6F4F4;
+}
+
+.btn_section{
+  display: flex;
+  justify-content: end;
+}
+.category_card{
+ border-radius: "1rem";
+ background-color: #F6F4F4;
+}
+.submit_button{
+  background-color: #419794  ;
+  color:white;
+  font-family: 'Gill Sans';
+  font-weight: 600;
+}
+.switch_btn{
+  padding-top: 4px;
+}
+.category_description{
+  font-family: Gill Sans !important;
+}
+.category_dropZone{
+  padding-top: 10px  !important;
 }
