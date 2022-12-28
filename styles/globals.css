@@ -597,3 +597,21 @@ button[aria-checked="true"]{
   font-weight: 500;
 }
 /* switch btn end*/
+
+/* login  */
+.login_username .form-group .bb_only{
+  border-radius: 0px ;
+  border-bottom: 1.5px solid #419794;
+  margin-top: -50px;
+  margin-bottom: 20px;
+
+}
+
+.login_password .form-group .bb_only{
+  border-radius: 0px ;
+  border-bottom: 1.5px solid #419794;
+  
+}
+
+
+/* login end */
