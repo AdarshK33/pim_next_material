@@ -4,6 +4,7 @@ import DropZoneField from "./dropZoneField";
 import Input from "./input";
 import ReactSelect from "./reactSelect"
 import Textarea from "./textArea"
+import DatePickerField from "./datePicker"
 
 function FormikControl(props) {
     const { control, ...rest } = props;
@@ -14,6 +15,7 @@ function FormikControl(props) {
         case 'checkbox': return <Checkbox {...rest} />;
         case 'reactSelect': return <ReactSelect {...rest} />;
         case 'dropZone': return <DropZoneField {...rest} />;
+        case 'datePicker': return <DatePickerField {...rest} />;
     }
 
 }

@@ -12,16 +12,16 @@ import CustomTable from "../../public/customTable";
 import TabView from "../catalog/tabView";
 import { unstable_batchedUpdates } from "react-dom";
 import { getAllBrands, getBrandById } from "../../utility/apiUtility";
-import PropertiesForm from "./propertiesFormBrand";
+import PropertiesFormChannel from "./propertiesFormChannel";
 import CustomModal from "../../public/customModal";
-import BrandForm from "./brandForm";
+import ChannelForm from "./channelForm";
 import ToastComponenet from "../../public/toastComponenet";
 import PageLoader from "../../public/pageLoader";
 import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
 import Link from 'next/link'
 import Breadcrumb from "../../public/breadcrumb"
-import styles from "./brand.module.css";
+import styles from "./channel.module.css";
 // import CommonPaginationTable from "../../public/commonPaginationTable"
 import TABLE_HEADERS  from "../../public/tableHeader";
 import Pagination from "react-js-pagination";
@@ -36,10 +36,10 @@ import Image from 'next/image';
 import marker from "../../../assets/icons/marker 1.svg";
 
 
-function classifyingBrand({ currentPgNo }) {
+function classifyingChannel({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
-  const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
+  const [showChannelCreationForm, setShowChannelCreationForm] = useState(false);
   const [itemData, setItemData] = useState({});
   const toastRef = useRef(null);
   const [itemsCount, setItemsCount] = useState(null);
@@ -83,7 +83,7 @@ console.log("hello brandGet",isLogin)
       {
         id: "properties",
         title: "PROPERTIES",
-        content: <PropertiesForm data={itemData} />,
+        content: <PropertiesFormChannel data={itemData} />,
       },
       { id: "attributes", title: "ATTRIBUTES", content: "" },
       { id: "multiCountryTab", title: "MULTICOUNTRY", content: "" },
@@ -117,7 +117,7 @@ console.log("hello brandGet",isLogin)
   }, []);
 
   const onBrandCreationSuccess = useCallback(() => {
-    setShowBrandCreationForm(false);
+    setShowChannelCreationForm(false);
     getAllBrandsData({ pageSize: 10, pageNo: 0 });
     toastRef.current.toastHandler({
       response: "suc",
@@ -153,8 +153,9 @@ console.log("hello brandGet",isLogin)
   for (let i = 1; i <= 10; i++) {
     tableData.push({
       id: "11100"+i,
-      name: "Brand" + i,
+      name: "Channel" + i,
       discription: "discription" + (i),
+      lastUploaded:`${i}/12/1022`
     });
   }
  //   /*-----------------Pagination------------------*/
@@ -177,15 +178,18 @@ console.log("hello brandGet",isLogin)
       <div className={`row mx-0 font14 ${styles.listing_space}`}>
         <div className="col-10 p-0">
         {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
-        <p className={styles.brand_title_name}>Brands</p>
+        <p className={styles.brand_title_name}>Channels</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
+
         <div className="col-2 p-3 text-end align-self-center">
           <button
-            onClick={() => setShowBrandCreationForm(true)}
-            className="btn btn-sm btn-icons"
+            onClick={() => setShowChannelCreationForm(true)}
+            className={`btn btn-sm ${styles.add_button_text}`}
+
           >
-            <img src="/icons/add.png" alt="add-icon" />
+            {/* <img src="/icons/add.png" alt="add-icon" /> */}
+            + Add New
           </button>
         </div>
 
@@ -200,14 +204,13 @@ console.log("hello brandGet",isLogin)
                 <tr style={{ backgroundColor: "#f5f6f8" }}>
                   {/* <th scope="col">S. No</th> */}
                   {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
-                  <th scope="col">{TABLE_HEADERS[0].Brand.name}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.discription}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.email}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.contact}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.category}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.sku}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.status}</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">{TABLE_HEADERS[0].Channels.name}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Channels.discription}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Channels.lastUploaded}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Channels.totalProductsActive}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Channels.totalProductsInactive}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Channels.status}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Channels.action}</th>
 
                 </tr>
               </thead>
@@ -225,10 +228,9 @@ console.log("hello brandGet",isLogin)
                             {/* <td>{item.id}</td> */}
                             <td>{item.name}</td>
                             <td>{item.discription}</td>
-                            <td>{item.email}</td>
-                            <td>{item.contact}</td>
-                            <td>{item.category}</td>
-                            <td>{item.sku}</td>
+                            <td>{item.lastUploaded}</td>
+                            <td>{item.totalProductsActive}</td>
+                            <td>{item.totalProductsInactive}</td>
                             <td>{item.status}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/${item.id}`}> */}
@@ -239,7 +241,7 @@ console.log("hello brandGet",isLogin)
                               width={35}
 							                height={30}
                               onClick={() => {
-                                setShowBrandCreationForm(true)
+                                setShowChannelCreationForm(true)
                               }}
 						                  />
                               {/* <marker
@@ -290,14 +292,14 @@ console.log("hello brandGet",isLogin)
           /> */}
         {/* )} */}
         <CustomModal
-            show={showBrandCreationForm}
-            closeModal={() => setShowBrandCreationForm(false)}
+            show={showChannelCreationForm}
+            closeModal={() => setShowChannelCreationForm(false)}
             size="md"
             centered={true}
             body={
               <CommonUpdateForm
                 table={TABLE_HEADERS[0].Brand.table}
-                classModal={() => setShowBrandCreationForm(false)}
+                classModal={() => setShowChannelCreationForm(false)}
                 onSuccess={onBrandCreationSuccess}
                 notifySucess={() => notify(true)}
               />
@@ -316,13 +318,13 @@ console.log("hello brandGet",isLogin)
       )}
 
       <CustomModal
-        show={showBrandCreationForm}
-        closeModal={() => setShowBrandCreationForm(false)}
+        show={showChannelCreationForm}
+        closeModal={() => setShowChannelCreationForm(false)}
         size="md"
         centered={true}
         body={
-          <BrandForm
-            classModal={() => setShowBrandCreationForm(false)}
+          <ChannelForm
+            classModal={() => setShowChannelCreationForm(false)}
             onSuccess={onBrandCreationSuccess}
             notifySucess={() => notify(true)}
           />
@@ -360,4 +362,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps
-)(React.memo(classifyingBrand));
+)(React.memo(classifyingChannel));
