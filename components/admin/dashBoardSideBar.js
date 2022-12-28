@@ -91,7 +91,8 @@ function DashBoardSideBar({ defaultValue }) {
     {
       name: "Channels",
       icon:distribution ,
-      id: "channel",
+      id: "channels",
+      link: "/dashboard/channels?list=channels",
       list: [],
     },
     {
