@@ -5,10 +5,11 @@ import DashBoardView from "./dashboard/dashBoardView";
 import PermissionView from "./settings/permissionView";
 import ActionsView from "./catalog/actionsView";
 import ProductList from "./catalog/productList";
-import BulkUpload from "./catalog/bulkUpload";
+import BulkUpload from "./bulkUpload/bulkUpload";
 import Category from "./catalog/categories/classifyingCategory";
 import ClassifyingBrand from "./brands/classifyingBrand";
 import ClassifyingChannel from "./channels/classifyingChannel";
+import ClassifyingUser from "./userManagement/classifyingUser";
 
 function DashBoardContent() {
 
@@ -21,10 +22,11 @@ function DashBoardContent() {
             case 'permission': return <PermissionView />;
             case 'publish': return <ActionsView />;
             case 'products': return <ProductList />;
-            case 'uploads': return <BulkUpload />;
+            case 'bulkUpload': return <BulkUpload />;
             case 'categories': return <Category />;
             case 'brands_categories': return <ClassifyingBrand />;
             case 'channels': return <ClassifyingChannel />;
+            case 'userManagement': return <ClassifyingUser />;
             
             default : return <DashBoardView />;
         }

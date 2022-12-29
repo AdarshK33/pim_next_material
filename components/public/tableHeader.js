@@ -50,6 +50,23 @@ const TABLE_HEADERS = [{
          status: "Status",
          action: "Action",
     },
+    User: {
+      tableName:"User",
+         email: "Email",
+         role: "Role Type",
+         brand: "Brand",
+         status: "Status",
+         action: "Action",
+    },
+    BulkUpload: {
+      tableName:"BulkUpload",
+         name: "Name",
+         uploadedby: "Uploaded By",
+         uploadedat: "Uploaded At",
+         brand: "Brand",
+         channels: "Channels",
+         status: "Status" 
+    },
   }];
    
   export default TABLE_HEADERS;
