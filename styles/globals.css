@@ -615,3 +615,49 @@ button[aria-checked="true"]{
 
 
 /* login end */
+
+/* productDetails tab start */
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: black !important;
+  font-weight: 700;
+ 
+}
+.ant-tabs .ant-tabs-tab-btn {
+  color: black !important;
+  font-weight: 700;
+  padding: 7px 25px;
+}
+.ant-tabs-card.ant-tabs-top >.ant-tabs-nav .ant-tabs-tab+.ant-tabs-tab{
+  margin-left: 5px;
+}
+.ant-tabs-card.ant-tabs-top >.ant-tabs-nav .ant-tabs-tab-active{
+  background-color: #D1E6E5;
+  border-bottom-color: #D1E6E5;
+}
+
+.ant-tabs >.ant-tabs-nav{
+  margin-bottom: 0px;
+}
+
+.ant-tabs .ant-tabs-content{
+  background-color: #D1E6E5;
+}
+.title_name{
+  font-size: 20px;
+    font-weight: bold;
+    color: #399996;
+    width: 20%;
+    border-bottom: 2px solid #ffcf76;
+}
+
+.sub_title_name{
+  font-size: 14px;
+    font-weight: 400;
+    color: black;
+    width: 40%;
+    border-bottom: 1px solid #ffcf76;
+}
+.w-80{
+width:80%;
+}
+/* productDetails tab End */
