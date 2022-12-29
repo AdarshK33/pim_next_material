@@ -59,7 +59,11 @@ a {
 .txt_gray {
   color: var(--gray);
 }
-
+.bulk_upload_style .dropZone-container .txt_gray {
+  color: #000000;
+  text-decoration: underline;
+  font-weight: bold;
+}
 .bg_light_gray {
   background-color: var(--lightGray);
 }
@@ -392,6 +396,15 @@ td{
   text-align: center;
   vertical-align: center;
   min-height: 300px;
+}
+
+.bulk_upload_style .dropZone-container .dropzone {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  vertical-align: center;
+  min-height: 150px;
+  background-color: #b8e3e2;
 }
 
 .dropZone-container .files-list {

@@ -12,16 +12,16 @@ import CustomTable from "../../public/customTable";
 import TabView from "../catalog/tabView";
 import { unstable_batchedUpdates } from "react-dom";
 import { getAllBrands, getBrandById } from "../../utility/apiUtility";
-import PropertiesForm from "./propertiesFormBrand";
+import PropertiesForm from "./propertiesFormUser";
 import CustomModal from "../../public/customModal";
-import BrandForm from "./brandForm";
+import UserForm from "./userForm";
 import ToastComponenet from "../../public/toastComponenet";
 import PageLoader from "../../public/pageLoader";
 import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
 import Link from 'next/link'
 import Breadcrumb from "../../public/breadcrumb"
-import styles from "./brand.module.css";
+import styles from "./user.module.css";
 // import CommonPaginationTable from "../../public/commonPaginationTable"
 import TABLE_HEADERS  from "../../public/tableHeader";
 import Pagination from "react-js-pagination";
@@ -36,7 +36,7 @@ import Image from 'next/image';
 import marker from "../../../assets/icons/marker 1.svg";
 
 
-function classifyingBrand({ currentPgNo }) {
+function classifyingUser({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
@@ -153,8 +153,9 @@ console.log("hello brandGet",isLogin)
   for (let i = 1; i <= 10; i++) {
     tableData.push({
       id: "11100"+i,
-      name: "Brand" + i,
-      discription: "discription" + (i),
+      email: "Email" + i,
+      role: "Role" + i,
+      brand: "Brand" + i,
     });
   }
  //   /*-----------------Pagination------------------*/
@@ -177,7 +178,7 @@ console.log("hello brandGet",isLogin)
       <div className={`row mx-0 font14 ${styles.listing_space}`}>
         <div className="col-10 p-0">
         {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
-        <p className={styles.brand_title_name}>Brands</p>
+        <p className={styles.brand_title_name}>User Management</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
         
@@ -203,14 +204,11 @@ console.log("hello brandGet",isLogin)
                 <tr style={{ backgroundColor: "#f5f6f8" }}>
                   {/* <th scope="col">S. No</th> */}
                   {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
-                  <th scope="col">{TABLE_HEADERS[0].Brand.name}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.discription}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.email}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.contact}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.category}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.sku}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.status}</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">{TABLE_HEADERS[0].User.email}</th>
+                  <th scope="col">{TABLE_HEADERS[0].User.role}</th>
+                  <th scope="col">{TABLE_HEADERS[0].User.brand}</th>
+                  <th scope="col">{TABLE_HEADERS[0].User.status}</th>
+                  <th scope="col">{TABLE_HEADERS[0].User.action}</th>
 
                 </tr>
               </thead>
@@ -226,12 +224,9 @@ console.log("hello brandGet",isLogin)
                           <tr>
                             {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
                             {/* <td>{item.id}</td> */}
-                            <td>{item.name}</td>
-                            <td>{item.discription}</td>
                             <td>{item.email}</td>
-                            <td>{item.contact}</td>
-                            <td>{item.category}</td>
-                            <td>{item.sku}</td>
+                            <td>{item.role}</td>
+                            <td>{item.brand}</td>
                             <td>{item.status}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/${item.id}`}> */}
@@ -324,7 +319,7 @@ console.log("hello brandGet",isLogin)
         size="md"
         centered={true}
         body={
-          <BrandForm
+          <UserForm
             classModal={() => setShowBrandCreationForm(false)}
             onSuccess={onBrandCreationSuccess}
             notifySucess={() => notify(true)}
@@ -363,4 +358,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps
-)(React.memo(classifyingBrand));
+)(React.memo(classifyingUser));
