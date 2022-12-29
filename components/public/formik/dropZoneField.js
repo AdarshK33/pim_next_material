@@ -15,7 +15,7 @@ function DropZoneField({ setFieldValue, name }) {
         <section className="dropZone-container">
             <div {...getRootProps({ className: 'dropzone' })}>
                 <input name={name} {...getInputProps()} />
-                <p className="m-auto txt_gray">Click to select files or <br /> Drag 'n' drop some files here</p>
+                <p className="m-auto txt_gray">Upload your document</p>
             </div>
             {acceptedFiles.length > 0 && <div className="files-list">
                 <ul>{files}</ul>

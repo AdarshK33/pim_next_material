@@ -1,102 +1,87 @@
-import React, {
-  Fragment,
+import React, { Fragment,
   useMemo,
   useState,
   useEffect,
   useCallback,
-  useRef,
-} from "react";
+  useRef, } from "react";
 import { connect } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { getAllProducts, getProductById } from "../../utility/apiUtility";
 import CustomTable from "../../public/customTable";
 import TabView from "../catalog/tabView";
+import Pagination from "react-js-pagination";
 import { unstable_batchedUpdates } from "react-dom";
-import { getAllBrands, getBrandById } from "../../utility/apiUtility";
-import PropertiesForm from "./propertiesFormBrand";
-import CustomModal from "../../public/customModal";
-import BrandForm from "./brandForm";
-import ToastComponenet from "../../public/toastComponenet";
 import PageLoader from "../../public/pageLoader";
 import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
-import Link from 'next/link'
-import Breadcrumb from "../../public/breadcrumb"
-import styles from "./brand.module.css";
-// import CommonPaginationTable from "../../public/commonPaginationTable"
-import TABLE_HEADERS  from "../../public/tableHeader";
-import Pagination from "react-js-pagination";
-import { Edit2, Eye, Search, AlertCircle } from "react-feather";
-import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import  CommonUpdateForm from "../../public/commonUpdateForm";
-import { useDispatch, useSelector } from "react-redux";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
 import Image from 'next/image';
-
-
+import styles from "./upload.module.css";
+import TABLE_HEADERS  from "../../public/tableHeader"
 import marker from "../../../assets/icons/marker 1.svg";
+import CustomModal from "../../public/customModal";
+import { ToastContainer, toast } from "react-toastify";
+import FormikControl from "../../public/formik/formikControl";
+import { DatePicker, Space } from 'antd';
 
-
-function classifyingBrand({ currentPgNo }) {
-  const [list, setList] = useState({ content: [] });
+function BulkUpload({ currentPgNo }) {
+  const [productList, setProductList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
-  const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
   const [itemData, setItemData] = useState({});
-  const toastRef = useRef(null);
   const [itemsCount, setItemsCount] = useState(null);
-  const toastId = React.useRef(null);
-  const dispatch = useDispatch();
+  const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
 
+  const selectOpts = [
+    { value: "Brand 1", label: "xyz" },
+    { value: "Brand 2", label: "Brand 2" },
+    { value: "Brand 3", label: "Brand 3  " },
+  ];
 
   useEffect(() => {
-    //  dispatch(createBrandApi(dataObj));
-    dispatch(getBrandApi());
-   
+    getAllProductData({ pageSize: 10, pageNo: 0 });
+    currentPgNo(0);
   }, []);
 
-  const { isLogin } = useSelector(state => {
-    console.log("hello state",state)
-		return state.brandReducer;
-	});
-console.log("hello brandGet",isLogin)
-  const getAllBrandsData = async (payload) => {
+  const onBrandCreationSuccess = useCallback(() => {
+    setShowBrandCreationForm(false);
+    getAllProducts({ pageSize: 10, pageNo: 0 });
+    toastRef.current.toastHandler({
+      response: "suc",
+      // position: "middle-center",
+    });
+  }, []);
+
+
+  const getAllProductData = async (payload) => {
     !loading && setLoading(true);
-    const apiRes = await getAllBrands(payload);
+    const apiRes = await getAllProducts(payload);
     if (apiRes === "err") {
     } else {
       unstable_batchedUpdates(() => {
-        setList(apiRes.data);
+        setProductList(apiRes.data);
         setItemsCount(apiRes.data.totalElements);
         setItemData({});
         setLoading(false);
       });
     }
   };
-  const notify = (val) => {
-    if (!toast.isActive(toastId.current)) {
-      if (val) {
-        toastId.current = toast("Brand Name added Successfully !!!");
-      }
-    }
-  };
-  const tabsList = useMemo(() => {
-    const tabArr = [
-      {
-        id: "properties",
-        title: "PROPERTIES",
-        content: <PropertiesForm data={itemData} />,
-      },
-      { id: "attributes", title: "ATTRIBUTES", content: "" },
-      { id: "multiCountryTab", title: "MULTICOUNTRY", content: "" },
-      { id: "catalogSystem", title: "CATALOG SYSTEM", content: "" },
-    ];
-    return tabArr;
-  }, [itemData]);
 
+   //   /*-----------------Pagination------------------*/
+ const [currentPage, setCurrentPage] = useState(1);
+ const recordPerPage = 10;
+const totalRecords = tableData?.length;
+ const pageRange = 10;
+ const indexOfLastRecord = currentPage * recordPerPage;
+ const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+ const currentRecords = tableData;
+
+ const handlePageChange = pageNumber => {
+   setCurrentPage(pageNumber);
+ }
+ /*-----------------Pagination------------------*/
   const totalItems = useMemo(
     () => (
       <PaginationView
         totalProductCount={itemsCount}
-        getListData={getAllBrandsData}
+        getListData={getAllProductData}
       />
     ),
     [itemsCount]
@@ -104,49 +89,11 @@ console.log("hello brandGet",isLogin)
 
   const getEachItemData = async (item) => {
     setItemData({});
-    const apiRes = await getBrandById(item);
-    if (apiRes === "err") {
-    } else {
+    const apiRes = await getProductById(item.productId);
+    if (apiRes.data) {
       setItemData(apiRes.data);
     }
   };
-
-  useEffect(() => {
-    getAllBrandsData({ pageSize: 10, pageNo: 0 });
-    currentPgNo(0);
-  }, []);
-
-  const onBrandCreationSuccess = useCallback(() => {
-    setShowBrandCreationForm(false);
-    getAllBrandsData({ pageSize: 10, pageNo: 0 });
-    toastRef.current.toastHandler({
-      response: "suc",
-      // position: "middle-center",
-    });
-  }, []);
-
-  const tableHeadings = useMemo(() => {
-    const arr = [
-      { name: "Brand Id" },
-      { name: "Brand Name" },
-      { name: "Discription" },
-      { name: "Action" },
-    ];
-    return arr;
-  }, []);
-
-  const tableContent = (
-    <Fragment>
-      {list.content.map((item, index) => (
-        <CatatlogListTd
-          key={`BrndsListTd${index}${item.brandId}`}
-          data={item}
-          itemData={itemData}
-          setItemData={getEachItemData}
-        />
-      ))}
-    </Fragment>
-  );
 
   const tableData = [];
 
@@ -157,30 +104,62 @@ console.log("hello brandGet",isLogin)
       discription: "discription" + (i),
     });
   }
- //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
- const recordPerPage = 10;
- const totalRecords = tableData.length;
- const pageRange = 10;
- const indexOfLastRecord = currentPage * recordPerPage;
- const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = tableData;
 
- const handlePageChange = pageNumber => {
-   setCurrentPage(pageNumber);
- }
- /*-----------------Pagination------------------*/
+
+
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
+
+  const tableContent = (
+    <Fragment>
+      {productList.content.map((item, index) => (
+        <ProductListTd
+          key={`productListTd${index}${item.itemCode}`}
+          data={item}
+          itemData={itemData}
+          setItemData={getEachItemData}
+        />
+      ))}
+    </Fragment>
+  );
 
   return (
     <Fragment>
-      <ToastComponenet ref={toastRef} />
-      <div className={`row mx-0 font14 ${styles.listing_space}`}>
+     <div className={`row mx-0 font14 ${styles.listing_space}`}>
         <div className="col-10 p-0">
         {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
-        <p className={styles.brand_title_name}>Brands</p>
+        <p className={styles.brand_title_name}>Bulk Upload</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
-        
+
+
+        <div className="col-8 p-0">
+        <div className="row">
+          <div className="col-2">
+          <DatePicker onChange={onChange} />
+          </div>
+          <div className="col-2">
+          <DatePicker onChange={onChange} />
+          </div>
+          <div className="col-2">
+            <FormikControl
+              control="reactSelect"
+              selectOpts={selectOpts}
+              placeholder="Brand"
+              isMulti={true}
+            />
+          </div>
+          <div className="col-2">
+            <FormikControl
+              control="reactSelect"
+              selectOpts={selectOpts}
+              placeholder="Channel"
+              isMulti={false}
+            />
+          </div>
+        </div>
+        </div>
         <div className="col-2 p-3 text-end align-self-center">
           <button
             onClick={() => setShowBrandCreationForm(true)}
@@ -188,10 +167,29 @@ console.log("hello brandGet",isLogin)
 
           >
             {/* <img src="/icons/add.png" alt="add-icon" /> */}
-            + Add New
+            + Download Masters
           </button>
         </div>
 
+        <div className="col-2 p-3 text-end align-self-center">
+          <button
+            onClick={() => setShowBrandCreationForm(true)}
+            className={`btn btn-sm ${styles.add_button_text}`}
+
+          >
+            {/* <img src="/icons/add.png" alt="add-icon" /> */}
+            + Download Template
+          </button>
+        </div>
+
+        <div></div>
+        <div className="pb-3 bulk_upload_style">
+        <FormikControl
+                  control="dropZone"
+                  name="catalog_name"
+                  // setFieldValue={setFieldValue}
+                />
+        </div>
         <div className="card p-0" style={{ borderRadius: "1rem" }}>
         <div className="card-body p-0">
           <div className={`table-responsive ${styles.listing_border}`}>
@@ -203,14 +201,13 @@ console.log("hello brandGet",isLogin)
                 <tr style={{ backgroundColor: "#f5f6f8" }}>
                   {/* <th scope="col">S. No</th> */}
                   {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
-                  <th scope="col">{TABLE_HEADERS[0].Brand.name}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.discription}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.email}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.contact}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.category}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.sku}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Brand.status}</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.name}</th>
+                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.uploadedby}</th>
+                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.uploadedat}</th>
+                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.brand}</th>
+                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.channels}</th>
+                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.status}</th>
+                  <th scope="col"></th>
 
                 </tr>
               </thead>
@@ -226,13 +223,13 @@ console.log("hello brandGet",isLogin)
                           <tr>
                             {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
                             {/* <td>{item.id}</td> */}
-                            <td>{item.name}</td>
-                            <td>{item.discription}</td>
-                            <td>{item.email}</td>
-                            <td>{item.contact}</td>
-                            <td>{item.category}</td>
+                            <td>{item.image}</td>
+                            <td>{item.productName}</td>
                             <td>{item.sku}</td>
+                            <td>{item.brand}</td>
+                            <td>{item.channels}</td>
                             <td>{item.status}</td>
+
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/${item.id}`}> */}
                             <Image
@@ -292,7 +289,7 @@ console.log("hello brandGet",isLogin)
             tableContainarClass="my-3 catalog-list"
           /> */}
         {/* )} */}
-        <CustomModal
+        {/* <CustomModal
             show={showBrandCreationForm}
             closeModal={() => setShowBrandCreationForm(false)}
             size="md"
@@ -305,20 +302,20 @@ console.log("hello brandGet",isLogin)
                 notifySucess={() => notify(true)}
               />
         }
-      />
+      /> */}
 
         {itemsCount && totalItems}
       </div>
       {Object.entries(itemData).length !== 0 && (
         <TabView
-          id={itemData.name}
           tabsList={tabsList}
           data={itemData}
+          id={itemData.name}
           setItemData={setItemData}
         />
       )}
 
-      <CustomModal
+{/* <CustomModal
         show={showBrandCreationForm}
         closeModal={() => setShowBrandCreationForm(false)}
         size="md"
@@ -330,26 +327,27 @@ console.log("hello brandGet",isLogin)
             notifySucess={() => notify(true)}
           />
         }
-      />
-      <ToastContainer />
+      /> */}
+     <ToastContainer />
     </Fragment>
   );
 }
 
-function CatatlogListTd({ data, itemData, setItemData }) {
+function ProductListTd({ data, itemData, setItemData }) {
   return (
     <Fragment>
       <tr>
         <td>
           <input
             type="checkbox"
-            checked={itemData.brandId === data.brandId}
-            name={data.brandId}
+            checked={itemData.productId === data.productId}
+            name={data.articleNumber}
             onChange={() => setItemData(data)}
           />
-          <span>{data.name}</span>
+          <span>{data.articleNumber}</span>
         </td>
-        <td>{data.brandOwner}</td>
+        <td>{data.categories.c3}</td>
+        <td>{data.name}</td>
         <td>{data.version}</td>
         <td>{data.modifiedAt}</td>
       </tr>
@@ -360,7 +358,4 @@ function CatatlogListTd({ data, itemData, setItemData }) {
 const mapDispatchToProps = {
   currentPgNo: actions.currentPgNo,
 };
-export default connect(
-  null,
-  mapDispatchToProps
-)(React.memo(classifyingBrand));
+export default connect(null, mapDispatchToProps)(React.memo(BulkUpload));

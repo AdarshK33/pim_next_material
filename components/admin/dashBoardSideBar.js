@@ -99,14 +99,14 @@ function DashBoardSideBar({ defaultValue }) {
       name: "User Management",
       icon:process ,
       id: "usermanagement",
-      link: "/dashboard/settings?list=permission",
+      link: "/dashboard/userManagement?list=userManagement",
       list: [],
     },
     { 
     name: "Bulk Upload", 
     icon: inventory, 
     id: "bulkupload", 
-    link: "/dashboard/catalog?list=uploads",
+    link: "/dashboard/bulkUpload?list=bulkUpload",
     list: [] 
     },
     {

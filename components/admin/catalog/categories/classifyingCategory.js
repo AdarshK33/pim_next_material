@@ -436,7 +436,7 @@ const onSubmit = async (values, formik) => {
       <div className="col-2 p-0 text-end align-self-center">
           <button
             onClick={() => setShowBrandCreationForm(true)}
-            className="btn btn-sm btn-icons border-0"
+            className={`btn btn-sm ${styles.add_button_text}`}
           >
             + Add New
           </button>
