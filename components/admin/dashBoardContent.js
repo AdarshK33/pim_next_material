@@ -10,6 +10,7 @@ import Category from "./catalog/categories/classifyingCategory";
 import ClassifyingBrand from "./brands/classifyingBrand";
 import ClassifyingChannel from "./channels/classifyingChannel";
 import ClassifyingUser from "./userManagement/classifyingUser";
+import MediaUpload from "./media/mediaUpload";
 
 function DashBoardContent() {
 
@@ -27,6 +28,7 @@ function DashBoardContent() {
             case 'brands_categories': return <ClassifyingBrand />;
             case 'channels': return <ClassifyingChannel />;
             case 'userManagement': return <ClassifyingUser />;
+            case 'mediaUpload': return <MediaUpload />;
             
             default : return <DashBoardView />;
         }

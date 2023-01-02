@@ -67,6 +67,13 @@ const TABLE_HEADERS = [{
          channels: "Channels",
          status: "Status" 
     },
+    Media: {
+      tableName:"Media",
+         name: "Name",
+         uploadedby: "Uploaded By",
+         uploadedat: "Uploaded At",
+         status: "Status" 
+    },
   }];
    
   export default TABLE_HEADERS;
