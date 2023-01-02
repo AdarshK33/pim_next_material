@@ -14,7 +14,7 @@ import PageLoader from "../../public/pageLoader";
 import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
 import Image from 'next/image';
-import styles from "./upload.module.css";
+import styles from "./media.module.css";
 import TABLE_HEADERS  from "../../public/tableHeader"
 import download from "../../../assets/icons/download.svg";
 import CustomModal from "../../public/customModal";
@@ -129,12 +129,12 @@ const totalRecords = tableData?.length;
      <div className={`row mx-0 font14 ${styles.listing_space}`}>
         <div className="col-10 p-0">
         {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
-        <p className={styles.brand_title_name}>Bulk Upload</p>
+        <p className={styles.brand_title_name}>Media</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
 
 
-        <div className="col-8 p-0">
+        <div className="col-8 p-3">
         <div className="row">
           <div className="col-2">
           <DatePicker onChange={onChange} />
@@ -142,44 +142,7 @@ const totalRecords = tableData?.length;
           <div className="col-2">
           <DatePicker onChange={onChange} />
           </div>
-          <div className="col-2">
-            <FormikControl
-              control="reactSelect"
-              selectOpts={selectOpts}
-              placeholder="Brand"
-              isMulti={true}
-            />
-          </div>
-          <div className="col-2">
-            <FormikControl
-              control="reactSelect"
-              selectOpts={selectOpts}
-              placeholder="Channel"
-              isMulti={false}
-            />
-          </div>
         </div>
-        </div>
-        <div className="col-2 p-3 text-end align-self-center">
-          <button
-            onClick={() => setShowBrandCreationForm(true)}
-            className={`btn btn-sm ${styles.add_button_text}`}
-
-          >
-            {/* <img src="/icons/add.png" alt="add-icon" /> */}
-            + Download Masters
-          </button>
-        </div>
-
-        <div className="col-2 p-3 text-end align-self-center">
-          <button
-            onClick={() => setShowBrandCreationForm(true)}
-            className={`btn btn-sm ${styles.add_button_text}`}
-
-          >
-            {/* <img src="/icons/add.png" alt="add-icon" /> */}
-            + Download Template
-          </button>
         </div>
 
         <div></div>
@@ -201,12 +164,10 @@ const totalRecords = tableData?.length;
                 <tr style={{ backgroundColor: "#f5f6f8" }}>
                   {/* <th scope="col">S. No</th> */}
                   {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
-                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.name}</th>
-                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.uploadedby}</th>
-                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.uploadedat}</th>
-                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.brand}</th>
-                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.channels}</th>
-                  <th scope="col">{TABLE_HEADERS[0].BulkUpload.status}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Media.name}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Media.uploadedby}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Media.uploadedat}</th>
+                  <th scope="col">{TABLE_HEADERS[0].Media.status}</th>
                   <th scope="col"></th>
 
                 </tr>
@@ -226,8 +187,6 @@ const totalRecords = tableData?.length;
                             <td>{item.image}</td>
                             <td>{item.productName}</td>
                             <td>{item.sku}</td>
-                            <td>{item.brand}</td>
-                            <td>{item.channels}</td>
                             <td>{item.status}</td>
 
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>

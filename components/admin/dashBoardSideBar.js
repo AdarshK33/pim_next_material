@@ -112,9 +112,9 @@ function DashBoardSideBar({ defaultValue }) {
     {
       name: "Media",
       icon: upload,
-      id: "media",
+      id: "mediaUpload",
       list: [],
-      link: "/dashboard/settings?list=permission",
+      link: "/dashboard/mediaUpload?list=mediaUpload",
     },
   ];
 
