@@ -4,6 +4,7 @@ import React, { Fragment,
   useEffect,
   useCallback,
   useRef, } from "react";
+import Link from 'next/link';
 import { connect } from "react-redux";
 import { getAllProducts, getProductById } from "../../utility/apiUtility";
 import CustomTable from "../../public/customTable";
@@ -20,6 +21,7 @@ import styles from "../brands/brand.module.css";
 import TABLE_HEADERS  from "../../public/tableHeader"
 import marker from "../../../assets/icons/marker 1.svg";
 import CustomModal from "../../public/customModal";
+import download from "../../../assets/icons/download.svg";
 import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from 'antd';
@@ -173,7 +175,7 @@ const totalRecords = tableData?.length;
         <div className="col-2 p-3 text-end align-self-center">
           <button
             onClick={() => setShowBrandCreationForm(true)}
-            className={`btn btn-sm ${styles.add_button_text}`}
+            className={`btn btn-sm ${styles.add_bulk_button_text}`}
 
           >
             {/* <img src="/icons/add.png" alt="add-icon" /> */}
@@ -215,14 +217,26 @@ const totalRecords = tableData?.length;
           </div>
         </div>
         </div>
-        <div className="col-2 p-3 text-end align-self-center">
+        <div className="col-2 p-3 text-end align-self-center d-flex">
+        <div className={`${styles.download_left}`}>
+            <Image
+              className="px-2"
+							src={download}
+							alt="download"
+              width={40}
+							height={35}
+              // onClick={() => {
+              //   setShowBrandCreationForm(true)
+              // }}
+              /></div>
           <button
             onClick={() => setShowBrandCreationForm(true)}
             className={`btn btn-sm ${styles.add_button_text}`}
 
           >
             {/* <img src="/icons/add.png" alt="add-icon" /> */}
-            + Download CSV
+             Download CSV
+              
           </button>
         </div>
 
@@ -273,7 +287,7 @@ const totalRecords = tableData?.length;
                             <td>{item.status}</td>
 
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
-                              {/* <Link href={`/${item.id}`}> */}
+                              <Link href={`/dashboard/product/${item.id}`}>
                             <Image
                               className="px-2"
 							                src={marker}
@@ -289,7 +303,7 @@ const totalRecords = tableData?.length;
                                     setShowBrandCreationForm(true)
                                   }}
                                 /> */}
-                              {/* </Link> */}
+                              </Link>
                             </td>
                           </tr>
                         </tbody>

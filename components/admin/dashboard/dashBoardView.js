@@ -7,7 +7,7 @@ import Breadcrumb from "../../public/breadcrumb"
 import styles from "./dashBoard.module.css";
 import CommonPaginationTable from "../../public/commonPaginationTable"
 import TABLE_HEADERS  from "../../public/tableHeader"
-import ProductDetail from "../../public/productDetails"
+// import ProductDetail from "../../../pages/product/[id]"
 function DashBoardView() {
   // Table data
   const tableData = [];
@@ -54,7 +54,7 @@ function DashBoardView() {
                     <img src="/dashBoard4.png" alt="dashBoard4" width="100%" />
                 </div>
             </div> */}
-                  <ProductDetail />
+                  {/* <ProductDetail /> */}
             </div>
             </div>
            

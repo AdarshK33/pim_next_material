@@ -2,9 +2,9 @@ import React, { Fragment, useState, useMemo } from "react";
 import { Navbar, Container } from "react-bootstrap";
 import Link from "next/link";
 // import { Tabs } from 'antd';
-import FormikControl from "../public/formik/formikControl";
+import FormikControl from "../../../components/public/formik/formikControl";
 import { Form, Formik } from "formik";
-import styles from "./common.module.css";
+import styles from "../../../components/public/common.module.css";
 import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 

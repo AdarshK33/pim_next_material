@@ -160,25 +160,47 @@ const totalRecords = tableData?.length;
           </div>
         </div>
         </div>
-        <div className="col-2 p-3 text-end align-self-center">
+        <div className="col-2 p-3 text-end align-self-center d-flex">
+        <div>
+            <Image
+              className="px-2"
+							src={download}
+							alt="download"
+              width={40}
+							height={35}
+              // onClick={() => {
+              //   setShowBrandCreationForm(true)
+              // }}
+              /></div>
           <button
             onClick={() => setShowBrandCreationForm(true)}
             className={`btn btn-sm ${styles.add_button_text}`}
 
           >
             {/* <img src="/icons/add.png" alt="add-icon" /> */}
-            + Download Masters
+            Download Masters
           </button>
         </div>
 
-        <div className="col-2 p-3 text-end align-self-center">
+        <div className="col-2 p-3 text-end align-self-center d-flex">
+        <div>
+            <Image
+              className="px-2"
+							src={download}
+							alt="download"
+              width={40}
+							height={35}
+              // onClick={() => {
+              //   setShowBrandCreationForm(true)
+              // }}
+              /></div>
           <button
             onClick={() => setShowBrandCreationForm(true)}
             className={`btn btn-sm ${styles.add_button_text}`}
 
           >
             {/* <img src="/icons/add.png" alt="add-icon" /> */}
-            + Download Template
+             Download Template
           </button>
         </div>
 

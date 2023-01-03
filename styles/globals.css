@@ -371,6 +371,10 @@ td{
   font-weight: bold;
 }
 
+.boldtxt {
+  font-weight: bold;
+}
+
 .paginate-btn {
   border-radius: 4px;
   border: 1px solid var(--gray2);
@@ -674,3 +678,14 @@ button[aria-checked="true"]{
 width:80%;
 }
 /* productDetails tab End */
+
+.save_btn_secondary {
+  color: #6c757d;
+  border-color: #419794;
+}
+
+.save_btn_secondary:hover {
+  color: #ffff;
+  border-color: #419794;
+  background-color: #419794;
+}
