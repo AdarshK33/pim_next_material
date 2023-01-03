@@ -103,7 +103,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                 <FormikControl
                   control="input"
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
+                  classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
                   label="Email Id"
                   name="email"
@@ -113,14 +113,14 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                 <FormikControl
                   control="input"
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
+                  classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
                   label="Password"
                   name="password"
                   id="password"
                 />
 
-              <p className="px-2 py-0">Role Type</p>
+              <p className="px-2 py-0 boldtxt">Role Type</p>
                 <FormikControl
                   control="reactSelect"
                   className="px-2 py-1"
@@ -130,7 +130,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   isMulti={false}
                 />
 
-              <p className="px-2 py-2">Brand</p>
+              <p className="px-2 py-2 boldtxt">Brand</p>
                 <FormikControl
                   control="reactSelect"
                   className="px-2 py-1"
@@ -139,18 +139,18 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   isMulti={false}
                 />
 
-                <div className="col-12 text-end pt-5">
+                <div className="col-12 text-center pt-5">
                   <SubmitButton
                     onClick={classModal}
                     type="button"
                     name="CANCEL"
-                    className="btn btn-sm btn-outline-secondary py-1 px-5 br3"
+                    className="btn btn-sm save_btn_secondary py-1 px-5 br3"
                   />
                   <SubmitButton
                     isLoading={isSubmitting}
                     type="submit"
                     name="ADD"
-                    className="btn btn-sm btn-secondary py-1 px-5 br3 mx-2"
+                    className="btn btn-sm save_btn_secondary py-1 px-5 br3 mx-2"
                   />
                 </div>
               </Form>

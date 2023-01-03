@@ -93,7 +93,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                 <FormikControl
                   control="input"
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
+                  classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
                   label="Brand Name"
                   name="name"
@@ -103,7 +103,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                 <FormikControl
                   control="input"
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
+                  classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
                   label="Email Id"
                   name="email"
@@ -113,7 +113,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                 <FormikControl
                   control="input"
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
+                  classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
                   label="Contact Info"
                   name="contact"
@@ -123,33 +123,33 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                 <FormikControl
                   control="text-area"
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
+                  classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
                   label="Brand Discription"
                   name="discription"
                   id="brandDiscription"
                 />
 
-              <p>Status</p>
+              <p className="boldtxt">Status</p>
                 <FormikControl
                   control="reactSelect"
                   selectOpts={selectOpts}
-                  placeholder="Status"
+                  placeholder="Select"
                   isMulti={false}
                 />
 
-                <div className="col-12 text-end pt-5">
+                <div className="col-12 text-center pt-5">
                   <SubmitButton
                     onClick={classModal}
                     type="button"
                     name="CANCEL"
-                    className="btn btn-sm btn-outline-secondary py-1 px-5 br3"
+                    className="btn btn-sm save_btn_secondary py-1 px-5 br3"
                   />
                   <SubmitButton
                     isLoading={isSubmitting}
                     type="submit"
                     name="ADD"
-                    className="btn btn-sm btn-secondary py-1 px-5 br3 mx-2"
+                    className="btn btn-sm save_btn_secondary py-1 px-5 br3 mx-2"
                   />
                 </div>
               </Form>
