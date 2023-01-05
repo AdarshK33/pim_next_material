@@ -17,6 +17,8 @@ import Image from 'next/image';
 import styles from "./media.module.css";
 import TABLE_HEADERS  from "../../public/tableHeader"
 import download from "../../../assets/icons/download.svg";
+import calendar from "../../../assets/icons/calendar.svg";
+import folder from "../../../assets/icons/folder.svg";
 import CustomModal from "../../public/customModal";
 import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
@@ -137,10 +139,10 @@ const totalRecords = tableData?.length;
         <div className="col-8 p-3">
         <div className="row">
           <div className="col-2">
-          <DatePicker onChange={onChange} />
+          <DatePicker className="date_picker_style" onChange={onChange} />
           </div>
           <div className="col-2">
-          <DatePicker onChange={onChange} />
+          <DatePicker className="date_picker_style" onChange={onChange} />
           </div>
         </div>
         </div>
