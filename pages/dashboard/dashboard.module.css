@@ -1,3 +1,9 @@
+@font-face {
+    font-family: Gill-bold;
+    src: url(../../assets/font/Gill\ Sans\ Medium.otf);
+  }
+
+
 .bg_color{
     background-color: #419794;
     list-style-type: none;
@@ -27,7 +33,7 @@
 
 }
 .header_info{
-    font-family: Gill Sans;
+    font-family: Gill-bold;
     font-weight: 700;
     font-size: 19px;
     color: #419794;
@@ -37,7 +43,7 @@
 }
 .header_profile_info   {
   
-        font-family: Gill Sans;
+        font-family: Gill-bold;
         font-weight: 700;
         size: 16px;
         color: #419794;

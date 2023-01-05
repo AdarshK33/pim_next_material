@@ -137,12 +137,12 @@ const totalRecords = tableData?.length;
         <div className="col-8 p-0">
         <div className="row">
           <div className="col-2">
-          <DatePicker onChange={onChange} />
+          <DatePicker className="date_picker_style" onChange={onChange} />
           </div>
           <div className="col-2">
-          <DatePicker onChange={onChange} />
+          <DatePicker className="date_picker_style" onChange={onChange} />
           </div>
-          <div className="col-2">
+          <div className={`col-2 ${styles.dropdown_select}`}>
             <FormikControl
               control="reactSelect"
               selectOpts={selectOpts}
@@ -150,7 +150,7 @@ const totalRecords = tableData?.length;
               isMulti={true}
             />
           </div>
-          <div className="col-2">
+          <div className={`col-2 ${styles.dropdown_select}`}>
             <FormikControl
               control="reactSelect"
               selectOpts={selectOpts}
