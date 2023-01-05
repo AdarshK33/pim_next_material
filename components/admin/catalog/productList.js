@@ -186,10 +186,10 @@ const totalRecords = tableData?.length;
         <div className="col-10 p-0">
         <div className="row">
           <div className="col-2">
-          <DatePicker onChange={onChange} />
+          <DatePicker className="date_picker_style" onChange={onChange} />
           </div>
           <div className="col-2">
-          <DatePicker onChange={onChange} />
+          <DatePicker className="date_picker_style" onChange={onChange} />
           </div>
           <div className="col-2">
             <FormikControl
