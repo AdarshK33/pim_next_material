@@ -12,6 +12,7 @@ function ProductDetail() {
     const attributeRender=()=>{
         return (
           <>
+          
           <div className={styles.main_Attri}> 
                     <div className="row ">
                          <div className="col-12 ">
@@ -247,6 +248,7 @@ function ProductDetail() {
              </div>
        
          </div>
+         
            </>
         )
     }

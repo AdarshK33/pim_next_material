@@ -287,7 +287,7 @@ const totalRecords = tableData?.length;
                             <td>{item.status}</td>
 
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
-                              <Link href={`/dashboard/product/${item.id}`}>
+                              <Link href={`/catalog/product?list=productDetails/${item.id}`}>
                             <Image
                               className="px-2"
 							                src={marker}
