@@ -719,3 +719,9 @@ width:80%;
   margin: auto;
   cursor: pointer;
 }
+
+.min_height_100{
+  min-height: 100vh;
+}
+
+

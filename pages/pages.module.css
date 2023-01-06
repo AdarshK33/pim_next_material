@@ -1,7 +1,10 @@
-
+@font-face {
+    font-family: Gill-medium;
+    src:url(../assets/font/Gill\ Sans\ Medium.otf);
+  }
 
  .left_box {
-    font-family: "Gill Sans";
+    font-family: Gill-medium;
     position: relative;
     left: 65px;
     top: 30px;
@@ -10,14 +13,14 @@
 }
 
 .mid_box{
-    font-family: "Gill Sans";
+    font-family: Gill-medium;
     position: relative;
     /* top: 50px; */
     width: 55%;
     padding-top: 50px;
 }
 .last_box  {
-    font-family: "Gill Sans";
+    font-family: Gill-medium;
     position: relative;
     right: 110px; 
     bottom: 50px;
@@ -42,7 +45,7 @@
 
 }
 .forget_pasword{
-    font-family: "Gill Sans";
+    font-family: Gill-medium;
     color:#515050;
     font-weight: 700;
     text-decoration-line: underline;  
