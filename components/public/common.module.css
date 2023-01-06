@@ -1,3 +1,9 @@
+@font-face {
+  font-family: Gill-medium;
+  src:url(../../assets/font/Gill\ Sans\ Medium.otf);
+}
+
+
 .pagination{
   display: flex;
   justify-content: center;
@@ -13,7 +19,7 @@
 }
 
 .add_button_text {
-  font-family: "Gill Sans";
+  font-family: Gill-medium;
   font-weight: 700;
   /* background-color: var(--white); */
   box-shadow: none; 

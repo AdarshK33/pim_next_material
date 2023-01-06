@@ -1,3 +1,9 @@
+@font-face {
+  font-family: Gill-medium;
+  src:url(../assets/font/Gill\ Sans\ Medium.otf);
+}
+
+
 .container {
   min-height: 100vh;
   padding: 0 0.5rem;
@@ -67,7 +73,7 @@
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;
-  font-family:"Gill Sans";
+  font-family:Gill-medium;
   /* font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace; */
 }
