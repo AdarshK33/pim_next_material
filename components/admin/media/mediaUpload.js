@@ -138,11 +138,32 @@ const totalRecords = tableData?.length;
 
         <div className="col-8 p-3">
         <div className="row">
-          <div className="col-2">
-          <DatePicker className="date_picker_style" onChange={onChange} />
+          <div className="col-2 sidebar_blk">
+
+          
+          <DatePicker className="date_picker_style" onChange={onChange} />          
+          <div className="calender_blk">
+          <Image
+            className="px-2"
+            src={calendar}
+            alt="calendar"
+            width={30}
+            height={25}
+            />
           </div>
-          <div className="col-2">
+          
+          </div>
+          <div className="col-2 sidebar_blk">
           <DatePicker className="date_picker_style" onChange={onChange} />
+          <div className="calender_blk">
+          <Image
+            className="px-2"
+            src={calendar}
+            alt="calendar"
+            width={30}
+            height={25}
+            />
+          </div>
           </div>
         </div>
         </div>

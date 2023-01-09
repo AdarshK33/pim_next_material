@@ -154,6 +154,9 @@ function DashBoardSideBar({ defaultValue }) {
         </Accordion.Body>
       </Accordion.Item>
     ))}
+    <div className="copyright_block">
+    <p className="copyright_txt">@copyright 2023 @ Apollo</p>
+    </div>
   </Accordion> : <Fragment />
   );
 

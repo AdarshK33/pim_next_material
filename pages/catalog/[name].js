@@ -35,7 +35,7 @@ function AdminDashBoard() {
     <div className="page-container dashBoard">
       {/* <h4 className="offset-md-2 px-2 text-uppercase heading">{heading}</h4> */}
       <div className="row mx-0 md-5 p-0 min_height_100">
-        <div className={`col-md-2 ${styles.bg_color}`}>
+        <div className={`col-md-2 ${styles.bg_color} sidebar_blk`}>
           <DashBoardSideBar defaultValue={query.name} />
         </div>
 

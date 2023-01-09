@@ -25,6 +25,7 @@ import download from "../../../assets/icons/download.svg";
 import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from 'antd';
+import calendar from "../../../assets/icons/calendar.svg";
 
 function ProductList({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -185,11 +186,29 @@ const totalRecords = tableData?.length;
 
         <div className="col-10 p-0">
         <div className="row">
-          <div className="col-2">
+          <div className="col-2 sidebar_blk">
           <DatePicker className="date_picker_style" onChange={onChange} />
+          <div className="calender_blk_p">
+          <Image
+            className="px-2"
+            src={calendar}
+            alt="calendar"
+            width={30}
+            height={25}
+            />
           </div>
-          <div className="col-2">
+          </div>
+          <div className="col-2 sidebar_blk">
           <DatePicker className="date_picker_style" onChange={onChange} />
+          <div className="calender_blk_p">
+          <Image
+            className="px-2"
+            src={calendar}
+            alt="calendar"
+            width={30}
+            height={25}
+            />
+          </div>
           </div>
           <div className="col-2">
             <FormikControl
