@@ -296,6 +296,10 @@ a {
   font-weight: 800;
 }
 
+th{
+  font-family:Gill-heavy ;
+}
+
 th,
 td {
   text-align: center;
@@ -304,6 +308,7 @@ td {
   white-space: nowrap;
   max-width: 200px;
   position: relative;
+ 
 }
 
 td{ 
@@ -1025,7 +1030,9 @@ and (max-device-width: 1500px)
     width: fit-content;
     font-weight: 800;
   }
-  
+  th{
+    font-family:Gill-heavy ;
+  }
   th,
   td {
     text-align: center;

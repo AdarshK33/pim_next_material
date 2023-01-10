@@ -81,7 +81,7 @@
 
 .add_button_text {
   font-weight: bold;
-  font-family: Gill-medium;
+  font-family: Gill-heavy;
   background-color: var(--white);
   box-shadow: none; 
 
@@ -89,7 +89,7 @@
 
 .add_bulk_button_text {
   font-weight: bold;
-  font-family: Gill-medium;
+  font-family: Gill-heavy;
   background-color: var(--white);
   box-shadow: none; 
   padding-left: 80px;
@@ -139,7 +139,7 @@ and (max-device-width: 1500px)
   
   .add_button_text {
     font-weight: bold;
-    font-family: Gill-medium;
+    font-family: Gill-heavy;
     background-color: var(--white);
     box-shadow: none; 
   
@@ -147,7 +147,7 @@ and (max-device-width: 1500px)
   
   .add_bulk_button_text {
     font-weight: bold;
-    font-family: Gill-medium;
+    font-family: Gill-heavy;
     background-color: var(--white);
     box-shadow: none; 
     padding-left: 80px;
