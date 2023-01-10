@@ -48,8 +48,8 @@
     src:url(../../../assets/font/GillSans\ Condensed.otf);
   }
   
-
-.dash_board_pagination{
+  
+  .dash_board_pagination{
     display: flex;
     justify-content: center;
   }
@@ -89,74 +89,47 @@
   
   }
   
-  .download_left{
-    padding-left:27px;
-  }
-
-  .dropdown_select .css-b62m3t-container .css-1s2u09g-control {
-    border: 1px solid #419794 !important;
-    border-radius: 6px;
-    box-shadow: none !important;
-}
-
-
-@media screen 
-  and (min-device-width: 1200px) 
-  and (max-device-width: 1500px)  { 
-  .set_laptop_right{
-      padding: 0px !important;
-    }
-  .dash_board_pagination{
-    display: flex;
-    justify-content: center;
-  }
-   /* tr{
-   background-color:  #f5f6f8;
-  } */
-  
-  .listing_space {
-    padding: 30px;
-  }
-  
-  .listing_border{
-    padding: 0;
-    border-radius: 11px;
-  }
-  
-  .title_name{
-    font-size: 20px;
+  .add_bulk_button_text {
     font-weight: bold;
-    color: #419794;
-  }
-  
-  
-  .brand_title_name{
-    font-size: 20px;
-      font-weight: bold;
-      color: #399996;
-      width: 20%;
-      border-bottom: 2px solid #ffcf76;
-  }
-  
-  .add_button_text {
-    font-weight: bold;
-    font-family: Gill-heavy;
-    font-size: 12px;
+    font-family: Gill-medium;
     background-color: var(--white);
     box-shadow: none; 
-    padding: 0px !important;
+    padding-left: 80px;
   
   }
   
   .download_left{
     padding-left:27px;
   }
+  
+  @media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1500px) 
+  { 
+    .set_laptop_right{
+      padding: 5px !important;
+    }
+    .calender_section{
+      padding-bottom: 15px !important;
+    }
 
-  .dropdown_select .css-b62m3t-container .css-1s2u09g-control {
-    border: 1px solid #419794 !important;
-    border-radius: 6px;
-    box-shadow: none !important;
-}
-
-
-}
+    .add_bulk_button_text {
+      font-weight: bold;
+      font-family: Gill-heavy;
+      background-color: var(--white);
+      box-shadow: none; 
+      padding-left: 0px;
+    
+    }
+    .add_button_text {
+      font-family: Gill-heavy;
+      font-size: 12px;
+    }
+    .download_left{
+      padding-left:20px !important;
+    }
+    .button_add{
+      padding: 0rem !important;
+    }
+  }  
+  

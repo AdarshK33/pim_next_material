@@ -17,7 +17,7 @@ import PageLoader from "../../public/pageLoader";
 import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
 import Image from 'next/image';
-import styles from "../brands/brand.module.css";
+import styles from "./catelog.module.css";
 import TABLE_HEADERS  from "../../public/tableHeader"
 import marker from "../../../assets/icons/marker 1.svg";
 import CustomModal from "../../public/customModal";
@@ -173,7 +173,7 @@ const totalRecords = tableData?.length;
         <p className={styles.brand_title_name}>Products</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
-        <div className="col-2 p-3 text-end align-self-center">
+        <div className={`col-2 p-3 text-end align-self-center ${styles.set_laptop_right}`}>
           <button
             onClick={() => setShowBrandCreationForm(true)}
             className={`btn btn-sm ${styles.add_bulk_button_text}`}
@@ -184,7 +184,7 @@ const totalRecords = tableData?.length;
           </button>
         </div>
 
-        <div className="col-10 p-0">
+        <div className={`col-10 p-0 ${styles.calender_section}`}>
         <div className="row">
           <div className="col-2 sidebar_blk">
           <DatePicker className="date_picker_style" onChange={onChange} />
@@ -236,7 +236,7 @@ const totalRecords = tableData?.length;
           </div>
         </div>
         </div>
-        <div className="col-2 p-3 text-end align-self-center d-flex">
+        <div className={`col-2 p-3 text-end align-self-center d-flex ${styles.button_add}`}>
         <div className={`${styles.download_left}`}>
             <Image
               className="px-2"

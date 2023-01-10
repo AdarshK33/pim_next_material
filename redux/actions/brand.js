@@ -99,9 +99,9 @@ export const getBrandApi = () => {
       dispatch(getBrandDataLoading());
       client.get("/api/onboard/getBrand")
         .then((response) => {
-        //   console.log("api response",response)
+         //   console.log("api response",response)
         //   console.log(response)
-          if (response.status === 200) {
+          if (response.statusCode === 200) {
              console.log("API SUCCESS", response.data);
             dispatch(getBrandDataSuccess(response.data));
           }
