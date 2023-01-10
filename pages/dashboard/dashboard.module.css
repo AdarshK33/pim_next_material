@@ -1,7 +1,51 @@
 @font-face {
-    font-family: Gill-bold;
-    src: url(../../assets/font/Gill\ Sans\ Medium.otf);
-  }
+  font-family: Gill-Bold-Italic;
+  src:url(../../assets/font/Gill\ Sans\ Bold\ Italic.otf)
+}
+@font-face {
+  font-family: Gill-bold;
+  src:url(../../assets/font/Gill\ Sans\ Bold.otf);
+}
+@font-face {
+  font-family: Gill-heavy-italic;
+  src:url(../../assets/font/Gill\ Sans\ Heavy\ Italic.otf);
+}
+@font-face {
+  font-family: Gill-heavy;
+  src:url(../../assets/font/Gill\ Sans\ Heavy.otf);
+}
+@font-face {
+  font-family: Gill-italic;
+  src:url(../../assets/font/Gill\ Sans\ Italic.otf);
+}
+@font-face {
+  font-family: Gill-light-italic;
+  src:url(../../assets/font/Gill\ Sans\ Light\ Italic.otf);
+}
+@font-face {
+  font-family: Gill-light;
+  src:url(../../assets/font/Gill\ Sans\ Light.otf);
+}
+@font-face {
+  font-family: Gill-mediium-italic;
+  src:url(../../assets/font/Gill\ Sans\ Medium\ Italic.otf);
+}
+@font-face {
+  font-family: Gill-medium;
+  src:url(../../assets/font/Gill\ Sans\ Medium.otf);
+}
+@font-face {
+  font-family: Gill-Sans;
+  src:url(../../assets/font/Gill\ Sans.otf);
+}
+@font-face {
+  font-family: Gill-condensed-bold;
+  src:url(../../assets/font/GillSans\ Condensed\ Bold.otf);
+}
+@font-face {
+  font-family: Gill-condensed-condensed;
+  src:url(../../assets/font/GillSans\ Condensed.otf);
+}
 
 
 .bg_color{

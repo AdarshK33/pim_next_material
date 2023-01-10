@@ -1,9 +1,97 @@
 @font-face {
+  font-family: Gill-Bold-Italic;
+  src:url(../../../assets/font/Gill\ Sans\ Bold\ Italic.otf);
+}
+@font-face {
+  font-family: Gill-bold;
+  src:url(../../../assets/font/Gill\ Sans\ Bold.otf);
+}
+@font-face {
+  font-family: Gill-heavy-italic;
+  src:url(../../../assets/font/Gill\ Sans\ Heavy\ Italic.otf);
+}
+@font-face {
+  font-family: Gill-heavy;
+  src:url(../../../assets/font/Gill\ Sans\ Heavy.otf);
+}
+@font-face {
+  font-family: Gill-italic;
+  src:url(../../../assets/font/Gill\ Sans\ Italic.otf);
+}
+@font-face {
+  font-family: Gill-light-italic;
+  src:url(../../../assets/font/Gill\ Sans\ Light\ Italic.otf);
+}
+@font-face {
+  font-family: Gill-light;
+  src:url(../../../assets/font/Gill\ Sans\ Light.otf);
+}
+@font-face {
+  font-family: Gill-mediium-italic;
+  src:url(../../../assets/font/Gill\ Sans\ Medium\ Italic.otf);
+}
+@font-face {
   font-family: Gill-medium;
   src:url(../../../assets/font/Gill\ Sans\ Medium.otf);
 }
+@font-face {
+  font-family: Gill-Sans;
+  src:url(../../../assets/font/Gill\ Sans.otf);
+}
+@font-face {
+  font-family: Gill-condensed-bold;
+  src:url(../../../assets/font/GillSans\ Condensed\ Bold.otf);
+}
+@font-face {
+  font-family: Gill-condensed-condensed;
+  src:url(../../../assets/font/GillSans\ Condensed.otf);
+}
 
 .dash_board_pagination{
+    display: flex;
+    justify-content: center;
+  }
+   /* tr{
+   background-color:  #f5f6f8;
+  } */
+  
+  .listing_space {
+    padding: 30px;
+  }
+  
+  .listing_border{
+    padding: 0;
+    border-radius: 11px;
+  }
+  
+  .title_name{
+    font-size: 20px;
+    font-weight: bold;
+    color: #419794;
+  }
+  
+  
+  .brand_title_name{
+    font-size: 20px;
+      font-weight: bold;
+      color: #399996;
+      width: 20%;
+      border-bottom: 2px solid #ffcf76;
+  }
+  
+  .add_button_text {
+    font-weight: bold;
+    font-family: Gill-heavy;
+    background-color: var(--white);
+    box-shadow: none; 
+  
+  }
+  @media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1500px) 
+  { 
+
+  .dash_board_pagination{
     display: flex;
     justify-content: center;
   }
@@ -43,3 +131,7 @@
   
   }
   
+
+
+
+}

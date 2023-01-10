@@ -128,13 +128,13 @@ const totalRecords = tableData?.length;
   return (
     <Fragment>
      <div className={`row mx-0 font14 ${styles.listing_space}`}>
-        <div className="col-10 p-0">
+        <div className="col-12 p-0">
         {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
         <p className={styles.brand_title_name}>Bulk Upload</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
 
-
+      <div className="row pb-2">
         <div className="col-8 p-0">
         <div className="row">
           <div className="col-2 sidebar_blk">
@@ -179,7 +179,7 @@ const totalRecords = tableData?.length;
           </div>
         </div>
         </div>
-        <div className="col-2 p-3 text-end align-self-center d-flex">
+        <div className={`col-2 p-3 text-end align-self-center d-flex  ${styles.set_laptop_right}`}>
         <div>
             <Image
               className="px-2"
@@ -201,7 +201,7 @@ const totalRecords = tableData?.length;
           </button>
         </div>
 
-        <div className="col-2 p-3 text-end align-self-center d-flex">
+        <div className={`col-2 p-3 text-end align-self-center d-flex ${styles.set_laptop_right}`}>
         <div>
             <Image
               className="px-2"
@@ -222,14 +222,18 @@ const totalRecords = tableData?.length;
              Download Template
           </button>
         </div>
-
-        <div></div>
-        <div className="pb-3 bulk_upload_style">
-        <FormikControl
-                  control="dropZone"
-                  name="catalog_name"
-                  // setFieldValue={setFieldValue}
-                />
+        </div>
+        
+        <div className="row">
+          <div className="col-12 px-0">
+              <div className="pb-3 bulk_upload_style">
+              <FormikControl
+                        control="dropZone"
+                        name="catalog_name"
+                        // setFieldValue={setFieldValue}
+                      />
+              </div>
+          </div>
         </div>
         <div className="card p-0" style={{ borderRadius: "1rem" }}>
         <div className="card-body p-0">
