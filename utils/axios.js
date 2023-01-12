@@ -15,7 +15,7 @@ const client = axios.create({
 });
 
 // console.log("hello process.env.ONBOARD_SERVICE_URL",process.env.ONBOARD_SERVICE_URL)
-const server = axios.create({
+const onboardServer = axios.create({
 	baseURL:  process.env.ONBOARD_SERVICE_URL,
 	// timeout: 1000 * 10,
 	headers: {
@@ -84,4 +84,4 @@ const server = axios.create({
 // 		});
 // };
 
-export { client, server };
+export { client, onboardServer };

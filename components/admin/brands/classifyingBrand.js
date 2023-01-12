@@ -27,7 +27,7 @@ import TABLE_HEADERS  from "../../public/tableHeader";
 import Pagination from "react-js-pagination";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import  CommonUpdateForm from "../../public/commonUpdateForm";
+import  UpdateBrandForm from "./UpdateBrandForm";
 import { useDispatch, useSelector } from "react-redux";
 import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
 import Image from 'next/image';
@@ -40,6 +40,7 @@ function classifyingBrand({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
+  const [showBrandUpdateForm, setShowBrandUpdateForm] = useState(false);
   const [itemData, setItemData] = useState({});
   const toastRef = useRef(null);
   const [itemsCount, setItemsCount] = useState(null);
@@ -118,6 +119,7 @@ console.log("hello brandGet",isLogin)
 
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
+    setShowBrandUpdateForm(false)
     getAllBrandsData({ pageSize: 10, pageNo: 0 });
     toastRef.current.toastHandler({
       response: "suc",
@@ -242,7 +244,7 @@ console.log("hello brandGet",isLogin)
                               width={35}
 							                height={30}
                               onClick={() => {
-                                setShowBrandCreationForm(true)
+                                setShowBrandUpdateForm(true)
                               }}
 						                  />
                               {/* <marker
@@ -293,14 +295,14 @@ console.log("hello brandGet",isLogin)
           /> */}
         {/* )} */}
         <CustomModal
-            show={showBrandCreationForm}
-            closeModal={() => setShowBrandCreationForm(false)}
+            show={showBrandUpdateForm}
+            closeModal={() => setShowBrandUpdateForm(false)}
             size="md"
             centered={true}
             body={
-              <CommonUpdateForm
+              <UpdateBrandForm
                 table={TABLE_HEADERS[0].Brand.table}
-                classModal={() => setShowBrandCreationForm(false)}
+                classModal={() => setShowBrandUpdateForm(false)}
                 onSuccess={onBrandCreationSuccess}
                 notifySucess={() => notify(true)}
               />

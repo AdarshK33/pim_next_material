@@ -16,7 +16,7 @@ import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./brand.module.css";
 
-function BrandForm({ classModal, onSuccess, notifySucess }) {
+function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
   const [itemData, setItemData] = useState();
   const [brandActive, setBrandActive]= useState();
   const toastId = React.useRef(null);
@@ -48,12 +48,15 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
     description:"",
     contactPerson: "",
     emailId: "",
-    mobile: ""
+    mobile: "",
+    isActive:"",
   };
-
+  console.log("brandActive1",brandActive);
 
   const onSubmit = async (values, formik) => {
+    formik.setFieldValue("isActive")
     console.log("values",values);
+    console.log("brandActive",brandActive);
 
     let brndName = {
       name: values.brandName.trim(),
@@ -73,7 +76,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
 
 
 
-    if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "") {
+    if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "" || brandActive === "") {
       console.log("notify");
       notify("err");
     } else {
@@ -82,7 +85,8 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
         description:brndDiscription.name,
         contactPerson: brandEmail.name,
         emailId: brandContact.name,
-        mobile: brandMobile.name
+        mobile: brandMobile.name,
+        isActive:brandActive,
       }
       setItemData(infoData)
       console.log("infoData",infoData);
@@ -153,7 +157,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   id="description"
                 />
 
-              {/* <p className="boldtxt">Status</p>
+              <p className="boldtxt">Status</p>
                 <FormikControl
                   control="reactSelect"
                   selectOpts={selectOpts}
@@ -163,7 +167,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   id="isActive"
                   setFieldValue={(n,v)=>
                   v==="true" && setBrandActive(true) }
-                /> */}
+                />
 
                 <div className="col-12 text-center pt-5">
                   <SubmitButton
@@ -189,4 +193,4 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   );
 }
 
-export default React.memo(BrandForm);
+export default React.memo(UpdateBrandForm);
