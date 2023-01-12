@@ -1,4 +1,4 @@
-import { server } from '../../../utils/axios';
+import { onboardServer } from '../../../utils/axios';
 
 export default async function handler(req, res) {
     // return new Promise((resolve, reject) => {
@@ -6,10 +6,10 @@ export default async function handler(req, res) {
 	const body = req.body;
 	const config = {
 		method: 'patch',
-		url: '/brand',
+		url: `/brand/${body.id}`,
 		data: body,
 	};
-server(config)
+	onboardServer(config)
 		.then(response => {
 			if (response.status === 200) {
 				res.status(200).json(response.data);

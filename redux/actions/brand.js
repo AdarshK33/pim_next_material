@@ -79,7 +79,7 @@ export const createBrandApi = (data) => {
     return (dispatch) => {
         dispatch(createBrandDataLoading('BRAND....', 'BRAND'));
         client
-            .post("/api/onboard/brand",data)
+            .post("/api/onboard/createBrand",data)
         .then((response) => {
                 if (response.status === 200) {
                     console.log("BrandGreat==>", response.data);

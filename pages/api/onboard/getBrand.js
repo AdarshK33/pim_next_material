@@ -1,12 +1,12 @@
 
-import { server } from "../../../utils/axios";
+import { onboardServer } from "../../../utils/axios";
 
 function handler(req, res) {
   const config = {
     method: "get",
     url: "/brands"
   };
-  server(config)
+  onboardServer(config)
     .then((response) => {
       if (response.status === 200) {
         res.status(200).json(response.data);
