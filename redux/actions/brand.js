@@ -96,14 +96,14 @@ export const createBrandApi = (data) => {
 export const getBrandApi = () => {
   
     return (dispatch) => {
-      dispatch(getBrandDataLoading());
+      dispatch(getBrandDataLoading('BRAND....', 'BRAND'));
       client.get("/api/onboard/getBrand")
         .then((response) => {
-         //   console.log("api response",response)
+          console.log("api response",response)
         //   console.log(response)
-          if (response.statusCode === 200) {
-             console.log("API SUCCESS", response.data);
-            dispatch(getBrandDataSuccess(response.data));
+          if (response?.data?.statusCode === 200) {
+              console.log("API SUCCESS2", response.data.result);
+            dispatch(getBrandDataSuccess(response.data.result));
           }
         })
         .catch((err) => {
