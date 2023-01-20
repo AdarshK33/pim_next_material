@@ -52,13 +52,13 @@ function classifyingBrand({ currentPgNo }) {
     //  dispatch(createBrandApi(dataObj));
     dispatch(getBrandApi());
    
-  }, []);
+  }, [brandGet]);
 
-  const { isLogin } = useSelector(state => {
-    console.log("hello state",state)
+  const { brandGet } = useSelector(state => {
+    console.log("hello",state)
 		return state.brandReducer;
 	});
-console.log("hello brandGet",isLogin)
+console.log("hello brandGet",brandGet)
   const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);
@@ -150,23 +150,23 @@ console.log("hello brandGet",isLogin)
     </Fragment>
   );
 
-  const tableData = [];
+  // const tableData = [];
 
-  for (let i = 1; i <= 10; i++) {
-    tableData.push({
-      id: "11100"+i,
-      name: "Brand" + i,
-      discription: "discription" + (i),
-    });
-  }
+  // for (let i = 1; i <= 10; i++) {
+  //   tableData.push({
+  //     id: "11100"+i,
+  //     name: "Brand" + i,
+  //     discription: "discription" + (i),
+  //   });
+  // }
  //   /*-----------------Pagination------------------*/
  const [currentPage, setCurrentPage] = useState(1);
  const recordPerPage = 10;
- const totalRecords = tableData.length;
+ const totalRecords = brandGet.length;
  const pageRange = 10;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = tableData;
+ const currentRecords = brandGet;
 
  const handlePageChange = pageNumber => {
    setCurrentPage(pageNumber);
@@ -212,29 +212,29 @@ console.log("hello brandGet",isLogin)
                   <th scope="col">{TABLE_HEADERS[0].Brand.category}</th>
                   <th scope="col">{TABLE_HEADERS[0].Brand.sku}</th>
                   <th scope="col">{TABLE_HEADERS[0].Brand.status}</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">{TABLE_HEADERS[0].Brand.action}</th>
 
                 </tr>
               </thead>
-                {tableData !== null &&
-                  tableData.length > 0
+                {currentRecords !== null &&
+                  currentRecords.length > 0
                   ? (
-                    tableData.map((item, i) => {
-
+                    currentRecords.map((item, i) => {
+                    
                       return (
                         <tbody style={{borderTop: "0px"}}
                         
-                    key={i}>
+                              key={i}>
                           <tr>
                             {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
-                            {/* <td>{item.id}</td> */}
-                            <td>{item.name}</td>
-                            <td>{item.discription}</td>
+                            {/* <td>{item.brandName}</td> */}
+                            <td>{item.brandName}</td>
+                            <td>{item.description}</td>
                             <td>{item.email}</td>
-                            <td>{item.contact}</td>
-                            <td>{item.category}</td>
-                            <td>{item.sku}</td>
-                            <td>{item.status}</td>
+                            <td>{item.contactPerson}</td>
+                            <td>{item.totalCategories}</td>
+                            <td>{item.totalSKUs}</td>
+                              <td>{item?.isActive === true ? "Active" : "In-Active"}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/${item.id}`}> */}
                             <Image
