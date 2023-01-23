@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import folder from "../../../assets/icons/folder.svg";
 import Image from 'next/image';
 
-function DropZoneField({ setFieldValue, name }) {
+function DropZoneField({ setFieldValue, name,placeholder }) {
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
     if(acceptedFiles.length) setFieldValue(name, acceptedFiles)
 
@@ -31,7 +31,7 @@ function DropZoneField({ setFieldValue, name }) {
               />
                 </div>
                 <div>
-                <p className="m-auto txt_gray">Upload test your document</p>
+                <p className="m-auto txt_gray">{placeholder}</p>
 
                 </div>
                 </div>   

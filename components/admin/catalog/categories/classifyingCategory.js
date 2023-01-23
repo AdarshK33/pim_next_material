@@ -531,6 +531,8 @@ const onSubmit = async (values, formik) => {
                   control="dropZone"
                   name="category drop Images/file"
                   setFieldValue="Image Upload"
+                  placeholder="Image Upload"
+
                 />
                 </div>
               

@@ -1,9 +1,11 @@
-import React, { Fragment,
+import React, {
+  Fragment,
   useMemo,
   useState,
   useEffect,
   useCallback,
-  useRef, } from "react";
+  useRef,
+} from "react";
 import { connect } from "react-redux";
 import { getAllProducts, getProductById } from "../../utility/apiUtility";
 import CustomTable from "../../public/customTable";
@@ -13,16 +15,16 @@ import { unstable_batchedUpdates } from "react-dom";
 import PageLoader from "../../public/pageLoader";
 import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
-import Image from 'next/image';
+import Image from "next/image";
 import styles from "./media.module.css";
-import TABLE_HEADERS  from "../../public/tableHeader"
+import TABLE_HEADERS from "../../public/tableHeader";
 import download from "../../../assets/icons/download.svg";
 import calendar from "../../../assets/icons/calendar.svg";
 import folder from "../../../assets/icons/folder.svg";
 import CustomModal from "../../public/customModal";
 import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space } from "antd";
 
 function BulkUpload({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -51,7 +53,6 @@ function BulkUpload({ currentPgNo }) {
     });
   }, []);
 
-
   const getAllProductData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllProducts(payload);
@@ -66,19 +67,19 @@ function BulkUpload({ currentPgNo }) {
     }
   };
 
-   //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
- const recordPerPage = 10;
-const totalRecords = tableData?.length;
- const pageRange = 10;
- const indexOfLastRecord = currentPage * recordPerPage;
- const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = tableData;
+  //   /*-----------------Pagination------------------*/
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const totalRecords = tableData?.length;
+  const pageRange = 10;
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = tableData;
 
- const handlePageChange = pageNumber => {
-   setCurrentPage(pageNumber);
- }
- /*-----------------Pagination------------------*/
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  /*-----------------Pagination------------------*/
   const totalItems = useMemo(
     () => (
       <PaginationView
@@ -101,13 +102,11 @@ const totalRecords = tableData?.length;
 
   for (let i = 1; i <= 10; i++) {
     tableData.push({
-      id: "11100"+i,
+      id: "11100" + i,
       name: "Brand" + i,
-      discription: "discription" + (i),
+      discription: "discription" + i,
     });
   }
-
-
 
   const onChange = (date, dateString) => {
     console.log(date, dateString);
@@ -128,142 +127,135 @@ const totalRecords = tableData?.length;
 
   return (
     <Fragment>
-     <div className={`row mx-0 font14 ${styles.listing_space}`}>
+      <div className={`row mx-0 font14 ${styles.listing_space}`}>
         <div className="col-10 p-0">
-        {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
-        <p className={styles.brand_title_name}>Media</p>
+          {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
+          <p className={styles.brand_title_name}>Media</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
 
-
         <div className="col-8 p-3">
-        <div className="row">
-          <div className="col-2 sidebar_blk">
-
-          
-          <DatePicker className="date_picker_style" onChange={onChange} />          
-          <div className="calender_blk">
-          <Image
-            className="px-2"
-            src={calendar}
-            alt="calendar"
-            width={30}
-            height={25}
-            />
+          <div className="row">
+            <div className="col-2 sidebar_blk">
+              <DatePicker className="date_picker_style" onChange={onChange} />
+              <div className="calender_blk">
+                <Image
+                  className="px-2"
+                  src={calendar}
+                  alt="calendar"
+                  width={30}
+                  height={25}
+                />
+              </div>
+            </div>
+            <div className="col-2 sidebar_blk">
+              <DatePicker className="date_picker_style" onChange={onChange} />
+              <div className="calender_blk">
+                <Image
+                  className="px-2"
+                  src={calendar}
+                  alt="calendar"
+                  width={30}
+                  height={25}
+                />
+              </div>
+            </div>
           </div>
-          
-          </div>
-          <div className="col-2 sidebar_blk">
-          <DatePicker className="date_picker_style" onChange={onChange} />
-          <div className="calender_blk">
-          <Image
-            className="px-2"
-            src={calendar}
-            alt="calendar"
-            width={30}
-            height={25}
-            />
-          </div>
-          </div>
-        </div>
         </div>
 
         <div></div>
         <div className="pb-3 bulk_upload_style">
-        <FormikControl
-                  control="dropZone"
-                  name="catalog_name"
-                  // setFieldValue={setFieldValue}
-                />
+          <FormikControl
+            control="dropZone"
+            name="catalog_name"
+            placeholder="Upload your images (Single Or Bulk)"
+            // setFieldValue={setFieldValue}
+          />
         </div>
         <div className="card p-0" style={{ borderRadius: "1rem" }}>
-        <div className="card-body p-0">
-          <div className={`table-responsive ${styles.listing_border}`}>
-            <table id="table-to-xls" className="table" >
-              <thead
-                className="thead-light"
-                style={{ backgroundColor: "#2f3c4e" }}
-              >
-                <tr style={{ backgroundColor: "#f5f6f8" }}>
-                  {/* <th scope="col">S. No</th> */}
-                  {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
-                  <th scope="col">{TABLE_HEADERS[0].Media.name}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Media.uploadedby}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Media.uploadedat}</th>
-                  <th scope="col">{TABLE_HEADERS[0].Media.status}</th>
-                  <th scope="col"></th>
+          <div className="card-body p-0">
+            <div className={`table-responsive ${styles.listing_border}`}>
+              <table id="table-to-xls" className="table">
+                <thead
+                  className="thead-light"
+                  style={{ backgroundColor: "#2f3c4e" }}
+                >
+                  <tr style={{ backgroundColor: "#f5f6f8" }}>
+                    {/* <th scope="col">S. No</th> */}
+                    {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
+                    <th scope="col">{TABLE_HEADERS[0].Media.name}</th>
+                    <th scope="col">{TABLE_HEADERS[0].Media.uploadedby}</th>
+                    <th scope="col">{TABLE_HEADERS[0].Media.uploadedat}</th>
+                    <th scope="col">{TABLE_HEADERS[0].Media.status}</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                {tableData !== null && tableData.length > 0 ? (
+                  tableData.map((item, i) => {
+                    return (
+                      <tbody style={{ borderTop: "0px" }} key={i}>
+                        <tr>
+                          {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
+                          {/* <td>{item.id}</td> */}
+                          <td>{item.image}</td>
+                          <td>{item.productName}</td>
+                          <td>{item.sku}</td>
+                          <td>{item.status}</td>
 
-                </tr>
-              </thead>
-                {tableData !== null &&
-                  tableData.length > 0
-                  ? (
-                    tableData.map((item, i) => {
-
-                      return (
-                        <tbody style={{borderTop: "0px"}}
-                        
-                    key={i}>
-                          <tr>
-                            {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
-                            {/* <td>{item.id}</td> */}
-                            <td>{item.image}</td>
-                            <td>{item.productName}</td>
-                            <td>{item.sku}</td>
-                            <td>{item.status}</td>
-
-                            <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
-                              {/* <Link href={`/${item.id}`}> */}
+                          <td
+                            style={{ textDecoration: "none", color: "#4466f2" }}
+                          >
+                            {/* <Link href={`/${item.id}`}> */}
                             <Image
                               className="px-2"
-							                src={download}
-							                alt="download"
+                              src={download}
+                              alt="download"
                               width={40}
-							                height={35}
+                              height={35}
                               onClick={() => {
-                                setShowBrandCreationForm(true)
+                                setShowBrandCreationForm(true);
                               }}
-						                  />
-                              {/* <marker
+                            />
+                            {/* <marker
                                   onClick={() => {
                                     setShowBrandCreationForm(true)
                                   }}
                                 /> */}
-                              {/* </Link> */}
-                            </td>
-                          </tr>
-                        </tbody>
-                      );
-                    })
-                  ) : (
-                    <tbody>
-                      <tr>
-                        <td colSpan="12">No Record Found</td>
-                      </tr>
-                    </tbody>
-                  )}
-            </table>
-          </div>
+                            {/* </Link> */}
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  })
+                ) : (
+                  <tbody>
+                    <tr>
+                      <td colSpan="12">No Record Found</td>
+                    </tr>
+                  </tbody>
+                )}
+              </table>
+            </div>
 
-          <div className={styles.dash_board_pagination}>
-            <Pagination
-              itemClass="page-item"
-              linkClass="page-link"
-              activePage={currentPage}
-              itemsCountPerPage={recordPerPage}
-              totalItemsCount={totalRecords}
-              pageRangeDisplayed={pageRange}
-              onChange={handlePageChange}
-              firstPageText="First"
-              lastPageText="Last"
-            />
+            <div className={styles.dash_board_pagination}>
+              <Pagination
+                itemClass="page-item"
+                linkClass="page-link"
+                activePage={currentPage}
+                itemsCountPerPage={recordPerPage}
+                totalItemsCount={totalRecords}
+                pageRangeDisplayed={pageRange}
+                onChange={handlePageChange}
+                firstPageText="First"
+                lastPageText="Last"
+              />
+            </div>
           </div>
         </div>
-      </div>
         {/* {loading ? (
           <PageLoader />
         ) : ( */}
-          {/* <CustomTable
+        {/* <CustomTable
             tableName="product-list"
             head={tableHeadings}
             content={tableContent}
@@ -297,7 +289,7 @@ const totalRecords = tableData?.length;
         />
       )}
 
-{/* <CustomModal
+      {/* <CustomModal
         show={showBrandCreationForm}
         closeModal={() => setShowBrandCreationForm(false)}
         size="md"
@@ -310,7 +302,7 @@ const totalRecords = tableData?.length;
           />
         }
       /> */}
-     <ToastContainer />
+      <ToastContainer />
     </Fragment>
   );
 }
