@@ -4,10 +4,11 @@ import React, { useMemo } from "react";
 import DashBoardContent from "../../components/admin/dashBoardContent";
 import DashBoardSideBar from "../../components/admin/dashBoardSideBar";
 import styles from "../dashboard/dashboard.module.css";
-import PublicHeader from "../../components/public/publicHeader";
 import logo from "../../assets/icons/logo_2_2022.svg";
 import user from "../../assets/icons/user1.png";
 import ProductDetail from "../../components/admin/catalog/productDetails"
+import CommonHeader from "../../components/admin/commonHeader"
+
 function AdminDashBoard() {
   const { query } = useRouter();
   const heading = useMemo(() => {
@@ -40,32 +41,8 @@ function AdminDashBoard() {
         </div>
 
         <div className={`col-md-10 px-0 ${styles.bg_color_header}`}>
-          <div className={styles.header}>
-            <div className="col-md-12">
-              <div className="row">
-                <div className="col-md-10">
-                  <div className={styles.header_logo}>
-                    <div className="header_logo_img">
-                      <Image src={logo} alt="logo" width={55} height={39} />
-                    </div>
-                    <span className={styles.header_info}>
-                      Product information management
-                    </span>
-                  </div>
-                </div>
-                <div className="col-md-2">
-                  <div className={styles.header_profile}>
-                    <div className={styles.header_profile_img}>
-                      <Image src={user} alt="logo" width={30} height={30} />
-                    </div>
-                    <span className={styles.header_profile_info}>
-                      My Profile
-                    </span>{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* CommonHeader */}
+       < CommonHeader  />
           <hr className={styles.dashboard_hr}></hr>
           {/* <DashBoardContent /> */}
           <div className={styles.main_product_details}>

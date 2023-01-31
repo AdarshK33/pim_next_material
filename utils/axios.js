@@ -22,6 +22,16 @@ const onboardServer = axios.create({
 		"Content-Type": "application/json",
 	},
 });
+const authServer = axios.create({
+	baseURL:  process.env.AUTH_SERVICE_URL,
+	// timeout: 1000 * 10,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});
+
+
+
 
 // server.setJwtToken = newToken => {
 // 	token = newToken;
@@ -84,4 +94,4 @@ const onboardServer = axios.create({
 // 		});
 // };
 
-export { client, onboardServer };
+export { client, onboardServer,authServer  };

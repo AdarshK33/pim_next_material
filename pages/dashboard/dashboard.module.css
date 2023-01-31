@@ -122,3 +122,19 @@
     padding: 30px;
   }
 
+
+
+  @media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1500px) 
+  
+{
+  .header_profile_info {
+  font-family: Gill-bold;
+  font-weight: 700;
+  size: 16px;
+  color: #419794;
+  margin-left: 0px;
+  margin-top: 0px;
+}
+}
