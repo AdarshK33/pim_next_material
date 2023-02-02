@@ -32,6 +32,7 @@
     "react-dom": "^17.0.2",
     "react-dropzone": "^11.4.2",
     "react-feather": "^2.0.9",
+    "iron-session": "^6.0.5",
     "react-google-login": "^5.2.2",
     "react-js-pagination": "^3.0.3",
     "react-paginate": "^8.0.3",

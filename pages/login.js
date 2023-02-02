@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect,useState } from "react";
 import Link from 'next/link';
 import GoogleAuth from "../components/utility/googleAuth";
 // import { Auth } from "./_app";
@@ -15,23 +15,46 @@ import FormikControl from "../components/public/formik/formikControl";
 import SubmitButton from "../components/public/formik/submitButton";
 import user from "../assets/icons/userLogin.svg"
 import key from "../assets/icons/loginkey.svg"
+import { useDispatch } from "react-redux";
 
+
+import {userLoginApi } from "../redux/actions/login";
 
 
 function Login() { 
+  const [itemData, setItemData] = useState();
+
     const LoginStat = {
-        isLogin: useSelector((state) => state.reducer.isLogin),
-        token: useSelector((state) => state.reducer.token),
+        isLogin: useSelector((state) => state.loginReducer.isLogin),
+        accessToken: useSelector((state) => state.loginReducer.accessToken),
+        refreshToken: useSelector((state) => state.loginReducer.refreshToken),
+
       };
     // const { loginState } = useContext(Auth);
     const router = useRouter();
+    const dispatch = useDispatch();
 
+    // console.log("lllllllllllllll",LoginStat.isLogin.statusCode)
     useEffect(() => {
-        LoginStat.isLogin && router.push("/");
-    }, []);
+      if(LoginStat.isLogin.statusCode===200){
+        router.push("/dashboard/dashboard");
+      }
+    }, [LoginStat.isLogin.statusCode]);
 
 
 
+   
+
+useEffect(() => {
+  // console.log("itemData",itemData);
+  if(itemData){
+  dispatch(userLoginApi(
+    itemData
+  ));
+  }
+}, [itemData]);
+
+    
 
 
     const initialValues = {
@@ -44,19 +67,25 @@ function Login() {
         name: values.userName.trim(),
       };
       let userPassword = {
-        name: values.password.trim(),
+        passwordKey: values.password.trim(),
       };
       console.log("val", userName);
-      if (userName.name === "" || userPassword.name === "" ) {
+      if (userName.name === "" || userPassword.passwordKey === "" ) {
         notify("err");
       } else {
-        const apiRes = await createBrandApi(brndName);
-        if (apiRes === "err") {
-          formik.setSubmitting(false);
-        } else {
-          notifySucess(true);
-          classModal();
+        let infoData={
+          email: userName.name,
+          password:userPassword.passwordKey,
         }
+
+        setItemData(infoData)
+        // const apiRes = await createBrandApi(brndName);
+        // if (apiRes === "err") {
+        //   formik.setSubmitting(false);
+        // } else {
+        //   notifySucess(true);
+        //   classModal();
+        // }
       }
     };
 
