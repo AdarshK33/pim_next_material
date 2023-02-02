@@ -5,7 +5,7 @@ function handler(req, res) {
   const body = req.body;
   const config = {
     method: "get",
-    url: `/getBrandById/${body.id}`
+    url: `/getBrandById/${body.brandId}`
   };
   onboardQueryServer(config)
     .then((response) => {
