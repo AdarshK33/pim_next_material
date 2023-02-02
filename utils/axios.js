@@ -1,8 +1,8 @@
 import axios from "axios";
 // import { toast } from "../common-components/Toast";
-// import {
-// 	ONBOARD_SERVICE_URL
-//   } from "../components/utility/apiEndPoints";
+import {
+	ONBOARD_QUERY_SERVICE_URL
+  } from "../components/utility/apiEndPoints";
   
 let token;
 let blacklist = ["trackorder"];
@@ -14,7 +14,6 @@ const client = axios.create({
 	},
 });
 
-// console.log("hello process.env.ONBOARD_QUERY_SERVICE_URL",process.env.)
 const onboardServer = axios.create({
 	baseURL:  process.env.ONBOARD_SERVICE_URL,
 	// timeout: 1000 * 10,
@@ -29,8 +28,9 @@ const authServer = axios.create({
 		"Content-Type": "application/json",
 	},
 });
+// console.log("hello ONBOARD_QUERY_SERVICE_URL",process.env.ONBOARD_QUERY_SERVICE_URL)
 const onboardQueryServer = axios.create({
-	baseURL:  process.env.ONBOARD_QUERY_SERVICE_URL,
+	baseURL:  ONBOARD_QUERY_SERVICE_URL,
 	// timeout: 1000 * 10,
 	headers: {
 		"Content-Type": "application/json",
