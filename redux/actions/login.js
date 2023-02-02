@@ -5,7 +5,7 @@ import {
 } from "../types/types";
 
 import { client } from "../../utils/axios";
-
+// import { useNavigate } from "react-router-dom";
 
 export const userLoginLoading = () => {
     return {
@@ -30,11 +30,13 @@ export const userLoginApi = (data) => {
     return (dispatch) => {
         dispatch(userLoginLoading('LOGIN....', 'LOGIN'));
         client
-            .post("/api/auth/userLogin",data)
+            .post("/api/login/userLogin",data)
         .then((response) => {
-                if (response.status === 200) {
-                    console.log("Login post==>", response.data);
+            // console.log("hello rrrrrrrrrrrr",response)
+                if (response?.data?.statusCode === 200) {
+                    // console.log("hello Login post==>", response.data);
                     dispatch(userLoginSuccess(response.data, 'Login Post Successfully', 'LOGIN POST'));
+                    // navigate('/dashboard/dashboard');
                 } else throw new Error("")
             })
             .catch((err) => {
