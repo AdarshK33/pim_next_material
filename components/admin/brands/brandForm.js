@@ -19,6 +19,7 @@ import style from "./brand.module.css";
 function BrandForm({ classModal, onSuccess, notifySucess }) {
   const [itemData, setItemData] = useState();
   const [brandActive, setBrandActive]= useState();
+  const [checkValidation, setcheckValidation]= useState(false);
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
 
@@ -43,14 +44,13 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       }
     }
   };
-  const initialValues = {
+    const initialValues = {
     brandName: "",
     description:"",
     contactPerson: "",
     emailId: "",
     mobile: ""
   };
-
 
   const onSubmit = async (values, formik) => {
     console.log("values",values);
@@ -85,8 +85,9 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
         mobile: brandMobile.name
       }
       setItemData(infoData)
-      console.log("infoData",infoData);
-      // const apiRes = await createBrandApi(brndName);
+      console.log("infoData--brand",infoData);
+
+      const apiRes = await createBrandApi(brndName);
       if (apiRes === "err") {
         formik.setSubmitting(false);
       } else {    
@@ -174,6 +175,8 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   />
                   <SubmitButton
                     isLoading={isSubmitting}
+                    // onClick={classModal}
+                    // onClick={checkValidation}
                     type="submit"
                     name="ADD"
                     className="btn btn-sm save_btn_secondary py-1 px-5 br3 mx-2"
