@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   reducer,
   brandReducer,
   loginReducer,
-  onBoardQueryReducer,
+  onBoardQueryReducer
 });
 
 export default rootReducer;
