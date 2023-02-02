@@ -27,7 +27,7 @@ import TABLE_HEADERS  from "../../public/tableHeader";
 import Pagination from "react-js-pagination";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import  UpdateBrandForm from "./UpdateBrandForm";
+import  UpdateBrandForm from "./updateBrandForm";
 import { useDispatch, useSelector } from "react-redux";
 import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
 import Image from 'next/image';
