@@ -28,9 +28,9 @@ const authServer = axios.create({
 		"Content-Type": "application/json",
 	},
 });
-// console.log("hello ONBOARD_QUERY_SERVICE_URL",process.env.ONBOARD_QUERY_SERVICE_URL)
+//console.log("hello ONBOARD_QUERY_SERVICE_URL",process.env.ONBOARD_QUERY_SERVICE_URL)
 const onboardQueryServer = axios.create({
-	baseURL:  ONBOARD_QUERY_SERVICE_URL,
+	baseURL:  process.env.ONBOARD_QUERY_SERVICE_URL,
 	// timeout: 1000 * 10,
 	headers: {
 		"Content-Type": "application/json",

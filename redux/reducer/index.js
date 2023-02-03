@@ -3,7 +3,7 @@ import reducer from "./reducer";
 import brandReducer from "./brandReducer";
 
 import loginReducer from "./loginReducer";
-import onBoardQueryReducer from "./onBoardQueryReducer";
+import onBoardQueryReducer from "./onboardQueryReducer";
 
 
 const rootReducer = combineReducers({
