@@ -70,7 +70,7 @@
 }
 
 
-.brand_title_name{
+.channel_title_name{
   font-size: 20px;
     font-weight: bold;
     color: #399996;
@@ -116,7 +116,7 @@ and (max-device-width: 1500px)
   }
   
   
-  .brand_title_name{
+  .channel_title_name{
     font-size: 20px;
       font-weight: bold;
       color: #399996;
