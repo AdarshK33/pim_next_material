@@ -11,7 +11,6 @@ import { ToastContainer, toast } from "react-toastify";
 import CustomTable from "../../public/customTable";
 import TabView from "../catalog/tabView";
 import { unstable_batchedUpdates } from "react-dom";
-import { getAllBrands, getBrandById } from "../../utility/apiUtility";
 import PropertiesFormChannel from "./propertiesFormChannel";
 import CustomModal from "../../public/customModal";
 import ChannelForm from "./channelForm";
@@ -23,13 +22,13 @@ import Link from 'next/link'
 import Breadcrumb from "../../public/breadcrumb"
 import styles from "./channel.module.css";
 // import CommonPaginationTable from "../../public/commonPaginationTable"
-import TABLE_HEADERS  from "../../public/tableHeader";
+import TABLE_HEADERS from "../../public/tableHeader";
 import Pagination from "react-js-pagination";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  CommonUpdateForm from "../../public/commonUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import { createChannelApi, getChannelApi } from "../../../redux/actions/channel";
 import Image from 'next/image';
 
 
@@ -48,33 +47,33 @@ function classifyingChannel({ currentPgNo }) {
 
 
   useEffect(() => {
-    //  dispatch(createBrandApi(dataObj));
-    dispatch(getBrandApi());
+    //  dispatch(createChannelApi(dataObj));
+    dispatch(getChannelApi());
    
   }, []);
 
   const { isLogin } = useSelector(state => {
     console.log("hello state",state)
-		return state.brandReducer;
+		return state.channelReducer;
 	});
-console.log("hello brandGet",isLogin)
-  const getAllBrandsData = async (payload) => {
-    !loading && setLoading(true);
-    const apiRes = await getAllBrands(payload);
-    if (apiRes === "err") {
-    } else {
-      unstable_batchedUpdates(() => {
-        setList(apiRes.data);
-        setItemsCount(apiRes.data.totalElements);
-        setItemData({});
-        setLoading(false);
-      });
-    }
-  };
+console.log("hello ChannelGet",isLogin)
+  // const getAllChannelsData = async (payload) => {
+  //   !loading && setLoading(true);
+  //   const apiRes = await getAllChannels(payload);
+  //   if (apiRes === "err") {
+  //   } else {
+  //     unstable_batchedUpdates(() => {
+  //       setList(apiRes.data);
+  //       setItemsCount(apiRes.data.totalElements);
+  //       setItemData({});
+  //       setLoading(false);
+  //     });
+  //   }
+  // };
   const notify = (val) => {
     if (!toast.isActive(toastId.current)) {
       if (val) {
-        toastId.current = toast("Brand Name added Successfully !!!");
+        toastId.current = toast("channel Name added Successfully !!!");
       }
     }
   };
@@ -96,7 +95,7 @@ console.log("hello brandGet",isLogin)
     () => (
       <PaginationView
         totalProductCount={itemsCount}
-        getListData={getAllBrandsData}
+        // getListData={getAllChannelsData}
       />
     ),
     [itemsCount]
@@ -104,7 +103,7 @@ console.log("hello brandGet",isLogin)
 
   const getEachItemData = async (item) => {
     setItemData({});
-    const apiRes = await getBrandById(item);
+    const apiRes = await getchannelById(item);
     if (apiRes === "err") {
     } else {
       setItemData(apiRes.data);
@@ -112,13 +111,13 @@ console.log("hello brandGet",isLogin)
   };
 
   useEffect(() => {
-    getAllBrandsData({ pageSize: 10, pageNo: 0 });
+    // getAllChannelsData({ pageSize: 10, pageNo: 0 });
     currentPgNo(0);
   }, []);
 
-  const onBrandCreationSuccess = useCallback(() => {
+  const onchannelCreationSuccess = useCallback(() => {
     setShowChannelCreationForm(false);
-    getAllBrandsData({ pageSize: 10, pageNo: 0 });
+    // getAllChannelsData({ pageSize: 10, pageNo: 0 });
     toastRef.current.toastHandler({
       response: "suc",
       // position: "middle-center",
@@ -127,8 +126,8 @@ console.log("hello brandGet",isLogin)
 
   const tableHeadings = useMemo(() => {
     const arr = [
-      { name: "Brand Id" },
-      { name: "Brand Name" },
+      { name: "channel Id" },
+      { name: "channel Name" },
       { name: "Discription" },
       { name: "Action" },
     ];
@@ -139,7 +138,7 @@ console.log("hello brandGet",isLogin)
     <Fragment>
       {list.content.map((item, index) => (
         <CatatlogListTd
-          key={`BrndsListTd${index}${item.brandId}`}
+          key={`ChannelsListTd${index}${item.channelId}`}
           data={item}
           itemData={itemData}
           setItemData={getEachItemData}
@@ -177,8 +176,8 @@ console.log("hello brandGet",isLogin)
       <ToastComponenet ref={toastRef} />
       <div className={`row mx-0 font14 ${styles.listing_space}`}>
         <div className="col-10 p-0">
-        {/* <Breadcrumb title="Brand" parent="BRAND LIST" /> */}
-        <p className={styles.brand_title_name}>Channels</p>
+        {/* <Breadcrumb title="channel" parent="channel LIST" /> */}
+        <p className={styles.channel_title_name}>Channels</p>
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
 
@@ -203,7 +202,7 @@ console.log("hello brandGet",isLogin)
               >
                 <tr style={{ backgroundColor: "#f5f6f8" }}>
                   {/* <th scope="col">S. No</th> */}
-                  {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
+                  {/* <th scope="col">{TABLE_HEADERS[0].channel.id} </th> */}
                   <th scope="col">{TABLE_HEADERS[0].Channels.name}</th>
                   <th scope="col">{TABLE_HEADERS[0].Channels.discription}</th>
                   <th scope="col">{TABLE_HEADERS[0].Channels.lastUploaded}</th>
@@ -246,7 +245,7 @@ console.log("hello brandGet",isLogin)
 						                  />
                               {/* <marker
                                   onClick={() => {
-                                    setShowBrandCreationForm(true)
+                                    setShowChannelCreationForm(true)
                                   }}
                                 /> */}
                               {/* </Link> */}
@@ -298,9 +297,9 @@ console.log("hello brandGet",isLogin)
             centered={true}
             body={
               <CommonUpdateForm
-                table={TABLE_HEADERS[0].Brand.table}
+                table={TABLE_HEADERS[0].Channels.table}
                 classModal={() => setShowChannelCreationForm(false)}
-                onSuccess={onBrandCreationSuccess}
+                onSuccess={onchannelCreationSuccess}
                 notifySucess={() => notify(true)}
               />
         }
@@ -325,7 +324,7 @@ console.log("hello brandGet",isLogin)
         body={
           <ChannelForm
             classModal={() => setShowChannelCreationForm(false)}
-            onSuccess={onBrandCreationSuccess}
+            onSuccess={onchannelCreationSuccess}
             notifySucess={() => notify(true)}
           />
         }
@@ -342,13 +341,13 @@ function CatatlogListTd({ data, itemData, setItemData }) {
         <td>
           <input
             type="checkbox"
-            checked={itemData.brandId === data.brandId}
-            name={data.brandId}
+            checked={itemData.channelId === data.channelId}
+            name={data.channelId}
             onChange={() => setItemData(data)}
           />
           <span>{data.name}</span>
         </td>
-        <td>{data.brandOwner}</td>
+        <td>{data.channelOwner}</td>
         <td>{data.version}</td>
         <td>{data.modifiedAt}</td>
       </tr>

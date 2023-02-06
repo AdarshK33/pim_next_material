@@ -10,12 +10,12 @@ import React, {
 import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import SubmitButton from "../../public/formik/submitButton";
-// import { createBrandApi } from "../../utility/apiUtility";
+// import { createChannelApi } from "../../utility/apiUtility";
 import * as Yup from "yup";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import { createChannelApi,getChannelApi } from "../../../redux/actions/channel";
 import { useDispatch, useSelector } from "react-redux";
 
-function BrandForm({ classModal, onSuccess, notifySucess }) {
+function ChannelForm({ classModal, onSuccess, notifySucess }) {
   const [itemData, setItemData] = useState();
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
@@ -27,16 +27,16 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
 
   useEffect(() => {
     console.log("itemData",itemData);
-    dispatch(createBrandApi(itemData));
-    // dispatch(getBrandApi()); 
+    dispatch(createChannelApi(itemData));
+    // dispatch(getChannelApi()); 
   }, [itemData]);
 
   const notify = (type) => {
     if (!toast.isActive(toastId.current)) {
       if (type !== "err") {
-        toastId.current = toast.success("Brand added Successfully !!!");
+        toastId.current = toast.success("Channel added Successfully !!!");
       } else {
-        toastId.current = toast.error("Brand fields cannot be empty !!!");
+        toastId.current = toast.error("Channel fields cannot be empty !!!");
       }
     }
   };
@@ -48,32 +48,25 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
 
   const onSubmit = async (values, formik) => {
     console.log("values",values);
-    let brndName = {
+    let channelName = {
       name: values.name.trim(),
     };
-    let brndDiscription = {
+    let channelDiscription = {
       name: values.discription.trim(),
     };
-    let brandEmail = {
-      name: values.email.trim(),
-    };
-    console.log("val", brndName);
-    if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" ) {
+  
+    console.log("val", channelName);
+    if (channelName.name === "" || channelDiscription.name === "" ) {
       notify("err");
     } else {
       let infoData={
-        brandId: 0,
-        brandName: brndName.name,
-        description:brndDiscription.name,
-        address: null,
-        contactPerson: null,
-        emailId: brandEmail.name,
-        mobile: null,
-        imageUrl: null,
-        brandShortcode: null,
+        ChannelId: 0,
+        ChannelName: channelName.name,
+        description:channelDiscription.name,
+        
       }
       setItemData(infoData)
-      // const apiRes = await createBrandApi(brndName);
+      // const apiRes = await createChannelApi(channelName);
       if (apiRes === "err") {
         formik.setSubmitting(false);
       } else {    
@@ -95,11 +88,11 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   type="text"
                   classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
-                  label="Brand Name"
+                  label="Channel Name"
                   name="name"
-                  id="brandName"
+                  id="ChannelName"
                 />
-
+{/* 
                 <FormikControl
                   control="input"
                   type="text"
@@ -108,8 +101,8 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   label="Email Id"
                   name="email"
                   id="email"
-                />
-
+                /> */}
+{/* 
                 <FormikControl
                   control="input"
                   type="text"
@@ -118,16 +111,16 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   label="Contact Info"
                   name="contact"
                   id="contact"
-                />
+                /> */}
 
                 <FormikControl
                   control="text-area"
                   type="text"
                   classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
-                  label="Brand Discription"
+                  label="Channel Discription"
                   name="discription"
-                  id="brandDiscription"
+                  id="ChannelDiscription"
                 />
 
               <p className="boldtxt">Status</p>
@@ -162,4 +155,4 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   );
 }
 
-export default React.memo(BrandForm);
+export default React.memo(ChannelForm);

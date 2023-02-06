@@ -1,14 +1,14 @@
 import { Form, Formik } from "formik";
 import React from "react";
 import FormikControl from "../../public/formik/formikControl";
-import formJson from "../../utility/brandsProperties.json";
+import formJson from "../../utility/channelProperties.json";
 // import SubmitButton from "../../public/formik/submitButton";
 
 function PropertiesForm({ data }) {
 
     const initialValues = {
-        brand_id: data?.brandId || "",
-        brand: data?.brandOwner || "",
+        channel_id: data?.channelId || "",
+        channel: data?.channelOwner || "",
         date: data?.createdAt || ""
     }
 
