@@ -22,8 +22,7 @@ import Link from 'next/link'
 import Breadcrumb from "../../public/breadcrumb"
 import styles from "./channel.module.css";
 // import CommonPaginationTable from "../../public/commonPaginationTable"
-// import TABLE_HEADERS  from "../../public/tableChannelHeader";
-import TABLE_HEADERS from "../../public/tabelChannelHeader";
+import TABLE_HEADERS from "../../public/tableHeader";
 import Pagination from "react-js-pagination";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
@@ -298,7 +297,7 @@ console.log("hello ChannelGet",isLogin)
             centered={true}
             body={
               <CommonUpdateForm
-                table={TABLE_HEADERS[0].Channel.table}
+                table={TABLE_HEADERS[0].Channels.table}
                 classModal={() => setShowChannelCreationForm(false)}
                 onSuccess={onchannelCreationSuccess}
                 notifySucess={() => notify(true)}
