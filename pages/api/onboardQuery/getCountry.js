@@ -19,6 +19,7 @@ function handler(req, res) {
 				res.status(status).json(err.response.data.error +' '+ status);
       }
       else res.status(500).json({ message: "something went wrong" });
+      Promise.reject(err);
     });
 }
 
