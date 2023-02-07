@@ -31,8 +31,10 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
 
   useEffect(() => {
     console.log("itemData",itemData);
+    if(itemData){
     dispatch(createBrandApi(itemData));
-    dispatch(getBrandApi()); 
+    // dispatch(getBrandApi()); 
+    }
   }, [itemData]);
 
   const notify = (type) => {
@@ -87,13 +89,13 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       setItemData(infoData)
       console.log("infoData--brand",infoData);
 
-      const apiRes = await createBrandApi(brndName);
-      if (apiRes === "err") {
-        formik.setSubmitting(false);
-      } else {    
-        notifySucess(true);
-        classModal();
-      }
+      // const apiRes = await createBrandApi(brndName);
+      // if (apiRes === "err") {
+      //   formik.setSubmitting(false);
+      // } else {    
+      //   notifySucess(true);
+      //   classModal();
+      // }
     }
   };
 
