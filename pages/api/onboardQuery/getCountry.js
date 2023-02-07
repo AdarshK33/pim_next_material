@@ -10,6 +10,7 @@ function handler(req, res) {
     .then((response) => {
       if (response.status === 200) {
         res.status(200).json(response.data);
+        Promise.resolve();
       }
     })
     .catch((err) => {

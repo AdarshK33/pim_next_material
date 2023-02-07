@@ -30,9 +30,12 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   ];
 
   useEffect(() => {
+    if(itemData){
     console.log("itemData",itemData);
     dispatch(createBrandApi(itemData));
+    }
     dispatch(getBrandApi()); 
+
   }, [itemData]);
 
   const notify = (type) => {
