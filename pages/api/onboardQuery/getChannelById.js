@@ -11,6 +11,7 @@ function handler(req, res) {
     .then((response) => {
       if (response.status === 200) {
         res.status(200).json(response.data);
+        Promise.resolve();
       }
     })
     .catch((err) => {
@@ -20,7 +21,9 @@ function handler(req, res) {
 				res.status(status).json(err.response.data.error +' '+ status);
       }
       else res.status(500).json({ message: "something went wrong" });
+      Promise.reject(err);
     });
+    
 }
 
 export default handler;

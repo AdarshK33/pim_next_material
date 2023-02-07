@@ -27,7 +27,9 @@ function ChannelForm({ classModal, onSuccess, notifySucess }) {
 
   useEffect(() => {
     console.log("itemData",itemData);
+    if(itemData){
     dispatch(createChannelApi(itemData));
+    }
     // dispatch(getChannelApi()); 
   }, [itemData]);
 
