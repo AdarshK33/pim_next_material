@@ -67,7 +67,7 @@ export const updateBrandDataFailure = (error) => {
 
 export const createBrandApi = (data) => {
   let result = false;
-  console.log("hello  brandPageApi called", data);
+  // console.log("hello  brandPageApi called", data);
   return (dispatch) => {
     dispatch(createBrandDataLoading("BRAND....", "BRAND"));
     client
@@ -87,7 +87,7 @@ export const createBrandApi = (data) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        console.log("error caught in -> actions/brand/brand", err);
+        console.log("error caught in -> actions/brand/create", err);
         result = false;
         dispatch(
           createBrandDataFailure(err, "Something went wrong", "BRAND CREATE")
@@ -137,7 +137,7 @@ export const updateBrandApi = (data) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        console.log("error caught in -> actions/brand/brand", err);
+        console.log("error caught in -> actions/brand/update", err);
         dispatch(
           updateBrandDataFailure(err, "Something went wrong", "BRAND UPDATE")
         );

@@ -15,16 +15,39 @@ import * as Yup from "yup";
 import { createChannelApi,getChannelApi } from "../../../redux/actions/channel";
 import { useDispatch, useSelector } from "react-redux";
 
+import { getCountryApi } from "../../../redux/actions/onboardQuery";
+
 function ChannelForm({ classModal, onSuccess, notifySucess }) {
   const [itemData, setItemData] = useState();
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
 
+
+
   const selectOpts = [
-    { value: "active", label: "Active" },
-    { value: "inactive", label: "InActive" }
+    { id: "20", name: "Active" },
+    { id: "inactive", name: "InActive" },
+    { label: "Albania", value: 355 },
+    { label: "Argentina", value: 54 },
+    { label: "Austria", value: 43 },
+    { label: "Cocos Islands", value: 61 },
+    { label: "Kuwait", value: 965 },
+    { label: "Sweden", value: 46 },
+    { label: "Venezuela", value: 58 }
   ];
 
+
+  
+  useEffect(() => {
+    dispatch(getCountryApi());
+  }, []);
+
+  const { countryData } = useSelector(state => {
+    console.log("hello",state)
+		return state.onBoardQueryReducer;
+	});
+
+console.log("cccccccccc",countryData)
   useEffect(() => {
     console.log("itemData",itemData);
     if(itemData){
@@ -94,6 +117,15 @@ function ChannelForm({ classModal, onSuccess, notifySucess }) {
                   name="name"
                   id="ChannelName"
                 />
+
+                <FormikControl
+                  control="reactSelect"
+                  selectOpts={selectOpts}
+                  placeholder="Select"
+                  isMulti={false}
+                />
+
+              
 {/* 
                 <FormikControl
                   control="input"

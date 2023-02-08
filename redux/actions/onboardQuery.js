@@ -87,6 +87,7 @@ export const getCountryDataLoading = () => {
     };
 };
 export const getCountryDataSuccess = (data) => {
+  // console.log("hello action",data)
     return {
         type: GET_COUNTRY_DATA_SUCCESS,
         payload: data,
@@ -144,11 +145,11 @@ export const getCountryApi = () => {
       dispatch(getCountryDataLoading('COUNTRY....', 'COUNTRY'));
       client.get("/api/onboardQuery/getCountry")
         .then((response) => {
-          console.log("api response",response)
+          console.log("hello api response",response.status)
         //   console.log(response)
-          if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
-            dispatch(getCountryDataSuccess(response.data.result));
+          if (response?.status === 200 ) {
+              console.log("hello API SUCCESS2", response);
+            dispatch(getCountryDataSuccess(response.data));
           }
         })
         .catch((err) => {
