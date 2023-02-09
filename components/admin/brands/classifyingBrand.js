@@ -29,7 +29,7 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  UpdateBrandForm from "./updateBrandForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import {  getBrandListApi } from "../../../redux/actions/onboardQuery";
 import Image from 'next/image';
 
 
@@ -46,24 +46,28 @@ function classifyingBrand({ currentPgNo }) {
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
+  const [getData, setGetData] = useState({"pageNumber":"1","pageSize":"10"});
 
 
-  useEffect(() => {
+useEffect(() => {
     //  dispatch(createBrandApi(dataObj));
-    dispatch(getBrandApi());
+    dispatch(getBrandListApi(currentPage,5));
+    console.log("hello called get",currentPage)
    
-  }, [brandGet]);
+}, [brandGet,currentPage]);
 
-  const { brandGet } = useSelector(state => {
-    console.log("hello",state)
-		return state.brandReducer;
-	});
-console.log("hello brandGet",brandGet)
-  const getAllBrandsData = async (payload) => {
+const { brandGet } = useSelector(state => {
+    // console.log("hello",state)
+		return state.onBoardQueryReducer;
+});
+console.log("hello brandGet",brandGet.length)
+
+const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);
     if (apiRes === "err") {
     } else {
+
       unstable_batchedUpdates(() => {
         setList(apiRes.data);
         setItemsCount(apiRes.data.totalElements);
@@ -161,15 +165,17 @@ console.log("hello brandGet",brandGet)
   // }
  //   /*-----------------Pagination------------------*/
  const [currentPage, setCurrentPage] = useState(1);
- const recordPerPage = 10;
- const totalRecords = brandGet.length;
- const pageRange = 10;
+ const recordPerPage = 5;
+ const totalRecords = 20;
+ const pageRange = 5;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
  const currentRecords = brandGet;
 
  const handlePageChange = pageNumber => {
+  console.log(pageNumber,"ppppppppppppppp")
    setCurrentPage(pageNumber);
+   dispatch(getBrandListApi(pageNumber,5));
  }
  /*-----------------Pagination------------------*/
 

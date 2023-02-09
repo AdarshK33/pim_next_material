@@ -1,4 +1,8 @@
 import {
+    GET_BRAND_DATA_LOADING,
+    GET_BRAND_DATA_SUCCESS,
+    GET_BRAND_DATA_FAILURE,
+
     GET_CHANNEL_BYID_DATA_LOADING ,
     GET_CHANNEL_BYID_DATA_SUCCESS,
     GET_CHANNEL_BYID_DATA_FAILURE,
@@ -27,12 +31,32 @@ const initialState = {
     channelsData:{},
     channelByIdData:{},
     brandByIdData:{},
+    brandGet:{},
     error: {},
 };
 const onBoardQueryReducer = (state = initialState, action) => {
-    // console.log("hello onBoardQueryReducer reducer called",action)
+    //console.log("hello onBoardQueryReducer reducer called",action.payload)
     switch (action.type) {
 
+        case  GET_BRAND_DATA_LOADING:
+            return {
+                ...state,
+                loading: true,
+            };
+        case  GET_BRAND_DATA_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                brandGet:action.payload,
+                error: {},
+            };
+        case  GET_BRAND_DATA_FAILURE:
+                return {
+                    ...state,
+                    loading: false,
+                brandGet: [],
+                error: action,
+            };
         case GET_BRAND_BYID_DATA_LOADING:
             return {
                 ...state,
@@ -120,7 +144,7 @@ const onBoardQueryReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    countryData:action,
+                    countryData:action.payload,
                     error: {},
                 };
             case  GET_COUNTRY_DATA_FAILURE:

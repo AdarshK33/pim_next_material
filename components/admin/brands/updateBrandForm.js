@@ -31,7 +31,7 @@ function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
   useEffect(() => {
     console.log("itemData",itemData);
     dispatch(createBrandApi(itemData));
-    dispatch(getBrandApi()); 
+    // dispatch(getBrandApi()); 
   }, [itemData]);
 
   const notify = (type) => {

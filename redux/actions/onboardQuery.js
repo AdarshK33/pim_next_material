@@ -20,9 +20,31 @@ import {
     GET_COUNTRY_DATA_SUCCESS,
     GET_COUNTRY_DATA_FAILURE,
     
+    GET_BRAND_DATA_LOADING,
+    GET_BRAND_DATA_SUCCESS,
+    GET_BRAND_DATA_FAILURE,
 
 } from "../types/types";
 import { client } from "../../utils/axios";
+
+export const getBrandDataLoading = () => {
+  return {
+    type: GET_BRAND_DATA_LOADING,
+  };
+};
+export const getBrandDataSuccess = (data) => {
+  return {
+    type: GET_BRAND_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getBrandDataFailure = (error) => {
+  return {
+    type: GET_BRAND_DATA_FAILURE,
+    payload: error,
+  };
+};
+
 
 
 export const getBrandByIdDataLoading = () => {
@@ -87,6 +109,7 @@ export const getCountryDataLoading = () => {
     };
 };
 export const getCountryDataSuccess = (data) => {
+  // console.log("hello action",data)
     return {
         type: GET_COUNTRY_DATA_SUCCESS,
         payload: data,
@@ -144,11 +167,11 @@ export const getCountryApi = () => {
       dispatch(getCountryDataLoading('COUNTRY....', 'COUNTRY'));
       client.get("/api/onboardQuery/getCountry")
         .then((response) => {
-          console.log("api response",response)
+          console.log("hello api response",response.status)
         //   console.log(response)
-          if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
-            dispatch(getCountryDataSuccess(response.data.result));
+          if (response?.status === 200 ) {
+              console.log("hello API SUCCESS2", response);
+            dispatch(getCountryDataSuccess(response.data));
           }
         })
         .catch((err) => {
@@ -217,3 +240,31 @@ export const getBrandByIdApi = (data) => {
     };
   };
 
+
+export const getBrandListApi = (pageNumber,pageSize) => {
+
+  
+  const data = {
+    pageNumber: pageNumber,
+    pageSize: pageSize
+  }
+
+  console.log("hello action data ",data)
+    return (dispatch) => {
+      dispatch(getBrandDataLoading("BRAND....", "BRAND"));
+      client
+        .post("/api/onboardQuery/getBrand",data)
+        .then((response) => {
+        console.log("api response", response);
+          //   console.log(response)
+        if (response?.status === 200) {
+            console.log("API SUCCESS2", response.data.result);
+            dispatch(getBrandDataSuccess(response.data.result));
+          }
+        })
+        .catch((err) => {
+          console.log("actions/brand/brand GET =>FAILURE", err);
+          dispatch(getBrandDataFailure(err));
+        });
+    };
+  };
