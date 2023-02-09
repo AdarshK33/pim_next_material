@@ -120,12 +120,10 @@ console.log("cccccccccc",countryData)
 
                 <FormikControl
                   control="reactSelect"
-                  selectOpts={selectOpts}
+                  selectOpts={countryData}
                   placeholder="Select"
                   isMulti={false}
                 />
-
-              
 {/* 
                 <FormikControl
                   control="input"

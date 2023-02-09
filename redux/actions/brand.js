@@ -29,23 +29,6 @@ export const createBrandDataFailure = (error) => {
   };
 };
 
-export const getBrandDataLoading = () => {
-  return {
-    type: GET_BRAND_DATA_LOADING,
-  };
-};
-export const getBrandDataSuccess = (data) => {
-  return {
-    type: GET_BRAND_DATA_SUCCESS,
-    payload: data,
-  };
-};
-export const getBrandDataFailure = (error) => {
-  return {
-    type: GET_BRAND_DATA_FAILURE,
-    payload: error,
-  };
-};
 
 export const updateBrandDataLoading = () => {
   return {
@@ -98,25 +81,7 @@ export const createBrandApi = (data) => {
   };
 };
 
-export const getBrandApi = () => {
-  return (dispatch) => {
-    dispatch(getBrandDataLoading("BRAND....", "BRAND"));
-    client
-      .get("/api/onboard/getBrand")
-      .then((response) => {
-        console.log("api response", response);
-        //   console.log(response)
-        if (response?.status === 200) {
-          console.log("API SUCCESS2", response.data.result);
-          dispatch(getBrandDataSuccess(response.data.result));
-        }
-      })
-      .catch((err) => {
-        console.log("actions/brand/brand GET =>FAILURE", err);
-        dispatch(getBrandDataFailure(err));
-      });
-  };
-};
+
 
 export const updateBrandApi = (data) => {
   // console.log("hello  brandPageApi called",data)

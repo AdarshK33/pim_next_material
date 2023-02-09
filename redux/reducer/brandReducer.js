@@ -2,9 +2,7 @@ import {
     CREATE_BRAND_DATA_LOADING,
     CREATE_BRAND_DATA_SUCCESS,
    CREATE_BRAND_DATA_FAILURE,
-   GET_BRAND_DATA_LOADING,
-   GET_BRAND_DATA_SUCCESS,
-   GET_BRAND_DATA_FAILURE,
+  
    UPDATE_BRAND_DATA_LOADING,
    UPDATE_BRAND_DATA_SUCCESS,
    UPDATE_BRAND_DATA_FAILURE
@@ -13,7 +11,7 @@ import {
 const initialState = {
     loading: false,
     brandCreate: {},
-    brandGet:{},
+   
     brandUpdate:{},
     error: {},
 };
@@ -39,25 +37,7 @@ const brandReducer = (state = initialState, action) => {
                 brandCreate: [],
                 error: action,
             };
-            case  GET_BRAND_DATA_LOADING:
-            return {
-                ...state,
-                loading: true,
-            };
-            case  GET_BRAND_DATA_SUCCESS:
-                return {
-                    ...state,
-                    loading: false,
-                    brandGet:action,
-                    error: {},
-                };
-            case  GET_BRAND_DATA_FAILURE:
-                return {
-                    ...state,
-                    loading: false,
-                brandGet: [],
-                error: action,
-            };
+            
             case  UPDATE_BRAND_DATA_LOADING:
                 return {
                     ...state,

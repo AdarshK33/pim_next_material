@@ -49,7 +49,7 @@ function classifyingUser({ currentPgNo }) {
 
   useEffect(() => {
     //  dispatch(createBrandApi(dataObj));
-    dispatch(getBrandApi());
+    // dispatch(getBrandApi());
    
   }, []);
 

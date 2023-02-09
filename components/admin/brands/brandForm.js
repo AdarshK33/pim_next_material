@@ -34,7 +34,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
     console.log("itemData",itemData);
     dispatch(createBrandApi(itemData));
     }
-    dispatch(getBrandApi()); 
+    // dispatch(getBrandApi()); 
 
   }, [itemData]);
 

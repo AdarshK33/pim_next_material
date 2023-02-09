@@ -20,9 +20,31 @@ import {
     GET_COUNTRY_DATA_SUCCESS,
     GET_COUNTRY_DATA_FAILURE,
     
+    GET_BRAND_DATA_LOADING,
+    GET_BRAND_DATA_SUCCESS,
+    GET_BRAND_DATA_FAILURE,
 
 } from "../types/types";
 import { client } from "../../utils/axios";
+
+export const getBrandDataLoading = () => {
+  return {
+    type: GET_BRAND_DATA_LOADING,
+  };
+};
+export const getBrandDataSuccess = (data) => {
+  return {
+    type: GET_BRAND_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getBrandDataFailure = (error) => {
+  return {
+    type: GET_BRAND_DATA_FAILURE,
+    payload: error,
+  };
+};
+
 
 
 export const getBrandByIdDataLoading = () => {
@@ -218,3 +240,31 @@ export const getBrandByIdApi = (data) => {
     };
   };
 
+
+export const getBrandListApi = (pageNumber,pageSize) => {
+
+  
+  const data = {
+    pageNumber: pageNumber,
+    pageSize: pageSize
+  }
+
+  console.log("hello action data ",data)
+    return (dispatch) => {
+      dispatch(getBrandDataLoading("BRAND....", "BRAND"));
+      client
+        .post("/api/onboardQuery/getBrand",data)
+        .then((response) => {
+        console.log("api response", response);
+          //   console.log(response)
+        if (response?.status === 200) {
+            console.log("API SUCCESS2", response.data.result);
+            dispatch(getBrandDataSuccess(response.data.result));
+          }
+        })
+        .catch((err) => {
+          console.log("actions/brand/brand GET =>FAILURE", err);
+          dispatch(getBrandDataFailure(err));
+        });
+    };
+  };
