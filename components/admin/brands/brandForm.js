@@ -79,7 +79,8 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
     if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "") {
       console.log("notify");
       notify("err");
-    } else {
+    } 
+    else {
       let infoData={
         brandName: brndName.name,
         description:brndDiscription.name,
@@ -90,7 +91,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       setItemData(infoData)
       console.log("infoData--brand",infoData);
 
-      const apiRes = await createBrandApi(brndName);
+      const apiRes = await createBrandApi(infoData);
       if (apiRes === "err") {
         formik.setSubmitting(false);
       } else {    

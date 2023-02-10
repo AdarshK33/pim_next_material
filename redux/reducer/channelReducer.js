@@ -47,7 +47,7 @@ const channelReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        channelGet: action,
+        channelGet: action.payload,
         error: {},
       };
     case GET_CHANNEL_DATA_FAILURE:

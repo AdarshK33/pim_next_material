@@ -1,4 +1,9 @@
 import {
+
+    GET_BRAND_DROPDOWN_DATA_LOADING,
+    GET_BRAND_DROPDOWN_DATA_SUCCESS,
+    GET_BRAND_DROPDOWN_DATA_FAILURE,
+    
     GET_BRAND_DATA_LOADING,
     GET_BRAND_DATA_SUCCESS,
     GET_BRAND_DATA_FAILURE,
@@ -32,11 +37,31 @@ const initialState = {
     channelByIdData:{},
     brandByIdData:{},
     brandGet:{},
+    brandDropdownGet:{},
     error: {},
 };
 const onBoardQueryReducer = (state = initialState, action) => {
     //console.log("hello onBoardQueryReducer reducer called",action.payload)
     switch (action.type) {
+        case  GET_BRAND_DROPDOWN_DATA_LOADING:
+            return {
+                ...state,
+                loading: true,
+            };
+        case  GET_BRAND_DROPDOWN_DATA_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                brandDropdownGet:action.payload,
+                error: {},
+            };
+        case  GET_BRAND_DROPDOWN_DATA_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            brandDropdownGet: [],
+            error: action,
+        };
 
         case  GET_BRAND_DATA_LOADING:
             return {
@@ -106,7 +131,7 @@ const onBoardQueryReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                MarketplaceData:action,
+                MarketplaceData:action.payload,
                 error: {},
             };
         case GET_MARKETPLACE_DATA_FAILURE:
@@ -125,7 +150,7 @@ const onBoardQueryReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    channelsData:action,
+                    channelsData:action.payload,
                     error: {},
                 };
             case  GET_CHANNELS_DATA_FAILURE:
