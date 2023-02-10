@@ -71,7 +71,7 @@ export const createChannelApi = (data) => {
   return (dispatch) => {
     dispatch(createChannelDataLoading("Channel....", "Channel"));
     client
-      .post("/api/onboard/addchannel", data)
+      .post("/api/channel/createChannel", data)
       .then((response) => {
         console.log("---------------", response.status);
         result = true;
@@ -98,32 +98,32 @@ export const createChannelApi = (data) => {
   };
 };
 
-export const getChannelApi = () => {
-  return (dispatch) => {
-    dispatch(getChannelDataLoading("Channel....", "Channel"));
-    client
-      .get("/api/onboard/getChannel")
-      .then((response) => {
-        console.log("api response", response);
-        //   console.log(response)
-        if (response?.status === 200) {
-          console.log("API SUCCESS2", response.data.result);
-          dispatch(getChannelDataSuccess(response.data.result));
-        }
-      })
-      .catch((err) => {
-        console.log("actions/Channel/Channel GET =>FAILURE", err);
-        dispatch(getChannelDataFailure(err));
-      });
-  };
-};
+// export const getChannelApi = () => {
+//   return (dispatch) => {
+//     dispatch(getChannelDataLoading("Channel....", "Channel"));
+//     client
+//       .get("/api/channel/getChannel")
+//       .then((response) => {
+//         console.log("api response", response);
+//         //   console.log(response)
+//         if (response?.status === 200) {
+//           console.log("API SUCCESS2", response.data.result);
+//           dispatch(getChannelDataSuccess(response.data.result));
+//         }
+//       })
+//       .catch((err) => {
+//         console.log("actions/Channel/Channel GET =>FAILURE", err);
+//         dispatch(getChannelDataFailure(err));
+//       });
+//   };
+// };
 
 export const updateChannelApi = (data) => {
   // console.log("hello  ChannelPageApi called",data)
   return (dispatch) => {
     dispatch(updateChannelDataLoading("Channel....", "Channel"));
     client
-      .post("/api/onboard/updateChannel", data)
+      .post("/api/channel/updateChannel", data)
       .then((response) => {
         if (response.status === 200) {
           console.log("ChannelGreat==>", response.data);
@@ -144,3 +144,34 @@ export const updateChannelApi = (data) => {
       });
   };
 };
+
+
+export const getChannelListApi = (pageNumber,pageSize) => {
+
+  
+  const data = {
+    pageNumber: pageNumber,
+    pageSize: pageSize
+  }
+
+  // console.log("hello action data ",data)
+    return (dispatch) => {
+    dispatch(getChannelDataLoading("Channel....", "Channel"));
+     
+      client
+        .post("/api/onboardQuery/getChannelsList",data)
+        .then((response) => {
+        // console.log("api response", response);
+        if (response?.status === 200) {
+            // console.log("API SUCCESS2", response.data.result);
+          dispatch(getChannelDataSuccess(response.data.result));
+           
+          }
+        })
+        .catch((err) => {
+          console.log("actions/OnboardQuery/Channel GET LIST =>FAILURE", err);
+                  dispatch(getChannelDataFailure(err));
+        });
+    };
+  };
+

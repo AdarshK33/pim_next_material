@@ -28,7 +28,7 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  CommonUpdateForm from "../../public/commonUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createChannelApi, getChannelApi } from "../../../redux/actions/channel";
+import { getChannelListApi } from "../../../redux/actions/channel";
 import Image from 'next/image';
 
 
@@ -46,30 +46,21 @@ function classifyingChannel({ currentPgNo }) {
   const dispatch = useDispatch();
 
 
-  useEffect(() => {
-    //  dispatch(createChannelApi(dataObj));
-    dispatch(getChannelApi());
-   
-  }, []);
 
-  const { isLogin } = useSelector(state => {
-    console.log("hello state",state)
-		return state.channelReducer;
-	});
-console.log("hello ChannelGet",isLogin)
-  // const getAllChannelsData = async (payload) => {
-  //   !loading && setLoading(true);
-  //   const apiRes = await getAllChannels(payload);
-  //   if (apiRes === "err") {
-  //   } else {
-  //     unstable_batchedUpdates(() => {
-  //       setList(apiRes.data);
-  //       setItemsCount(apiRes.data.totalElements);
-  //       setItemData({});
-  //       setLoading(false);
-  //     });
-  //   }
-  // };
+  useEffect(() => {
+    //  dispatch(createBrandApi(dataObj));
+    dispatch(getChannelListApi(currentPage,5));
+    // console.log("hello called get",currentPage)
+   
+}, [currentPage]);
+
+
+const { channelGet } = useSelector(state => {
+  // console.log("hello",state)
+  return state.channelReducer;
+});
+console.log("hello channelGet",channelGet)
+
   const notify = (val) => {
     if (!toast.isActive(toastId.current)) {
       if (val) {
@@ -105,7 +96,8 @@ console.log("hello ChannelGet",isLogin)
     setItemData({});
     const apiRes = await getchannelById(item);
     if (apiRes === "err") {
-    } else {
+    } 
+    else {
       setItemData(apiRes.data);
     }
   };
@@ -159,15 +151,16 @@ console.log("hello ChannelGet",isLogin)
   }
  //   /*-----------------Pagination------------------*/
  const [currentPage, setCurrentPage] = useState(1);
- const recordPerPage = 10;
- const totalRecords = tableData.length;
- const pageRange = 10;
+ const recordPerPage = 5;
+ const totalRecords = 20;
+ const pageRange = 5;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = tableData;
+ const currentRecords = channelGet;
 
  const handlePageChange = pageNumber => {
    setCurrentPage(pageNumber);
+   dispatch(getChannelListApi(pageNumber,5));
  }
  /*-----------------Pagination------------------*/
 
@@ -213,10 +206,10 @@ console.log("hello ChannelGet",isLogin)
 
                 </tr>
               </thead>
-                {tableData !== null &&
-                  tableData.length > 0
+                {currentRecords !== null &&
+                  currentRecords.length > 0
                   ? (
-                    tableData.map((item, i) => {
+                    currentRecords.map((item, i) => {
 
                       return (
                         <tbody style={{borderTop: "0px"}}
@@ -225,11 +218,11 @@ console.log("hello ChannelGet",isLogin)
                           <tr>
                             {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
                             {/* <td>{item.id}</td> */}
-                            <td>{item.name}</td>
-                            <td>{item.discription}</td>
+                            <td>{item.channelName}</td>
+                            <td>{item.description}</td>
                             <td>{item.lastUploaded}</td>
                             <td>{item.totalProductsActive}</td>
-                            <td>{item.totalProductsInactive}</td>
+                            <td>{item.totalProductsInActive}</td>
                             <td>{item.status}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/${item.id}`}> */}

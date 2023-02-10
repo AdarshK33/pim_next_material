@@ -8,12 +8,13 @@ export default async function handler(req, res) {
 	
 	const config = {
 		method: 'post',
-		url: 'addchannel',
+		url: '/addchannel',
 		data: body,
 	};
 
 	onboardServer(config)
 		.then(response => {
+			console.log("hello repo",response)
 			if (response.status === 200) {
 				res.status(200).json(response.data.result);
                 Promise.resolve();

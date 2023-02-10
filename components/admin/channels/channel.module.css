@@ -132,5 +132,8 @@ and (max-device-width: 1500px)
   
   }
 
+  .channel_dropdown{
+    margin-bottom: 15px;
+  }
 
 }

@@ -15,39 +15,34 @@ import * as Yup from "yup";
 import { createChannelApi,getChannelApi } from "../../../redux/actions/channel";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getCountryApi } from "../../../redux/actions/onboardQuery";
+import { getCountryApi ,getBrandDropdownApi,getMarketplaceApi} from "../../../redux/actions/onboardQuery";
 
+import styles from "./channel.module.css"
 function ChannelForm({ classModal, onSuccess, notifySucess }) {
   const [itemData, setItemData] = useState();
+  const [brandSelect, setBrandDropdown] = useState();
+  const [marketplaceSelect, setMarketplaceData] = useState();
+  const [countrySelect, setCountryData] = useState();
+
+console.log("hello marketplaceSelect ",marketplaceSelect)
+  
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
-
-
-
-  const selectOpts = [
-    { id: "20", name: "Active" },
-    { id: "inactive", name: "InActive" },
-    { label: "Albania", value: 355 },
-    { label: "Argentina", value: 54 },
-    { label: "Austria", value: 43 },
-    { label: "Cocos Islands", value: 61 },
-    { label: "Kuwait", value: 965 },
-    { label: "Sweden", value: 46 },
-    { label: "Venezuela", value: 58 }
-  ];
 
 
   
   useEffect(() => {
     dispatch(getCountryApi());
+    dispatch(getBrandDropdownApi());
+    dispatch(getMarketplaceApi());
+    
   }, []);
 
-  const { countryData } = useSelector(state => {
-    console.log("hello",state)
+  const { countryData,brandDropdownGet,MarketplaceData } = useSelector(state => {
+    // console.log("hello",state)
 		return state.onBoardQueryReducer;
 	});
 
-console.log("cccccccccc",countryData)
   useEffect(() => {
     console.log("itemData",itemData);
     if(itemData){
@@ -66,32 +61,45 @@ console.log("cccccccccc",countryData)
     }
   };
   const initialValues = {
-    name: "",
-    discription: "",
-    email:""
+    channelName: "",
+    brandId:"",
+    marketPlaceId: "",
+    countryId: "",
+    description: ""
   };
 
   const onSubmit = async (values, formik) => {
     console.log("values",values);
     let channelName = {
-      name: values.name.trim(),
+      name: values.channelName.trim(),
     };
-    let channelDiscription = {
-      name: values.discription.trim(),
+    let channelBrandId = {
+      id: values.brandId,
+    };
+    let channelMarketPlaceId = {
+      id: values.marketPlaceId,
+    };
+    let channelCountryId = {
+      id: values.countryId,
+    };
+    let channelDescription = {
+      name: values.description.trim(),
     };
   
     console.log("val", channelName);
-    if (channelName.name === "" || channelDiscription.name === "" ) {
+    if (channelName.name === "" || channelDescription.name === "" || channelBrandId.id===""||channelCountryId.id===""||channelMarketPlaceId.id==="") {
       notify("err");
     } else {
       let infoData={
-        ChannelId: 0,
-        ChannelName: channelName.name,
-        description:channelDiscription.name,
-        
+        channelname  : channelName.name,
+        marketPlaceId: channelMarketPlaceId.id,
+        brandId      :channelBrandId.id,
+        countryId    :channelCountryId.id,
+        description  :channelDescription.name
       }
+      console.log("ssssssssssss",infoData)
       setItemData(infoData)
-      // const apiRes = await createChannelApi(channelName);
+      const apiRes = await createChannelApi(infoData);
       if (apiRes === "err") {
         formik.setSubmitting(false);
       } else {    
@@ -105,7 +113,7 @@ console.log("cccccccccc",countryData)
     <>
       <div className="bg-white p-3 br3">
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ isSubmitting }) => {
+          {({ isSubmitting ,setFieldValue}) => {
             return (
               <Form className="row mx-0 font12">
                 <FormikControl
@@ -114,54 +122,54 @@ console.log("cccccccccc",countryData)
                   classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
                   label="Channel Name"
-                  name="name"
+                  name="channelName"
                   id="ChannelName"
                 />
 
-                <FormikControl
-                  control="reactSelect"
-                  selectOpts={countryData}
-                  placeholder="Select"
-                  isMulti={false}
-                />
-{/* 
-                <FormikControl
-                  control="input"
-                  type="text"
-                  classprops="form-group mb-3 col-md-12 boldtxt"
-                  className="form-control form-control-sm bb_only px-0 py-2"
-                  label="Email Id"
-                  name="email"
-                  id="email"
-                /> */}
-{/* 
-                <FormikControl
-                  control="input"
-                  type="text"
-                  classprops="form-group mb-3 col-md-12 boldtxt"
-                  className="form-control form-control-sm bb_only px-0 py-2"
-                  label="Contact Info"
-                  name="contact"
-                  id="contact"
-                /> */}
+                  <div className={`${styles.channel_dropdown}`}>
+                                 <FormikControl
+                                    control="reactSelect"
+                                    selectOpts={brandDropdownGet}
+                                    placeholder="Brand"
+                                    name="brandId"
+                                    isMulti={false}
+                                   setFieldValue={setFieldValue}
+                                  />
+                  </div>
+                  <div className={`${styles.channel_dropdown}`}>
+                                <FormikControl
+                                    control="reactSelect"
+                                    selectOpts={MarketplaceData}
+                                    placeholder="Market Place"
+                                    isMulti={false}
+                                    name="marketPlaceId"
+                                    setFieldValue={setFieldValue}
+                                  />
+                  </div>
+           
+                  <div className={`${styles.channel_dropdown}`}>
+                                <FormikControl
+                                    control="reactSelect"
+                                    selectOpts={countryData}
+                                    placeholder="Country"
+                                    isMulti={false}
+                                    name="countryId"
+                                    setFieldValue={setFieldValue}
+                                  />
+                  </div>
+           
 
                 <FormikControl
                   control="text-area"
                   type="text"
                   classprops="form-group mb-3 col-md-12 boldtxt"
                   className="form-control form-control-sm bb_only px-0 py-2"
-                  label="Channel Discription"
-                  name="discription"
-                  id="ChannelDiscription"
+                  label="Channel Description"
+                  name="description"
+                  id="ChannelDescription"
                 />
 
-              <p className="boldtxt">Status</p>
-                <FormikControl
-                  control="reactSelect"
-                  selectOpts={selectOpts}
-                  placeholder="Select"
-                  isMulti={false}
-                />
+           
 
                 <div className="col-12 text-center pt-5">
                   <SubmitButton
