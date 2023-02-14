@@ -3,7 +3,7 @@ import React, {
   Fragment,
   useMemo,
   useState,
-  useEffect,
+  useEffect, 
   useCallback,
   useRef,
 } from "react";
@@ -12,7 +12,7 @@ import FormikControl from "../../public/formik/formikControl";
 import SubmitButton from "../../public/formik/submitButton";
 // import { createBrandApi } from "../../utility/apiUtility";
 import * as Yup from "yup";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import { updateBrandApi } from "../../../redux/actions/brand";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./brand.module.css";
 
@@ -28,11 +28,11 @@ function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
     { value: "false", label: "In-Active" }
   ];
 
-  useEffect(() => {
-    console.log("itemData",itemData);
-    dispatch(createBrandApi(itemData));
-    // dispatch(getBrandApi()); 
-  }, [itemData]);
+  const { brandByIdData,loading } = useSelector(state => {
+    // console.log("hello",state)
+		return state.onBoardQueryReducer;
+});
+
 
   const notify = (type) => {
     if (!toast.isActive(toastId.current)) {
@@ -43,54 +43,55 @@ function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
       }
     }
   };
+
   const initialValues = {
-    brandName: "",
-    description:"",
-    contactPerson: "",
-    emailId: "",
-    mobile: "",
-    isActive:"",
+    brandName: brandByIdData?.brandName,
+    description:brandByIdData?.description,
+    contactPerson:brandByIdData?.contactPerson,
+    emailId: brandByIdData?.emailId,
+    mobile: brandByIdData?.mobile,
+    brandStatus:brandByIdData?.isActive
   };
-  console.log("brandActive1",brandActive);
 
+ 
   const onSubmit = async (values, formik) => {
-    formik.setFieldValue("isActive")
-    console.log("values",values);
-    console.log("brandActive",brandActive);
-
-    let brndName = {
+    // formik.setFieldValue("isActive")
+console.log("hello value",values,formik)
+    let brandName = {
       name: values.brandName.trim(),
     };
-    let brndDiscription = {
+    let brandDescription = {
       name: values.description.trim(),
     };
     let brandEmail = {
-      name: values.emailId.trim(),
+      email: values.emailId.trim(),
     };
     let brandContact = {
       name: values.contactPerson.trim(),
     };
     let brandMobile = {
-      name: values.mobile.trim(),
+      number: values.mobile.trim(),
+    };
+    let brandStatus = {
+      value: values.status,
     };
 
-
-
-    if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "" || brandActive === "") {
+    if (brandName.name === "" || brandDescription.name === "" || brandEmail.email === "" || brandContact.name === "" || brandMobile.number === "" ||brandStatus.value=== "" ) {
       console.log("notify");
       notify("err");
-    } else {
+    }
+    else {
       let infoData={
-        brandName: brndName.name,
-        description:brndDiscription.name,
+        brandName: brandName.name,
+        description:brandDescription.name,
         contactPerson: brandEmail.name,
-        emailId: brandContact.name,
-        mobile: brandMobile.name,
-        isActive:brandActive,
+        emailId: brandContact.email,
+        mobile: brandMobile.number,
+        status:brandStatus.value,
       }
       setItemData(infoData)
       console.log("infoData",infoData);
-      // const apiRes = await createBrandApi(brndName);
+      // const apiRes = await updateBrandApi(brndName);
       if (apiRes === "err") {
         formik.setSubmitting(false);
       } else {    
@@ -103,8 +104,9 @@ function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
   return (
     <>
       <div className="bg-white p-3 br3">
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ isSubmitting }) => {
+        {loading ? <p>Loading...</p>:null}
+        {!loading &&initialValues.brandName ?( <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          {({ isSubmitting,setFieldValue }) => {
             return (
               <Form className="row mx-0 font12">
                 <FormikControl
@@ -163,10 +165,9 @@ function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
                   selectOpts={selectOpts}
                   placeholder="Select"
                   isMulti={false}
-                  name="isActive"
-                  id="isActive"
-                  setFieldValue={(n,v)=>
-                  v==="true" && setBrandActive(true) }
+                  name="status"
+                  id="status"
+                  setFieldValue={setFieldValue}
                 />
 
                 <div className="col-12 text-center pt-5">
@@ -186,7 +187,8 @@ function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
               </Form>
             );
           }}
-        </Formik>
+        </Formik>):null}
+       
       </div>
       <ToastContainer />
     </>

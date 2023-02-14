@@ -160,7 +160,7 @@ console.log("hello channelGet",channelGet)
 
  const handlePageChange = pageNumber => {
    setCurrentPage(pageNumber);
-   dispatch(getChannelListApi(pageNumber,5));
+   dispatch(getChannelListApi(pageNumber-1,5));
  }
  /*-----------------Pagination------------------*/
 
@@ -203,7 +203,6 @@ console.log("hello channelGet",channelGet)
                   <th scope="col">{TABLE_HEADERS[0].Channels.totalProductsInactive}</th>
                   <th scope="col">{TABLE_HEADERS[0].Channels.status}</th>
                   <th scope="col">{TABLE_HEADERS[0].Channels.action}</th>
-
                 </tr>
               </thead>
                 {currentRecords !== null &&

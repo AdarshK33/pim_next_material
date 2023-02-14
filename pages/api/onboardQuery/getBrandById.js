@@ -3,9 +3,10 @@ import { onboardQueryServer } from "../../../utils/axios";
 
 function handler(req, res) {
   const body = req.body;
+   const id = body.brandId
   const config = {
     method: "get",
-    url: `/getBrandById/${body.brandId}`
+    url: `/getBrandById/${id}`
   };
   onboardQueryServer(config)
     .then((response) => {

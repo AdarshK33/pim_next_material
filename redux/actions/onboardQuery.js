@@ -265,14 +265,20 @@ export const getChannelByIdApi = (data) => {
     };
   };
 
-export const getBrandByIdApi = (data) => {
+export const getBrandByIdApi = (brandId) => {
+  const data = {
+    brandId: brandId
+  }
+
+  // console.log("hello redux getBrandByIdApi",data)
     return (dispatch) => {
       dispatch(getBrandByIdDataLoading('BRAND BY ID....', 'BRAND BY ID'));
-      client.get("/api/onboardQuery/getChannels",data)
-        .then((response) => {
+      client
+      .post("/api/onboardQuery/getBrandById",data)
+      .then((response) => {
           console.log("api response",response)
         //   console.log(response)
-          if (response?.data?.statusCode === 200) {
+          if (response?.status=== 200) {
               console.log("API SUCCESS2", response.data.result);
             dispatch(getBrandByIdDataSuccess(response.data.result));
           }
