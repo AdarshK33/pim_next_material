@@ -166,7 +166,7 @@ useEffect(() => {
                   <div className="login_password">
                   <FormikControl
                   control="input"
-                  type="text"
+                  type="password"
                   classprops="form-group"
                   className={`form-control form-control bb_only px-0 py-2 text-center`}
                   placeholder="Password"

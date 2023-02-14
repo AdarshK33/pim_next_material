@@ -91,7 +91,7 @@ const onBoardQueryReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                brandByIdData:action,
+                brandByIdData:action.payload,
                 error: {},
             };
         case GET_BRAND_BYID_DATA_FAILURE:
