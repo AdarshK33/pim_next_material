@@ -83,13 +83,24 @@ export const createBrandApi = (data) => {
 
 
 
-export const updateBrandApi = (data) => {
-  // console.log("hello  brandPageApi called",data)
+export const updateBrandApi = (info) => {
+  //console.log("hello  brandupdateApi info",info)
+  const data = {
+        brandId:info?.brandId,
+        brandName: info.brandName,
+        description:info.description,
+        contactPerson: info.contactPerson,
+        emailId: info.emailId,
+        mobile: info.mobile
+  }
+ // console.log("hello  brandupdateApi data",data)
+
   return (dispatch) => {
     dispatch(updateBrandDataLoading("BRAND....", "BRAND"));
     client
       .post("/api/onboard/updateBrand", data)
       .then((response) => {
+        console.log("rrrrrr",response)
         if (response.status === 200) {
           console.log("BrandGreat==>", response.data);
           dispatch(

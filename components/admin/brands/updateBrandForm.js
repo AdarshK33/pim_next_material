@@ -29,10 +29,15 @@ function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
   ];
 
   const { brandByIdData,loading } = useSelector(state => {
-    // console.log("hello",state)
 		return state.onBoardQueryReducer;
 });
 
+useEffect(() => {
+  if(itemData){
+  dispatch(updateBrandApi(itemData));
+  }
+
+}, [itemData]);
 
   const notify = (type) => {
     if (!toast.isActive(toastId.current)) {
@@ -50,13 +55,13 @@ function UpdateBrandForm({ classModal, onSuccess, notifySucess }) {
     contactPerson:brandByIdData?.contactPerson,
     emailId: brandByIdData?.emailId,
     mobile: brandByIdData?.mobile,
-    brandStatus:brandByIdData?.isActive
+    // brandStatus:brandByIdData?.isActive
   };
 
  
   const onSubmit = async (values, formik) => {
     // formik.setFieldValue("isActive")
-console.log("hello value",values,formik)
+   //console.log("hello value",values)
     let brandName = {
       name: values.brandName.trim(),
     };
@@ -64,34 +69,37 @@ console.log("hello value",values,formik)
       name: values.description.trim(),
     };
     let brandEmail = {
-      email: values.emailId.trim(),
+      name: values.emailId.trim(),
     };
     let brandContact = {
       name: values.contactPerson.trim(),
     };
     let brandMobile = {
-      number: values.mobile.trim(),
+      name: values.mobile.trim(),
     };
-    let brandStatus = {
-      value: values.status,
-    };
+    // let brandStatus = {
+    //   name: values.status,
+    // };
 
-    if (brandName.name === "" || brandDescription.name === "" || brandEmail.email === "" || brandContact.name === "" || brandMobile.number === "" ||brandStatus.value=== "" ) {
+    if (brandName.name === "" || brandDescription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "" ) {
       console.log("notify");
+      // ||brandStatus.name === "" 
       notify("err");
     }
     else {
       let infoData={
+        brandId: brandByIdData?.brandId,
         brandName: brandName.name,
         description:brandDescription.name,
-        contactPerson: brandEmail.name,
-        emailId: brandContact.email,
-        mobile: brandMobile.number,
-        status:brandStatus.value,
+        contactPerson: brandContact.name,
+        emailId: brandEmail.name,
+        mobile: brandMobile.name,
+        //  status:brandStatus.name,
+        // status: brandByIdData?.isActive
       }
       setItemData(infoData)
       console.log("infoData",infoData);
-      // const apiRes = await updateBrandApi(brndName);
+      const apiRes = await updateBrandApi(brndName);
       if (apiRes === "err") {
         formik.setSubmitting(false);
       } else {    
@@ -159,7 +167,7 @@ console.log("hello value",values,formik)
                   id="description"
                 />
 
-              <p className="boldtxt">Status</p>
+              {/* <p className="boldtxt">Status</p>
                 <FormikControl
                   control="reactSelect"
                   selectOpts={selectOpts}
@@ -168,7 +176,7 @@ console.log("hello value",values,formik)
                   name="status"
                   id="status"
                   setFieldValue={setFieldValue}
-                />
+                /> */}
 
                 <div className="col-12 text-center pt-5">
                   <SubmitButton

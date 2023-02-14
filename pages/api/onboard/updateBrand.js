@@ -4,9 +4,11 @@ export default async function handler(req, res) {
     // return new Promise((resolve, reject) => {
 		
 	const body = req.body;
+	
+	let id=body.brandId
 	const config = {
 		method: 'patch',
-		url: `/brand/${body.id}`,
+		url: `/brand/update/${id}`,
 		data: body,
 	};
 	onboardServer(config)

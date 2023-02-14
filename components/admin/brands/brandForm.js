@@ -74,8 +74,6 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       name: values.mobile.trim(),
     };
 
-
-
     if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "") {
       console.log("notify");
       notify("err");
@@ -84,8 +82,8 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       let infoData={
         brandName: brndName.name,
         description:brndDiscription.name,
-        contactPerson: brandEmail.name,
-        emailId: brandContact.name,
+        contactPerson: brandContact.name,
+        emailId: brandEmail.name,
         mobile: brandMobile.name
       }
       setItemData(infoData)
