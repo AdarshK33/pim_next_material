@@ -4,7 +4,7 @@ import withSession from "../../../utils/session";
 
 function handler(req, res) {
   const { user: { at = "" } = {}, loggedIn } = req.session;
-  console.log("Brand loggedIn",at,loggedIn)
+  // console.log("Brand loggedIn",at,loggedIn)
 	const body = req.body;
   // const sku = body.pageNumber
   // const sku2 = body.pageSize

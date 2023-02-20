@@ -42,12 +42,12 @@ function ProductList({ currentPgNo }) {
   ];
 
   
-  const { loginUser } = useSelector(({app}) => {
-    console.log("hello app",app)
-    return {loginUser: app?.loggedIn,};
-  });
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
   
-  console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
   
 
   useEffect(() => {

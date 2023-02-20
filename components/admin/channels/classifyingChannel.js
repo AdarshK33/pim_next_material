@@ -48,12 +48,12 @@ function classifyingChannel({ currentPgNo }) {
   const dispatch = useDispatch();
   const [showBrandUpdateForm, setShowBrandUpdateForm] = useState(false);
 
-  const { loginUser } = useSelector(({app}) => {
-    console.log("hello app",app)
-    return {loginUser: app?.loggedIn,};
-  });
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
   
-  console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
   
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const { channelGet } = useSelector(state => {
   // console.log("hello",state)
   return state.channelReducer;
 });
-console.log("hello channelGet",channelGet)
+// console.log("hello channelGet",channelGet)
 
   const notify = (val) => {
     if (!toast.isActive(toastId.current)) {

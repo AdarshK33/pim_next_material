@@ -11,12 +11,25 @@ import CommonHeader from "../../components/admin/commonHeader"
 import { useDispatch, useSelector } from "react-redux";
 import {initApplication} from "../../redux/actions/app"
 
+import useUser from "../../utils/useUser";
+// import fetchJson from "../../utils/fetchJson";
+// import { useRouter } from "next/router";
+
 
 function AdminDashBoard() {
   const dispatch = useDispatch();
-  useEffect(() => {
-		dispatch(initApplication());
-	}, []);
+  const { user, mutateUser } = useUser();
+
+
+  // useEffect(() => {
+	// 	dispatch(initApplication());
+	// }, []);
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
+
+
   const { query } = useRouter();
   const heading = useMemo(() => {
     switch (query.list) {
@@ -40,6 +53,9 @@ function AdminDashBoard() {
   }, [query]);
 
   return (
+<>
+    {user?.isLoggedIn === true && (
+      <>
     <div className="page-container dashBoard">
       {/* <h4 className="offset-md-2 px-2 text-uppercase heading">{heading}</h4> */}
       <div className="row mx-0 md-5 p-0 min_height_100">
@@ -55,7 +71,11 @@ function AdminDashBoard() {
         </div>
       </div>
     </div>
+    </>
+    )}
+     </>
   );
+ 
 }
 
 export default React.memo(AdminDashBoard);

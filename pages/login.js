@@ -19,9 +19,15 @@ import { useDispatch } from "react-redux";
 
 
 import {userLoginApi } from "../redux/actions/login";
-
+import useUser  from "../utils/useUser"
 
 function Login() {
+
+
+  const { mutateUser } = useUser({
+    redirectTo: "/profile-sg",
+    redirectIfFound: true,
+  });
   // console.log("hello pppppppppp",props)
   const [itemData, setItemData] = useState();
 
@@ -38,7 +44,7 @@ function Login() {
     // console.log("lllllllllllllll",LoginStat.isLogin.statusCode)
     useEffect(() => {
       if(LoginStat.isLogin.statusCode===200){
-        router.push("/dashboard/dashboard");
+        router.push("/dashboards/brands?list=brands_categories");
       }
     }, [LoginStat.isLogin.statusCode]);
 
