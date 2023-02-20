@@ -49,15 +49,14 @@ export const updateBrandDataFailure = (error) => {
 };
 
 export const createBrandApi = (data) => {
-  let result = false;
-  // console.log("hello  brandPageApi called", data);
-  return (dispatch) => {
+// console.log("hello  brandPageApi called", data);
+return (dispatch) => {
     dispatch(createBrandDataLoading("BRAND....", "BRAND"));
     client
       .post("/api/onboard/createBrand", data)
       .then((response) => {
         console.log("---------------", response.status);
-        result = true;
+       
         if (response.status === 200) {
           console.log("BrandGreat==>", response.data.result);
           dispatch(
@@ -71,13 +70,11 @@ export const createBrandApi = (data) => {
       })
       .catch((err) => {
         console.log("error caught in -> actions/brand/create", err);
-        result = false;
+        
         dispatch(
           createBrandDataFailure(err, "Something went wrong", "BRAND CREATE")
         );
       });
-
-    return result;
   };
 };
 

@@ -38,12 +38,17 @@ const onboardQueryServer = axios.create({
 });
 
 
+onboardServer.setJwtToken = newToken => {
+	token = newToken;
+};
+authServer.setJwtToken = newToken => {
+	token = newToken;
+};
 
+onboardQueryServer.setJwtToken = newToken => {
+	token = newToken;
+};
 
-
-// server.setJwtToken = newToken => {
-// 	token = newToken;
-// };
 
 // server.setSessionId = SessionId => {
 // 	session = SessionId;
@@ -90,7 +95,7 @@ const onboardQueryServer = axios.create({
 
 // const clearSession = () => {
 // 	client
-// 		.post("/api/signout/signout")
+// 		.post("/api/login/logOut")
 // 		.then(response => {
 // 			if (response.status === 200) {
 // 				toast.error("You're Session Has Expired");

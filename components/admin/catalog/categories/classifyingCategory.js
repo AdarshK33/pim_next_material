@@ -35,6 +35,7 @@ import { Switch, Space } from 'antd';
 
 import FormikControl from "../../../public/formik/formikControl"
 import SubmitButton from "../../../public/formik/submitButton";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function classifyingCategory({ currentPgNo }) {
@@ -46,6 +47,15 @@ function classifyingCategory({ currentPgNo }) {
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
 
+
+  const { loginUser } = useSelector(({app}) => {
+    console.log("hello app",app)
+    return {loginUser: app?.loggedIn,};
+  });
+  
+  console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  
+  
   const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);

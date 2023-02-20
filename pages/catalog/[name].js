@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import React, { useMemo } from "react";
+import React, { useMemo ,useState, useEffect } from "react";
 import DashBoardContent from "../../components/admin/dashBoardContent";
 import DashBoardSideBar from "../../components/admin/dashBoardSideBar";
 import styles from "../dashboard/dashboard.module.css";
@@ -8,8 +8,14 @@ import logo from "../../assets/icons/logo_2_2022.svg";
 import user from "../../assets/icons/user1.png";
 import ProductDetail from "../../components/admin/catalog/productDetails"
 import CommonHeader from "../../components/admin/commonHeader"
+import { useDispatch, useSelector } from "react-redux";
+import {initApplication} from "../../redux/actions/app"
 
 function AdminDashBoard() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+		dispatch(initApplication());
+	}, []);
   const { query } = useRouter();
   const heading = useMemo(() => {
     switch (query.list) {

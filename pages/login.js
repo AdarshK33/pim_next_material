@@ -21,7 +21,8 @@ import { useDispatch } from "react-redux";
 import {userLoginApi } from "../redux/actions/login";
 
 
-function Login() { 
+function Login() {
+  // console.log("hello pppppppppp",props)
   const [itemData, setItemData] = useState();
 
     const LoginStat = {
@@ -79,13 +80,13 @@ useEffect(() => {
         }
 
         setItemData(infoData)
-        // const apiRes = await createBrandApi(brndName);
-        // if (apiRes === "err") {
-        //   formik.setSubmitting(false);
-        // } else {
-        //   notifySucess(true);
-        //   classModal();
-        // }
+        const apiRes = await userLoginApi(infoData);
+        if (apiRes === "err") {
+          formik.setSubmitting(false);
+        } else {
+          notifySucess(true);
+          classModal();
+        }
       }
     };
 

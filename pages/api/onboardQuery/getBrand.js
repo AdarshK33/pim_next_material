@@ -1,8 +1,10 @@
 
 import { onboardQueryServer } from "../../../utils/axios";
+import withSession from "../../../utils/session";
 
 function handler(req, res) {
-
+  const { user: { at = "" } = {}, loggedIn } = req.session;
+  console.log("Brand loggedIn",at,loggedIn)
 	const body = req.body;
   // const sku = body.pageNumber
   // const sku2 = body.pageSize
@@ -16,8 +18,10 @@ function handler(req, res) {
     method: "get",
     url: `/fetchbrand/${body.pageNumber}/${body.pageSize}`,
     // data: body,
-
-    // url: `/fetchbrand/1/5`
+   headers: {
+      Authorization: `Bearer ${at}`,
+      "Content-Type": "application/json",
+    },
   };
   onboardQueryServer(config)
     .then((response) => { 
@@ -39,4 +43,5 @@ function handler(req, res) {
  
 }
 
-export default handler;
+// export default handler;
+export default withSession(handler);

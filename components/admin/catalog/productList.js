@@ -26,6 +26,7 @@ import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from 'antd';
 import calendar from "../../../assets/icons/calendar.svg";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProductList({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -39,6 +40,15 @@ function ProductList({ currentPgNo }) {
     { value: "Brand 2", label: "Brand 2" },
     { value: "Brand 3", label: "Brand 3  " },
   ];
+
+  
+  const { loginUser } = useSelector(({app}) => {
+    console.log("hello app",app)
+    return {loginUser: app?.loggedIn,};
+  });
+  
+  console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  
 
   useEffect(() => {
     getAllProductData({ pageSize: 10, pageNo: 0 });
