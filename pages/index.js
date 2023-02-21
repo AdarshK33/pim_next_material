@@ -6,6 +6,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useUser from "../utils/useUser";
 
+
+import RedirectLogin from "../pages/redirectLogin";
+
+
 export default function Home() {
 
   const { user, mutateUser } = useUser();
@@ -15,15 +19,13 @@ export default function Home() {
 	// }, []);
 
 
-
-
   
 // const { loginUser } = useSelector(({app}) => {
 //   console.log("hello app",app)
 //   return {loginUser: app?.loggedIn,};
 // });
 
-// console.log("hello uuuuuuuu",loginUser)
+
 
   return (
     <div className={styles.container}>
@@ -32,9 +34,11 @@ export default function Home() {
         <title>Apollo_PIM</title>       
       </Head>
 
-      {/* {user?.isLoggedIn === false && ( */}
+      {/* {user?.isLoggedIn === false ? ( */}
              <Login />
-          {/* )} */}
+           {/* ):(<> */}
+           {/* <RedirectLogin />
+           </>)} */}
 
    
     </div>

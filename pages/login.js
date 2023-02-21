@@ -20,14 +20,11 @@ import { useDispatch } from "react-redux";
 
 import {userLoginApi } from "../redux/actions/login";
 import useUser  from "../utils/useUser"
+import RedirectLogin from "../pages/redirectLogin";
 
 function Login() {
+  const { user, mutateUser } = useUser();
 
-
-  const { mutateUser } = useUser({
-    redirectTo: "/profile-sg",
-    redirectIfFound: true,
-  });
   // console.log("hello pppppppppp",props)
   const [itemData, setItemData] = useState();
 
@@ -44,7 +41,7 @@ function Login() {
     // console.log("lllllllllllllll",LoginStat.isLogin.statusCode)
     useEffect(() => {
       if(LoginStat.isLogin.statusCode===200){
-        router.push("/dashboards/brands?list=brands_categories");
+        router.push("/dashboard/dashborad");
       }
     }, [LoginStat.isLogin.statusCode]);
 
@@ -97,6 +94,8 @@ useEffect(() => {
     };
 
     return (
+      <>
+   
         <div className="page-container d-flex p-2">
            
             <div className="m-auto">
@@ -208,6 +207,8 @@ useEffect(() => {
              </div>
             </div>
         </div>
+  
+        </>
     )
 };
 

@@ -14,7 +14,7 @@ import {initApplication} from "../../redux/actions/app"
 import useUser from "../../utils/useUser";
 // import fetchJson from "../../utils/fetchJson";
 // import { useRouter } from "next/router";
-
+import RedirectLogin from "../redirectLogin";
 
 function AdminDashBoard() {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ function AdminDashBoard() {
 
   return (
 <>
-    {user?.isLoggedIn === true && (
+    {user?.isLoggedIn === true ? (
       <>
     <div className="page-container dashBoard">
       {/* <h4 className="offset-md-2 px-2 text-uppercase heading">{heading}</h4> */}
@@ -72,7 +72,10 @@ function AdminDashBoard() {
       </div>
     </div>
     </>
-    )}
+    ):(<>
+    <RedirectLogin />
+    </>)
+  }
      </>
   );
  
