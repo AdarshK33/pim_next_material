@@ -21,11 +21,13 @@ import { useDispatch } from "react-redux";
 import {userLoginApi } from "../redux/actions/login";
 import useUser  from "../utils/useUser"
 import RedirectLogin from "../pages/redirectLogin";
+import { withIronSessionSsr } from "iron-session/next";
 
-function Login() {
-  const { user, mutateUser } = useUser();
+function Login(user) {
+  
+  // const { user, mutateUser } = useUser();
 
-  // console.log("hello pppppppppp",props)
+  // console.log("hello pppppppppp",user,Object.keys(user).length)
   const [itemData, setItemData] = useState();
 
     const LoginStat = {
@@ -95,121 +97,158 @@ useEffect(() => {
 
     return (
       <>
-   
-        <div className="page-container d-flex p-2">
+       {user  && (
+        <>
+          <div className="page-container d-flex p-2">
            
-            <div className="m-auto">
+           <div className="m-auto">
+             
+               <div className={styles.left_box}>
               
-                <div className={styles.left_box}>
-               
-                         <Image
-                            className="login-concept-logo"
-                        src={loginLeft}
-                        alt="loginLeft"
-                        width={666}
-                        height={666}
-                      />
+                        <Image
+                           className="login-concept-logo"
+                       src={loginLeft}
+                       alt="loginLeft"
+                       width={666}
+                       height={666}
+                     />
+                </div>
+           </div>
+           <div className={styles.mid_box}>
+                        <Image
+                           className="login-concept-logo"
+             src={loginLine1}
+             alt="loginLeft"
+             width={600}
+             height={600}
+           />
+                       </div>
+           <div className={`login-main-container ${styles.last_box}`}>
+              
+              <div className={styles.apollo_login_logo}>
+               <Image
+                   className="login-logo-header"
+                   src={loginLogo}
+                   alt="loginLogo"
+                   width={150}
+                   height={120}
+                 />
                  </div>
-            </div>
-            <div className={styles.mid_box}>
-                         <Image
-                            className="login-concept-logo"
-							src={loginLine1}
-							alt="loginLeft"
-							width={600}
-							height={600}
-						/>
-                        </div>
-            <div className={`login-main-container ${styles.last_box}`}>
-               
-               <div className={styles.apollo_login_logo}>
-                <Image
-                    className="login-logo-header"
-                    src={loginLogo}
-                    alt="loginLogo"
-                    width={150}
-                    height={120}
-                  />
-                  </div>
-                <div className={styles.login_form}>
-                <div className={`card ${styles.box_shadow}`}>
-                  <div className="card-body">
-                  <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ isSubmitting }) => {
-            return (
-              
-              <Form className="row mx-0 font16">
-                <div className={styles.login_icon_user}>
-                {/* <Image
-                    // className={}
-                    src={user}
-                    alt="loginUser"
-                    width={40}
-                    height={35}
-                  /> */}
-                </div>
-                <div className="login_username">
-                <FormikControl
-                  control="input"
-                  type="text"
-                  classprops="form-group"
-                  className={`form-control form-control bb_only px-0 py-2 text-center`}
-                  placeholder="Username"
-                  name="userName"
-                  id="userName"
-                />
-                </div>
-                 <div className={styles.login_icon_key}>
-                   {/* <Image
-                    className="login-concept-logo"
-                    src={key}
-                    alt="loginKey"
-                    width={40}
-                    height={35}
-                  /> */}
-                  </div>
-                  
-                  <div className="login_password">
-                  <FormikControl
-                  control="input"
-                  type="password"
-                  classprops="form-group"
-                  className={`form-control form-control bb_only px-0 py-2 text-center`}
-                  placeholder="Password"
-                  name="password"
-                  id="password"
-                />
+               <div className={styles.login_form}>
+               <div className={`card ${styles.box_shadow}`}>
+                 <div className="card-body">
+                 <Formik initialValues={initialValues} onSubmit={onSubmit}>
+         {({ isSubmitting }) => {
+           return (
+             
+             <Form className="row mx-0 font16">
+               <div className={styles.login_icon_user}>
+               {/* <Image
+                   // className={}
+                   src={user}
+                   alt="loginUser"
+                   width={40}
+                   height={35}
+                 /> */}
                </div>
+               <div className="login_username">
+               <FormikControl
+                 control="input"
+                 type="text"
+                 classprops="form-group"
+                 className={`form-control form-control bb_only px-0 py-2 text-center`}
+                 placeholder="Username"
+                 name="userName"
+                 id="userName"
+               />
+               </div>
+                <div className={styles.login_icon_key}>
+                  {/* <Image
+                   className="login-concept-logo"
+                   src={key}
+                   alt="loginKey"
+                   width={40}
+                   height={35}
+                 /> */}
+                 </div>
+                 
+                 <div className="login_password">
+                 <FormikControl
+                 control="input"
+                 type="password"
+                 classprops="form-group"
+                 className={`form-control form-control bb_only px-0 py-2 text-center`}
+                 placeholder="Password"
+                 name="password"
+                 id="password"
+               />
+              </div>
 
-                <div className="col-12 text-center pt-5">
-                  <SubmitButton
-                    isLoading={isSubmitting}
-                    type="submit"
-                    name="Login"
-                    className={`btn btn-sm btn-secondary py-1 px-5 br3 mx-2 ${styles.submit_button}`}
-                  />
-                </div>
-              </Form>
-            );
-          }}
-        </Formik>   
-                <div>
-                    <div className="w-100 text-end not-registered"> 
-                    {/* <Link href="/signup"> */}
-                      <a href="/signup" className={`txt_black px-1 ${styles.forget_pasword}`}>
-                        Forget Password
-                        </a>
-                    {/* </Link> */}
-                    </div>
-                </div>
-                  </div>
-                </div>      
-             </div>
+               <div className="col-12 text-center pt-5">
+                 <SubmitButton
+                   isLoading={isSubmitting}
+                   type="submit"
+                   name="Login"
+                   className={`btn btn-sm btn-secondary py-1 px-5 br3 mx-2 ${styles.submit_button}`}
+                 />
+               </div>
+             </Form>
+           );
+         }}
+       </Formik>   
+               <div>
+                   <div className="w-100 text-end not-registered"> 
+                   {/* <Link href="/signup"> */}
+                     <a href="/signup" className={`txt_black px-1 ${styles.forget_pasword}`}>
+                       Forget Password
+                       </a>
+                   {/* </Link> */}
+                   </div>
+               </div>
+                 </div>
+               </div>      
             </div>
-        </div>
-  
+           </div>
+       </div>
+
+        </>
+
+       )
+}
+      
         </>
     )
 };
 
 export default React.memo(Login);
+
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    const user = req?.session?.user;
+console.log("oooooooooooooooo", req?.session?.user)
+      if (user) {
+        return {
+          redirect: {
+            destination: '/dashboard/dashboard',
+            permanent: false,
+          },
+        }
+      }
+
+    return {
+      props: {
+        user: req.session,
+      },
+    };
+  },
+  {
+    cookieName: "PIMSESSION",
+    password: "760848aa-c385-4321-ba49-75201fa0de81",
+    cookieOptions: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      maxAge: 60 * 60 * 24,
+    },
+  },
+);

@@ -9,10 +9,13 @@ import useUser from "../utils/useUser";
 
 import RedirectLogin from "../pages/redirectLogin";
 
+import sessionOption from "../utils/session"
 
-export default function Home() {
+import { withIronSessionSsr } from "iron-session/next";
 
-  const { user, mutateUser } = useUser();
+export default function Home(user) {
+
+  // const { user, mutateUser } = useUser();
   const dispatch = useDispatch();
   // useEffect(() => {
 	// 	dispatch(initApplication());
@@ -34,14 +37,52 @@ export default function Home() {
         <title>Apollo_PIM</title>       
       </Head>
 
-      {/* {user?.isLoggedIn === false ? ( */}
-             <Login />
-           {/* ):(<> */}
-           {/* <RedirectLogin />
-           </>)} */}
+    
+     <Login />
+    
+            
+           
 
-   
     </div>
   )
 }
+
+
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    try {
+    const user = req?.session?.user ||null;
+
+if (user) {
+  return {
+    redirect: {
+      destination: '/dashboard/dashboard',
+      permanent: false,
+    },
+  }
+}
+
+
+    return {
+      props: {
+        user: req?.session?.user|| null,
+      },
+    };
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+  },
+  {
+    cookieName: "PIMSESSION",
+    password: "760848aa-c385-4321-ba49-75201fa0de81",
+    cookieOptions: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      maxAge: 60 * 60 * 24,
+    },
+  },
+);
+
 
