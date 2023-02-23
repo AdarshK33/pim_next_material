@@ -1,4 +1,4 @@
-import RefillFinder from '../../components/RefillFinder';
+import ProductList from '../../components/admin/catalog/';
 
 
 
@@ -6,7 +6,7 @@ function index() {
 
     return (
         <>
-            <RefillFinder />
+            <ProductList />
         </>
     )
 }

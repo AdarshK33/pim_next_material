@@ -1,4 +1,4 @@
-import RefillFinder from '../../components/RefillFinder';
+import classifyingUser from '../../components/admin/userManagement';
 
 
 
@@ -6,7 +6,7 @@ function index() {
 
     return (
         <>
-            <RefillFinder />
+            <classifyingUser />
         </>
     )
 }

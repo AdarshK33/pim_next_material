@@ -1,4 +1,4 @@
-import RefillFinder from '../../components/RefillFinder';
+import classifyingCategory  from '../../components/admin/catalog/categories';
 
 
 
@@ -6,7 +6,7 @@ function index() {
 
     return (
         <>
-            <RefillFinder />
+            <classifyingCategory />
         </>
     )
 }

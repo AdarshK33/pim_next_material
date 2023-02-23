@@ -1,4 +1,4 @@
-import RefillFinder from '../../components/RefillFinder';
+import BulkUpload from '../../components/admin/bulkUpload';
 
 
 
@@ -6,7 +6,7 @@ function index() {
 
     return (
         <>
-            <RefillFinder />
+            <BulkUpload />
         </>
     )
 }

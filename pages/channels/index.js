@@ -1,4 +1,4 @@
-import RefillFinder from '../../components/RefillFinder';
+import classifyingChannel from '../../components/admin/channels';
 
 
 
@@ -6,7 +6,7 @@ function index() {
 
     return (
         <>
-            <RefillFinder />
+            < classifyingChannel/>
         </>
     )
 }
