@@ -27,7 +27,7 @@ import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
-function BulkUpload({ currentPgNo }) {
+function MediaUpload({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
   const [itemData, setItemData] = useState({});
@@ -341,4 +341,4 @@ function ProductListTd({ data, itemData, setItemData }) {
 const mapDispatchToProps = {
   currentPgNo: actions.currentPgNo,
 };
-export default connect(null, mapDispatchToProps)(React.memo(BulkUpload));
+export default connect(null, mapDispatchToProps)(React.memo(MediaUpload));

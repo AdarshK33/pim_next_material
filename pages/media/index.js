@@ -1,4 +1,4 @@
-import BulkUpload from '../../components/admin/media';
+import MediaUpload from '../../components/admin/media';
 
 
 
@@ -6,7 +6,7 @@ function index() {
 
     return (
         <>
-            <BulkUpload/>
+            <MediaUpload/>
         </>
     )
 }
