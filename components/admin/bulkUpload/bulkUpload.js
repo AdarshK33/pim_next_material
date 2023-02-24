@@ -24,6 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from "antd";
 import calendar from "../../../assets/icons/calendar.svg";
+import { useDispatch, useSelector } from "react-redux";
 
 function BulkUpload({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -52,6 +53,13 @@ function BulkUpload({ currentPgNo }) {
     });
   }, []);
 
+  
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
+  
+  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
   const getAllProductData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllProducts(payload);

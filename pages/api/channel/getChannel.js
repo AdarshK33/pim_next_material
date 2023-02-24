@@ -1,10 +1,18 @@
 
 import { onboardServer } from "../../../utils/axios";
+import withSession from "../../../utils/session";
+
 
 function handler(req, res) {
+const { user: { at = "" } = {}, loggedIn } = req.session;
+// console.log("hello getchannel",at,loggedIn)
   const config = {
     method: "get",
-    url: "/brands"
+    url: "/brands",
+    headers: {
+      Authorization: `Bearer ${at}`,
+      "Content-Type": "application/json",
+    }
   };
   onboardServer(config)
     .then((response) => {
@@ -22,4 +30,5 @@ function handler(req, res) {
     });
 }
 
-export default handler;
+// export default handler;
+export default withSession(handler);

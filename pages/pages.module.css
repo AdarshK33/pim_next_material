@@ -186,4 +186,19 @@ and (max-device-width: 1500px)
     }
     
 
+    /* redirect page */
+
+    .redirectPage{
+      width: 500px;
+      position: absolute;
+      top: 250px;
+      left: 450px;
+      }
+      .redirect_button{
+        width: 80%;
+        height: 50px;
+        font-size: 17px;
+        background-color: #419794;
+      }
+      
   }

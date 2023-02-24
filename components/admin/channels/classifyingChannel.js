@@ -30,6 +30,8 @@ import  CommonUpdateForm from "../../public/commonUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
 import { getChannelListApi } from "../../../redux/actions/channel";
 import Image from 'next/image';
+import UpdateChannelForm from './updateChannelForm';
+
 
 
 import marker from "../../../assets/icons/marker 1.svg";
@@ -44,8 +46,15 @@ function classifyingChannel({ currentPgNo }) {
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
+  const [showBrandUpdateForm, setShowBrandUpdateForm] = useState(false);
 
-
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
+  
+  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  
 
   useEffect(() => {
     //  dispatch(createBrandApi(dataObj));
@@ -59,7 +68,7 @@ const { channelGet } = useSelector(state => {
   // console.log("hello",state)
   return state.channelReducer;
 });
-console.log("hello channelGet",channelGet)
+// console.log("hello channelGet",channelGet)
 
   const notify = (val) => {
     if (!toast.isActive(toastId.current)) {
@@ -163,6 +172,15 @@ console.log("hello channelGet",channelGet)
    dispatch(getChannelListApi(pageNumber-1,5));
  }
  /*-----------------Pagination------------------*/
+ const onBrandCreationSuccess = useCallback(() => {
+  // setShowBrandCreationForm(false);
+  setShowBrandUpdateForm(false)
+  // getAllBrandsData({ pageSize: 10, pageNo: 0 });
+  // toastRef.current.toastHandler({
+  //   response: "suc",
+  //   // position: "middle-center",
+  // });
+}, []);
 
   return (
     <Fragment>
@@ -232,7 +250,7 @@ console.log("hello channelGet",channelGet)
                               width={35}
 							                height={30}
                               onClick={() => {
-                                setShowChannelCreationForm(true)
+                                setShowBrandUpdateForm(true)
                               }}
 						                  />
                               {/* <marker
@@ -241,6 +259,24 @@ console.log("hello channelGet",channelGet)
                                   }}
                                 /> */}
                               {/* </Link> */}
+
+                              <CustomModal
+                                      show={showBrandUpdateForm}
+                                      closeModal={() => 
+                                      setShowBrandUpdateForm(false)
+                                      }           
+                                  
+                                      size="md"
+                                      centered={true}
+                                      body={
+                                        <UpdateChannelForm
+                                          table={TABLE_HEADERS[0].Brand.table}
+                                          classModal={() => setShowBrandUpdateForm(false)}
+                                          onSuccess={onBrandCreationSuccess}
+                                          notifySucess={() => notify(true)}
+                                        />
+                                  }
+                                />
                             </td>
                           </tr>
                         </tbody>
@@ -282,7 +318,7 @@ console.log("hello channelGet",channelGet)
             tableContainarClass="my-3 catalog-list"
           /> */}
         {/* )} */}
-        <CustomModal
+           {/* <CustomModal
             show={showChannelCreationForm}
             closeModal={() => setShowChannelCreationForm(false)}
             size="md"
@@ -293,9 +329,9 @@ console.log("hello channelGet",channelGet)
                 classModal={() => setShowChannelCreationForm(false)}
                 onSuccess={onchannelCreationSuccess}
                 notifySucess={() => notify(true)}
-              />
-        }
-      />
+              /> */}
+        {/* } */}
+      {/* /> */}
 
         {itemsCount && totalItems}
       </div>

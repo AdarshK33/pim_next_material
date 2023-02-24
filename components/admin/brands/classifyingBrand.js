@@ -51,12 +51,17 @@ function classifyingBrand({ currentPgNo }) {
   const [getData, setGetData] = useState({"pageNumber":"1","pageSize":"10"});
 
   const handleEdit = (brandId)=> {
-    console.log(brandId,"hello item.brandId")
+      console.log(brandId,"hello item.brandId")
       setShowBrandUpdateForm(true),
       // setBrandUpdateID(item.brandId)
-      dispatch( getBrandByIdApi(brandId))
-     
+      dispatch( getBrandByIdApi(brandId)) 
   }
+// const { loginUser } = useSelector(({app}) => {
+//   console.log("hello app",app)
+//   return {loginUser: app?.loggedIn,};
+// });
+
+// console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
 
 
 useEffect(() => {
