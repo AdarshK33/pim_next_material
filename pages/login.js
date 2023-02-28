@@ -43,7 +43,7 @@ function Login(user) {
     // console.log("lllllllllllllll",LoginStat.isLogin.statusCode)
     useEffect(() => {
       if(LoginStat.isLogin.statusCode===200){
-        router.push("/dashboard/dashborad");
+        router.push("/dashboard/dashboard");
       }
     }, [LoginStat.isLogin.statusCode]);
 
@@ -97,7 +97,7 @@ useEffect(() => {
 
     return (
       <>
-       {user  && (
+       {/*// its working {user  && ( */}
         <>
           <div className="page-container d-flex p-2">
            
@@ -213,8 +213,8 @@ useEffect(() => {
 
         </>
 
-       )
-}
+       {/* // its working)
+} */}
       
         </>
     )
@@ -222,33 +222,33 @@ useEffect(() => {
 
 export default React.memo(Login);
 
+// // its working
+// export const getServerSideProps = withIronSessionSsr(
+//   async function getServerSideProps({ req }) {
+//     const user = req?.session?.user;
+// console.log("oooooooooooooooo", req?.session?.user)
+//       if (user) {
+//         return {
+//           redirect: {
+//             destination: '/dashboard/dashboard',
+//             permanent: false,
+//           },
+//         }
+//       }
 
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
-    const user = req?.session?.user;
-console.log("oooooooooooooooo", req?.session?.user)
-      if (user) {
-        return {
-          redirect: {
-            destination: '/dashboard/dashboard',
-            permanent: false,
-          },
-        }
-      }
-
-    return {
-      props: {
-        user: req.session,
-      },
-    };
-  },
-  {
-    cookieName: "PIMSESSION",
-    password: "760848aa-c385-4321-ba49-75201fa0de81",
-    cookieOptions: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      maxAge: 60 * 60 * 24,
-    },
-  },
-);
+//     return {
+//       props: {
+//         user: req.session,
+//       },
+//     };
+//   },
+//   {
+//     cookieName: "PIMSESSION",
+//     password: "760848aa-c385-4321-ba49-75201fa0de81",
+//     cookieOptions: {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV === "production" ? true : false,
+//       maxAge: 60 * 60 * 24,
+//     },
+//   },
+// );

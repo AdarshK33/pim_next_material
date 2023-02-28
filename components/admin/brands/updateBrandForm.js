@@ -98,7 +98,7 @@ useEffect(() => {
         // status: brandByIdData?.isActive
       }
       setItemData(infoData)
-      console.log("infoData",infoData);
+      // console.log("infoData",infoData);
       const apiRes = await updateBrandApi(brndName);
       if (apiRes === "err") {
         formik.setSubmitting(false);

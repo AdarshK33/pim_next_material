@@ -42,6 +42,8 @@ function classifyingBrand({ currentPgNo }) {
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
   const [showBrandUpdateForm, setShowBrandUpdateForm] = useState(false);
   const [brandUpdateID, setBrandUpdateID] = useState();
+ const [currentPage, setCurrentPage] = useState(0);
+
 
   const [itemData, setItemData] = useState({});
   const toastRef = useRef(null);
@@ -51,7 +53,7 @@ function classifyingBrand({ currentPgNo }) {
   const [getData, setGetData] = useState({"pageNumber":"1","pageSize":"10"});
 
   const handleEdit = (brandId)=> {
-      console.log(brandId,"hello item.brandId")
+      // console.log(brandId,"hello item.brandId")
       setShowBrandUpdateForm(true),
       // setBrandUpdateID(item.brandId)
       dispatch( getBrandByIdApi(brandId)) 
@@ -63,16 +65,17 @@ function classifyingBrand({ currentPgNo }) {
 
 // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
 
+const { brandGet } = useSelector(state => {
+  // console.log("hello",state)
+  return state.onBoardQueryReducer;
+});
 
 useEffect(() => {
+    // if(currentPage){
     dispatch(getBrandListApi(currentPage,5));
-  
-}, [brandGet,currentPage]);
+    // }
+}, []);
 
-const { brandGet } = useSelector(state => {
-    // console.log("hello",state)
-		return state.onBoardQueryReducer;
-});
 const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);
@@ -167,7 +170,6 @@ const getAllBrandsData = async (payload) => {
 
 
  //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(0);
  const recordPerPage = 5;
  const totalRecords = 20;
  const pageRange = 5;
@@ -176,7 +178,7 @@ const getAllBrandsData = async (payload) => {
  const currentRecords = brandGet;
 
  const handlePageChange = pageNumber => {
-  console.log(pageNumber,"ppppppppppppppp")
+  // console.log(pageNumber,"ppppppppppppppp")
    setCurrentPage(pageNumber);
    dispatch(getBrandListApi(pageNumber-1,5));
  }

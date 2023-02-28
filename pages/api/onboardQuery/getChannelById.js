@@ -3,12 +3,19 @@ import { onboardQueryServer } from "../../../utils/axios";
 
 function handler(req, res) {
   const body = req.body;
+
+
+    const id = body.channelId
+
+
   const config = {
     method: "get",
-    url: `/getChannels/${body.channelsId}`
+    url: `/getChannelById/${id}`
   };
   onboardQueryServer(config)
+ 
     .then((response) => {
+
       if (response.status === 200) {
         res.status(200).json(response.data);
         Promise.resolve();

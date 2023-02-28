@@ -246,15 +246,20 @@ export const getChannelsApi = () => {
     };
   };
 
-export const getChannelByIdApi = (data) => {
+export const getChannelByIdApi = (channelId) => {
+  // console.log("hello getChannelByIdApi",channelId)
+  const data = {
+    channelId: channelId
+  }
+
     return (dispatch) => {
       dispatch(getChannelByIdDataLoading('CHANNEL BY ID....', 'CHANNEL BY ID'));
-      client.get("/api/onboardQuery/getChannelById",data)
+      client.post("/api/onboardQuery/getChannelById",data)
         .then((response) => {
-          console.log("api response",response)
+          // console.log("api response",response)
         //   console.log(response)
           if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
+              // console.log("API SUCCESS2", response.data.result);
             dispatch(getChannelByIdDataSuccess(response.data.result));
           }
         })

@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 	
 	const config = {
 		method: 'post',
-		url: '',
+		url: `ct/attributes/create/${groupId}`,
 		data: body,
 	};
 
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 			}
 		})
 		.catch(err => {
-        console.log("error caught in -> api/category/CreateGroup", err);
+        console.log("error caught in -> api/catalog/createAttribute", err);
 		console.log(err.response);
 		if (err?.response?.data) {
 			const { status = {} } = err?.response;

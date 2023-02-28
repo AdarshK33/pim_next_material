@@ -111,7 +111,7 @@ const onBoardQueryReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                channelByIdData:action,
+                channelByIdData:action.payload,
                 error: {},
             };
         case GET_CHANNEL_BYID_DATA_FAILURE:

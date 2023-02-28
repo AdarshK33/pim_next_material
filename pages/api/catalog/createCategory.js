@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 	
 	const config = {
 		method: 'post',
-		url: '',
+		url: 'ct/category',
 		data: body,
 	};
 
