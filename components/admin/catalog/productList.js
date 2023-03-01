@@ -26,6 +26,7 @@ import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from 'antd';
 import calendar from "../../../assets/icons/calendar.svg";
+import {  getAllProductApi } from "../../../redux/actions/catalogQuery";//testing
 import { useDispatch, useSelector } from "react-redux";
 
 function ProductList({ currentPgNo }) {
@@ -34,6 +35,7 @@ function ProductList({ currentPgNo }) {
   const [itemData, setItemData] = useState({});
   const [itemsCount, setItemsCount] = useState(null);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
+  const dispatch = useDispatch();
 
   const selectOpts = [
     { value: "Brand 1", label: "xyz" },
@@ -49,6 +51,17 @@ function ProductList({ currentPgNo }) {
   
   // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
   
+  useEffect(() => {
+    dispatch(getAllProductApi());
+
+}, []);
+
+const { allProductData } = useSelector(state => {
+  // console.log("hello",state)
+  return state.catalogQueryReducer;
+});
+
+  console.log("hello allProductData",allProductData)
 
   useEffect(() => {
     getAllProductData({ pageSize: 10, pageNo: 0 });

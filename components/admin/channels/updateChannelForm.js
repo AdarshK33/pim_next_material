@@ -108,15 +108,15 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
 
  
   const countryHandler = (e) => {
-    console.log("hello called ccccc",e.target.value)
+    // console.log("hello called ccccc",e.target.value)
     setCountryName(e.target.value);
   };
   const brandHandler = (e) => {
-    console.log("hello called bbbb",e.target)
+    // console.log("hello called bbbb",e.target.value)
     setBrandName(e.target.value);
   };
   const  marketplaceHandler = (e) => {
-    console.log("hello called mmmmm",e.target)
+    // console.log("hello called mmmmm",e.target.value)
     setMarketplaceName(e.target.value);
   };
 
@@ -251,6 +251,7 @@ const checkValidations = () => {
     //apis(UpdateInfo)
    
     dispatch( updateChannelApi(UpdateInfo));
+    
   };
 }
 
@@ -431,7 +432,7 @@ const checkValidations = () => {
                   <SubmitButton
                    onClick={submitHandler}
                     type="submit"
-                    name="ADD"
+                    name="UPDATE"
                     className="btn btn-sm save_btn_secondary py-1 px-5 br3 mx-2"
                   />
                 </div>

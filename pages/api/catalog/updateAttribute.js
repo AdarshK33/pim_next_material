@@ -1,4 +1,4 @@
-import { onboardServer } from '../../../utils/axios';
+import { catalogServer } from '../../../utils/axios';
 
 export default async function handler(req, res) {
     // return new Promise((resolve, reject) => {
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 				data: body,
 		};
 
-	onboardServer(config)
+		catalogServer(config)
 		.then(response => {
 			if (response.status === 200) {
 				res.status(200).json(response.data);

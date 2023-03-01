@@ -99,10 +99,13 @@ useEffect(() => {
       }
       setItemData(infoData)
       // console.log("infoData",infoData);
-      const apiRes = await updateBrandApi(brndName);
+      const apiRes = await updateBrandApi(infoData);
       if (apiRes === "err") {
+        console.log("hello  if classModal")  
+
         formik.setSubmitting(false);
-      } else {    
+      } else {  
+        console.log("hello  else classModal")  
         notifySucess(true);
         classModal();
       }
@@ -188,7 +191,7 @@ useEffect(() => {
                   <SubmitButton
                     isLoading={isSubmitting}
                     type="submit"
-                    name="ADD"
+                    name="UPDATE"
                     className="btn btn-sm save_btn_secondary py-1 px-5 br3 mx-2"
                   />
                 </div>

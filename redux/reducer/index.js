@@ -6,6 +6,8 @@ import channelReducer from "./channelReducer"
 import loginReducer from "./loginReducer";
 import onBoardQueryReducer from "./onboardQueryReducer";
 // import app from "./appReducer"
+import catalogQueryReducer from "./catalogQueryReducer"
+import catalogReducer from "./catalogReducer"
 
 const rootReducer = combineReducers({
   // app,
@@ -13,7 +15,9 @@ const rootReducer = combineReducers({
   brandReducer,
   loginReducer,
   onBoardQueryReducer,
-  channelReducer
+  channelReducer,
+  catalogQueryReducer,
+  catalogReducer
 });
 
 export default rootReducer;

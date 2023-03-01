@@ -1,4 +1,4 @@
-import { catalog } from '../../../utils/axios';
+import { catalogServer } from '../../../utils/axios';
 
 export default async function handler(req, res) {
     // return new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 		url: 'ct/group/create',
 		data: body,
 	};
-	catalog(config)
+	catalogServer(config)
 		.then(response => {
 			if (response.status === 200) {
 				res.status(200).json(response.data.result);
