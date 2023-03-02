@@ -49,7 +49,7 @@ export const getChannelDataFailure = (error) => {
 
 export const updateChannelDataLoading = () => {
   return {
-    type: UPDATE_Channel_DATA_LOADING,
+    type: UPDATE_CHANNEL_DATA_LOADING,
   };
 };
 export const updateChannelDataSuccess = (data) => {
@@ -66,7 +66,7 @@ export const updateChannelDataFailure = (error) => {
 };
 
 export const createChannelApi = (data) => {
-  let result = false;
+  // let result = false;
   console.log("hello  ChannelPageApi called", data);
   return (dispatch) => {
     dispatch(createChannelDataLoading("Channel....", "Channel"));
@@ -74,7 +74,7 @@ export const createChannelApi = (data) => {
       .post("/api/channel/createChannel", data)
       .then((response) => {
         console.log("---------------", response.status);
-        result = true;
+        // result = true;
         if (response.status === 200) {
           console.log("ChannelGreat==>", response.data.result);
           dispatch(
@@ -94,7 +94,7 @@ export const createChannelApi = (data) => {
         );
       });
 
-    return result;
+    // return result;
   };
 };
 
@@ -118,15 +118,28 @@ export const createChannelApi = (data) => {
 //   };
 // };
 
-export const updateChannelApi = (data) => {
-  // console.log("hello  ChannelPageApi called",data)
+export const updateChannelApi = (info) => {
+
+  const data = {
+    channelId:info?.id,
+    channelName: info.channelName,
+    channelDescription:info.channelDescription,
+    countryName: info.countryName,
+    brandName: info.brandName,
+    marketplaceName: info.marketplaceName
+}
+  console.log("hello  updateChannelApi called",info)
+  console.log("hello  updateChannelApi data",data)
+
   return (dispatch) => {
     dispatch(updateChannelDataLoading("Channel....", "Channel"));
     client
       .post("/api/channel/updateChannel", data)
       .then((response) => {
+        console.log("ChannelGreat==>", response);
+
         if (response.status === 200) {
-          console.log("ChannelGreat==>", response.data);
+          console.log("ChannelGreat data==>", response.data);
           dispatch(
             updateChannelDataSuccess(
               response.data,
@@ -137,7 +150,7 @@ export const updateChannelApi = (data) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        console.log("error caught in -> actions/Channel/Channel", err);
+        console.log("error caught in -> actions/Channel/updateChannelApi", err);
         dispatch(
           updateChannelDataFailure(err, "Something went wrong", "Channel UPDATE")
         );

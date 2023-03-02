@@ -1,17 +1,18 @@
-import { onboardServer } from '../../../utils/axios';
+import { catalogServer } from '../../../utils/axios';
 
 export default async function handler(req, res) {
     // return new Promise((resolve, reject) => {
 		
-	const body = req.body;
+	   const body = req.body;
 	
-	let id=body.categoryId
-	const config = {
-		method: 'put',
-		url: `/${id}`,
-		data: body,
-	};
-	onboardServer(config)
+		let groupId=body.groupId
+		const config = {
+				method: 'patch',
+				url: `ct/attributes/update/${groupId}`,
+				data: body,
+		};
+
+		catalogServer(config)
 		.then(response => {
 			if (response.status === 200) {
 				res.status(200).json(response.data);
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
 			}
 		})
 		.catch(err => {
-        console.log("error caught in -> api/onboard/updateCategory", err);
+        console.log("error caught in -> api/onboard/updateAttribute", err);
 					console.log(err.response);
 					if (err?.response?.data) {
 						const { status = {} } = err?.response;

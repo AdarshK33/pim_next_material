@@ -28,10 +28,13 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  CommonUpdateForm from "../../public/commonUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { getChannelListApi } from "../../../redux/actions/channel";
+import { getChannelListApi} from "../../../redux/actions/channel";
+import {getChannelByIdApi} from "../../../redux/actions/onboardQuery";
+
 import Image from 'next/image';
 import UpdateChannelForm from './updateChannelForm';
 
+import { getCountryApi ,getBrandDropdownApi,getMarketplaceApi} from "../../../redux/actions/onboardQuery";
 
 
 import marker from "../../../assets/icons/marker 1.svg";
@@ -46,15 +49,32 @@ function classifyingChannel({ currentPgNo }) {
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
-  const [showBrandUpdateForm, setShowBrandUpdateForm] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+ const [currentPage, setCurrentPage] = useState(0);
+
 
   // const { loginUser } = useSelector(({app}) => {
   //   console.log("hello app",app)
   //   return {loginUser: app?.loggedIn,};
   // });
   
-  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  const handleEdit = (Id)=> {
+    // console.log(Id,"hello item")
+    setShowUpdateForm(true),
+    // setBrandUpdateID(item.brandId)
+    dispatch(getChannelByIdApi(Id)) 
+}
   
+useEffect(() => {
+  dispatch(getCountryApi());
+  dispatch(getBrandDropdownApi());
+  dispatch(getMarketplaceApi());
+}, []);
+
+  const { channelGet } = useSelector(state => {
+    // console.log("hello",state)
+    return state.channelReducer;
+  });
 
   useEffect(() => {
     //  dispatch(createBrandApi(dataObj));
@@ -64,10 +84,7 @@ function classifyingChannel({ currentPgNo }) {
 }, [currentPage]);
 
 
-const { channelGet } = useSelector(state => {
-  // console.log("hello",state)
-  return state.channelReducer;
-});
+
 // console.log("hello channelGet",channelGet)
 
   const notify = (val) => {
@@ -159,7 +176,6 @@ const { channelGet } = useSelector(state => {
     });
   }
  //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
  const recordPerPage = 5;
  const totalRecords = 20;
  const pageRange = 5;
@@ -174,7 +190,7 @@ const { channelGet } = useSelector(state => {
  /*-----------------Pagination------------------*/
  const onBrandCreationSuccess = useCallback(() => {
   // setShowBrandCreationForm(false);
-  setShowBrandUpdateForm(false)
+  setShowUpdateForm(false)
   // getAllBrandsData({ pageSize: 10, pageNo: 0 });
   // toastRef.current.toastHandler({
   //   response: "suc",
@@ -249,9 +265,7 @@ const { channelGet } = useSelector(state => {
 							                alt="edit"
                               width={35}
 							                height={30}
-                              onClick={() => {
-                                setShowBrandUpdateForm(true)
-                              }}
+                              onClick={()=>handleEdit(item.channelId)}
 						                  />
                               {/* <marker
                                   onClick={() => {
@@ -261,17 +275,17 @@ const { channelGet } = useSelector(state => {
                               {/* </Link> */}
 
                               <CustomModal
-                                      show={showBrandUpdateForm}
+                                      show={showUpdateForm}
                                       closeModal={() => 
-                                      setShowBrandUpdateForm(false)
+                                      setShowUpdateForm(false)
                                       }           
                                   
                                       size="md"
                                       centered={true}
                                       body={
                                         <UpdateChannelForm
-                                          table={TABLE_HEADERS[0].Brand.table}
-                                          classModal={() => setShowBrandUpdateForm(false)}
+                                          table={TABLE_HEADERS[0].Channels.table}
+                                          classModal={() => setShowUpdateForm(false)}
                                           onSuccess={onBrandCreationSuccess}
                                           notifySucess={() => notify(true)}
                                         />

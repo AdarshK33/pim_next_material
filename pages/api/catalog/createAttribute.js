@@ -1,4 +1,4 @@
-import { catalog } from '../../../utils/axios';
+import { catalogServer } from '../../../utils/axios';
 
 export default async function handler(req, res) {
     // return new Promise((resolve, reject) => {
@@ -7,11 +7,11 @@ export default async function handler(req, res) {
 	
 	const config = {
 		method: 'post',
-		url: '',
+		url: `ct/attributes/create/${groupId}`,
 		data: body,
 	};
 
-	catalog(config)
+	catalogServer(config)
 		.then(response => {
 			if (response.status === 200) {
 				res.status(200).json(response.data.result);
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 			}
 		})
 		.catch(err => {
-        console.log("error caught in -> api/category/CreateGroup", err);
+        console.log("error caught in -> api/catalog/createAttribute", err);
 		console.log(err.response);
 		if (err?.response?.data) {
 			const { status = {} } = err?.response;

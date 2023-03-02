@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 function MyProfile() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
-  console.log("hello user?.isLoggedIn",user)
+  console.log("user?.isLoggedIn",user)
     return (
       <>
          {user?.isLoggedIn === true && (

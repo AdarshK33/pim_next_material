@@ -55,10 +55,10 @@ return (dispatch) => {
     client
       .post("/api/onboard/createBrand", data)
       .then((response) => {
-        console.log("---------------", response.status);
+        // console.log("---------------", response.status);
        
         if (response.status === 200) {
-          console.log("BrandGreat==>", response.data.result);
+          // console.log("BrandGreat==>", response.data.result);
           dispatch(
             createBrandDataSuccess(
               response.data.result,
@@ -97,9 +97,9 @@ export const updateBrandApi = (info) => {
     client
       .post("/api/onboard/updateBrand", data)
       .then((response) => {
-        console.log("rrrrrr",response)
+        // console.log("rrrrrr",response)
         if (response.status === 200) {
-          console.log("BrandGreat==>", response.data);
+          // console.log("BrandGreat==>", response.data);
           dispatch(
             updateBrandDataSuccess(
               response.data,

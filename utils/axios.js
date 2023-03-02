@@ -37,6 +37,22 @@ const onboardQueryServer = axios.create({
 	},
 });
 
+const catalogServer = axios.create({
+	baseURL:  process.env.CATALOG_SERVICE_URL,
+	// timeout: 1000 * 10,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});
+const catalogQueryServer = axios.create({
+	baseURL:  process.env.CATALOG_QUERY_SERVICE_URL,
+	// timeout: 1000 * 10,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});
+
+
 
 onboardServer.setJwtToken = newToken => {
 	token = newToken;
@@ -107,4 +123,4 @@ onboardQueryServer.setJwtToken = newToken => {
 // 		});
 // };
 
-export { client, onboardServer,authServer,onboardQueryServer };
+export { client, onboardServer,authServer,onboardQueryServer,catalogServer,catalogQueryServer };

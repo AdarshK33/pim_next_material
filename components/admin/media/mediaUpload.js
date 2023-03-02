@@ -75,6 +75,16 @@ function MediaUpload({ currentPgNo }) {
       });
     }
   };
+  const tableData = [];
+
+  for (let i = 1; i <= 10; i++) {
+    tableData.push({
+      id: "11100" + i,
+      name: "Brand" + i,
+      discription: "discription" + i,
+    });
+  }
+
 
   //   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -107,16 +117,7 @@ function MediaUpload({ currentPgNo }) {
     }
   };
 
-  const tableData = [];
-
-  for (let i = 1; i <= 10; i++) {
-    tableData.push({
-      id: "11100" + i,
-      name: "Brand" + i,
-      discription: "discription" + i,
-    });
-  }
-
+  
   const onChange = (date, dateString) => {
     console.log(date, dateString);
   };
