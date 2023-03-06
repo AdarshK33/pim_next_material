@@ -36,16 +36,22 @@ import { Switch, Space } from 'antd';
 import FormikControl from "../../../public/formik/formikControl"
 import SubmitButton from "../../../public/formik/submitButton";
 import { useDispatch, useSelector } from "react-redux";
-
+import {getCategoriesApis} from "../../../../redux/actions/catalogQuery"
 
 function classifyingCategory({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
   const [itemData, setItemData] = useState({});
   const toastRef = useRef(null);
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
+
+  const dispatch = useDispatch();
+
+  const [itemTree, setItemTree] = useState(null);
+  const [selectedTreeForUpdate, setSelectedTreeForUpdate] = useState();
+
 
 
   // const { loginUser } = useSelector(({app}) => {
@@ -53,11 +59,95 @@ function classifyingCategory({ currentPgNo }) {
   //   return {loginUser: app?.loggedIn,};
   // });
   
-  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  console.log("hello selectedTreeForUpdate",selectedTreeForUpdate)
+
+
+  useEffect(() => {
+   dispatch(getCategoriesApis("Puma"))
+  }, []);
   
+
+
+
+
   
+const { categoriesData,loading } = useSelector(state => {
+  // console.log("hello",state)
+  return state.catalogQueryReducer;
+});
+
+  // console.log("hello categoriesData",categoriesData)
+
+
+ //   /*----------------- catagory menu list------------------*/
+
+const updateDisplayNameToLabel = (val, keysMap) => {
+  if (val == null) return null;
+  if (Array.isArray(val)) {
+    return val.map(item => updateDisplayNameToLabel(item, keysMap));
+  } else if (typeof val == "object") {
+    return Object.keys(val).reduce((obj, key) => {
+      const propKey = updateDisplayNameToLabel(key, keysMap);
+      const propVal = updateDisplayNameToLabel(val[key], keysMap);
+      obj[propKey] = propVal;
+      return obj;
+    }, {});
+  } else if (typeof val === "string") {
+    return keysMap[val] || val;
+  }
+  return val;
+}
+
+const keysToUpdate = {
+  id: 'key',
+  name: 'title',
+  categories: 'children'
+};
+
+
+const treeUpdated = updateDisplayNameToLabel(categoriesData, keysToUpdate);
+
+console.log("hello tree",treeUpdated);
+ //   /*----------------- catagory menu------------------*/
+
+
+
+
+ //   /*-----------------  selected catagory menu------------------*/
+
+
+function findNested(obj, key, value) {
+
+  // Base case
+  if (obj[key] === value) {
+    return obj;
+  } else {
+    var keys = Object.keys(obj); // add this line to iterate over the keys
+
+    for (var i = 0, len = keys.length; i < len; i++) {
+      var k = keys[i]; // use this key for iteration, instead of index "i"
+
+      // add "obj[k] &&" to ignore null values
+      if (obj[k] && typeof obj[k] == 'object') {
+        var found = findNested(obj[k], key, value);
+        if (found) {
+          // If the object was found in the recursive call, bubble it up.
+          return found;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+ //   /*-----------------  selected catagory menu------------------*/
+ 
+
+
   const getAllBrandsData = async (payload) => {
-    !loading && setLoading(true);
+    // !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);
     if (apiRes === "err") {
     } else {
@@ -65,7 +155,7 @@ function classifyingCategory({ currentPgNo }) {
         setList(apiRes.data);
         setItemsCount(apiRes.data.totalElements);
         setItemData({});
-        setLoading(false);
+        // setLoading(false);
       });
     }
   };
@@ -180,234 +270,16 @@ function classifyingCategory({ currentPgNo }) {
  }
  /*-----------------Pagination------------------*/
 
- const treeData1 = [
-  {
-    title: "Health & Nutrition",
-    key: "MainStructure",
-    children: [
-      {
-        title: "Health Drinks",
-        key: "layoutFolder",
-        children: [ //child element
-          {
-            title: "Coconut Drinks.js",
-            key: "coconut Drinks.js"
-          }
-        ]
-      },
-      {
-        title: "Kids Nutrition",
-        key: "layoutFolder Kids Nutrition",
-        children: [ //child element
-          {
-            title: "MIlk Drinks.js",
-            key: " milk Kids Nutrition"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    title: "women & health care",
-    key: "MainStructure women",
-    children: [
-      {
-        title: "Health health care",
-        key: "layoutFolder no",
-        children: [ //child element
-          {
-            title: "women health care.js",
-            key: "coconut Drinks.NodeNo"
-          }
-        ]
-      },
 
 
-    ]
-  },
 
-  {
-    title: "Personal Care",
-    key: "MainStructure Personal Care",
-    children: [
-      {
-        title: "Health health Personal Care",
-        key: "layoutFolder Personal Care",
-        children: [ //child element
-          {
-            title: "women Personal Care care.js",
-            key: "coconut DrinksPersonal Care"
-          }
-        ]
-      },
-
-
-    ]
-  },
-  {
-    title: "Ayurveda",
-    key: "MainStructure Ayurveda",
-    children: [ 
-    ]
-  },
-  {
-    title: "Health Devices",
-    key: "MainStructure Health Devices",
-    children: [ 
-    ]
-  },
-];
-
-const treeData = [
-  {
-    title: 'Health & Nutrition ',
-    key: '0-0',
-    children: [
-      {
-        title: 'H&N',
-        key: '0-0-0',
-        children: [
-          {
-            title: 'Health Drinks',
-            key: '0-0-0-0',
-          },
-          {
-            title: 'Health Drinks2',
-            key: '0-0-0-1',
-          },
-          {
-            title: 'Health Drinks3',
-            key: '0-0-0-2',
-          },
-        ],
-      },
-      {
-        title: 'parent 1-1',
-        key: '0-0-1',
-        children: [
-          {
-            title: 'leaf',
-            key: '0-0-1-0',
-          },
-        ],
-      },
-      {
-        title: 'parent 1-2',
-        key: '0-0-2',
-        children: [
-          {
-            title: 'leaf',
-            key: '0-0-2-0',
-          },
-          {
-            title: 'leaf',
-            key: '0-0-2-1',
-          },
-        ],
-      },
-    ],
-  },
-
-  {
-    title: 'Women Care',
-    key: 'Women Care 0-0',
-    children: [
-      {
-        title: 'W&C',
-        key: 'Women Care 0-0-0',
-        children: [
-          {
-            title: 'Women Care',
-            key: 'Women Care 0-0-0-0',
-          },
-          {
-            title: 'Women Care2',
-            key: 'Women Care 0-0-0-1',
-          },
-          {
-            title: 'Health Drinks3',
-            key: 'Women Care 0-0-0-2',
-          },
-        ],
-      },
-      {
-        title: ' Women Careparent 1-1',
-        key: 'Women Care0-0-1',
-        children: [
-          {
-            title: ' Women Careleaf',
-            key: 'Women Care 0-0-1-0',
-          },
-        ],
-      },
-      {
-        title: ' Women Careparent 1-2',
-        key: 'Women Care 0-0-2',
-        children: [
-          {
-            title: 'Women Care leaf',
-            key: 'Women Care 0-0-2-0',
-          },
-          {
-            title: 'Women Care leaf',
-            key: 'Women Care 0-0-2-1',
-          },
-        ],
-      },
-    ],
-  },
-
-  {
-    title: 'Personal Care',
-    key: 'Personal Care 0-0',
-    children: [
-      {
-        title: 'W&C',
-        key: 'Personal Care0-0-0',
-        children: [
-          {
-            title: 'Personal Care',
-            key: 'Personal Care 0-0-0-0',
-          },
-          {
-            title: 'Personal Care2',
-            key: 'Personal Care 0-0-0-1',
-          },
-          {
-            title: 'Personal Care3',
-            key: 'Personal Care 0-0-0-2',
-          },
-        ],
-      },
-      {
-        title: ' Personal Care 1-1',
-        key: 'Personal Care0-0-1',
-        children: [
-          {
-            title: ' Personal Careleaf',
-            key: 'Personal Care 0-0-1-0',
-          },
-        ],
-      },
-      {
-        title: 'Personal Care 1-2',
-        key: 'Personal Care 0-0-2',
-        children: [
-          {
-            title: 'Personal Care leaf',
-            key: 'Personal Care 0-0-2-0',
-          },
-          {
-            title: 'Personal Care leaf',
-            key: 'Personal Care 0-0-2-1',
-          },
-        ],
-      },
-    ],
-  },
-];
 const onSelect = (selectedKeys, info) => {
   console.log('hello selected', selectedKeys,'hello info',info);
+  if(selectedKeys.length !==0){
+  console.log("hello selected match",findNested(treeUpdated, "key", selectedKeys[0])); 
+
+  setSelectedTreeForUpdate(findNested(treeUpdated, "key", selectedKeys[0]))
+  }// returns object  selectedKeys  empty dont send
 };
 const initialValues = {
   name: "",
@@ -460,10 +332,12 @@ const onSubmit = async (values, formik) => {
         <div className={styles.category_menu_overflow}>
           <Tree
             showLine
+            // title
             switcherIcon={<DownOutlined />}
             // defaultExpandedKeys={['0-0-0']}
             onSelect={onSelect}
-            treeData={treeData}
+            treeData={treeUpdated}
+            // sectionRender
             autoExpandParent ={false}
             defaultExpandAll={false}
           />

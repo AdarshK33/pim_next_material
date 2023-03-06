@@ -29,7 +29,7 @@ const initialState = {
     loading: false,
     allProductData: {},
     attributesData:{},
-    categoriesData:{},
+    categoriesData:[],
 
     attributesByIdData:{},
     attributesGroupData:{},
