@@ -30,7 +30,7 @@ const initialState = {
     error: {},
 }; 
 const catalogReducer = (state = initialState, action) => {
-    // console.log("hello brand reducer called",action)
+    // console.log("hello category added reducer called",action)
     switch (action.type) {
         case CREATE_CATEGORY_DATA_LOADING:
             return {
@@ -41,7 +41,7 @@ const catalogReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                categoryCreate:action,
+                categoryCreate:action.payload,
                 error: {},
             };
         case CREATE_CATEGORY_DATA_FAILURE:

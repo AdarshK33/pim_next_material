@@ -211,7 +211,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
     }
   };
 
-const checkValidations = () => {
+  const checkValidations = () => {
         // console.log("isChecked");
         if (
           (channelNameValidations() == true)  &

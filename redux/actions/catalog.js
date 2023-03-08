@@ -127,13 +127,13 @@ import {
   export const createCategoryApi = (data) => {
     // console.log("hello   called", data);
     return (dispatch) => {
-      dispatch(createBrandDataLoading("CATEGORY....", "CATEGORY"));
+      dispatch(createCategoryDataLoading("CATEGORY....", "CATEGORY"));
       client
         .post("/api/catalog/createCategory", data)
         .then((response) => {
-          // console.log("---------------", response.status);
+          console.log("---------------", response.status);
           if (response.status === 200) {
-            // console.log("API category==>", response.data.result);
+            console.log("API category==>", response.data.result);
             dispatch(
               createCategoryDataSuccess(
                 response.data.result,
@@ -144,9 +144,9 @@ import {
           } else throw new Error("");
         })
         .catch((err) => {
-          console.log("error caught in -> actions/category/create", err);
+          console.log("error caught in -> actions/category/createCategoryApi", err);
           dispatch(
-            createCategoryDataFailure(err, "Something went wrong", "CATEGORY CREATE")
+          createCategoryDataFailure(err, "Something went wrong", "CATEGORY CREATE")
           );
         });
     };

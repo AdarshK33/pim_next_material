@@ -6,7 +6,7 @@ function handler(req, res) {
    const id = body.brandId
   const config = {
     method: "get",
-    url: `/getBrandById/${id}`
+    url: `/brand/${id}`
   };
   onboardQueryServer(config)
     .then((response) => {

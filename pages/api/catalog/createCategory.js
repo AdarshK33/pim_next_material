@@ -5,16 +5,20 @@ export default async function handler(req, res) {
 
 	const body = req.body;
 	
+	console.log("bodyaaaaa",body);
+	
 	const config = {
 		method: 'post',
-		url: 'ct/category',
+		url: 'catalog/category',
 		data: body,
 	};
 
 	catalogServer(config)
 		.then(response => {
+		console.log("called",response);
+
 			if (response.status === 200) {
-				res.status(200).json(response.data.result);
+				res.status(200).json(response.data);
                 Promise.resolve();
 			}
 		})

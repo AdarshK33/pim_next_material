@@ -14,7 +14,7 @@ import { unstable_batchedUpdates } from "react-dom";
 import { getAllBrands, getBrandById } from "../../../utility/apiUtility";
 import PropertiesForm from "./propertiesForm";
 import CustomModal from "../../../public/customModal";
-import BrandForm from "./categoryForm";
+import CategoryForm from "./categoryForm";
 import ToastComponenet from "../../../public/toastComponenet";
 import PageLoader from "../../../public/pageLoader";
 import PaginationView from "../../../public/paginationView";
@@ -210,6 +210,8 @@ function findNested(obj, key, value) {
     toastRef.current.toastHandler({
       response: "suc",
       // position: "middle-center",
+
+
     });
   }, []);
 
@@ -488,10 +490,12 @@ const onSubmit = async (values, formik) => {
         size="md"
         centered={true}
         body={
-          <BrandForm
+          <CategoryForm
             classModal={() => setShowBrandCreationForm(false)}
             onSuccess={onBrandCreationSuccess}
             notifySucess={() => notify(true)}
+            type={selectedTreeForUpdate}
+         
           />
         }
       />
