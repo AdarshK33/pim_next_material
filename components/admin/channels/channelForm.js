@@ -31,12 +31,12 @@ console.log("hello marketplaceSelect ",marketplaceSelect)
 
 
   
-  useEffect(() => {
-    dispatch(getCountryApi());
-    dispatch(getBrandDropdownApi());
-    dispatch(getMarketplaceApi());
+  // useEffect(() => {
+  //   dispatch(getCountryApi());
+  //   dispatch(getBrandDropdownApi());
+  //   dispatch(getMarketplaceApi());
     
-  }, []);
+  // }, []);
 
   const { countryData,brandDropdownGet,MarketplaceData } = useSelector(state => {
     // console.log("hello",state)
@@ -91,13 +91,14 @@ console.log("hello marketplaceSelect ",marketplaceSelect)
       notify("err");
     } else {
       let infoData={
-        channelname  : channelName.name,
+        channelName  : channelName.name,
         marketPlaceId: channelMarketPlaceId.id,
         brandId      :channelBrandId.id,
         countryId    :channelCountryId.id,
         description  :channelDescription.name
       }
-      console.log("ssssssssssss",infoData)
+
+      // console.log("ssssssssssss",infoData)
       setItemData(infoData)
       const apiRes = await createChannelApi(infoData);
       if (apiRes === "err") {
