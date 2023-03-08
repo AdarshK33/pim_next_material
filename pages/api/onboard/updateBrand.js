@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 	let id=body.brandId
 	const config = {
 		method: 'patch',
-		url: `/brand/update/${id}`,
+		url: `/brand/${id}`,
 		data: body,
 	};
 	onboardServer(config)
