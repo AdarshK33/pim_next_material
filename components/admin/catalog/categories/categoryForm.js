@@ -33,6 +33,11 @@ function CategoryForm({ classModal, onSuccess, notifySucess,type }) {
 
 
 
+  const [newparentCategoryName , setnewParentCategoryName ] = useState();
+  const [newcategoryNameError, setnewCategoryNameError] = useState();
+  const [newcategoryDescriptionError, setnewCategoryDescriptionError] = useState();
+  const [newparentCategoryNameError, setnewParentCategoryNameError] = useState();
+
   
 
 const { categoryCreate,loading } = useSelector(state => {
@@ -40,7 +45,7 @@ const { categoryCreate,loading } = useSelector(state => {
   return state.catalogReducer;
 });
 
-console.log("categoryCreate",categoryCreate)
+// console.log("type.title",type.title)
 
   const [state, setState] = useState({
     categoryName: "",
@@ -48,9 +53,21 @@ console.log("categoryCreate",categoryCreate)
     slug:""
   });
 
+
+  
+  const [newstate, setNewState] = useState({
+    categoryName: "",
+    categoryDescription: "",
+    slug:""
+  });
   const changeHandler = (e) => {
     setState({
       ...state,
+      [e.target.name]: e.target.value,
+    });
+
+    setNewState({
+      ...newstate,
       [e.target.name]: e.target.value,
     });
     // console.log("hello input",state);
@@ -126,18 +143,54 @@ console.log("categoryCreate",categoryCreate)
     }
   };
 
-  const categoryParentValidations = () => {
+
+  // const categoryParentValidations = () => {
+  //   const nameValid = /^[a-zA-Z\b]+$/;
+  //   if (
+  //     parentCategoryName == "" &&
+  //     parentCategoryName == null &&
+  //     parentCategoryName == undefined
+  //   ) {
+  //     setParentCategoryNameError(false);
+  //     // console.log("channelNameSuccess");
+  //     return true;
+  //   } else {
+  //     setParentCategoryNameError(true);
+  //     // console.log("channelNameError");
+  //     return false;
+  //   }
+  // };
+
+  const newCategoryNameValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (
-      parentCategoryName !== "" &&
-      parentCategoryName !== null &&
-      parentCategoryName !== undefined
+      newstate.categoryName !== "" &&
+      newstate.categoryName !== null &&
+      newstate.categoryName !== undefined
     ) {
-      setParentCategoryNameError(false);
+      setnewCategoryNameError(false);
       // console.log("channelNameSuccess");
       return true;
     } else {
-      setParentCategoryNameError(true);
+      setnewCategoryNameError(true);
+      // console.log("channelNameError");
+      return false;
+    }
+  };
+
+
+  const newCategoryDescriptionValidations = () => {
+    const nameValid = /^[a-zA-Z\b]+$/;
+    if (
+      newstate.categoryDescription !== "" &&
+      newstate.categoryDescription !== null &&
+      newstate.categoryDescription !== undefined
+    ) {
+      setnewCategoryDescriptionError(false);
+      // console.log("channelNameSuccess");
+      return true;
+    } else {
+      setnewCategoryDescriptionError(true);
       // console.log("channelNameError");
       return false;
     }
@@ -148,8 +201,8 @@ console.log("categoryCreate",categoryCreate)
   const checkValidations = () => {
     // console.log("isChecked");
     if (
-      (categoryNameValidations() == true)   &
-      (categoryDescriptionValidations() == true)   &
+      (categoryNameValidations() == true)    &
+      // (categoryParentValidations() == true)   &
 
       (categoryDescriptionValidations() == true)
 
@@ -161,12 +214,30 @@ console.log("categoryCreate",categoryCreate)
 
 };
 
+const checkNewCategoryValidation = () => {
+  // console.log("isChecked");
+  if (
+    (newCategoryNameValidations() == true)   &
+    (newCategoryDescriptionValidations() == true)
+
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+
+};
 
 
-const submitHandler = (e) => {
+
+
+
+const submitHandler = async(e) => {
   e.preventDefault();
 
   const value = checkValidations();
+ 
+
 
   if (value === true) {
     console.log("Inside the category submit");
@@ -183,9 +254,52 @@ const submitHandler = (e) => {
   console.log("hello update info", UpdateInfo);
   //apis(UpdateInfo)
  dispatch( createCategoryApi(UpdateInfo));
+
+ const apiRes = await createCategoryApi(UpdateInfo);
+ if (apiRes === "err") {
+  //  formik.setSubmitting(false);
+ } else {    
+   notifySucess(true);
+   classModal();
+ }
 };
+
+
 }
 
+const submitNewHandler = async(e) => {
+  e.preventDefault();
+
+ 
+  const newValue = checkNewCategoryValidation();
+
+if (newValue === true) {
+  console.log("Inside the category submit");
+  // setSaveclick(true);
+
+  const UpdateInfo = {
+      name: newstate.categoryName,
+      description : newstate.categoryDescription,
+      brands : ['Puma'],
+      precedence: 0
+    
+}
+console.log("hello new category info", UpdateInfo);
+//apis(UpdateInfo)
+dispatch( createCategoryApi(UpdateInfo));
+
+const apiRes = await createCategoryApi(UpdateInfo);
+if (apiRes === "err") {
+//  formik.setSubmitting(false);
+} else {    
+ notifySucess(true);
+ classModal();
+}
+};
+
+
+
+}
 
 
   return (
@@ -194,27 +308,27 @@ const submitHandler = (e) => {
       {/* parentCategoryId */}
          {!type?(
           <>
-           <Form>
+         <Form>
            <Row style={{ marginBottom: ".2rem" }}>
            <div className="col-sm-12 ">
                 <Form.Group>
                   <Form.Label>
-                    <span className=".font12">Channel Name</span>
+                    <span className=".font12">Add New Catergory</span>
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    name="channelName"
-                    value={state.channelName}
+                    name="categoryName"
+                    value={newstate.categoryName}
                     onChange={changeHandler}
                     required
                     maxLength="250"
-                    style={channelNameError ? { borderColor: "red" } : {}}
-                    placeholder="Channel"
+                    style={newcategoryNameError ? { borderColor: "red" } : {}}
+                    placeholder="Name"
                     // disabled={disabled}
                   />
-                  {channelNameError ? (
+                  {newcategoryNameError ? (
                     <p style={{ color: "red" }}> ** Please enter channel Name </p>
-                  ) :state.channelName && state.channelName.length === 100 ? (
+                  ) :newstate.categoryName && newstate.categoryName.length === 100 ? (
                     <p style={{ color: "red" }}> Max 100 Characters</p>
                   ) : (
                     <p></p>
@@ -222,41 +336,77 @@ const submitHandler = (e) => {
                 </Form.Group>
               </div>
               </Row>
-          <Row style={{ marginBottom: ".2rem" }}>
+          {/* <Row style={{ marginBottom: ".2rem" }}>
           <div className="col-sm-12">
             <Form.Group>
               <Form.Label>
-                <span> Country </span>
+             
+                <span> selected Category </span>
               </Form.Label>
               <Form.Control
                 as="select"
-                name="countryId"
-                value={countryName}
-                onChange={(e) => countryHandler(e)}
+                name="parentId"
+                // value={type.title}
+                // onChange={(e) => countryHandler(e)}
                 required
-                style={countryNameError ? { borderColor: "red" } : {}}
+                style={parentCategoryNameError ? { borderColor: "red" } : {}}
                 // disabled={disabled}
               >
-                <option value="">Select Country</option>
-                {
+                {/* <option value="">Select Parent Catergory</option> */}
+                {/* <option value="">{type.title}</option> */}
+
+                {/* {
                   countryData &&
                   countryData?.map((item, i) => {
                     return (
                       <option key={item.value}>{item.label}</option>
                     );
                   })
-                  }
-              </Form.Control>
-              {countryNameError ? (
-                    <p style={{ color: "red" }}>** Please choose country</p>
+                  } */}
+              {/* </Form.Control>
+              {parentCategoryNameError ? (
+                    <p style={{ color: "red" }}>** Please choose parent category</p>
                   ) : (
                     <p></p>
                   )}
              
             </Form.Group>
           </div>
-          </Row>
-          <Row style={{ marginBottom: ".2rem" }}>
+            // </Row> */}
+          {/* <Row style={{ marginBottom: ".2rem" }}> */}
+          {/* <div className="col-sm-12">
+            <Form.Group>
+              <Form.Label>
+                <span> Sub Category </span>
+              </Form.Label>
+              <Form.Control
+                as="select"
+                name="subCategoryNameId"
+                value={subCategoryName}
+                // onChange={(e) => brandHandler(e)}
+                required
+                style={subCategoryNameError ? { borderColor: "red" } : {}}
+                // disabled={disabled}
+              >
+                <option value="">Select Sub Category Name</option>
+                {/* {
+                  brandDropdownGet &&
+                  brandDropdownGet.map((item, i) => {
+                    return (
+                      <option key={item.value}>{item.label}</option>
+                    );
+                  })
+                  } */}
+              {/* </Form.Control>
+              {subCategoryNameError ? (
+                    <p style={{ color: "red" }}>** Please choose sub Category Name</p>
+                  ) : (
+                    <p></p>
+                  )}
+            </Form.Group>
+          </div> */}
+          {/* </Row> */}
+          {/* <Row style={{ marginBottom: ".2rem" }}>
           <div className="col-sm-12">
             <Form.Group>
               <Form.Label>
@@ -264,105 +414,104 @@ const submitHandler = (e) => {
               </Form.Label>
               <Form.Control
                 as="select"
-                name="brandNameId"
-                value={brandName}
-                onChange={(e) => brandHandler(e)}
+                name="parentId"
+                value={parentCategoryName}
+                // onChange={(e) => brandHandler(e)}
                 required
                 style={brandNameError ? { borderColor: "red" } : {}}
                 // disabled={disabled}
               >
-                <option value="">Select Brand</option>
-                {
-                  brandDropdownGet &&
-                  brandDropdownGet.map((item, i) => {
+                <option value="">Select Brand </option>
+                {/* {
+                  countryData &&
+                  countryData?.map((item, i) => {
                     return (
                       <option key={item.value}>{item.label}</option>
                     );
                   })
-                  }
-              </Form.Control>
+                  } */}
+              {/* </Form.Control>
               {brandNameError ? (
                     <p style={{ color: "red" }}>** Please choose brand</p>
                   ) : (
                     <p></p>
-                  )}
-            </Form.Group>
+                  )} */}
+             
+            {/* </Form.Group>
           </div>
-          </Row>
-          <Row style={{ marginBottom: ".2rem" }}>
-          <div className="col-sm-12">
-            <Form.Group>
-              <Form.Label>
-                <span> Market place </span>
-              </Form.Label>
-              <Form.Control
-                as="select"
-                name="marketplaceId"
-                value={marketplaceName}
-                onChange={(e) => marketplaceHandler(e)}
-                required
-                style={marketplaceNameError ? { borderColor: "red" } : {}}
-                // disabled={disabled}
-              >
-                <option value="">Select Marketplace</option>
-                {
-                  MarketplaceData &&
-                  MarketplaceData.map((item, i) => {
-                    return (
-                      <option key={item.value}>{item.label}</option>
-                    );
-                  })
-                  }
-              </Form.Control>
-              {marketplaceNameError ? (
-                    <p style={{ color: "red" }}>** Please choose market place.</p>
-                  ) : (
-                    <p></p>
-                  )}
-            </Form.Group>
-          </div>
-          </Row>
-          <Row style={{ marginBottom: ".2rem" }}>
-           <div className="col-sm-12">
+          // </Row> */} 
+
+
+
+          {/* <Row style={{ marginBottom: ".2rem" }}>
+           <div className="col-sm-12 ">
                 <Form.Group>
                   <Form.Label>
-                    <span>Channel Description</span>
+                    <span className=".font12">Slug</span>
                   </Form.Label>
                   <Form.Control
-                    as="textarea" rows={3}
-                    name="channelDescription"
-                    value={state.channelDescription}
+                    type="text"
+                    name="Slug"
+                    value={state.slug}
                     onChange={changeHandler}
                     required
                     maxLength="250"
-                    style={channelDescriptionError ? { borderColor: "red" } : {}}
-                    placeholder="Description"
+                    style={slugError ? { borderColor: "red" } : {}}
+                    placeholder="slug"
                     // disabled={disabled}
                   />
-                  {channelDescriptionError ? (
-                    <p style={{ color: "red" }}>** Please enter channel description</p>
-                  ) :state.channelDescription && state.channelDescription.length === 250 ? (
-                    <p style={{ color: "red" }}> Max 250 Characters</p>
+                  {slugError ? (
+                    <p style={{ color: "red" }}> ** Please enter slug </p>
+                  ) :state.slug && state.slug.length === 100 ? (
+                    <p style={{ color: "red" }}> Max 100 Characters</p>
                   ) : (
                     <p></p>
                   )}
                 </Form.Group>
               </div>
-              </Row>
+          </Row> */}
+          <Row style={{ marginBottom: ".2rem" }}>
+           <div className="col-sm-12">
+                <Form.Group>
+                  <Form.Label>
+                    <span>Category Description</span>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea" rows={3}
+                    name="categoryDescription"
+                    value={newstate.categoryDescription}
+                    onChange={changeHandler}
+                    required
+                    maxLength="250"
+                    style={newcategoryDescriptionError ? { borderColor: "red" } : {}}
+                    placeholder="Description"
+                    // disabled={disabled}
+                  />
+                  {newcategoryDescriptionError ? (
+                    <p style={{ color: "red" }}>** Please enter Category description</p>
+                  ) :newstate.categoryDescription && newstate.categoryDescription.length === 250 ? (
+                    <p style={{ color: "red" }}> Max 250 Characters</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
+          
+              </div>
+            </Row>
               <div className="col-12 text-center pt-5">
                     <SubmitButton
-                      // onClick={classModal}
+                      onClick={classModal}
                       type="button"
                       name="CANCEL"
                       className="btn btn-sm save_btn_secondary py-1 px-5 br3"
                     />
                     <SubmitButton
-                    //  onClick={submitHandler}
+                     onClick={submitNewHandler}
                       type="submit"
                       name="ADD"
                       className="btn btn-sm save_btn_secondary py-1 px-5 br3 mx-2"
                     />
-                  </div>
+              </div>
            </Form>
           </>
          ):(<>
@@ -371,7 +520,7 @@ const submitHandler = (e) => {
            <div className="col-sm-12 ">
                 <Form.Group>
                   <Form.Label>
-                    <span className=".font12">Name</span>
+                    <span className=".font12">Add New Catergory</span>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -385,7 +534,7 @@ const submitHandler = (e) => {
                     // disabled={disabled}
                   />
                   {categoryNameError ? (
-                    <p style={{ color: "red" }}> ** Please enter channel Name </p>
+                    <p style={{ color: "red" }}> ** Please enter Category Name </p>
                   ) :state.categoryName && state.categoryName.length === 100 ? (
                     <p style={{ color: "red" }}> Max 100 Characters</p>
                   ) : (
@@ -398,18 +547,21 @@ const submitHandler = (e) => {
           <div className="col-sm-12">
             <Form.Group>
               <Form.Label>
-                <span> Parent Category </span>
+             
+                <span> selected Category </span>
               </Form.Label>
               <Form.Control
                 as="select"
                 name="parentId"
-                value={parentCategoryName}
+                // value={type.title}
                 // onChange={(e) => countryHandler(e)}
                 required
-                style={parentCategoryNameError ? { borderColor: "red" } : {}}
+                // style={parentCategoryNameError ? { borderColor: "red" } : {}}
                 // disabled={disabled}
               >
-                <option value="">Select Parent Catergory</option>
+                {/* <option value="">Select Parent Catergory</option> */}
+                <option value="">{type.title}</option>
+
                 {/* {
                   countryData &&
                   countryData?.map((item, i) => {
@@ -419,11 +571,11 @@ const submitHandler = (e) => {
                   })
                   } */}
               </Form.Control>
-              {parentCategoryNameError ? (
+              {/* {parentCategoryNameError ? (
                     <p style={{ color: "red" }}>** Please choose parent category</p>
                   ) : (
                     <p></p>
-                  )}
+                  )} */}
              
             </Form.Group>
           </div>
@@ -550,6 +702,7 @@ const submitHandler = (e) => {
                     <p></p>
                   )}
                 </Form.Group>
+          
               </div>
             </Row>
               <div className="col-12 text-center pt-5">
@@ -565,7 +718,7 @@ const submitHandler = (e) => {
                       name="ADD"
                       className="btn btn-sm save_btn_secondary py-1 px-5 br3 mx-2"
                     />
-                  </div>
+              </div>
            </Form>
          </>)
           

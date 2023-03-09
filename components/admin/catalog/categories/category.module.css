@@ -198,6 +198,13 @@ and (max-device-width: 1500px)
   font-family: Gill-medium;
   font-weight: 600;
 }
+
+.not_slected_submit_button{
+  background-color: #757575  ;
+  color:white;
+  font-family: Gill-medium;
+  font-weight: 600;
+}
 .switch_btn{
   padding-top: 4px;
 }

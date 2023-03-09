@@ -37,6 +37,8 @@ import FormikControl from "../../../public/formik/formikControl"
 import SubmitButton from "../../../public/formik/submitButton";
 import { useDispatch, useSelector } from "react-redux";
 import {getCategoriesApis} from "../../../../redux/actions/catalogQuery"
+import {updateCategoryApi} from "../../../../redux/actions/catalog"
+
 
 function classifyingCategory({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
@@ -59,11 +61,16 @@ function classifyingCategory({ currentPgNo }) {
   //   return {loginUser: app?.loggedIn,};
   // });
   
-  console.log("hello selectedTreeForUpdate",selectedTreeForUpdate)
-
+  console.log("hello selectedTreeForUpdate",selectedTreeForUpdate?.title)
+  let infoData=
 
   useEffect(() => {
    dispatch(getCategoriesApis("Puma"))
+  //  dispatch( updateCategoryApi({
+  //   categoryId: 79,
+  //   name: 'nokia mobile',
+    
+  // }))
   }, []);
   
 
@@ -162,7 +169,8 @@ function findNested(obj, key, value) {
   const notify = (val) => {
     if (!toast.isActive(toastId.current)) {
       if (val) {
-        toastId.current = toast("Brand Name added Successfully !!!");
+        toastId.current = toast("Category added Successfully !!!");
+        dispatch(getCategoriesApis("Puma"))
       }
     }
   };
@@ -274,7 +282,6 @@ function findNested(obj, key, value) {
 
 
 
-
 const onSelect = (selectedKeys, info) => {
   console.log('hello selected', selectedKeys,'hello info',info);
   if(selectedKeys.length !==0){
@@ -284,26 +291,36 @@ const onSelect = (selectedKeys, info) => {
   }// returns object  selectedKeys  empty dont send
 };
 const initialValues = {
-  name: "",
+  name: selectedTreeForUpdate?.title ,
   discription: ""
 };
 
 const onSubmit = async (values, formik) => {
-  let brndName = {
+  let categoryName = {
     name: values.name.trim(),
   };
-  let brndDiscription = {
+  let categoryDiscription = {
     name: values.discription.trim(),
   };
-  console.log("val", brndName);
-  if (brndName.name === "" || brndDiscription.name === "" ) {
+  console.log("val");
+  if (categoryName.name === "" || categoryDiscription.name === "" ) {
     notify("err");
   } else {
-    const apiRes = await createBrandApi(brndName);
+    let infoData={
+      name: categoryName.name,
+      // description: categoryDiscription.name,
+      // description:brandDescription.name,
+      // contactPerson: brandContact.name,
+      // emailId: brandEmail.name,
+      // mobile: brandMobile.name,
+      //  status:brandStatus.name,
+      // status: brandByIdData?.isActive
+    }
+    const apiRes = await updateCategoryApi(infoData);
     if (apiRes === "err") {
       formik.setSubmitting(false);
     } else {
-      notifySucess(true);
+      // notifySucess(true);
       classModal();
     }
   }
@@ -352,25 +369,31 @@ const onSubmit = async (values, formik) => {
         <div className="col-10 p-0">
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
-       
+       {selectedTreeForUpdate ?(
+       <>
         <div className={`card ${styles.category_card}`}>
         <div className="card-body">
+          {/* selected */}
          <div className="row">
          <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ isSubmitting }) => {
+          {({ isSubmitting ,setFieldValue}) => {
             return (
               
+
+             
               <Form className="mx-0 font12">
                 <div className="row">
+                {selectedTreeForUpdate.title}
                 <div className="col-4 my-2">
                 <FormikControl
                   control="input"
                   type="input"
                   classprops="form-group mb-3 col-md-12"
                   className="form-control form-control-sm px-0 py-2 text-center border-0"
-                  placeholder="Name"
-                  name="Name"
-                  id="Name"
+                  placeholder={selectedTreeForUpdate.title}
+                  name="name"
+                  id="name"
+                //  setFieldValue={selectedTreeForUpdate}
                 />
                 </div>
                 <div className="col-4 mt-4 my-2">
@@ -430,8 +453,8 @@ const onSubmit = async (values, formik) => {
                   classprops="form-group mb-3 col-md-12"
                   className="form-control form-control-sm px-0 py-2 text-center border-0"
                   placeholder="Category descriptions..."
-                  name="CategoryDescriptions"
-                  id="Category_descriptions"
+                  name="descriptions"
+                  id="descriptions"
                   rows="5"
                 />
                 </div>
@@ -462,6 +485,122 @@ const onSubmit = async (values, formik) => {
          </div>
         </div>
       </div>
+       </>):(
+        <>
+       <div className={`card ${styles.category_card}`}>
+        <div className="card-body">
+         <div className="row">
+         <Formik >
+          {({ isnotSubmitting }) => {
+            return (
+              
+              <Form className="mx-0 font12">
+                <div className="row">
+                <div className="col-4 my-2">
+                notselected
+                <FormikControl
+                  control="input"
+                  type="input"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm px-0 py-2 text-center border-0"
+                  placeholder="Name"
+                  name="notselectedname"
+                  id="name"
+                   // setFieldValue={setFieldValue}
+                />
+                </div>
+                <div className="col-4 mt-4 my-2">
+                <FormikControl
+                  control="reactSelect"
+                  selectOpts={null}
+                  placeholder="Parent Category"
+                  isMulti={false}
+                />
+                </div>
+                <div className="col-4 mt-4 my-2">
+                <FormikControl
+                  control="reactSelect"
+                  selectOpts={null}
+                  placeholder="Sub Category"
+                  isMulti={false}
+                />
+                </div>
+                </div>
+                <div className="row">
+                <div className="col-4 my-2">
+                <FormikControl
+                  control="input"
+                  type="input"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm px-0 py-2 text-center border-0"
+                  placeholder="Slug"
+                  name="Slug"
+                  id="Slug"
+                />
+                </div>
+                <div className="col-4 mt-4 my-2">
+                <FormikControl
+                  control="reactSelect"
+                  selectOpts={null}
+                  placeholder="Brand (Multi Select)"
+                  isMulti={true}
+                />
+                </div>
+                </div>
+                <div className="row">
+                <div className={`col-4 category_dropZone my-3`}>
+                <FormikControl
+                  control="dropZone"
+                  name="category drop Images/file"
+                  setFieldValue="Image Upload"
+                  placeholder="Image Upload"
+
+                />
+                </div>
+              
+                <div className="col-8 my-0">
+                 <FormikControl
+                  // label="First Name"
+                  control="text-area"
+                  type="text"
+                  classprops="form-group mb-3 col-md-12"
+                  className="form-control form-control-sm px-0 py-2 text-center border-0"
+                  placeholder="Category descriptions..."
+                  name="notselecteddescriptions"
+                  id="notselecteddescriptions"
+                  rows="5"
+                />
+                </div>
+                </div>
+
+
+             <div className={styles.btn_section}>
+              <div className={styles.switch_btn}>
+        <Space >
+          <Switch checkedChildren="Active" unCheckedChildren="Not Active" />
+        </Space>
+            </div>
+            <div className={styles.submit_btn}>
+                  <SubmitButton
+                    // isLoading={isnSubmitting}
+                    type="submit"
+                    name="Submit"
+                    className={`btn btn-sm py-1 px-4 br3 mx-2 ${styles.not_slected_submit_button}`}
+                  />
+            </div>
+        </div>
+                
+              </Form>
+            );
+          }}
+        </Formik>  
+         
+         </div>
+        </div>
+      </div>
+        </>
+       )}
+      
         {/* {loading ? (
           <PageLoader />
         ) : ( */}

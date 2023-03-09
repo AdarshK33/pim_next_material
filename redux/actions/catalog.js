@@ -152,16 +152,16 @@ import {
     };
   };
   
-  export const updateCategoryApi = (data) => {
-    //console.log("hello  updateCategoryApi info",info)
-    // const data = {
-    //       brandId:info?.brandId,
-    //       brandName: info.brandName,
-    //       description:info.description,
-    //       contactPerson: info.contactPerson,
-    //       emailId: info.emailId,
-    //       mobile: info.mobile
-    // }
+  export const updateCategoryApi = (info) => {
+    console.log("hello  updateCategoryApi info",info)
+    const data = {
+      categoryId:info?.categoryId,
+          name: info.name,
+          // description:info.description,
+          // contactPerson: info.contactPerson,
+          // emailId: info.emailId,
+          // mobile: info.mobile
+    }
    
     return (dispatch) => {
       dispatch(updateCategoryDataLoading("CATEGORY....", "CATEGORY"));
