@@ -2,8 +2,8 @@ import axios from "axios";
 // import { toast } from "../common-components/Toast";
 import {
 	ONBOARD_QUERY_SERVICE_URL
-  } from "../components/utility/apiEndPoints";
-  
+} from "../components/utility/apiEndPoints";
+
 let token;
 let blacklist = ["trackorder"];
 
@@ -15,14 +15,14 @@ const client = axios.create({
 });
 
 const onboardServer = axios.create({
-	baseURL:  process.env.ONBOARD_SERVICE_URL,
+	baseURL: process.env.ONBOARD_SERVICE_URL,
 	// timeout: 1000 * 10,
 	headers: {
 		"Content-Type": "application/json",
 	},
 });
 const authServer = axios.create({
-	baseURL:  process.env.AUTH_SERVICE_URL,
+	baseURL: process.env.AUTH_SERVICE_URL,
 	// timeout: 1000 * 10,
 	headers: {
 		"Content-Type": "application/json",
@@ -30,7 +30,7 @@ const authServer = axios.create({
 });
 //console.log("hello ONBOARD_QUERY_SERVICE_URL",process.env.ONBOARD_QUERY_SERVICE_URL)
 const onboardQueryServer = axios.create({
-	baseURL:  process.env.ONBOARD_QUERY_SERVICE_URL,
+	baseURL: process.env.ONBOARD_QUERY_SERVICE_URL,
 	// timeout: 1000 * 10,
 	headers: {
 		"Content-Type": "application/json",
@@ -38,14 +38,14 @@ const onboardQueryServer = axios.create({
 });
 
 const catalogServer = axios.create({
-	baseURL:  process.env.CATALOG_SERVICE_URL,
+	baseURL: process.env.CATALOG_SERVICE_URL,
 	// timeout: 1000 * 10,
 	headers: {
 		"Content-Type": "application/json",
 	},
 });
 const catalogQueryServer = axios.create({
-	baseURL:  process.env.CATALOG_QUERY_SERVICE_URL,
+	baseURL: process.env.CATALOG_QUERY_SERVICE_URL,
 	// timeout: 1000 * 10,
 	headers: {
 		"Content-Type": "application/json",
@@ -99,7 +99,7 @@ onboardQueryServer.setJwtToken = newToken => {
 // };
 
 // const errorHandler = (error, type) => {
-	
+
 // 	if (type === "client") {
 // 		const invalidSessionMessage = "\"%fieldName\" is required. Enter and try again.";
 // 		const isUnauthorized = error?.response?.status === 401;
@@ -123,4 +123,12 @@ onboardQueryServer.setJwtToken = newToken => {
 // 		});
 // };
 
-export { client, onboardServer,authServer,onboardQueryServer,catalogServer,catalogQueryServer };
+const syncServer = axios.create({
+	baseURL: process.env.SYNC_SERVICE_URL,
+	// timeout: 1000 * 10,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});
+
+export { client, onboardServer, authServer, onboardQueryServer, catalogServer, catalogQueryServer, syncServer };

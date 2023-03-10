@@ -25,6 +25,9 @@ import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from "antd";
 import calendar from "../../../assets/icons/calendar.svg";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+import { createBulkApi } from "../../../redux/actions/bulk";
 
 function BulkUpload({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -32,6 +35,8 @@ function BulkUpload({ currentPgNo }) {
   const [itemData, setItemData] = useState({});
   const [itemsCount, setItemsCount] = useState(null);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
+
+  const [template, setTemplate] = useState('');
 
   const selectOpts = [
     { value: "Brand 1", label: "xyz" },
@@ -53,12 +58,32 @@ function BulkUpload({ currentPgNo }) {
     });
   }, []);
 
-  
+  const handleClick = () => {
+    setShowBrandCreationForm(true)
+    axios.get('http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1/sync/template', {
+      responseType: "blob",
+      headers: {
+        "Content-Type": "application/zip"
+      }
+    })
+      .then((response) => {
+        setTemplate(response.data)
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'template.zip');
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch(err => console.error(err))
+  }
+
+
   // const { loginUser } = useSelector(({app}) => {
   //   console.log("hello app",app)
   //   return {loginUser: app?.loggedIn,};
   // });
-  
+
   // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
   const getAllProductData = async (payload) => {
     !loading && setLoading(true);
@@ -196,9 +221,9 @@ function BulkUpload({ currentPgNo }) {
                 alt="download"
                 width={40}
                 height={35}
-                // onClick={() => {
-                //   setShowBrandCreationForm(true)
-                // }}
+              // onClick={() => {
+              //   setShowBrandCreationForm(true)
+              // }}
               />
             </div>
             <button
@@ -220,13 +245,11 @@ function BulkUpload({ currentPgNo }) {
                 alt="download"
                 width={40}
                 height={35}
-                // onClick={() => {
-                //   setShowBrandCreationForm(true)
-                // }}
+                onClick={handleClick}
               />
             </div>
             <button
-              onClick={() => setShowBrandCreationForm(true)}
+              onClick={handleClick}
               className={`btn btn-sm ${styles.add_button_text}`}
             >
               {/* <img src="/icons/add.png" alt="add-icon" /> */}
@@ -243,6 +266,7 @@ function BulkUpload({ currentPgNo }) {
                 name="catalog_name"
                 placeholder="Upload your documnet"
                 // setFieldValue={setFieldValue}
+                onClick={postFile}
               />
             </div>
           </div>

@@ -7,7 +7,8 @@ import loginReducer from "./loginReducer";
 import onBoardQueryReducer from "./onboardQueryReducer";
 // import app from "./appReducer"
 import catalogQueryReducer from "./catalogQueryReducer"
-import catalogReducer from "./catalogReducer"
+import catalogReducer from "./catalogReducer";
+import bulkReducer from "./bulkReducer";
 
 const rootReducer = combineReducers({
   // app,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   onBoardQueryReducer,
   channelReducer,
   catalogQueryReducer,
-  catalogReducer
+  catalogReducer,
+  bulkReducer
 });
 
 export default rootReducer;
