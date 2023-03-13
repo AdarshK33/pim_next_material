@@ -91,7 +91,8 @@ function BulkUpload({ currentPgNo }) {
         }
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
+        alert('File uploaded')
       })
       .catch((error) => {
         console.log(error);
@@ -280,7 +281,7 @@ function BulkUpload({ currentPgNo }) {
 
         <div className="row">
           <div className="col-12 px-0">
-            <div className="pb-3 bulk_upload_style" style={{border:'2px dashed black', margin:'15px 0px', padding:'10px 0px', background:'rgba(195,218,217,.69)', textAlign:'center'}}>
+            <div className="pb-3 bulk_upload_style" style={{ border: '2px dashed black', margin: '15px 0px', padding: '0px 0px', background: 'rgba(195,218,217,.69)', textAlign: 'center' }}>
               {/* <FormikControl
                 control="dropZone"
                 name="catalog_name"
@@ -290,15 +291,15 @@ function BulkUpload({ currentPgNo }) {
               /> */}
               <Dropzone onDrop={onDrop}>
                 {({ getRootProps, getInputProps }) => (
-                    <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        {
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {
 
-                        }
-                        <p>Drag and drop a file here, or click to select file</p>
-                    </div>
+                    }
+                    <p>Drag and drop a file here, or click to select file</p>
+                  </div>
                 )}
-            </Dropzone>
+              </Dropzone>
             </div>
           </div>
         </div>
