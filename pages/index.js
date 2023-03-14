@@ -57,7 +57,7 @@ export const getServerSideProps = withIronSessionSsr(
 if (user) {
   return {
     redirect: {
-      destination: '/dashboard/dashboard',
+      destination: '/pim/dashboard',
       permanent: false,
     },
   }

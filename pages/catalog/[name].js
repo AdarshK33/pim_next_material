@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useMemo ,useState, useEffect } from "react";
 import DashBoardContent from "../../components/admin/dashBoardContent";
 import DashBoardSideBar from "../../components/admin/dashBoardSideBar";
-import styles from "../dashboard/dashboard.module.css";
+import styles from "../pim/dashboard.module.css";
 import logo from "../../assets/icons/logo_2_2022.svg";
 import user from "../../assets/icons/user1.png";
 import ProductDetail from "../../components/admin/catalog/productDetails"

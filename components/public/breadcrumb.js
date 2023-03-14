@@ -19,7 +19,7 @@ const Breadcrumb = (props) => {
                 <h3>{breadcrumb.title}</h3>
                 <ol className="breadcrumb pull-right">
                   <li className="breadcrumb-item">
-                  <Link  href={"/dashboard/dashboard"}   >
+                  <Link  href={"/pim/dashboard"}   >
                      <Home />
                    </Link>
                    {/* { rolePermission === "manager" || rolePermission === "admin"  ||rolePermission === "costCenterManager" ||rolePermission === "superCostCenterManager" ? (
