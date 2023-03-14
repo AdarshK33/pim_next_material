@@ -157,10 +157,6 @@ import {
     const data = {
       categoryId:info?.categoryId,
           name: info.name,
-          // description:info.description,
-          // contactPerson: info.contactPerson,
-          // emailId: info.emailId,
-          // mobile: info.mobile
     }
    
     return (dispatch) => {

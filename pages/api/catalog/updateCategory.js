@@ -7,6 +7,7 @@ export default async function handler(req, res) {
 	
 
 	let id=body.categoryId
+	// console.log("hello iiiiiiiiiiiiii",id)
 	const config = {
 		method: 'put',
 		url: `/catalog/category/${id}`,
@@ -21,7 +22,7 @@ export default async function handler(req, res) {
 		})
 		.catch(err => {
         console.log("error caught in -> api/catalog/updateCategory", err);
-					console.log(err.response);
+					// console.log(err.response);
 					if (err?.response?.data) {
 						const { status = {} } = err?.response;
 						res.status(status).json(err.response.data.error +' '+ status);

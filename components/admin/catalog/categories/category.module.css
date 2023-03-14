@@ -140,7 +140,6 @@ and (min-device-width: 1200px)
 and (max-device-width: 1500px) 
 { 
 
-  
 
 .dash_board_pagination{
   display: flex;

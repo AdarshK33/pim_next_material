@@ -37,7 +37,7 @@ const initialState = {
     channelByIdData:{},
     brandByIdData:{},
     brandGet:{},
-    brandDropdownGet:{},
+    brandDropdownGet:[],
     error: {},
 };
 const onBoardQueryReducer = (state = initialState, action) => {
