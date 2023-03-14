@@ -25,6 +25,10 @@ import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from "antd";
 import calendar from "../../../assets/icons/calendar.svg";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+import Dropzone from 'react-dropzone';
+import { createBulkApi } from "../../../redux/actions/bulk";
 
 function BulkUpload({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -32,6 +36,8 @@ function BulkUpload({ currentPgNo }) {
   const [itemData, setItemData] = useState({});
   const [itemsCount, setItemsCount] = useState(null);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
+
+  const [template, setTemplate] = useState('');
 
   const selectOpts = [
     { value: "Brand 1", label: "xyz" },
@@ -53,12 +59,52 @@ function BulkUpload({ currentPgNo }) {
     });
   }, []);
 
-  
+  const handleClick = () => {
+    setShowBrandCreationForm(true)
+    axios.get('http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1/sync/template', {
+      responseType: "blob",
+      headers: {
+        "Content-Type": "application/zip"
+      }
+    })
+      .then((response) => {
+        setTemplate(response.data)
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'template.zip');
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch(err => console.error(err))
+  }
+
+  const onDrop = (acceptedFiles) => {
+    const formData = new FormData();
+    acceptedFiles.forEach((file) => {
+      formData.append('file', file);
+    });
+    axios
+      .post('http://sync-command-handler.theretailinsightsdemos.com/api/v1/sync/bulk', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then((response) => {
+        // console.log(response);
+        alert('File uploaded')
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
   // const { loginUser } = useSelector(({app}) => {
   //   console.log("hello app",app)
   //   return {loginUser: app?.loggedIn,};
   // });
-  
+
   // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
   const getAllProductData = async (payload) => {
     !loading && setLoading(true);
@@ -196,9 +242,9 @@ function BulkUpload({ currentPgNo }) {
                 alt="download"
                 width={40}
                 height={35}
-                // onClick={() => {
-                //   setShowBrandCreationForm(true)
-                // }}
+              // onClick={() => {
+              //   setShowBrandCreationForm(true)
+              // }}
               />
             </div>
             <button
@@ -220,13 +266,11 @@ function BulkUpload({ currentPgNo }) {
                 alt="download"
                 width={40}
                 height={35}
-                // onClick={() => {
-                //   setShowBrandCreationForm(true)
-                // }}
+                onClick={handleClick}
               />
             </div>
             <button
-              onClick={() => setShowBrandCreationForm(true)}
+              onClick={handleClick}
               className={`btn btn-sm ${styles.add_button_text}`}
             >
               {/* <img src="/icons/add.png" alt="add-icon" /> */}
@@ -237,13 +281,25 @@ function BulkUpload({ currentPgNo }) {
 
         <div className="row">
           <div className="col-12 px-0">
-            <div className="pb-3 bulk_upload_style">
-              <FormikControl
+            <div className="pb-3 bulk_upload_style" style={{ border: '2px dashed black', margin: '15px 0px', padding: '0px 0px', background: 'rgba(195,218,217,.69)', textAlign: 'center' }}>
+              {/* <FormikControl
                 control="dropZone"
                 name="catalog_name"
                 placeholder="Upload your documnet"
                 // setFieldValue={setFieldValue}
-              />
+                onClick={postFile}
+              /> */}
+              <Dropzone onDrop={onDrop}>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {
+
+                    }
+                    <p>Drag and drop a file here, or click to select file</p>
+                  </div>
+                )}
+              </Dropzone>
             </div>
           </div>
         </div>
