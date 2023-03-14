@@ -10,7 +10,7 @@ function handler(req, res) {
 
   const config = {
     method: "get",
-    url: `/getChannelById/${id}`
+    url: `/channel/${id}`
   };
   onboardQueryServer(config)
  

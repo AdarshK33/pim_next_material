@@ -57,7 +57,7 @@ return (dispatch) => {
       .then((response) => {
         // console.log("---------------", response.status);
        
-        if (response.status === 200) {
+        if (response.status === 201) {
           // console.log("BrandGreat==>", response.data.result);
           dispatch(
             createBrandDataSuccess(

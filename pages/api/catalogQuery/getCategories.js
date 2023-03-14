@@ -3,13 +3,14 @@ import { catalogQueryServer } from "../../../utils/axios";
 
 function handler(req, res) {
   const body = req.body;
-  const name = body.brandName
+  let brandName = body.brandName
  const config = {
    method: "get",
-   url: `/ct/categories/${name}`
+   url: `/ct/categories/${brandName}`
  };
   catalogQueryServer(config)
     .then((response) => {
+      // console.log("hello calleed ",response)
       if (response.status === 200) {
         res.status(200).json(response.data.result);
          Promise.resolve();

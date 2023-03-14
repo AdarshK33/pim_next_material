@@ -188,13 +188,13 @@ export const getCategoriesApis = (brandName) => {
   }
     return (dispatch) => {
       dispatch(getCategoriesDataLoading('CATEGORIES....', 'CATEGORIES'));
-      client.get("/api/catalogQuery/getCategories",data)
+      client.post("/api/catalogQuery/getCategories",data)
         .then((response) => {
-          console.log("api response",response)
+          // console.log("api response",response.status)
         //   console.log(response)
-          if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
-            dispatch(getCategoriesDataSuccess(response.data.result));
+          if (response?.status === 200) {
+              // console.log("API SUCCESS2", response.data);
+            dispatch(getCategoriesDataSuccess(response.data));
           }
         })
         .catch((err) => {
@@ -236,7 +236,7 @@ export const getAttributesGroupApis = (groupId) => {
 
       return (dispatch) => {
         dispatch(getAttributesGroupDataLoading('ATTRIBUTE GROUP....', 'ATTRIBUTE GROUP'));
-        client.get("/api/catalogQuery/attributeGroup",data)
+        client.post("/api/catalogQuery/attributeGroup",data)
           .then((response) => {
             console.log("api response",response)
           //   console.log(response)
@@ -258,7 +258,7 @@ export const getProductPimCodeApi = (pim_model_code) => {
   }
   return (dispatch) => {
     dispatch(getProductPimCodeDataLoading('PRODUCTs PIM CODE....', 'PRODUCTs PIM CODE'));
-    client.get("/api/catalogQuery/getProductPimCode",data)
+    client.post("/api/catalogQuery/getProductPimCode",data)
       .then((response) => {
         console.log("api response",response)
       //   console.log(response)

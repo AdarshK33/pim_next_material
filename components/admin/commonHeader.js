@@ -5,7 +5,7 @@ import Link from "next/link";
 // import GoogleSignout from "../utility/googleSignout";
 import Image from "next/image";
 
-import styles from "../../pages/dashboard/dashboard.module.css";
+import styles from "../../pages/pim/dashboard.module.css";
 import logo from "../../assets/icons/logo_2_2022.svg";
 import user from "../../assets/icons/user1.png";
 import MyProfile from "./myProfile";
@@ -45,7 +45,7 @@ function CommonHeader() {
                       <Image src={logo} alt="logo" width={55} height={39} />
                     </div>
                     <span className={styles.header_info}>
-                      Product information management
+                      Product Information Management
                     </span>
                   </div>
                 </div>

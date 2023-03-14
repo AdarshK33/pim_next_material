@@ -75,7 +75,7 @@ export const createChannelApi = (data) => {
       .then((response) => {
         console.log("---------------", response.status);
         // result = true;
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log("ChannelGreat==>", response.data.result);
           dispatch(
             createChannelDataSuccess(
@@ -88,7 +88,7 @@ export const createChannelApi = (data) => {
       })
       .catch((err) => {
         console.log("error caught in -> actions/Channel/Channel", err);
-        result = false;
+        //result = false;
         dispatch(
           createChannelDataFailure(err, "Something went wrong", "Channel CREATE")
         );

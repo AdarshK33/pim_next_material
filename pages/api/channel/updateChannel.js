@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 	console.log("helo server",id)
 	const config = {
 		method: 'patch',
-		url: `/channel/update/${id}`,
+		url: `/channel/${id}`,
 		data: body,
 	};
 	onboardServer(config)

@@ -4,7 +4,7 @@ import { onboardQueryServer } from "../../../utils/axios";
 function handler(req, res) {
   const config = {
     method: "get",
-    url: "/getCountry/dropdown"
+    url: "/country"
   };
   onboardQueryServer(config)
     .then((response) => {

@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 	
 	const config = {
 		method: 'post',
-		url: '/addchannel',
+		url: '/channel',
 		data: body,
 	};
 
@@ -20,14 +20,18 @@ export default async function handler(req, res) {
                 Promise.resolve();
 			}
 		})
-		.catch(err => {
+	.catch(err => {
         console.log("error caught in -> api/onboard/channel", err);
 		console.log(err.response);
-			if (err.data) res.status(400).json(err.data);
-			else res.status(500).json({ message: 'Create channel-something went wrong' });
-             Promise.reject(err);
-		});
-    // }
+		if (err?.response?.data) {
+			const { status = {} } = err?.response;
+			res.status(status).json(err.response.data.error +' '+ status);
+         }
+				else res.status(500).json({ message: "Create channel-something went wrong" });
+			Promise.reject(err);
+
+				});
+    // // }
     // )
 
 }

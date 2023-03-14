@@ -41,7 +41,7 @@ function GoogleAuth({ userLogin, userTenetID }) {
       cookies.set("token", apiRes.data.accessToken, { path: "/" });
       cookies.set("tokenExp", apiRes.data.accessTokenExpiryTime, { path: "/" });
       cookies.set("refreshToken", apiRes.data.refreshToken, { path: "/" });
-      router.push("/dashboard/dashboard");
+      router.push("/pim/dashboard");
     }
   };
 

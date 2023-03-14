@@ -5,10 +5,11 @@ export default async function handler(req, res) {
 		
 	const body = req.body;
 	
+
 	let id=body.categoryId
 	const config = {
 		method: 'put',
-		url: `ct/category/update/${id}`,
+		url: `/catalog/category/${id}`,
 		data: body,
 	};
 	catalogServer(config)
