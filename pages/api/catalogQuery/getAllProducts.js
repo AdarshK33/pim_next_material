@@ -5,10 +5,14 @@ import withSession from "../../../utils/session";
 function handler(req, res) {
   const { user: { at = "" } = {}, loggedIn } = req.session;
 	const body = req.body;
- 
+  const pageNo = body.pageNo
+  const pageSize = body.pageSize
+  console.log("pageNo",pageNo)
+
+  // http://catalog-query-handler.theretailinsightsdemos.com/api/v1/ct/products?pageNo=0&pageSize=10' \
   const config = {
     method: "get",
-    url: '/ct/allProducts',
+    url: `/ct/products?pageNo=${pageNo}&pageSize=${pageSize}`,
     // data: body,
    headers: {
       Authorization: `Bearer ${at}`,
@@ -17,6 +21,7 @@ function handler(req, res) {
   };
   catalogQueryServer(config)
     .then((response) => { 
+      console.log("rrrrrrrrrrrrr",response)
       if (response.status === 200) {
         res.status(200).json(response.data);
         Promise.resolve();

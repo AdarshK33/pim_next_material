@@ -143,14 +143,19 @@ export const getProductPimCodeDataFailure = (error) => {
 
 
 
-export const getAllProductApi = () => {
+export const getAllProductApi = (pageNo,pageSize) => {
+  const data = {
+    pageNo: pageNo,
+    pageSize: pageSize
+
+  }
     return (dispatch) => {
       dispatch(getAllProductDataLoading('PRODUCTs....', 'PRODUCTs'));
-      client.get("/api/catalogQuery/getAllProduct")
+      client.post("/api/catalogQuery/getAllProducts",data)
         .then((response) => {
-          console.log("api response",response)
+          // console.log("  response",response)
         //   console.log(response)
-          if (response?.status === 200) {
+          if (response?.data.statusCode === 200) {
               console.log("API SUCCESS2", response.data);
             dispatch(getAllProductDataSuccess(response.data.result));
           }

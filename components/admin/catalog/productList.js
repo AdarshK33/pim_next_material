@@ -35,6 +35,8 @@ function ProductList({ currentPgNo }) {
   const [itemData, setItemData] = useState({});
   const [itemsCount, setItemsCount] = useState(null);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
+ const [currentPage, setCurrentPage] = useState(0);
+
   const dispatch = useDispatch();
 
   const selectOpts = [
@@ -52,7 +54,7 @@ function ProductList({ currentPgNo }) {
   // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
   
   useEffect(() => {
-    dispatch(getAllProductApi());
+    dispatch(getAllProductApi(currentPage,10));
 
 }, []);
 
@@ -116,16 +118,16 @@ const { allProductData } = useSelector(state => {
   }, [itemData]);
 
    //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
  const recordPerPage = 10;
-const totalRecords = tableData?.length;
+const totalRecords = 100;
  const pageRange = 10;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
  const currentRecords = tableData;
 
  const handlePageChange = pageNumber => {
-   setCurrentPage(pageNumber);
+  // console.log("hello pageNumber",pageNumber-1)
+   setCurrentPage(pageNumber-1);
  }
  /*-----------------Pagination------------------*/
   const totalItems = useMemo(
