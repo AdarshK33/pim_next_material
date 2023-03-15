@@ -43,13 +43,16 @@ function Login(user) {
     // console.log("lllllllllllllll",LoginStat.isLogin.statusCode)
     useEffect(() => {
       if(LoginStat.isLogin.statusCode===200){
-        router.push("/dashboard/dashboard");
+        router.push("/pim/dashboard");
       }
     }, [LoginStat.isLogin.statusCode]);
 
 
 
-   
+    const nullAddField = () => {
+      router.push("/pim/dashboard");
+    };
+    
 
 useEffect(() => {
   // console.log("itemData",itemData);
@@ -75,7 +78,7 @@ useEffect(() => {
       let userPassword = {
         passwordKey: values.password.trim(),
       };
-      console.log("val", userName);
+      // console.log("val", userName);
       if (userName.name === "" || userPassword.passwordKey === "" ) {
         notify("err");
       } else {
@@ -186,7 +189,8 @@ useEffect(() => {
 
                <div className="col-12 text-center pt-5">
                  <SubmitButton
-                   isLoading={isSubmitting}
+                  onClick={() => nullAddField()} // direct redirect
+                  //  isLoading={isSubmitting} its working
                    type="submit"
                    name="Login"
                    className={`btn btn-sm btn-secondary py-1 px-5 br3 mx-2 ${styles.submit_button}`}

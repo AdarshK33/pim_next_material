@@ -1,3 +1,8 @@
+//new cartegory
+import Image from 'next/image';
+import axios from "axios";
+
+
 import React, {
   Fragment,
   useMemo,
@@ -7,6 +12,10 @@ import React, {
   useRef,
 } from "react";
 import { connect } from "react-redux";
+// import folder from "../../../assets/icons/folder.svg";
+import folder from "../../../../assets/icons/folder.svg";
+
+
 import { ToastContainer, toast } from "react-toastify";
 import CustomTable from "../../../public/customTable";
 import TabView from "../../catalog/tabView";
@@ -29,7 +38,7 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 // import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import { DownOutlined } from '@ant-design/icons';
 import { Tree } from 'antd';
-import { Form, Formik } from "formik";
+// import { Form, Formik } from "formik";
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Switch, Space } from 'antd';
 
@@ -38,7 +47,13 @@ import SubmitButton from "../../../public/formik/submitButton";
 import { useDispatch, useSelector } from "react-redux";
 import {getCategoriesApis} from "../../../../redux/actions/catalogQuery"
 import {updateCategoryApi} from "../../../../redux/actions/catalog"
+import { Row, Col, Form, Button } from "react-bootstrap";
+import { createCategoryApi } from "../../../../redux/actions/catalog";
 
+
+
+import Dropzone from 'react-dropzone';
+import { getBrandDropdownApi} from "../../../../redux/actions/onboardQuery";
 
 function classifyingCategory({ currentPgNo }) {
   const [list, setList] = useState({ content: [] });
@@ -51,8 +66,34 @@ function classifyingCategory({ currentPgNo }) {
 
   const dispatch = useDispatch();
 
+
+  const [brandName, setBrandName] = useState();
+  const [parentName, setParentName] = useState();
+
+  const [subCategoryName, setSubCategoryName ]= useState();
+   
+
+  const [brandNameError, setBrandNameError] = useState(false);
+  const [parentNameError , setParentNameError] = useState(false);
+  const [categoryNameError, setCategoryNameError] = useState(false);
+  const [categoryDescriptionError, setCategoryDescriptionError] = useState(false);
+  const [slugError, setSlugError] = useState(false);
+  console.log("hello parentName",parentName);
+
+  
+  const [state, setState] = useState({
+    categoryName: "",
+    categoryDescription: "",
+     slug :""
+  });
   const [itemTree, setItemTree] = useState(null);
   const [selectedTreeForUpdate, setSelectedTreeForUpdate] = useState();
+  
+  useEffect(() => {
+   
+    dispatch(getBrandDropdownApi());
+
+  }, []);
 
 
 
@@ -62,7 +103,7 @@ function classifyingCategory({ currentPgNo }) {
   // });
   
   console.log("hello selectedTreeForUpdate",selectedTreeForUpdate?.title)
-  let infoData=
+  
 
   useEffect(() => {
    dispatch(getCategoriesApis("Puma"))
@@ -83,7 +124,29 @@ const { categoriesData,loading } = useSelector(state => {
   return state.catalogQueryReducer;
 });
 
-  // console.log("hello categoriesData",categoriesData)
+
+ //   /*-----------------Dropzone ------------------*/
+
+
+  const onDrop = (acceptedFiles) => {
+    const formData = new FormData();
+    acceptedFiles.forEach((file) => {
+      formData.append('file', file);
+    });
+    axios
+      .post('http://sync-command-handler.theretailinsightsdemos.com/api/v1/sync/bulk', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then((response) => {
+        // console.log(response);
+        alert('File uploaded')
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
 
  //   /*----------------- catagory menu list------------------*/
@@ -166,11 +229,15 @@ function findNested(obj, key, value) {
       });
     }
   };
-  const notify = (val) => {
+  const notify = (val,type) => {
     if (!toast.isActive(toastId.current)) {
-      if (val) {
+      if (val && type=== 'create') {
         toastId.current = toast("Category added Successfully !!!");
-        dispatch(getCategoriesApis("Puma"))
+        dispatch(getCategoriesApis("Puma")) //login  user brand
+      }
+      if (val && type=='update') {
+        toastId.current = toast("Category Updated Successfully !!!");
+       dispatch(getCategoriesApis("Puma")) // login user brand call
       }
     }
   };
@@ -326,6 +393,243 @@ const onSubmit = async (values, formik) => {
   }
 };
 
+
+const { countryData,brandDropdownGet,MarketplaceData } = useSelector(state => {
+  // console.log("hello",state)
+  return state.onBoardQueryReducer;
+});
+
+const changeHandler = (e) => {
+  setState({
+    ...state,
+    [e.target.name]: e.target.value,
+  });
+  // console.log("hello input",state);
+};
+
+const parentHandler = (e) => {
+  setParentName(e.target.value);
+};
+const brandHandler = (e) => {
+  
+  setBrandName(e.target.value);
+};
+
+const categoryNameValidations = () => {
+  const nameValid = /^[a-zA-Z\b]+$/;
+  if (
+    state.categoryName !== "" &&
+    state.categoryName !== null &&
+    state.categoryName !== undefined
+  ) {
+    setCategoryNameError(false);
+    // console.log("channelNameSuccess");
+    return true;
+  } else {
+    setCategoryNameError(true);
+    // console.log("channelNameError");
+    return false;
+  }
+};
+
+const categoryBrandValidations = () => {
+  const nameValid = /^[a-zA-Z\b]+$/;
+  if (
+    brandName !== "" &&
+    brandName !== null &&
+    brandName !== undefined
+  ) {
+    setBrandNameError(false);
+    // console.log("setBrandNameSuccess");
+    return true;
+  } else {
+    setBrandNameError(true);
+    // console.log("setBrandNameError");
+    return false;
+  }
+};
+
+const categoryParentValidations = () => {
+  const nameValid = /^[a-zA-Z\b]+$/;
+  if (
+    parentName !== "" &&
+    parentName !== null &&
+    parentName !== undefined
+  ) {
+    setparentNameError(false);
+    // console.log("setBrandNameSuccess");
+    return true;
+  } else {
+    setParentNameError(true);
+    // console.log("setBrandNameError");
+    return false;
+  }
+};
+const categoryDescriptionValidations = () => {
+  const nameValid = /^[a-zA-Z\b]+$/;
+  if (
+    state.categoryDescription !== "" &&
+    state.categoryDescription !== null &&
+    state.categoryDescription !== undefined
+  ) {
+    setCategoryDescriptionError(false);
+    // console.log("channelNameSuccess");
+    return true;
+  } else {
+    setCategoryDescriptionError(true);
+    // console.log("channelNameError");
+    return false;
+  }
+};
+
+
+
+
+const checkValidations = () => {
+  // console.log("isChecked");
+  if (
+    (categoryNameValidations() == true)  &
+    (categoryDescriptionValidations() == true)  &
+    (categoryBrandValidations() == true)  
+
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+
+};
+
+const checkUpdateValidations = () => {
+  // console.log("isChecked");
+  if (
+    (categoryNameValidations() == true) 
+    //  &
+    // (categoryDescriptionValidations() == true)  &
+    // (categoryBrandValidations() == true)  
+
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+
+};
+
+const submitHandler = async(e) => {
+  e.preventDefault();
+
+  const value = checkValidations();
+
+  if (value === true) {
+    // console.log("Inside the channel submit");
+    // setSaveclick(true);
+
+    const UpdateInfo = {
+      // new categopry
+      name: state.categoryName,
+      description : state.categoryDescription,
+      brands : [brandName],
+      parentCategoryId: 0,
+      precedence: 0
+    
+
+}
+  console.log("hello add info", UpdateInfo);
+  //apis(UpdateInfo)
+
+  dispatch( createCategoryApi(UpdateInfo));
+
+const apiRes = await createCategoryApi(UpdateInfo);
+if (apiRes === "err") {
+//  formik.setSubmitting(false);
+} else {    
+  notify(true,'create')
+}
+};
+  
+}
+
+
+
+
+const submitUpdateHandler = async(e) => {
+  e.preventDefault();
+
+  const value = checkUpdateValidations();
+
+  if (value === true) {
+    // console.log("Inside the channel submit");
+    // setSaveclick(true);
+
+    const UpdateInfo = {
+      //update categopry name only 
+      categoryId: selectedTreeForUpdate?.key,
+      name: state.categoryName,
+      // description : state.categoryDescription,
+      // brands : [brandName],
+      // parentCategoryId: parentName,
+      // precedence: 0
+
+}
+  console.log("hello add info", UpdateInfo);
+  //apis(UpdateInfo)
+
+  dispatch( updateCategoryApi(UpdateInfo));
+
+const apiRes = await updateCategoryApi(UpdateInfo);
+if (apiRes === "err") {
+//  formik.setSubmitting(false);
+} else {    
+  notify(true ,'update')
+  setState({
+    ...state,
+    categoryName:'' ,
+    categoryDescription :"",
+    slug :""
+  })
+  setBrandName('')
+  setParentName('')
+}
+};
+  
+}
+useEffect(async () => {
+  setState({
+    ...state,
+    categoryName:'' ,
+    categoryDescription :'' ,
+    slug :""
+  })
+  setBrandName('')
+  setParentName('')
+  if(selectedTreeForUpdate){
+  setState({
+    ...state,
+    categoryName:selectedTreeForUpdate?.title ,
+   
+    slug :""
+  })
+  setBrandName(selectedTreeForUpdate?.brandName)
+  setParentName(selectedTreeForUpdate?.parentCategoryId)
+
+  }
+
+}, [selectedTreeForUpdate]);
+
+
+const nullAddField = () => {
+  setState({
+    ...state,
+    categoryName:'' ,
+    categoryDescription :"",
+    slug :""
+  })
+  setBrandName('')
+  setParentName('')
+  setSelectedTreeForUpdate('');
+};
+
   return (
     <Fragment>
       <ToastComponenet ref={toastRef} />
@@ -336,8 +640,9 @@ const onSubmit = async (values, formik) => {
       </div>
       <div className="col-2 p-0 text-end align-self-center">
           <button
-            onClick={() => setShowBrandCreationForm(true)}
+            onClick={() => nullAddField()}
             className={`btn btn-sm ${styles.add_button_text}`}
+             //Reset the input fields
           >
             + Add New
           </button>
@@ -369,99 +674,224 @@ const onSubmit = async (values, formik) => {
         <div className="col-10 p-0">
           {/* <div className="catelog-search font12 txt_gray">Search</div> */}
         </div>
-       {selectedTreeForUpdate ?(
+       {!selectedTreeForUpdate ?(
        <>
         <div className={`card ${styles.category_card}`}>
         <div className="card-body">
-          {/* selected */}
+          {/* not selected */}
+       
+    
+         <Form>
          <div className="row">
-         <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ isSubmitting ,setFieldValue}) => {
-            return (
-              
-
-             
-              <Form className="mx-0 font12">
-                <div className="row">
-                {selectedTreeForUpdate.title}
-                <div className="col-4 my-2">
-                <FormikControl
-                  control="input"
-                  type="input"
-                  classprops="form-group mb-3 col-md-12"
-                  className="form-control form-control-sm px-0 py-2 text-center border-0"
-                  placeholder={selectedTreeForUpdate.title}
-                  name="name"
-                  id="name"
-                //  setFieldValue={selectedTreeForUpdate}
-                />
-                </div>
-                <div className="col-4 mt-4 my-2">
-                <FormikControl
-                  control="reactSelect"
-                  selectOpts={null}
-                  placeholder="Parent Category"
-                  isMulti={false}
-                />
-                </div>
-                <div className="col-4 mt-4 my-2">
-                <FormikControl
-                  control="reactSelect"
-                  selectOpts={null}
-                  placeholder="Sub Category"
-                  isMulti={false}
-                />
-                </div>
-                </div>
-                <div className="row">
-                <div className="col-4 my-2">
-                <FormikControl
-                  control="input"
-                  type="input"
-                  classprops="form-group mb-3 col-md-12"
-                  className="form-control form-control-sm px-0 py-2 text-center border-0"
-                  placeholder="Slug"
-                  name="Slug"
-                  id="Slug"
-                />
-                </div>
-                <div className="col-4 mt-4 my-2">
-                <FormikControl
-                  control="reactSelect"
-                  selectOpts={null}
-                  placeholder="Brand (Multi Select)"
-                  isMulti={true}
-                />
-                </div>
-                </div>
-                <div className="row">
-                <div className={`col-4 category_dropZone my-3`}>
-                <FormikControl
-                  control="dropZone"
-                  name="category drop Images/file"
-                  setFieldValue="Image Upload"
-                  placeholder="Image Upload"
-
-                />
-                </div>
-              
-                <div className="col-8 my-0">
-                 <FormikControl
-                  // label="First Name"
-                  control="text-area"
+         <div className="col-4 my-3 ">
+              <Form.Group>
+               
+                <Form.Control
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
-                  className="form-control form-control-sm px-0 py-2 text-center border-0"
-                  placeholder="Category descriptions..."
-                  name="descriptions"
-                  id="descriptions"
-                  rows="5"
+                  name="categoryName"
+                  value={state.categoryName}
+                  onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  style={categoryNameError ? { borderColor: "red" } : {}}
+                  placeholder="Name"
+                  // disabled={disabled}
                 />
-                </div>
-                </div>
+                {categoryNameError ? (
+                  <p style={{ color: "red" }}> ** Please enter Category Name </p>
+                ) :state.categoryName && state.categoryName.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+          
+  
+        <div className="col-4 my-3">
+          <Form.Group>
+          
+            <Form.Control
+              as="select"
+              name="ParentId"
+              value={parentName}
+              onChange={(e) => parentHandler(e)}
+              required
+              style={parentNameError ? { borderColor: "red" } : {}}
+              disabled={true}
+            >
+              <option value="">Parent Category </option>
+              {/* {
+                ParentData &&
+                ParentData?.map((item, i) => {
+                  return (
+                    <option key={item.value}>{item.label}</option>
+                  );
+                })
+                } */}
+            </Form.Control>
+            {parentNameError ? (
+                  <p style={{ color: "red" }}>** Please choose Parent Category</p>
+                ) : (
+                  <p></p>
+                )}
+           
+          </Form.Group>
+        </div>
+        
+      
+        <div className="col-4 my-3">
+          <Form.Group>
+          
+            <Form.Control
+              as="select"
+              name="subCategoryNameId"
+              // value={subCategoryName}
+              // onChange={(e) => brandHandler(e)}
+              required
+              // style={brandNameError ? { borderColor: "red" } : {}}
+              // disabled={disabled}
+              disabled={true}
+
+            >
+              <option value="">Sub Category</option>
+              {/* {
+                brandDropdownGet &&
+                brandDropdownGet.map((item, i) => {
+                  return (
+                    <option key={item.value}>{item.label}</option>
+                  );
+                })
+                } */}
+            </Form.Control>
+            {/* {brandNameError ? (
+                  <p style={{ color: "red" }}>** Please choose Sub category</p>
+                ) : (
+                  <p></p>
+                )} */}
+          </Form.Group>
+        </div>
+        </div>
+        <div className="row">
+        <div className="col-4 my-3">
+        <Form.Group>
+               
+                <Form.Control
+                  type="text"
+                  name="Slug"
+                  value={state.slug}
+                  onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  style={slugError ? { borderColor: "red" } : {}}
+                  placeholder="Slug"
+                  // disabled={disabled}
+                />
+                {slugError ? (
+                  <p style={{ color: "red" }}> ** Please enter Slug </p>
+                ) :state.slug && state.slug.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+        </div>
+        <div className="col-4 my-3">
+      
+        <Form.Group>
+            {/* <Form.Label>
+              <span> Brand </span>
+            </Form.Label> */}
+            <Form.Control
+              as="select"
+              name="brandNameId"
+              value={brandName}
+              onChange={(e) => brandHandler(e)}
+              required
+              style={brandNameError ? { borderColor: "red" } : {}}
+              // disabled={disabled}
+            >
+              <option value="">Brand (Multi-Select)</option>
+              {
+                brandDropdownGet &&
+                brandDropdownGet.map((item, i) => {
+                  return (
+                    <option key={item.value}>{item.label}</option>
+                  );
+                })
+                }
+            </Form.Control>
+            {brandNameError ? (
+                  <p style={{ color: "red" }}>** Please choose brand</p>
+                ) : (
+                  <p></p>
+                )}
+          </Form.Group>
 
 
-<div className={styles.btn_section}>
+        </div>
+     </div>
+
+     <div className="row">
+    
+        <div className={`col-4 category_dropZone my-3`}>
+          <div className="dropZone-container">
+            
+        <Dropzone onDrop={onDrop}>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()} class="dropzone col-2 p-3 text-end align-self-center d-flex">
+                    <input {...getInputProps()} />
+                    {
+                     
+                    }
+                    <div className='upload_placeholder upload_blk'>
+
+                   
+                       <div>
+                        <Image
+                        className="px-2"
+                        src={folder}
+                        alt="folder"
+                        width={40}
+                        height={35}
+                        // onClick={() => {
+                        //   setShowBrandCreationForm(true)
+                        // }}
+                        />
+                        </div>
+                    <div>Image Upload</div>
+                    </div>
+                  </div>
+                )}
+              </Dropzone>
+              </div>
+        </div>
+        <div className="col-8 my-3">
+        <Form.Group>
+
+            <Form.Control as="textarea"
+            placeholder="Category Descriptions..."
+            name="categoryDescription"
+            rows="5"
+            onChange={changeHandler}
+            style={categoryDescriptionError ? { borderColor: "red" } : {}}
+            
+            />
+              {categoryDescriptionError ? (
+                  <p style={{ color: "red" }}> ** Please enter Descriptions </p>
+                ) :state.categoryDescription && state.categoryDescription.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
+        </Form.Group>
+
+
+        </div>
+     </div>
+     
+     
+        <div className={styles.btn_section}>
   <div className={styles.switch_btn}>
         <Space >
           <Switch checkedChildren="Active" unCheckedChildren="Not Active" />
@@ -469,135 +899,252 @@ const onSubmit = async (values, formik) => {
             </div>
             <div className={styles.submit_btn}>
                   <SubmitButton
-                    isLoading={isSubmitting}
+                  onClick={submitHandler}
                     type="submit"
                     name="Submit"
                     className={`btn btn-sm py-1 px-4 br3 mx-2 ${styles.submit_button}`}
                   />
             </div>
         </div>
-                
-              </Form>
-            );
-          }}
-        </Formik>  
-         
-         </div>
+         </Form>
+        
         </div>
       </div>
        </>):(
         <>
-       <div className={`card ${styles.category_card}`}>
+        <div className={`card ${styles.category_card}`}>
         <div className="card-body">
+        <Form>
          <div className="row">
-         <Formik >
-          {({ isnotSubmitting }) => {
-            return (
-              
-              <Form className="mx-0 font12">
-                <div className="row">
-                <div className="col-4 my-2">
-                notselected
-                <FormikControl
-                  control="input"
-                  type="input"
-                  classprops="form-group mb-3 col-md-12"
-                  className="form-control form-control-sm px-0 py-2 text-center border-0"
-                  placeholder="Name"
-                  name="notselectedname"
-                  id="name"
-                   // setFieldValue={setFieldValue}
-                />
-                </div>
-                <div className="col-4 mt-4 my-2">
-                <FormikControl
-                  control="reactSelect"
-                  selectOpts={null}
-                  placeholder="Parent Category"
-                  isMulti={false}
-                />
-                </div>
-                <div className="col-4 mt-4 my-2">
-                <FormikControl
-                  control="reactSelect"
-                  selectOpts={null}
-                  placeholder="Sub Category"
-                  isMulti={false}
-                />
-                </div>
-                </div>
-                <div className="row">
-                <div className="col-4 my-2">
-                <FormikControl
-                  control="input"
-                  type="input"
-                  classprops="form-group mb-3 col-md-12"
-                  className="form-control form-control-sm px-0 py-2 text-center border-0"
-                  placeholder="Slug"
-                  name="Slug"
-                  id="Slug"
-                />
-                </div>
-                <div className="col-4 mt-4 my-2">
-                <FormikControl
-                  control="reactSelect"
-                  selectOpts={null}
-                  placeholder="Brand (Multi Select)"
-                  isMulti={true}
-                />
-                </div>
-                </div>
-                <div className="row">
-                <div className={`col-4 category_dropZone my-3`}>
-                <FormikControl
-                  control="dropZone"
-                  name="category drop Images/file"
-                  setFieldValue="Image Upload"
-                  placeholder="Image Upload"
-
-                />
-                </div>
-              
-                <div className="col-8 my-0">
-                 <FormikControl
-                  // label="First Name"
-                  control="text-area"
+         <div className="col-4 my-3 ">
+              <Form.Group>
+               
+                <Form.Control
                   type="text"
-                  classprops="form-group mb-3 col-md-12"
-                  className="form-control form-control-sm px-0 py-2 text-center border-0"
-                  placeholder="Category descriptions..."
-                  name="notselecteddescriptions"
-                  id="notselecteddescriptions"
-                  rows="5"
+                  name="categoryName"
+                  value={state.categoryName}
+                  onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  style={categoryNameError ? { borderColor: "red" } : {}}
+                  placeholder="Name"
+                  // disabled={disabled}
                 />
-                </div>
-                </div>
+                {categoryNameError ? (
+                  <p style={{ color: "red" }}> ** Please enter Category Name </p>
+                ) :state.categoryName && state.categoryName.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+          
+  
+        <div className="col-4 my-3">
+          <Form.Group>
+          
+            <Form.Control
+              as="select"
+              name="ParentId"
+               value={parentName??''}
+              onChange={(e) => parentHandler(e)}
+              required
+              style={parentNameError ? { borderColor: "red" } : {}}
+              // disabled={disabled}
+              disabled="true"
+            >
+              <option value="">Parent Category </option>
+              {/* {
+                ParentData &&
+                ParentData?.map((item, i) => {
+                  return (
+                    <option key={item.value}>{item.label}</option>
+                  );
+                })
+                } */}
+            </Form.Control>
+            {parentNameError ? (
+                  <p style={{ color: "red" }}>** Please choose Parent Category</p>
+                ) : (
+                  <p></p>
+                )}
+           
+          </Form.Group>
+        </div>
+        
+      
+        <div className="col-4 my-3">
+          <Form.Group>
+          
+            <Form.Control
+              as="select"
+              name="subCategoryNameId"
+              // value={subCategoryName}
+              // onChange={(e) => brandHandler(e)}
+              required
+              // style={brandNameError ? { borderColor: "red" } : {}}
+              // disabled={disabled}
+              disabled="true"
+            >
+              <option value="">Sub Category</option>
+              {/* {
+                brandDropdownGet &&
+                brandDropdownGet.map((item, i) => {
+                  return (
+                    <option key={item.value}>{item.label}</option>
+                  );
+                })
+                } */}
+            </Form.Control>
+            {/* {brandNameError ? (
+                  <p style={{ color: "red" }}>** Please choose Sub category</p>
+                ) : (
+                  <p></p>
+                )} */}
+          </Form.Group>
+        </div>
+        </div>
+        <div className="row">
+        <div className="col-4 my-3">
+        <Form.Group>
+               
+                <Form.Control
+                  type="text"
+                  name="Slug"
+                  value={state.slug}
+                  onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  style={slugError ? { borderColor: "red" } : {}}
+                  placeholder="Slug"
+                  disabled="true"
+                  // disabled={disabled}
+                />
+                {slugError ? (
+                  <p style={{ color: "red" }}> ** Please enter Slug </p>
+                ) :state.slug && state.slug.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+        </div>
+        <div className="col-4 my-3">
+      
+        <Form.Group>
+            {/* <Form.Label>
+              <span> Brand </span>
+            </Form.Label> */}
+            <Form.Control
+              as="select"
+              name="brandNameId"
+              value={brandName}
+              onChange={(e) => brandHandler(e)}
+              required
+              style={brandNameError ? { borderColor: "red" } : {}}
+              // disabled={disabled}
+              disabled="true"
+            >
+              <option value="">Brand (Multi-Select)</option>
+              {
+                brandDropdownGet &&
+                brandDropdownGet.map((item, i) => {
+                  return (
+                    <option key={item.value}>{item.label}</option>
+                  );
+                })
+                }
+            </Form.Control>
+            {brandNameError ? (
+                  <p style={{ color: "red" }}>** Please choose brand</p>
+                ) : (
+                  <p></p>
+                )}
+          </Form.Group>
 
 
-             <div className={styles.btn_section}>
-              <div className={styles.switch_btn}>
+        </div>
+     </div>
+
+     <div className="row">
+    
+        <div className={`col-4 category_dropZone my-3`}>
+          <div className="dropZone-container">
+            
+        <Dropzone onDrop={onDrop}>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()} class="dropzone col-2 p-3 text-end align-self-center d-flex">
+                    <input {...getInputProps()} />
+                    {
+                     
+                    }
+                    <div className='upload_placeholder upload_blk'>
+
+                   
+                       <div>
+                        <Image
+                        className="px-2"
+                        src={folder}
+                        alt="folder"
+                        width={40}
+                        height={35}
+                        // onClick={() => {
+                        //   setShowBrandCreationForm(true)
+                        // }}
+                        />
+                        </div>
+                    <div>Image Upload</div>
+                    </div>
+                  </div>
+                )}
+              </Dropzone>
+              </div>
+        </div>
+        <div className="col-8 my-3">
+        <Form.Group>
+
+            <Form.Control as="textarea"
+            placeholder="Category Descriptions..."
+            name="categoryDescription"
+            rows="5"
+            onChange={changeHandler}
+            // style={categoryDescriptionError ? { borderColor: "red" } : {}}
+            disabled="true"
+            
+            />
+              {/* {categoryDescriptionError ? (
+                  <p style={{ color: "red" }}> ** Please enter Descriptions </p>
+                ) :state.categoryDescription && state.categoryDescription.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )} */}
+        </Form.Group>
+
+
+        </div>
+     </div>
+     
+     
+        <div className={styles.btn_section}>
+  <div className={styles.switch_btn}>
         <Space >
           <Switch checkedChildren="Active" unCheckedChildren="Not Active" />
         </Space>
             </div>
             <div className={styles.submit_btn}>
                   <SubmitButton
-                    // isLoading={isnSubmitting}
+                  onClick={submitUpdateHandler}
                     type="submit"
                     name="Submit"
-                    className={`btn btn-sm py-1 px-4 br3 mx-2 ${styles.not_slected_submit_button}`}
+                    className={`btn btn-sm py-1 px-4 br3 mx-2 ${styles.submit_button}`}
                   />
             </div>
         </div>
-                
-              </Form>
-            );
-          }}
-        </Formik>  
-         
-         </div>
+         </Form>
         </div>
-      </div>
+        </div>
         </>
        )}
       

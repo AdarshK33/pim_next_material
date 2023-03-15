@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
 	onboardServer(config)
 		.then(response => {
-			console.log("hello repo",response)
+			// console.log("hello repo",response)
 			if (response.status === 200) {
 				res.status(200).json(response.data.result);
                 Promise.resolve();
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 		})
 	.catch(err => {
         console.log("error caught in -> api/onboard/channel", err);
-		console.log(err.response);
+		// console.log(err.response);
 		if (err?.response?.data) {
 			const { status = {} } = err?.response;
 			res.status(status).json(err.response.data.error +' '+ status);

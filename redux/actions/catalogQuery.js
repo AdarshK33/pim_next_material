@@ -143,14 +143,19 @@ export const getProductPimCodeDataFailure = (error) => {
 
 
 
-export const getAllProductApi = () => {
+export const getAllProductApi = (pageNo,pageSize) => {
+  const data = {
+    pageNo: pageNo,
+    pageSize: pageSize
+
+  }
     return (dispatch) => {
       dispatch(getAllProductDataLoading('PRODUCTs....', 'PRODUCTs'));
-      client.get("/api/catalogQuery/getAllProduct")
+      client.post("/api/catalogQuery/getAllProducts",data)
         .then((response) => {
-          console.log("api response",response)
-        //   console.log(response)
-          if (response?.status === 200) {
+          // console.log("  response",response)
+          console.log(response)
+          if (response?.data.statusCode === 200) {
               console.log("API SUCCESS2", response.data);
             dispatch(getAllProductDataSuccess(response.data.result));
           }
@@ -168,10 +173,10 @@ export const getAttributesApi = () => {
       dispatch(getAttributesDataLoading('ATTRIBUTE....', 'ATTRIBUTE'));
       client.get("/api/catalogQuery/getAttributes")
         .then((response) => {
-          console.log("hello api response",response.status)
+          // console.log("hello api response",response.status)
         //   console.log(response)
           if (response?.status === 200 ) {
-              console.log("hello API SUCCESS2", response);
+              // console.log("hello API SUCCESS2", response);
             dispatch(getAttributesDataSuccess(response.data));
           }
         })

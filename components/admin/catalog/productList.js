@@ -6,15 +6,15 @@ import React, { Fragment,
   useRef, } from "react";
 import Link from 'next/link';
 import { connect } from "react-redux";
-import { getAllProducts, getProductById } from "../../utility/apiUtility";
-import CustomTable from "../../public/customTable";
+// import { getAllProducts, getProductById } from "../../utility/apiUtility";
+// import CustomTable from "../../public/customTable";
 import TabView from "./tabView";
 import Pagination from "react-js-pagination";
-import { unstable_batchedUpdates } from "react-dom";
-import AttributesForm from "./attributesForm";
-import VendorForm from "./vendorForm";
-import PageLoader from "../../public/pageLoader";
-import PaginationView from "../../public/paginationView";
+// import { unstable_batchedUpdates } from "react-dom";
+// import AttributesForm from "./attributesForm";
+// import VendorForm from "./vendorForm";
+// import PageLoader from "../../public/pageLoader";
+// import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
 import Image from 'next/image';
 import styles from "./catelog.module.css";
@@ -27,6 +27,7 @@ import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from 'antd';
 import calendar from "../../../assets/icons/calendar.svg";
 import {  getAllProductApi } from "../../../redux/actions/catalogQuery";//testing
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 function ProductList({ currentPgNo }) {
@@ -35,6 +36,8 @@ function ProductList({ currentPgNo }) {
   const [itemData, setItemData] = useState({});
   const [itemsCount, setItemsCount] = useState(null);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
+ const [currentPage, setCurrentPage] = useState(0);
+ const router = useRouter();
   const dispatch = useDispatch();
 
   const selectOpts = [
@@ -52,7 +55,7 @@ function ProductList({ currentPgNo }) {
   // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
   
   useEffect(() => {
-    dispatch(getAllProductApi());
+    dispatch(getAllProductApi(currentPage,10));
 
 }, []);
 
@@ -63,14 +66,14 @@ const { allProductData } = useSelector(state => {
 
   console.log("hello allProductData",allProductData)
 
-  useEffect(() => {
-    getAllProductData({ pageSize: 10, pageNo: 0 });
-    currentPgNo(0);
-  }, []);
+  // useEffect(() => {
+  //   getAllProductData({ pageSize: 10, pageNo: 0 });
+  //   currentPgNo(0);
+  // }, []);
 
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
-    getAllProducts({ pageSize: 10, pageNo: 0 });
+    // getAllProducts({ pageSize: 10, pageNo: 0 });
     toastRef.current.toastHandler({
       response: "suc",
       // position: "middle-center",
@@ -78,73 +81,73 @@ const { allProductData } = useSelector(state => {
   }, []);
 
 
-  const getAllProductData = async (payload) => {
-    !loading && setLoading(true);
-    const apiRes = await getAllProducts(payload);
-    if (apiRes === "err") {
-    } else {
-      unstable_batchedUpdates(() => {
-        setProductList(apiRes.data);
-        setItemsCount(apiRes.data.totalElements);
-        setItemData({});
-        setLoading(false);
-      });
-    }
-  };
-  const tabsList = useMemo(() => {
-    const tabArr = [
-      {
-        id: "AttributesTab",
-        title: "ATTRIBUTES",
-        content: (
-          <AttributesForm
-            data={itemData}
-            getAllProductData={getAllProductData}
-            show={Object.entries(itemData).length > 0}
-          />
-        ),
-      },
-      { id: "VendorTab", title: "VENDOR", content: <VendorForm />, show: true },
-      { id: "multiCountryTab", title: "MULTICOUNTRY", content: "" },
-      { id: "catagorySystemsTab", title: "CATAGORY SYSTEMS", content: "" },
-      { id: "pricesTab", title: "PRICES", content: "" },
-      { id: "multimediaTab", title: "MULTIMEDIA", content: "" },
-      { id: "reviewsTab", title: "REVIEWS", content: "" },
-    ];
+  // const getAllProductData = async (payload) => {
+  //   !loading && setLoading(true);
+  //   const apiRes = await getAllProducts(payload);
+  //   if (apiRes === "err") {
+  //   } else {
+  //     unstable_batchedUpdates(() => {
+  //       setProductList(apiRes.data);
+  //       setItemsCount(apiRes.data.totalElements);
+  //       setItemData({});
+  //       setLoading(false);
+  //     });
+  //   }
+  // };
+  // const tabsList = useMemo(() => {
+  //   const tabArr = [
+  //     {
+  //       id: "AttributesTab",
+  //       title: "ATTRIBUTES",
+  //       content: (
+  //         <AttributesForm
+  //           data={itemData}
+  //           getAllProductData={getAllProductData}
+  //           show={Object.entries(itemData).length > 0}
+  //         />
+  //       ),
+  //     },
+  //     { id: "VendorTab", title: "VENDOR", content: <VendorForm />, show: true },
+  //     { id: "multiCountryTab", title: "MULTICOUNTRY", content: "" },
+  //     { id: "catagorySystemsTab", title: "CATAGORY SYSTEMS", content: "" },
+  //     { id: "pricesTab", title: "PRICES", content: "" },
+  //     { id: "multimediaTab", title: "MULTIMEDIA", content: "" },
+  //     { id: "reviewsTab", title: "REVIEWS", content: "" },
+  //   ];
 
-    return tabArr;
-  }, [itemData]);
+  //   return tabArr;
+  // }, [itemData]);
 
    //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
  const recordPerPage = 10;
-const totalRecords = tableData?.length;
+const totalRecords = 100;
  const pageRange = 10;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
  const currentRecords = tableData;
 
  const handlePageChange = pageNumber => {
-   setCurrentPage(pageNumber);
+  // console.log("hello pageNumber",pageNumber-1)
+   setCurrentPage(pageNumber-1);
  }
  /*-----------------Pagination------------------*/
-  const totalItems = useMemo(
-    () => (
-      <PaginationView
-        totalProductCount={itemsCount}
-        getListData={getAllProductData}
-      />
-    ),
-    [itemsCount]
-  );
+  // const totalItems = useMemo(
+  //   () => (
+  //     <PaginationView
+  //       totalProductCount={itemsCount}
+  //       getListData={getAllProductData}
+  //     />
+  //   ),
+  //   [itemsCount]
+  // );
 
-  const getEachItemData = async (item) => {
-    setItemData({});
-    const apiRes = await getProductById(item.productId);
-    if (apiRes.data) {
-      setItemData(apiRes.data);
-    }
-  };
+  // const getEachItemData = async (item) => {
+  //   setItemData({});
+  //   const apiRes = await getProductById(item.productId);
+  //   if (apiRes.data) {
+  //     setItemData(apiRes.data);
+  //   }
+  // };
 
   const tableData = [];
 
@@ -175,18 +178,22 @@ const totalRecords = tableData?.length;
     console.log(date, dateString);
   };
 
-  const tableContent = (
-    <Fragment>
-      {productList.content.map((item, index) => (
-        <ProductListTd
-          key={`productListTd${index}${item.itemCode}`}
-          data={item}
-          itemData={itemData}
-          setItemData={getEachItemData}
-        />
-      ))}
-    </Fragment>
-  );
+  // const tableContent = (
+  //   <Fragment>
+  //     {productList.content.map((item, index) => (
+  //       <ProductListTd
+  //         key={`productListTd${index}${item.itemCode}`}
+  //         data={item}
+  //         itemData={itemData}
+  //         setItemData={getEachItemData}
+  //       />
+  //     ))}
+  //   </Fragment>
+  // );
+  const bulkUploadNavigate = () => {
+    //  redirect to bulk page
+    router.push("/pim/bulkUpload?list=bulkUpload");
+  };
 
   return (
     <Fragment>
@@ -198,7 +205,10 @@ const totalRecords = tableData?.length;
         </div>
         <div className={`col-2 p-3 text-end align-self-center ${styles.set_laptop_right}`}>
           <button
-            onClick={() => setShowBrandCreationForm(true)}
+            // onClick={() => setShowBrandCreationForm(true)}
+           
+            onClick={() => bulkUploadNavigate()} //  redirect to bulk page
+
             className={`btn btn-sm ${styles.add_bulk_button_text}`}
 
           >
@@ -431,27 +441,27 @@ const totalRecords = tableData?.length;
   );
 }
 
-function ProductListTd({ data, itemData, setItemData }) {
-  return (
-    <Fragment>
-      <tr>
-        <td>
-          <input
-            type="checkbox"
-            checked={itemData.productId === data.productId}
-            name={data.articleNumber}
-            onChange={() => setItemData(data)}
-          />
-          <span>{data.articleNumber}</span>
-        </td>
-        <td>{data.categories.c3}</td>
-        <td>{data.name}</td>
-        <td>{data.version}</td>
-        <td>{data.modifiedAt}</td>
-      </tr>
-    </Fragment>
-  );
-}
+// function ProductListTd({ data, itemData, setItemData }) {
+//   return (
+//     <Fragment>
+//       <tr>
+//         <td>
+//           <input
+//             type="checkbox"
+//             checked={itemData.productId === data.productId}
+//             name={data.articleNumber}
+//             onChange={() => setItemData(data)}
+//           />
+//           <span>{data.articleNumber}</span>
+//         </td>
+//         <td>{data.categories.c3}</td>
+//         <td>{data.name}</td>
+//         <td>{data.version}</td>
+//         <td>{data.modifiedAt}</td>
+//       </tr>
+//     </Fragment>
+//   );
+// }
 
 const mapDispatchToProps = {
   currentPgNo: actions.currentPgNo,

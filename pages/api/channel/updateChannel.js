@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 	
 	let id=body.channelId
 	
-	console.log("helo server",id)
+	// console.log("helo server",id)
 	const config = {
 		method: 'patch',
 		url: `/channel/${id}`,
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 	};
 	onboardServer(config)
 		.then(response => {
-			console.log("hello rrrrrrrrrrrr",response)
+			// console.log("hello rrrrrrrrrrrr",response)
 			if (response.status === 200) {
 				res.status(200).json(response.data);
                 Promise.resolve();

@@ -131,9 +131,9 @@ import {
       client
         .post("/api/catalog/createCategory", data)
         .then((response) => {
-          console.log("---------------", response.status);
+          // console.log("---------------", response.status);
           if (response.status === 200) {
-            console.log("API category==>", response.data.result);
+            // console.log("API category==>", response.data.result);
             dispatch(
               createCategoryDataSuccess(
                 response.data.result,
@@ -153,14 +153,10 @@ import {
   };
   
   export const updateCategoryApi = (info) => {
-    console.log("hello  updateCategoryApi info",info)
+    // console.log("hello  updateCategoryApi info",info)
     const data = {
       categoryId:info?.categoryId,
           name: info.name,
-          // description:info.description,
-          // contactPerson: info.contactPerson,
-          // emailId: info.emailId,
-          // mobile: info.mobile
     }
    
     return (dispatch) => {

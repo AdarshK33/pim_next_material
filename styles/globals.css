@@ -808,6 +808,10 @@ button[aria-checked="true"] {
     /* overflow-y: hidden; */
     overflow-x: hidden;
   }
+  .form-control,input{
+    font-family: Gill-medium !important;
+    font-size: 13px !important;
+  }
 
   a {
     color: inherit;
@@ -1375,6 +1379,7 @@ button[aria-checked="true"] {
   /* category list  end */
 
   .category_dropZone .dropZone-container {
+    height: 135px;
     display: flex;
     position: relative;
     border: 1px dashed var(--gray);
@@ -1522,4 +1527,6 @@ button[aria-checked="true"] {
   .modal-backdrop.show {
     opacity: .2 !important;
 }
+
+
 }
