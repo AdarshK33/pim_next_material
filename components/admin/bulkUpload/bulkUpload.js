@@ -7,6 +7,9 @@ import React, {
   useRef,
 } from "react";
 import { connect } from "react-redux";
+import folder from "../../../assets/icons/folder.svg";
+
+
 import { getAllProducts, getProductById } from "../../utility/apiUtility";
 import CustomTable from "../../public/customTable";
 import TabView from "../catalog/tabView";
@@ -281,7 +284,7 @@ function BulkUpload({ currentPgNo }) {
 
         <div className="row">
           <div className="col-12 px-0">
-            <div className="pb-3 bulk_upload_style" style={{ border: '2px dashed black', margin: '15px 0px', padding: '0px 0px', background: 'rgba(195,218,217,.69)', textAlign: 'center' }}>
+            <div className="pb-3 bulk_upload_style">
               {/* <FormikControl
                 control="dropZone"
                 name="catalog_name"
@@ -289,17 +292,34 @@ function BulkUpload({ currentPgNo }) {
                 // setFieldValue={setFieldValue}
                 onClick={postFile}
               /> */}
+              <div className="dropZone-container">
               <Dropzone onDrop={onDrop}>
                 {({ getRootProps, getInputProps }) => (
-                  <div {...getRootProps()}>
+                  <div {...getRootProps()} class="dropzone col-2 p-3 text-end align-self-center d-flex">
                     <input {...getInputProps()} />
                     {
 
                     }
-                    <p>Drag and drop a file here, or click to select file</p>
+                   <div className='upload_placeholder upload_blk'>
+
+                            <div>
+                            <Image
+                            className="px-2"
+                            src={folder}
+                            alt="folder"
+                            width={40}
+                            height={35}
+                            // onClick={() => {
+                            //   setShowBrandCreationForm(true)
+                            // }}
+                            />
+                            </div>
+                            <u className={styles.Gill_heavy}>Upload Your Document</u>
+                            </div>
                   </div>
                 )}
               </Dropzone>
+              </div>
             </div>
           </div>
         </div>
