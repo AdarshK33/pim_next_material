@@ -45,10 +45,10 @@ function BulkUpload({ currentPgNo }) {
     { value: "Brand 3", label: "Brand 3  " },
   ];
 
-  useEffect(() => {
-    getAllProductData({ pageSize: 10, pageNo: 0 });
-    currentPgNo(0);
-  }, []);
+  // useEffect(() => {
+  //   getAllProductData({ pageSize: 10, pageNo: 0 });
+  //   currentPgNo(0);
+  // }, []);
 
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
@@ -106,19 +106,19 @@ function BulkUpload({ currentPgNo }) {
   // });
 
   // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
-  const getAllProductData = async (payload) => {
-    !loading && setLoading(true);
-    const apiRes = await getAllProducts(payload);
-    if (apiRes === "err") {
-    } else {
-      unstable_batchedUpdates(() => {
-        setProductList(apiRes.data);
-        setItemsCount(apiRes.data.totalElements);
-        setItemData({});
-        setLoading(false);
-      });
-    }
-  };
+  // const getAllProductData = async (payload) => {
+  //   !loading && setLoading(true);
+  //   const apiRes = await getAllProducts(payload);
+  //   if (apiRes === "err") {
+  //   } else {
+  //     unstable_batchedUpdates(() => {
+  //       setProductList(apiRes.data);
+  //       setItemsCount(apiRes.data.totalElements);
+  //       setItemData({});
+  //       setLoading(false);
+  //     });
+  //   }
+  // };
 
   //   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -133,23 +133,23 @@ function BulkUpload({ currentPgNo }) {
     setCurrentPage(pageNumber);
   };
   /*-----------------Pagination------------------*/
-  const totalItems = useMemo(
-    () => (
-      <PaginationView
-        totalProductCount={itemsCount}
-        getListData={getAllProductData}
-      />
-    ),
-    [itemsCount]
-  );
+  // const totalItems = useMemo(
+  //   () => (
+  //     <PaginationView
+  //       totalProductCount={itemsCount}
+  //       getListData={getAllProductData}
+  //     />
+  //   ),
+  //   [itemsCount]
+  // );
 
-  const getEachItemData = async (item) => {
-    setItemData({});
-    const apiRes = await getProductById(item.productId);
-    if (apiRes.data) {
-      setItemData(apiRes.data);
-    }
-  };
+  // const getEachItemData = async (item) => {
+  //   setItemData({});
+  //   const apiRes = await getProductById(item.productId);
+  //   if (apiRes.data) {
+  //     setItemData(apiRes.data);
+  //   }
+  // };
 
   const tableData = [];
 
@@ -165,18 +165,18 @@ function BulkUpload({ currentPgNo }) {
     console.log(date, dateString);
   };
 
-  const tableContent = (
-    <Fragment>
-      {productList.content.map((item, index) => (
-        <ProductListTd
-          key={`productListTd${index}${item.itemCode}`}
-          data={item}
-          itemData={itemData}
-          setItemData={getEachItemData}
-        />
-      ))}
-    </Fragment>
-  );
+  // const tableContent = (
+  //   <Fragment>
+  //     {productList.content.map((item, index) => (
+  //       <ProductListTd
+  //         key={`productListTd${index}${item.itemCode}`}
+  //         data={item}
+  //         itemData={itemData}
+  //         setItemData={getEachItemData}
+  //       />
+  //     ))}
+  //   </Fragment>
+  // );
 
   return (
     <Fragment>
@@ -446,27 +446,27 @@ function BulkUpload({ currentPgNo }) {
   );
 }
 
-function ProductListTd({ data, itemData, setItemData }) {
-  return (
-    <Fragment>
-      <tr>
-        <td>
-          <input
-            type="checkbox"
-            checked={itemData.productId === data.productId}
-            name={data.articleNumber}
-            onChange={() => setItemData(data)}
-          />
-          <span>{data.articleNumber}</span>
-        </td>
-        <td>{data.categories.c3}</td>
-        <td>{data.name}</td>
-        <td>{data.version}</td>
-        <td>{data.modifiedAt}</td>
-      </tr>
-    </Fragment>
-  );
-}
+// function ProductListTd({ data, itemData, setItemData }) {
+//   return (
+//     <Fragment>
+//       <tr>
+//         <td>
+//           <input
+//             type="checkbox"
+//             checked={itemData.productId === data.productId}
+//             name={data.articleNumber}
+//             onChange={() => setItemData(data)}
+//           />
+//           <span>{data.articleNumber}</span>
+//         </td>
+//         <td>{data.categories.c3}</td>
+//         <td>{data.name}</td>
+//         <td>{data.version}</td>
+//         <td>{data.modifiedAt}</td>
+//       </tr>
+//     </Fragment>
+//   );
+// }
 
 const mapDispatchToProps = {
   currentPgNo: actions.currentPgNo,

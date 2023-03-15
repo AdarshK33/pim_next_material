@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
 	const body = req.body;
 	
-	console.log("bodyaaaaa",body);
+	// console.log("bodyaaaaa",body);
 	
 	const config = {
 		method: 'post',
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
 	catalogServer(config)
 		.then(response => {
-		console.log("called",response);
+		// console.log("called",response);
 
 			if (response.status === 200) {
 				res.status(200).json(response.data);
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 		})
 		.catch(err => {
         console.log("error caught in -> api/category/CreateCategory", err);
-		console.log(err.response);
+		// console.log(err.response);
 		if (err?.response?.data) {
 			const { status = {} } = err?.response;
 			res.status(status).json(err.response.data.error +' '+ status);

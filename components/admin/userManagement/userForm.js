@@ -66,7 +66,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
     let brandEmail = {
       name: values.email.trim(),
     };
-    console.log("val", brndName);
+    // console.log("val", brndName);
     if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" ) {
       notify("err");
     } else {

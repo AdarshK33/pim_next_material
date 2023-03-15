@@ -30,7 +30,7 @@ async function handler(req, res) {
 		})
 		.catch(err => {
             console.log("error caught in -> api/login/userLogin", err);
-            console.log(err.response);
+            // console.log(err.response);
 			if (err?.response?.data) {
 				const { status = {} } = err?.response;
 				res.status(status).json(err.response.data.error +' '+ status);

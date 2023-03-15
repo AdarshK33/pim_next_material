@@ -61,11 +61,11 @@ function classifyingUser({ currentPgNo }) {
    
   }, []);
 
-  const { isLogin } = useSelector(state => {
-    console.log("hello state",state)
-		return state.brandReducer;
-	});
-console.log("hello brandGet",isLogin)
+//   const { isLogin } = useSelector(state => {
+//     console.log("hello state",state)
+// 		return state.brandReducer;
+// 	});
+// console.log("hello brandGet",isLogin)
   const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);

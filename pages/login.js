@@ -78,7 +78,7 @@ useEffect(() => {
       let userPassword = {
         passwordKey: values.password.trim(),
       };
-      console.log("val", userName);
+      // console.log("val", userName);
       if (userName.name === "" || userPassword.passwordKey === "" ) {
         notify("err");
       } else {
