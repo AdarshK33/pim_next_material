@@ -68,7 +68,10 @@ function classifyingCategory({ currentPgNo }) {
 
 
   const [brandName, setBrandName] = useState();
-  const [parentName, setParentName] = useState();
+  const [parentName, setParentName] = useState(); 
+  const [parentId, setParentId] = useState(); 
+
+  
 
   const [subCategoryName, setSubCategoryName ]= useState();
    
@@ -78,6 +81,7 @@ function classifyingCategory({ currentPgNo }) {
   const [categoryNameError, setCategoryNameError] = useState(false);
   const [categoryDescriptionError, setCategoryDescriptionError] = useState(false);
   const [slugError, setSlugError] = useState(false);
+
   console.log("hello parentName",parentName);
 
   
@@ -141,7 +145,8 @@ const { categoriesData,loading } = useSelector(state => {
       })
       .then((response) => {
         // console.log(response);
-        alert('File uploaded')
+        notify(true,'file_uploaded')
+        // alert('File uploaded')
       })
       .catch((error) => {
         console.log(error);
@@ -213,7 +218,25 @@ function findNested(obj, key, value) {
 
 
  //   /*-----------------  selected catagory menu------------------*/
- 
+
+
+
+ //   /*-----------------  selected find Parent id / name ------------------*/
+
+
+
+function findNestedObj(entireObj, keyToFind, valToFind) {
+  let foundObj;
+  JSON.stringify(entireObj, (_, nestedValue) => {
+    if (nestedValue && nestedValue[keyToFind] === valToFind) {
+      foundObj = nestedValue;
+    }
+    return nestedValue;
+  });
+  return foundObj;
+};
+
+ //   /*-----------------  selected Parent id / name ------------------*/
 
 
   const getAllBrandsData = async (payload) => {
@@ -238,7 +261,8 @@ function findNested(obj, key, value) {
       if (val && type=='update') {
         toastId.current = toast("Category Updated Successfully !!!");
        dispatch(getCategoriesApis("Puma")) // login user brand call
-      }
+      }if(val && type=='file_uploaded')
+      toastId.current = toast(" File Uploaded Successfully !!!");
     }
   };
   const tabsList = useMemo(() => {
@@ -589,6 +613,7 @@ if (apiRes === "err") {
     slug :""
   })
   setBrandName('')
+  setParentId('')
   setParentName('')
 }
 };
@@ -603,6 +628,8 @@ useEffect(async () => {
   })
   setBrandName('')
   setParentName('')
+  setParentId('')
+
   if(selectedTreeForUpdate){
   setState({
     ...state,
@@ -611,7 +638,11 @@ useEffect(async () => {
     slug :""
   })
   setBrandName(selectedTreeForUpdate?.brandName)
-  setParentName(selectedTreeForUpdate?.parentCategoryId)
+  let parentObj=findNestedObj(categoriesData, 'id', selectedTreeForUpdate?.parentCategoryId);
+  console.log(parentObj?.name,"parentObj")
+
+  setParentName(parentObj?.name)
+  setParentId(selectedTreeForUpdate?.parentCategoryId)
 
   }
 
@@ -714,8 +745,9 @@ const nullAddField = () => {
             <Form.Control
               as="select"
               name="ParentId"
-              value={parentName}
-              onChange={(e) => parentHandler(e)}
+           
+             value={parentName}
+              // onChange={(e) => parentHandler(e)}
               required
               style={parentNameError ? { borderColor: "red" } : {}}
               disabled={true}
@@ -746,7 +778,7 @@ const nullAddField = () => {
             <Form.Control
               as="select"
               name="subCategoryNameId"
-              // value={subCategoryName}
+              value={'subCategoryName'}
               // onChange={(e) => brandHandler(e)}
               required
               // style={brandNameError ? { borderColor: "red" } : {}}
@@ -947,8 +979,8 @@ const nullAddField = () => {
             <Form.Control
               as="select"
               name="ParentId"
-               value={parentName??''}
-              onChange={(e) => parentHandler(e)}
+               value={'hello'}
+              // onChange={(e) => parentHandler(e)}
               required
               style={parentNameError ? { borderColor: "red" } : {}}
               // disabled={disabled}
