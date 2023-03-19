@@ -1020,7 +1020,7 @@ const nullAddField = () => {
             <Form.Control as="textarea"
             placeholder="Category Descriptions..."
             name="categoryDescription"
-            rows="5"
+            rows="6"
             onChange={changeHandler}
             style={categoryDescriptionError ? { borderColor: "red" } : {}}
             
@@ -1310,7 +1310,7 @@ const nullAddField = () => {
             <Form.Control as="textarea"
             placeholder="Category Descriptions..."
             name="categoryDescription"
-            rows="5"
+            rows="6"
             onChange={changeHandler}
             // style={categoryDescriptionError ? { borderColor: "red" } : {}}
             disabled={!addNewChild ? true  : false}

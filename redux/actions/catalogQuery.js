@@ -257,17 +257,20 @@ export const getAttributesGroupApis = (groupId) => {
       };
     };
     
-export const getProductPimCodeApi = (pim_model_code) => {
+export const getProductPimCodeApi = (pim_model_code,brand) => {
+  console.log("api getProductPimCodeApi called",pim_model_code,brand)
+
   const data = {
-    pim_model_code: pim_model_code
+    code: pim_model_code,
+    brand:brand
   }
   return (dispatch) => {
     dispatch(getProductPimCodeDataLoading('PRODUCTs PIM CODE....', 'PRODUCTs PIM CODE'));
     client.post("/api/catalogQuery/getProductPimCode",data)
       .then((response) => {
-        console.log("api response",response)
+        console.log("api getProductPimCodeApi response",response)
       //   console.log(response)
-        if (response?.status === 200) {
+        if (response?.statusCode === 200) {
             console.log("API SUCCESS2", response.data);
           dispatch(getProductPimCodeDataSuccess(response.data.result));
         }
