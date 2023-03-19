@@ -70,8 +70,11 @@ function classifyingCategory({ currentPgNo }) {
   const [brandName, setBrandName] = useState();
   const [parentName, setParentName] = useState(); 
   const [parentId, setParentId] = useState(); 
+  const [addNewChild, setAddNewChild] = useState(false); 
 
   
+
+  console.log("setParentName",parentName)
 
   const [subCategoryName, setSubCategoryName ]= useState();
    
@@ -81,8 +84,10 @@ function classifyingCategory({ currentPgNo }) {
   const [categoryNameError, setCategoryNameError] = useState(false);
   const [categoryDescriptionError, setCategoryDescriptionError] = useState(false);
   const [slugError, setSlugError] = useState(false);
+  
 
   console.log("hello parentName",parentName);
+  
 
   
   const [state, setState] = useState({
@@ -106,7 +111,7 @@ function classifyingCategory({ currentPgNo }) {
   //   return {loginUser: app?.loggedIn,};
   // });
   
-  console.log("hello selectedTreeForUpdate",selectedTreeForUpdate?.title)
+  console.log("hello selectedTreeForUpdate",selectedTreeForUpdate)
   
 
   useEffect(() => {
@@ -549,22 +554,28 @@ const submitHandler = async(e) => {
     // console.log("Inside the channel submit");
     // setSaveclick(true);
 
-    const UpdateInfo = {
+     //add true conditions
+
+    const addNewInfo = {
       // new categopry
+      //  precedence is zero
       name: state.categoryName,
       description : state.categoryDescription,
       brands : [brandName],
-      parentCategoryId: 0,
-      precedence: 0
-    
+      slug : '' // now empty sending
+       // precedence: 
 
 }
-  console.log("hello add info", UpdateInfo);
+
+
+
+
+  console.log("hello add info", addNewInfo);
   //apis(UpdateInfo)
 
-  dispatch( createCategoryApi(UpdateInfo));
+  dispatch( createCategoryApi(addNewInfo));
 
-const apiRes = await createCategoryApi(UpdateInfo);
+const apiRes = await createCategoryApi(addNewInfo);
 if (apiRes === "err") {
 //  formik.setSubmitting(false);
 } else {    
@@ -590,13 +601,35 @@ const submitUpdateHandler = async(e) => {
       //update categopry name only 
       categoryId: selectedTreeForUpdate?.key,
       name: state.categoryName,
-      // description : state.categoryDescription,
-      // brands : [brandName],
-      // parentCategoryId: parentName,
-      // precedence: 0
 
 }
-  console.log("hello add info", UpdateInfo);
+
+
+
+// //false
+// const addChildInfo ={
+//   //precedence is one
+//  name: state.categoryName,
+//  description : state.categoryDescription,
+//  brands : [brandName],
+//  parentCategoryId : parentId,
+//  slug:"",
+//  precedence: 1
+// }
+// //
+// // {
+// //   "name": "test2099",
+// //   "description": "test2099",
+// //   "parentCategoryId": 96,
+// //   "brands": [
+// //     "Puma"
+// //   ],
+// //   "slug": "images.jpg",
+// // "precedence": 1
+// // }
+// //
+if(!addNewChild){
+  console.log("hello update info", UpdateInfo);
   //apis(UpdateInfo)
 
   dispatch( updateCategoryApi(UpdateInfo));
@@ -616,6 +649,83 @@ if (apiRes === "err") {
   setParentId('')
   setParentName('')
 }
+}
+ 
+
+ // selecteed parent add new child for create category
+
+
+ if(addNewChild &&selectedTreeForUpdate?.parentCategoryId === null){
+  const addFirstChildInfo ={
+    //precedence is one
+   name: state.categoryName,
+   description : state.categoryDescription,
+   brands : [brandName],
+   parentCategoryId : parentId,
+   slug:"",
+   precedence: 1
+  }
+
+
+  console.log("hello addFirstChildInfo info", addFirstChildInfo);
+
+  dispatch( createCategoryApi(addFirstChildInfo));
+
+  const apiRes = await createCategoryApi(addFirstChildInfo);
+  if (apiRes === "err") {
+  //  formik.setSubmitting(false);
+  } else {    
+    notify(true ,'create')
+    setState({
+      ...state,
+      categoryName:'' ,
+      categoryDescription :"",
+      slug :""
+    })
+    setBrandName('')
+    setParentId('')
+    setParentName('')
+    setAddNewChild(false)
+  }
+  }
+
+
+if(addNewChild &&selectedTreeForUpdate && parentName ){
+  const addChildInfo ={
+    //precedence is one
+   name: state.categoryName,
+   description : state.categoryDescription,
+   brands : [brandName],
+   parentCategoryId : parentId,
+   slug:"",
+   precedence: 1
+  }
+
+
+  console.log("hello addChildInfo info", addChildInfo);
+
+  dispatch( createCategoryApi(addChildInfo));
+
+  const apiRes = await createCategoryApi(addChildInfo);
+  if (apiRes === "err") {
+  //  formik.setSubmitting(false);
+  } else {    
+    notify(true ,'create')
+    setState({
+      ...state,
+      categoryName:'' ,
+      categoryDescription :"",
+      slug :""
+    })
+    setBrandName('')
+    setParentId('')
+    setParentName('')
+    setAddNewChild(false)
+  }
+  }
+
+
+
 };
   
 }
@@ -634,15 +744,18 @@ useEffect(async () => {
   setState({
     ...state,
     categoryName:selectedTreeForUpdate?.title ,
-   
+    
     slug :""
   })
   setBrandName(selectedTreeForUpdate?.brandName)
   let parentObj=findNestedObj(categoriesData, 'id', selectedTreeForUpdate?.parentCategoryId);
-  console.log(parentObj?.name,"parentObj")
+  console.log(parentObj,"parentObj")
 
-  setParentName(parentObj?.name)
-  setParentId(selectedTreeForUpdate?.parentCategoryId)
+  setParentName(parentObj?.name) //selected parent name
+  setParentId(selectedTreeForUpdate?.key) // new parent create
+  // console.log(selectedTreeForUpdate,"setNewParentId")
+  
+
 
   }
 
@@ -656,9 +769,11 @@ const nullAddField = () => {
     categoryDescription :"",
     slug :""
   })
-  setBrandName('')
-  setParentName('')
-  setSelectedTreeForUpdate('');
+  //true or false
+  setAddNewChild(true)
+  // setBrandName('')
+  // setParentName('')
+  // setSelectedTreeForUpdate('');
 };
 
   return (
@@ -709,7 +824,7 @@ const nullAddField = () => {
        <>
         <div className={`card ${styles.category_card}`}>
         <div className="card-body">
-          {/* not selected */}
+         new add  not selected
        
     
          <Form>
@@ -817,7 +932,8 @@ const nullAddField = () => {
                   maxLength="250"
                   style={slugError ? { borderColor: "red" } : {}}
                   placeholder="Slug"
-                  // disabled={disabled}
+                 
+                  disabled={true}
                 />
                 {slugError ? (
                   <p style={{ color: "red" }}> ** Please enter Slug </p>
@@ -843,7 +959,7 @@ const nullAddField = () => {
               style={brandNameError ? { borderColor: "red" } : {}}
               // disabled={disabled}
             >
-              <option value="">Brand (Multi-Select)</option>
+              <option value="">Brand</option>
               {
                 brandDropdownGet &&
                 brandDropdownGet.map((item, i) => {
@@ -944,6 +1060,7 @@ const nullAddField = () => {
       </div>
        </>):(
         <>
+        submitUpdateHandler
         <div className={`card ${styles.category_card}`}>
         <div className="card-body">
         <Form>
@@ -974,17 +1091,42 @@ const nullAddField = () => {
           
   
         <div className="col-4 my-3">
-          <Form.Group>
+
+          {parentName ?(<>
+            <Form.Group>
+               
+                <Form.Control
+                  type="text"
+                  name="parentNameselected"
+                  value={parentName}
+                  // onChange={changeHandler}
+                  required
+                  // maxLength="250"
+                  // style={categoryNameError ? { borderColor: "red" } : {}}
+                  placeholder="Name"
+                  disabled={true}
+                />
+                {/* {categoryNameError ? (
+                  <p style={{ color: "red" }}> ** Please enter Category Name </p>
+                ) :state.categoryName && state.categoryName.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )} */}
+              </Form.Group>
+          </>):(<>
+            <Form.Group>
           
             <Form.Control
               as="select"
               name="ParentId"
-               value={'hello'}
+               value={parentName}
               // onChange={(e) => parentHandler(e)}
               required
               style={parentNameError ? { borderColor: "red" } : {}}
               // disabled={disabled}
-              disabled="true"
+              disabled={!parentName ? true  : false}
+
             >
               <option value="">Parent Category </option>
               {/* {
@@ -993,7 +1135,7 @@ const nullAddField = () => {
                   return (
                     <option key={item.value}>{item.label}</option>
                   );
-                })
+                })ś
                 } */}
             </Form.Control>
             {parentNameError ? (
@@ -1003,11 +1145,37 @@ const nullAddField = () => {
                 )}
            
           </Form.Group>
+          </>)}
+       
         </div>
         
       
         <div className="col-4 my-3">
-          <Form.Group>
+
+        {parentName ?(<>
+            <Form.Group>
+               
+                <Form.Control
+                  type="text"
+                  name="subParentNameselected"
+                  value={selectedTreeForUpdate?.title }
+                  // onChange={changeHandler}
+                  required
+                  // maxLength="250"
+                  // style={categoryNameError ? { borderColor: "red" } : {}}
+                  placeholder="Name"
+                  disabled={true}
+                />
+                {/* {categoryNameError ? (
+                  <p style={{ color: "red" }}> ** Please enter Category Name </p>
+                ) :state.categoryName && state.categoryName.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )} */}
+              </Form.Group>
+          </>):(<>
+            <Form.Group>
           
             <Form.Control
               as="select"
@@ -1035,6 +1203,8 @@ const nullAddField = () => {
                   <p></p>
                 )} */}
           </Form.Group>
+          </>)}
+       
         </div>
         </div>
         <div className="row">
@@ -1075,10 +1245,11 @@ const nullAddField = () => {
               onChange={(e) => brandHandler(e)}
               required
               style={brandNameError ? { borderColor: "red" } : {}}
-              // disabled={disabled}
-              disabled="true"
+             
+              disabled={!addNewChild ? true  : false}
+              // disabled="true"
             >
-              <option value="">Brand (Multi-Select)</option>
+              <option value="">Brand</option>
               {
                 brandDropdownGet &&
                 brandDropdownGet.map((item, i) => {
@@ -1142,7 +1313,8 @@ const nullAddField = () => {
             rows="5"
             onChange={changeHandler}
             // style={categoryDescriptionError ? { borderColor: "red" } : {}}
-            disabled="true"
+            disabled={!addNewChild ? true  : false}
+
             
             />
               {/* {categoryDescriptionError ? (

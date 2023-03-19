@@ -54,6 +54,14 @@ const catalogQueryServer = axios.create({
 
 
 
+const syncCommandServer = axios.create({
+	baseURL: process.env.SYNC_COMMAND_SERVICE_URL,
+	// timeout: 1000 * 10,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});
+
 onboardServer.setJwtToken = newToken => {
 	token = newToken;
 };
@@ -131,4 +139,4 @@ const syncServer = axios.create({
 	},
 });
 
-export { client, onboardServer, authServer, onboardQueryServer, catalogServer, catalogQueryServer, syncServer };
+export { client, onboardServer, authServer, onboardQueryServer, catalogServer, catalogQueryServer, syncServer,syncCommandServer };
