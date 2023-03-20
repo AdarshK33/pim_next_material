@@ -153,7 +153,7 @@ import {
   };
   
   export const updateCategoryApi = (info) => {
-    // console.log("hello  updateCategoryApi info",info)
+    console.log("hello  updateCategoryApi info",info)
     const data = {
       categoryId:info?.categoryId,
           name: info.name,
@@ -164,7 +164,7 @@ import {
       client
         .post("/api/catalog/updateCategory", data)
         .then((response) => {
-          // console.log("rrrrrr",response)
+          console.log("rrrrrr",response)
           if (response.status === 200) {
             // console.log("BrandGreat==>", response.data);
             dispatch(

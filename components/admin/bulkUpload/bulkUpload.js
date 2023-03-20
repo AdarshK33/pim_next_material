@@ -7,6 +7,9 @@ import React, {
   useRef,
 } from "react";
 import { connect } from "react-redux";
+import folder from "../../../assets/icons/folder.svg";
+
+
 import { getAllProducts, getProductById } from "../../utility/apiUtility";
 import CustomTable from "../../public/customTable";
 import TabView from "../catalog/tabView";
@@ -22,7 +25,10 @@ import download from "../../../assets/icons/download.svg";
 import CustomModal from "../../public/customModal";
 import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
-import { DatePicker, Space } from "antd";
+// import { DatePicker, Space } from "antd";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import calendar from "../../../assets/icons/calendar.svg";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -39,11 +45,51 @@ function BulkUpload({ currentPgNo }) {
 
   const [template, setTemplate] = useState('');
 
+  const [fromDate,setFromDate] = useState(null)
+  const [toDate,setToDate] = useState(null)
+
+
+    
+  const [state, setState] = useState({
+    toDate: null,
+    fromDate: null
+  });
   const selectOpts = [
     { value: "Brand 1", label: "xyz" },
     { value: "Brand 2", label: "Brand 2" },
     { value: "Brand 3", label: "Brand 3  " },
   ];
+
+  
+  const fromDateHandler = (date) => {
+    var AdjusteddateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+  // let AdjusteddateValue=  date.toISOString()
+
+    setState({ ...state, fromDate: AdjusteddateValue,toDate:null });
+    setFromDate(AdjusteddateValue)
+    setToDate(null) 
+  };
+  const toDateHandler = (date) => {
+    var AdjusteddateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+  // let AdjusteddateValue=  date.toISOString()
+    setState({ ...state, toDate: AdjusteddateValue });
+    setToDate(AdjusteddateValue)
+
+  };
+
+  useEffect(() => {
+    if(toDate &&fromDate )
+   {
+ // dispatch(api call());
+ //  date.toISOString()
+
+   }
+   
+  }, [toDate,fromDate]);
 
   // useEffect(() => {
   //   getAllProductData({ pageSize: 10, pageNo: 0 });
@@ -161,10 +207,19 @@ function BulkUpload({ currentPgNo }) {
     });
   }
 
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
+  const onChangeStartDate = (date, dateString) => {
 
+    // console.log(new Date().toISOString());
+    // console.log("hello date",date, dateString);
+    console.log("hello start date",date.toISOString());
+
+  };
+  const onChangeEndDate = (date, dateString) => {
+    // console.log(new Date().toISOString());
+    // console.log("hello date",date, dateString);
+    console.log("hello end date",date.toISOString());
+  };
+  
   // const tableContent = (
   //   <Fragment>
   //     {productList.content.map((item, index) => (
@@ -191,7 +246,44 @@ function BulkUpload({ currentPgNo }) {
           <div className="col-8 p-0">
             <div className="row">
               <div className="col-2 sidebar_blk">
-                <DatePicker className="date_picker_style" onChange={onChange} />
+
+
+                             <DatePicker
+                                    className="form-control part-view"
+                                  
+                                    selected={fromDate}
+                                    name="fromDate"
+                                    // minDate={moment().toDate()}
+                                    required
+                                    onChange={(e) => fromDateHandler(e)}
+                                    dateFormat="dd-MM-yyyy"
+                                    placeholderText="DD-MM-YYYY"
+                                    minDate={new Date().getDate()>20?
+                                      new Date(
+                                        new Date().getFullYear(),
+                                          new Date().getMonth() 
+                                        ,21
+                                      ):
+                                      new Date(
+                                        new Date().getFullYear(),
+                                          new Date().getMonth() - 2
+                                        ,21
+                                      )
+                                    }
+                                    maxDate={
+                                      new Date().getDate()>20?new Date(
+                                        new Date().getFullYear(),
+                                          new Date().getMonth()+1
+                                        ,20
+                                      ):new Date(
+                                        new Date().getFullYear(),
+                                          new Date().getMonth() 
+                                        ,20
+                                      )
+                                    }
+                                  />
+
+                {/* <DatePicker className="date_picker_style" onChange={onChangeStartDate} /> */}
                 <div className="calender_blk">
                   <Image
                     className="px-2"
@@ -203,7 +295,40 @@ function BulkUpload({ currentPgNo }) {
                 </div>
               </div>
               <div className="col-2 sidebar_blk">
-                <DatePicker className="date_picker_style" onChange={onChange} />
+
+                                   <DatePicker
+                                        className="form-control part-view"
+                                        selected={toDate}
+                                        disabled={fromDate === null?true:false}
+                                        name="toDate"
+                                         minDate={new Date(fromDate)}
+                                        required
+                                        onChange={(e) => toDateHandler(e)}
+                                        dateFormat="dd-MM-yyyy"
+                                        placeholderText="DD-MM-YYYY"
+                                        // minDate={
+                                        //   new Date(
+                                        //     new Date().getFullYear(),
+                                        //       new Date().getMonth() - 1
+                                        //     ,21
+                                        //   )
+                                        // }
+                                        maxDate={
+                                          new Date().getDate()>20?
+                                          new Date(
+                                            new Date().getFullYear(),
+                                              new Date().getMonth()+1
+                                            ,20
+                                          )
+                                          :
+                                          new Date(
+                                            new Date().getFullYear(),
+                                              new Date().getMonth() 
+                                            ,20
+                                          )
+                                        }
+                                      />
+                {/* <DatePicker className="date_picker_style" onChange={onChangeEndDate} /> */}
                 <div className="calender_blk">
                   <Image
                     className="px-2"
@@ -281,7 +406,7 @@ function BulkUpload({ currentPgNo }) {
 
         <div className="row">
           <div className="col-12 px-0">
-            <div className="pb-3 bulk_upload_style" style={{ border: '2px dashed black', margin: '15px 0px', padding: '0px 0px', background: 'rgba(195,218,217,.69)', textAlign: 'center' }}>
+            <div className="pb-3 bulk_upload_style">
               {/* <FormikControl
                 control="dropZone"
                 name="catalog_name"
@@ -289,17 +414,34 @@ function BulkUpload({ currentPgNo }) {
                 // setFieldValue={setFieldValue}
                 onClick={postFile}
               /> */}
+              <div className="dropZone-container">
               <Dropzone onDrop={onDrop}>
                 {({ getRootProps, getInputProps }) => (
-                  <div {...getRootProps()}>
+                  <div {...getRootProps()} className="dropzone col-2 p-3 text-end align-self-center d-flex">
                     <input {...getInputProps()} />
                     {
 
                     }
-                    <p>Drag and drop a file here, or click to select file</p>
+                   <div className='upload_placeholder upload_blk'>
+
+                            <div>
+                            <Image
+                            className="px-2"
+                            src={folder}
+                            alt="folder"
+                            width={40}
+                            height={35}
+                            // onClick={() => {
+                            //   setShowBrandCreationForm(true)
+                            // }}
+                            />
+                            </div>
+                            <u className={styles.Gill_heavy}>Upload Your Document</u>
+                            </div>
                   </div>
                 )}
               </Dropzone>
+              </div>
             </div>
           </div>
         </div>

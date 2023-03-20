@@ -6,15 +6,15 @@ import React, { Fragment,
   useRef, } from "react";
 import Link from 'next/link';
 import { connect } from "react-redux";
-// import { getAllProducts, getProductById } from "../../utility/apiUtility";
-// import CustomTable from "../../public/customTable";
+import { getAllProducts, getProductById } from "../../utility/apiUtility";
+import CustomTable from "../../public/customTable";
 import TabView from "./tabView";
 import Pagination from "react-js-pagination";
-// import { unstable_batchedUpdates } from "react-dom";
-// import AttributesForm from "./attributesForm";
-// import VendorForm from "./vendorForm";
-// import PageLoader from "../../public/pageLoader";
-// import PaginationView from "../../public/paginationView";
+import { unstable_batchedUpdates } from "react-dom";
+import AttributesForm from "./attributesForm";
+import VendorForm from "./vendorForm";
+import PageLoader from "../../public/pageLoader";
+import PaginationView from "../../public/paginationView";
 import actions from "../../../redux/action";
 import Image from 'next/image';
 import styles from "./catelog.module.css";
@@ -37,6 +37,9 @@ function ProductList({ currentPgNo }) {
   const [itemsCount, setItemsCount] = useState(null);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
  const [currentPage, setCurrentPage] = useState(0);
+ const [productDataList, setProductDataList] = useState();
+
+ 
  const router = useRouter();
   const dispatch = useDispatch();
 
@@ -52,28 +55,62 @@ function ProductList({ currentPgNo }) {
   //   return {loginUser: app?.loggedIn,};
   // });
   
-  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  // console.log("hello productDataList",productDataList)
   
   useEffect(() => {
-    dispatch(getAllProductApi(currentPage,10));
-
-}, []);
+    dispatch(getAllProductApi(currentPage,10)); //testing
+}, [currentPage]);
 
 const { allProductData } = useSelector(state => {
   // console.log("hello",state)
   return state.catalogQueryReducer;
 });
+  
+  console.log("hello allProductData",allProductData.content)
 
-  console.log("hello allProductData",allProductData)
+  useEffect(() => {
+    if (
+      allProductData  &&
+      allProductData !== null &&
+      allProductData !== undefined &&
+      Object.keys( allProductData).length !== 0
 
-  // useEffect(() => {
-  //   getAllProductData({ pageSize: 10, pageNo: 0 });
-  //   currentPgNo(0);
-  // }, []);
+    ) {
+    const res = Object.entries(allProductData?.content[0] )
+ 
+    const DataList = [];
+   
+        res.map(data =>{
+            console.log("data 1",data)
+    
+            const newObj = {};
+            newObj.pimCode = data[0]
+            // data[0].forEach(column =>{
+            //   newObj[column.keyName] = column.value;
+            // }) 
+          data[1].forEach(column =>{
+            newObj[column.keyName] = column.value;
+          }) 
+          
+          DataList.push(newObj);
+          
+    
+        })
+          // console.log(" pim code productDataList",DataList)
+           setProductDataList(DataList)
+      }
+}, [allProductData]);
+  
+  
+
+  useEffect(() => {
+    getAllProductData({ pageSize: 10, pageNo: 0 });
+    currentPgNo(0);
+  }, []);
 
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
-    // getAllProducts({ pageSize: 10, pageNo: 0 });
+    getAllProducts({ pageSize: 10, pageNo: 0 });
     toastRef.current.toastHandler({
       response: "suc",
       // position: "middle-center",
@@ -81,73 +118,73 @@ const { allProductData } = useSelector(state => {
   }, []);
 
 
-  // const getAllProductData = async (payload) => {
-  //   !loading && setLoading(true);
-  //   const apiRes = await getAllProducts(payload);
-  //   if (apiRes === "err") {
-  //   } else {
-  //     unstable_batchedUpdates(() => {
-  //       setProductList(apiRes.data);
-  //       setItemsCount(apiRes.data.totalElements);
-  //       setItemData({});
-  //       setLoading(false);
-  //     });
-  //   }
-  // };
-  // const tabsList = useMemo(() => {
-  //   const tabArr = [
-  //     {
-  //       id: "AttributesTab",
-  //       title: "ATTRIBUTES",
-  //       content: (
-  //         <AttributesForm
-  //           data={itemData}
-  //           getAllProductData={getAllProductData}
-  //           show={Object.entries(itemData).length > 0}
-  //         />
-  //       ),
-  //     },
-  //     { id: "VendorTab", title: "VENDOR", content: <VendorForm />, show: true },
-  //     { id: "multiCountryTab", title: "MULTICOUNTRY", content: "" },
-  //     { id: "catagorySystemsTab", title: "CATAGORY SYSTEMS", content: "" },
-  //     { id: "pricesTab", title: "PRICES", content: "" },
-  //     { id: "multimediaTab", title: "MULTIMEDIA", content: "" },
-  //     { id: "reviewsTab", title: "REVIEWS", content: "" },
-  //   ];
+  const getAllProductData = async (payload) => {
+    !loading && setLoading(true);
+    const apiRes = await getAllProducts(payload);
+    if (apiRes === "err") {
+    } else {
+      unstable_batchedUpdates(() => {
+        setProductList(apiRes.data);
+        setItemsCount(apiRes.data.totalElements);
+        setItemData({});
+        setLoading(false);
+      });
+    }
+  };
+  const tabsList = useMemo(() => {
+    const tabArr = [
+      {
+        id: "AttributesTab",
+        title: "ATTRIBUTES",
+        content: (
+          <AttributesForm
+            data={itemData}
+            getAllProductData={getAllProductData}
+            show={Object.entries(itemData).length > 0}
+          />
+        ),
+      },
+      { id: "VendorTab", title: "VENDOR", content: <VendorForm />, show: true },
+      { id: "multiCountryTab", title: "MULTICOUNTRY", content: "" },
+      { id: "catagorySystemsTab", title: "CATAGORY SYSTEMS", content: "" },
+      { id: "pricesTab", title: "PRICES", content: "" },
+      { id: "multimediaTab", title: "MULTIMEDIA", content: "" },
+      { id: "reviewsTab", title: "REVIEWS", content: "" },
+    ];
 
-  //   return tabArr;
-  // }, [itemData]);
+    return tabArr;
+  }, [itemData]);
 
    //   /*-----------------Pagination------------------*/
  const recordPerPage = 10;
-const totalRecords = 100;
+const totalRecords = allProductData?.totalElements;
  const pageRange = 10;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = tableData;
+ const currentRecords = productDataList;
 
  const handlePageChange = pageNumber => {
   // console.log("hello pageNumber",pageNumber-1)
    setCurrentPage(pageNumber-1);
  }
  /*-----------------Pagination------------------*/
-  // const totalItems = useMemo(
-  //   () => (
-  //     <PaginationView
-  //       totalProductCount={itemsCount}
-  //       getListData={getAllProductData}
-  //     />
-  //   ),
-  //   [itemsCount]
-  // );
+  const totalItems = useMemo(
+    () => (
+      <PaginationView
+        totalProductCount={itemsCount}
+        getListData={getAllProductData}
+      />
+    ),
+    [itemsCount]
+  );
 
-  // const getEachItemData = async (item) => {
-  //   setItemData({});
-  //   const apiRes = await getProductById(item.productId);
-  //   if (apiRes.data) {
-  //     setItemData(apiRes.data);
-  //   }
-  // };
+  const getEachItemData = async (item) => {
+    setItemData({});
+    const apiRes = await getProductById(item.productId);
+    if (apiRes.data) {
+      setItemData(apiRes.data);
+    }
+  };
 
   const tableData = [];
 
@@ -178,18 +215,18 @@ const totalRecords = 100;
     console.log(date, dateString);
   };
 
-  // const tableContent = (
-  //   <Fragment>
-  //     {productList.content.map((item, index) => (
-  //       <ProductListTd
-  //         key={`productListTd${index}${item.itemCode}`}
-  //         data={item}
-  //         itemData={itemData}
-  //         setItemData={getEachItemData}
-  //       />
-  //     ))}
-  //   </Fragment>
-  // );
+  const tableContent = (
+    <Fragment>
+      {productList.content.map((item, index) => (
+        <ProductListTd
+          key={`productListTd${index}${item.itemCode}`}
+          data={item}
+          itemData={itemData}
+          setItemData={getEachItemData}
+        />
+      ))}
+    </Fragment>
+  );
   const bulkUploadNavigate = () => {
     //  redirect to bulk page
     router.push("/pim/bulkUpload?list=bulkUpload");
@@ -317,29 +354,29 @@ const totalRecords = 100;
 
                 </tr>
               </thead>
-                {tableData !== null &&
-                  tableData.length > 0
+                {productDataList !== null &&
+                  productDataList?.length > 0
                   ? (
-                    tableData.map((item, i) => {
-
+                    productDataList.map((item, i) => {
+                    //  console.log("mmmmmmmmmmmmmmmmm",item)
                       return (
                         <tbody style={{borderTop: "0px"}}
                         
                     key={i}>
                           <tr>
                             {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
-                            {/* <td>{item.id}</td> */}
-                            <td>{item.image}</td>
-                            <td>{item.productName}</td>
-                            <td>{item.sku}</td>
+                            {/* <td>{item}</td> */}
+                            <td>{item.image??'NA'}</td>
+                            <td>{item.productName??'NA'}</td>
+                            <td>{item.sku??'NA'}</td>
                             <td>{item.brand}</td>
-                            <td>{item.channels}</td>
-                            <td>{item.category}</td>
-                            <td>{item.subcategory}</td>
-                            <td>{item.status}</td>
+                            <td>{item.channels??'NA'}</td>
+                            <td>{item.category??'NA'}</td>
+                            <td>{item.subcategory??'NA'}</td>
+                            <td>{item.status??'NA'}</td>
 
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
-                              <Link href={`/catalog/product?list=productDetails/${item.id}`}>
+                              <Link href={`/catalog/product?list=productDetails/${item.pimCode}/${item.brand}`}>
                             <Image
                               className="px-2"
 							                src={marker}
@@ -441,27 +478,27 @@ const totalRecords = 100;
   );
 }
 
-// function ProductListTd({ data, itemData, setItemData }) {
-//   return (
-//     <Fragment>
-//       <tr>
-//         <td>
-//           <input
-//             type="checkbox"
-//             checked={itemData.productId === data.productId}
-//             name={data.articleNumber}
-//             onChange={() => setItemData(data)}
-//           />
-//           <span>{data.articleNumber}</span>
-//         </td>
-//         <td>{data.categories.c3}</td>
-//         <td>{data.name}</td>
-//         <td>{data.version}</td>
-//         <td>{data.modifiedAt}</td>
-//       </tr>
-//     </Fragment>
-//   );
-// }
+function ProductListTd({ data, itemData, setItemData }) {
+  return (
+    <Fragment>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            checked={itemData.productId === data.productId}
+            name={data.articleNumber}
+            onChange={() => setItemData(data)}
+          />
+          <span>{data.articleNumber}</span>
+        </td>
+        <td>{data.categories.c3}</td>
+        <td>{data.name}</td>
+        <td>{data.version}</td>
+        <td>{data.modifiedAt}</td>
+      </tr>
+    </Fragment>
+  );
+}
 
 const mapDispatchToProps = {
   currentPgNo: actions.currentPgNo,
