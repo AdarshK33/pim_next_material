@@ -268,11 +268,11 @@ export const getProductPimCodeApi = (pim_model_code,brand) => {
     dispatch(getProductPimCodeDataLoading('PRODUCTs PIM CODE....', 'PRODUCTs PIM CODE'));
     client.post("/api/catalogQuery/getProductPimCode",data)
       .then((response) => {
-        console.log("api getProductPimCodeApi response",response)
+        // console.log("hello Api response",response)
       //   console.log(response)
-        if (response?.statusCode === 200) {
-            console.log("API SUCCESS2", response.data);
-          dispatch(getProductPimCodeDataSuccess(response.data.result));
+        if (response?.status === 200) {
+            // console.log(" hello API SUCCESS2", response.data);
+          dispatch(getProductPimCodeDataSuccess(response.data));
         }
       })
       .catch((err) => {
