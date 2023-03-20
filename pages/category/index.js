@@ -1,4 +1,4 @@
-import classifyingCategory  from '../../components/admin/catalog/categories';
+import classifyingCategory  from '../../components/admin/catalog/categories/classifyingCategory';
 
 
 

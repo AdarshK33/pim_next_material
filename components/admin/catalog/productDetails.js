@@ -1,6 +1,8 @@
-import React, { Fragment, useState, useMemo } from "react";
+import React, { Fragment, useState, useMemo, useEffect } from "react";
 import { Navbar, Container } from "react-bootstrap";
 import Link from "next/link";
+import { useRouter } from 'next/router'
+
 // import { Tabs } from 'antd';
 import FormikControl from "../../../components/public/formik/formikControl";
 import { Form, Formik } from "formik";
@@ -9,10 +11,40 @@ import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 
 function ProductDetail() {
+  const { query } = useRouter();
+ const [codeBrand, setCodeBrand] = useState([]);
+
+
+ useEffect(() => {
+  setCodeBrand(query.list) //testing
+
+  
+}, []);
+
+useEffect(() => {
+  if (
+    codeBrand  &&
+    codeBrand !== null &&
+    codeBrand !== undefined &&
+    Object.keys( codeBrand).length !== 0
+
+  ) {
+console.log(codeBrand,"codeBrand")
+const myArray = codeBrand?.split("/");
+console.log("split 1",myArray[1])
+console.log("split 2",myArray[2])
+//api call 
+  }
+  
+}, [codeBrand]);
+ 
+ 
+
+ 
+  
     const attributeRender=()=>{
         return (
           <>
-          
           <div className={styles.main_Attri}> 
                     <div className="row ">
                          <div className="col-12 ">

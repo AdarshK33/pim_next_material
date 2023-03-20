@@ -1,4 +1,4 @@
-import ProductList from '../../components/admin/catalog/';
+import ProductList from '../../components/admin/catalog/productList';
 
 
 

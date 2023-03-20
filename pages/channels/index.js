@@ -1,4 +1,4 @@
-import classifyingChannel from '../../components/admin/channels';
+import classifyingChannel from '../../components/admin/channels/classifyingChannel';
 
 
 
