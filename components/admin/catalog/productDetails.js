@@ -8,17 +8,20 @@ import FormikControl from "../../../components/public/formik/formikControl";
 import { Form, Formik } from "formik";
 import styles from "../../../components/public/common.module.css";
 import { Tabs } from 'antd';
-const TabPane = Tabs.TabPane;
+import {  getProductPimCodeApi } from "../../../redux/actions/catalogQuery";//testing
+
+import { useDispatch, useSelector } from "react-redux";
+
 
 function ProductDetail() {
+  const TabPane = Tabs.TabPane;
   const { query } = useRouter();
+  const dispatch = useDispatch();
  const [codeBrand, setCodeBrand] = useState([]);
 
 
  useEffect(() => {
   setCodeBrand(query.list) //testing
-
-  
 }, []);
 
 useEffect(() => {
@@ -29,18 +32,26 @@ useEffect(() => {
     Object.keys( codeBrand).length !== 0
 
   ) {
-console.log(codeBrand,"codeBrand")
-const myArray = codeBrand?.split("/");
-console.log("split 1",myArray[1])
-console.log("split 2",myArray[2])
-//api call 
+// console.log(codeBrand,"codeBrand")
+const info = codeBrand?.split("/");
+// console.log("split 1",info[1])
+// console.log("split 2",info[2])
+dispatch(getProductPimCodeApi(info[1],info[2])); //testing //pim code and brand name
+
   }
   
 }, [codeBrand]);
  
  
 
+const { productPimCodeData } = useSelector(state => {
+  // console.log("hello",state)
+  return state.catalogQueryReducer;
+});
+  
+  console.log("hello productPimCodeData",productPimCodeData)
  
+
   
     const attributeRender=()=>{
         return (
