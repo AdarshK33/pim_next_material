@@ -1,4 +1,4 @@
-import classifyingUser from '../../components/admin/userManagement';
+import classifyingUser from '../../components/admin/userManagement/classifyingUser';
 
 
 

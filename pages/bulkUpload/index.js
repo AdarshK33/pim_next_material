@@ -1,4 +1,4 @@
-import BulkUpload from '../../components/admin/bulkUpload';
+import BulkUpload from '../../components/admin/bulkUpload/bulkUpload';
 
 
 

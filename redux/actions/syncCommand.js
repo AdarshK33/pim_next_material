@@ -2,12 +2,7 @@ import {
   BULK_LISTING_DATA_LOADING,
   BULK_LISTING_DATA_SUCCESS,
   BULK_LISTING_DATA_FAILURE,
-  GET_BRAND_DATA_LOADING,
-  GET_BRAND_DATA_SUCCESS,
-  GET_BRAND_DATA_FAILURE,
-  UPDATE_BRAND_DATA_LOADING,
-  UPDATE_BRAND_DATA_SUCCESS,
-  UPDATE_BRAND_DATA_FAILURE,
+ 
 } from "../types/types";
 import { client } from "../../utils/axios";
 
@@ -37,6 +32,8 @@ export const bulkListingApi = (info) => {
   const data = {
     pageNumber:info?.pageNumber,
     pageSize: info.pageSize,
+    startDate: info.fromDate,
+    endDate: info.toDate
   }
 
 

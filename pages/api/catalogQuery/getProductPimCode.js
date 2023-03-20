@@ -4,11 +4,11 @@ import { catalogQueryServer } from "../../../utils/axios";
 function handler(req, res) {
   const body = req.body;
   const pim_code = body.code
- const brandId =body.brand
+ const brandName =body.brand
  console.log(pim_code,"pim_code")
  const config = {
    method: "get",
-   url: `/ct/products/${pim_code}/${brandId}`
+   url: `/ct/products/${pim_code}/${brandName}`
  };
   catalogQueryServer(config)
     .then((response) => {

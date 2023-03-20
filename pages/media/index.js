@@ -1,4 +1,4 @@
-import MediaUpload from '../../components/admin/media';
+import MediaUpload from '../../components/admin/media/mediaUpload';
 
 
 
