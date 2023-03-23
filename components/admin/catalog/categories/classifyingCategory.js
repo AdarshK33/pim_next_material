@@ -824,7 +824,7 @@ const nullAddField = () => {
        <>
         <div className={`card ${styles.category_card}`}>
         <div className="card-body">
-         new add  not selected
+         {/* new add  not selected */}
        
     
          <Form>
@@ -1060,7 +1060,7 @@ const nullAddField = () => {
       </div>
        </>):(
         <>
-        submitUpdateHandler
+        {/* submitUpdateHandler */}
         <div className={`card ${styles.category_card}`}>
         <div className="card-body">
         <Form>

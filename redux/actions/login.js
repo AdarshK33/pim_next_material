@@ -32,10 +32,10 @@ export const userLoginApi = (data) => {
         client
             .post("/api/login/userLogin",data)
         .then((response) => {
-            // console.log("hello rrrrrrrrrrrr",response)
-                if (response?.data?.statusCode === 200) {
+            console.log("hello userLoginApi",response)
+                if (response?.data?.statusCode === 201) {
                     // console.log("hello Login post==>", response.data);
-                    dispatch(userLoginSuccess(response.data, 'Login Post Successfully', 'LOGIN POST'));
+                    dispatch(userLoginSuccess(response?.data?.statusCode, 'Login Post Successfully', 'LOGIN POST'));
                     // navigate('/dashboard/dashboard');
                 } else throw new Error("")
             })

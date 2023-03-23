@@ -23,36 +23,25 @@ import useUser  from "../utils/useUser"
 import RedirectLogin from "../pages/redirectLogin";
 import { withIronSessionSsr } from "iron-session/next";
 
-function Login(user) {
-  
+function Login() {
+  const router = useRouter();
+  const dispatch = useDispatch();
   // const { user, mutateUser } = useUser();
 
-  // console.log("hello pppppppppp",user,Object.keys(user).length)
   const [itemData, setItemData] = useState();
+  
 
-    const LoginStat = {
-        isLogin: useSelector((state) => state.loginReducer.isLogin),
-        accessToken: useSelector((state) => state.loginReducer.accessToken),
-        refreshToken: useSelector((state) => state.loginReducer.refreshToken),
 
-      };
-    // const { loginState } = useContext(Auth);
-    const router = useRouter();
-    const dispatch = useDispatch();
+  const { isLogin } = useSelector(state => {
+   
+    return state.loginReducer;
+  });
 
-    // console.log("lllllllllllllll",LoginStat.isLogin.statusCode)
     useEffect(() => {
-      if(LoginStat.isLogin.statusCode===200){
+      if(isLogin===201){
         router.push("/pim/dashboard");
       }
-    }, [LoginStat.isLogin.statusCode]);
-
-
-
-    const nullAddField = () => {
-      router.push("/pim/dashboard");
-    };
-    
+    }, [isLogin]);
 
 useEffect(() => {
   // console.log("itemData",itemData);
@@ -89,18 +78,18 @@ useEffect(() => {
 
         setItemData(infoData)
         const apiRes = await userLoginApi(infoData);
-        if (apiRes === "err") {
-          formik.setSubmitting(false);
-        } else {
-          notifySucess(true);
-          classModal();
-        }
+        // if (apiRes === "err") {
+        //   formik.setSubmitting(false);
+        // } else {
+        //   notifySucess(true);
+        //   classModal();
+        // }
       }
     };
 
     return (
       <>
-       {/*// its working {user  && ( */}
+       {user  && (
         <>
           <div className="page-container d-flex p-2">
            
@@ -189,8 +178,8 @@ useEffect(() => {
 
                <div className="col-12 text-center pt-5">
                  <SubmitButton
-                  onClick={() => nullAddField()} // direct redirect
-                  //  isLoading={isSubmitting} its working
+                  // onClick={() => nullAddField()} // direct redirect
+                   isLoading={isSubmitting}  //its working
                    type="submit"
                    name="Login"
                    className={`btn btn-sm btn-secondary py-1 px-5 br3 mx-2 ${styles.submit_button}`}
@@ -217,8 +206,8 @@ useEffect(() => {
 
         </>
 
-       {/* // its working)
-} */}
+      )
+}
       
         </>
     )
@@ -227,32 +216,32 @@ useEffect(() => {
 export default React.memo(Login);
 
 // // its working
-// export const getServerSideProps = withIronSessionSsr(
-//   async function getServerSideProps({ req }) {
-//     const user = req?.session?.user;
-// console.log("oooooooooooooooo", req?.session?.user)
-//       if (user) {
-//         return {
-//           redirect: {
-//             destination: '/dashboard/dashboard',
-//             permanent: false,
-//           },
-//         }
-//       }
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps ({ req }) {
+    const user = await req?.session?.user ;
+// console.log("oooooooooooooooo", user)
+      if (user) {
+        return {
+          redirect: {
+            destination: '/pim/dashboard',
+            permanent: false,
+          },
+        }
+      }
 
-//     return {
-//       props: {
-//         user: req.session,
-//       },
-//     };
-//   },
-//   {
-//     cookieName: "PIMSESSION",
-//     password: "760848aa-c385-4321-ba49-75201fa0de81",
-//     cookieOptions: {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production" ? true : false,
-//       maxAge: 60 * 60 * 24,
-//     },
-//   },
-// );
+    return {
+      props: {
+        user: req.session.user || null,
+      },
+    };
+  },
+  {
+    cookieName: "PIMSESSION",
+    password: "760848aa-c385-4321-ba49-75201fa0de81",
+    cookieOptions: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      maxAge: 60 * 60 * 24,
+    },
+  },
+);

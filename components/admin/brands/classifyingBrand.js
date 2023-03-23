@@ -70,6 +70,8 @@ const { brandGet } = useSelector(state => {
   return state.onBoardQueryReducer;
 });
 
+// console.log("hello bbbbbbbbbbbbbbbbb",brandGet.content)
+
 useEffect(() => {
     // if(currentPage){
     dispatch(getBrandListApi(currentPage,5));
@@ -171,11 +173,11 @@ const getAllBrandsData = async (payload) => {
 
  //   /*-----------------Pagination------------------*/
  const recordPerPage = 5;
- const totalRecords = 20;
+ const totalRecords =brandGet.totalElements;
  const pageRange = 5;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = brandGet;
+ const currentRecords = brandGet?.content;
 
  const handlePageChange = pageNumber => {
   // console.log(pageNumber,"ppppppppppppppp")
@@ -227,7 +229,8 @@ const getAllBrandsData = async (payload) => {
 
                 </tr>
               </thead>
-                {currentRecords !== null &&
+                {currentRecords &&
+                currentRecords !== null &&
                   currentRecords.length > 0
                   ? (
                     currentRecords.map((item, i) => {
