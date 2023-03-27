@@ -8,10 +8,10 @@ import {
 
 const initialState = {
     loading: false,
-    isLogin: {},
+    isLogin: {}, //storing status login time 201 //logout time 0
     error: {},
-    accessToken:{},
-    refreshToken:{}
+    // accessToken:{},
+    // refreshToken:{}
 };
 const loginReducer = (state = initialState, action) => {
     // console.log("hello loginReducer called",action)
@@ -35,20 +35,20 @@ const loginReducer = (state = initialState, action) => {
                 isLogin: [],
                 error: action,
             };
-        case USER_LOGIN_AT:
-                return {
-                    ...state,
-                    loading: false,
-                    accessToken:action.at,
-                    error: {},
-                }; 
-        case USER_LOGIN_RT:
-                    return {
-                        ...state,
-                        loading: false,
-                        refreshToken:action.rt,
-                        error: {},
-                    };              
+        // case USER_LOGIN_AT:
+        //         return {
+        //             ...state,
+        //             loading: false,
+        //             accessToken:action.at,
+        //             error: {},
+        //         }; 
+        // case USER_LOGIN_RT:
+                    // return {
+                    //     ...state,
+                    //     loading: false,
+                    //     refreshToken:action.rt,
+                    //     error: {},
+                    // };              
         default:
             return state;
     }

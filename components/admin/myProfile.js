@@ -3,11 +3,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { User, LogOut, Users, UserPlus } from "react-feather";
 import useUser from "../../utils/useUser";
 import fetchJson from "../../utils/fetchJson";
+
+import {userLoginSuccess} from "../../redux/actions/login";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+
 function MyProfile() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
-  console.log("user?.isLoggedIn",user)
+  const dispatch = useDispatch();
+  // console.log("user?.isLoggedIn",user)
     return (
       <>
          {user?.isLoggedIn === true && (
@@ -26,12 +31,15 @@ function MyProfile() {
                 <Dropdown.Item 
                   href="/api/login/logOut"
                   onClick={async (e) => {
+                  
                     e.preventDefault();
+                    dispatch(userLoginSuccess(0)) ;
                     mutateUser(
                       await fetchJson("/api/login/logOut", { method: "POST" }),
                       false,
                     );
                     router.push("/login");
+                   
                   }}
                   >
                       <LogOut /> Log out</Dropdown.Item>

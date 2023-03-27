@@ -16,8 +16,9 @@ function DashBoardContent() {
 
     const { query } = useRouter();
 
+    console.log("query.list",query)
     const content = useMemo(() => {
-        switch (query.list) {
+        switch (query.name) {
             case 'dashboard': return <DashBoardView />;
             case 'catalog_list': return <CatalogContent />;
             case 'permission': return <PermissionView />;
@@ -25,7 +26,7 @@ function DashBoardContent() {
             case 'products': return <ProductList />;
             case 'bulkUpload': return <BulkUpload />;
             case 'categories': return <Category />;
-            case 'brands_categories': return <ClassifyingBrand />;
+            case 'brands': return <ClassifyingBrand />;
             case 'channels': return <ClassifyingChannel />;
             case 'userManagement': return <ClassifyingUser />;
             case 'mediaUpload': return <MediaUpload />;

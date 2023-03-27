@@ -49,7 +49,7 @@ function AdminDashBoard(user) {
 
   return (
     <>
-    {/* {user &&( // its working*/}
+    {user &&( 
       <>
     <div className="page-container dashBoard">
       {/* <h4 className="offset-md-2 px-2 text-uppercase heading">{heading}</h4> */}
@@ -70,7 +70,7 @@ function AdminDashBoard(user) {
       </div>
     </div>
     </>
-    {/*// its working)} */}
+   )}
  </> );
 }
 
@@ -79,32 +79,32 @@ export default React.memo(AdminDashBoard);
 
 
 // its working
-// export const getServerSideProps = withIronSessionSsr(
-//   async function getServerSideProps({ req }) {
-//     const user = req.session.user;
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    const user = req.session.user || null;
 // console.log("cccccc",user)
-// if (!user) {
-//   return {
-//     redirect: {
-//       destination: '/login',
-//       permanent: false,
-//     },
-//   }
-// }
+if (!user) {
+  return {
+    redirect: {
+      destination: '/login',
+      permanent: false,
+    },
+  }
+}
 
-//     return {
-//       props: {
-//         user: req.session.user,
-//       },
-//     };
-//   },
-//   {
-//     cookieName: "PIMSESSION",
-//     password: "760848aa-c385-4321-ba49-75201fa0de81",
-//     cookieOptions: {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production" ? true : false,
-//       maxAge: 60 * 60 * 24,
-//     },
-//   },
-// );
+    return {
+      props: {
+        user: req.session.user || null,
+      },
+    };
+  },
+  {
+    cookieName: "PIMSESSION",
+    password: "760848aa-c385-4321-ba49-75201fa0de81",
+    cookieOptions: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      maxAge: 60 * 60 * 24,
+    },
+  },
+);
