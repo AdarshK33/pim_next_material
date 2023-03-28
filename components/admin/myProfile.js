@@ -12,12 +12,12 @@ function MyProfile() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
   const dispatch = useDispatch();
-  // console.log("user?.isLoggedIn",user)
+  console.log("user?.isLoggedIn",user)
 
-  const { userEmail,userRole ,userBrand} = useSelector(state => {
+  // const { userEmail,userRole ,userBrand} = useSelector(state => {
    
-    return state.loginReducer;
-  });
+  //   return state.loginReducer;
+  // });
 
 
     return (
@@ -30,9 +30,9 @@ function MyProfile() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Role: {userRole}</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Email: {userEmail}</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Brand : {userBrand}</Dropdown.Item>
+                <Dropdown.Item href="#/action-1">Role: {user.role}</Dropdown.Item>
+                <Dropdown.Item href="#/action-1">Email: {user.email}</Dropdown.Item>
+                <Dropdown.Item href="#/action-1">Brand : {user.brand}</Dropdown.Item>
                 <Dropdown.Divider />
                 <i className="fa fa-user"></i>
                 <Dropdown.Item 
