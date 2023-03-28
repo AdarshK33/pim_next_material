@@ -16,7 +16,7 @@ function DashBoardContent() {
 
     const { query } = useRouter();
 
-    console.log("query.list",query)
+    // console.log("query.list",query)
     const content = useMemo(() => {
         switch (query.name) {
             case 'dashboard': return <DashBoardView />;

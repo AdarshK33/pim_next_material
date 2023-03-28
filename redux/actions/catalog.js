@@ -153,7 +153,7 @@ import {
   };
   
   export const updateCategoryApi = (info) => {
-    console.log("hello  updateCategoryApi info",info)
+    // console.log("hello  updateCategoryApi info",info)
     const data = {
       categoryId:info?.categoryId,
           name: info.name,

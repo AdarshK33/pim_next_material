@@ -9,6 +9,9 @@ import onBoardQueryReducer from "./onboardQueryReducer";
 import catalogQueryReducer from "./catalogQueryReducer"
 import catalogReducer from "./catalogReducer";
 import bulkReducer from "./bulkReducer";
+import syncCommandReducer from "./syncCommandReducer";
+
+
 
 const rootReducer = combineReducers({
   // app,
@@ -19,7 +22,8 @@ const rootReducer = combineReducers({
   channelReducer,
   catalogQueryReducer,
   catalogReducer,
-  bulkReducer
+  bulkReducer,
+  syncCommandReducer
 });
 
 export default rootReducer;

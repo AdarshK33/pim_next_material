@@ -1,5 +1,5 @@
 
-import { onboardQueryServer } from "../../../utils/axios";
+import {  catalogQueryServer} from "../../../utils/axios";
 
 function handler(req, res) {
 
@@ -11,15 +11,15 @@ function handler(req, res) {
   // console.log("222222", sku2);
 
 // http://onboard-query-handler.theretailinsightsdemos.com/api/v1/fetchchannel/1/5
-
+// 'http://catalog-query-handler.theretailinsightsdemos.com/api/v1/ct/channel?pageNo=0&pageSize=10'
   const config = {
     method: "get",
-    url: `/fetchchannel/${body.pageNumber}/${body.pageSize}`,
+    url: `/ct/channel?pageNo=${body.pageNumber}&pageSize=${body.pageSize}`,
     // data: body,
 
     // url: `/fetchbrand/1/5`
   };
-  onboardQueryServer(config)
+  catalogQueryServer(config)
     .then((response) => { 
       if (response.status === 200) {
         res.status(200).json(response.data);

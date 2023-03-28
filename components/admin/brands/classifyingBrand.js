@@ -42,7 +42,7 @@ function classifyingBrand({ currentPgNo }) {
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
   const [showBrandUpdateForm, setShowBrandUpdateForm] = useState(false);
   const [brandUpdateID, setBrandUpdateID] = useState();
- const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
 
   const [itemData, setItemData] = useState({});
@@ -70,7 +70,12 @@ const { brandGet } = useSelector(state => {
   return state.onBoardQueryReducer;
 });
 
-// console.log("hello bbbbbbbbbbbbbbbbb",brandGet.content)
+// const { brandCreate } = useSelector(state => {
+//   // console.log("hello",state)
+//   return state.brandReducer;
+// });
+
+// console.log("hello brandCreate",brandCreate)
 
 useEffect(() => {
     // if(currentPage){
@@ -248,7 +253,7 @@ const getAllBrandsData = async (payload) => {
                             <td>{item.contactPerson}</td>
                             <td>{item.totalCategories}</td>
                             <td>{item.totalSKUs}</td>
-                            <td>{item?.status === "Active" ? "Active" : "In-Active"}</td>
+                            <td>{item?.status === true ? "Active" : "In-Active"}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/dashboard/brands?list=brands_categories/${item.brandId}`}> */}
                             <Image

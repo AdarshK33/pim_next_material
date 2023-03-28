@@ -36,7 +36,12 @@ import axios from "axios";
 import Dropzone from 'react-dropzone';
 import { createBulkApi } from "../../../redux/actions/bulk";
 
+import { bulkListingApi } from "../../../redux/actions/syncCommand";
+
+
 function BulkUpload({ currentPgNo }) {
+  const dispatch = useDispatch();
+
   const [productList, setProductList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
   const [itemData, setItemData] = useState({});
@@ -48,6 +53,7 @@ function BulkUpload({ currentPgNo }) {
   const [fromDate,setFromDate] = useState(null)
   const [toDate,setToDate] = useState(null)
 
+  const [currentPage, setCurrentPage] = useState(0);
 
     
   const [state, setState] = useState({
@@ -84,17 +90,18 @@ function BulkUpload({ currentPgNo }) {
   useEffect(() => {
     if(toDate &&fromDate )
    {
- // dispatch(api call());
- //  date.toISOString()
-
+ dispatch(bulkListingApi(currentPage,10,toDate.toISOString(),fromDate.toISOString()));
    }
    
   }, [toDate,fromDate]);
 
-  // useEffect(() => {
-  //   getAllProductData({ pageSize: 10, pageNo: 0 });
-  //   currentPgNo(0);
-  // }, []);
+  const { bulkListData } = useSelector(state => {
+    // console.log("bulkListData",bulkListData)
+    return state.syncCommandReducer;
+  });
+
+    console.log("bulkListData",bulkListData)
+
 
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
@@ -169,24 +176,30 @@ function BulkUpload({ currentPgNo }) {
   const tableData = [];
 
   for (let i = 1; i <= 10; i++) {
-    tableData.push({
+    tableData.push(
+      {
       id: "11100" + i,
       name: "Brand" + i,
       discription: "discription" + i,
-    });
+    
+    }
+    );
   }
 
   //   /*-----------------Pagination------------------*/
-  const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  const totalRecords = tableData?.length;
+  const totalRecords =bulkListData.totalElements;
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
+  const currentRecords = bulkListData?.content;
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+    console.log("hello pageNumber adarsh ",pageNumber)
+    if(toDate && fromDate){
+    dispatch(bulkListingApi(pageNumber,10,toDate.toISOString(),fromDate.toISOString()));
+    }
   };
   /*-----------------Pagination------------------*/
   // const totalItems = useMemo(
@@ -262,7 +275,7 @@ function BulkUpload({ currentPgNo }) {
                                     minDate={new Date().getDate()>20?
                                       new Date(
                                         new Date().getFullYear(),
-                                          new Date().getMonth() 
+                                          new Date().getMonth() -1
                                         ,21
                                       ):
                                       new Date(
@@ -458,32 +471,33 @@ function BulkUpload({ currentPgNo }) {
                     {/* <th scope="col">S. No</th> */}
                     {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
                     <th scope="col">{TABLE_HEADERS[0].BulkUpload.name}</th>
-                    <th scope="col">
+                    {/* <th scope="col">
                       {TABLE_HEADERS[0].BulkUpload.uploadedby}
-                    </th>
+                    </th> */}
                     <th scope="col">
                       {TABLE_HEADERS[0].BulkUpload.uploadedat}
                     </th>
-                    <th scope="col">{TABLE_HEADERS[0].BulkUpload.brand}</th>
-                    <th scope="col">{TABLE_HEADERS[0].BulkUpload.channels}</th>
+                    {/* <th scope="col">{TABLE_HEADERS[0].BulkUpload.brand}</th> */}
+                    {/* <th scope="col">{TABLE_HEADERS[0].BulkUpload.channels}</th> */}
                     <th scope="col">{TABLE_HEADERS[0].BulkUpload.status}</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
-                {tableData !== null && tableData.length > 0 ? (
-                  tableData.map((item, i) => {
+                {currentRecords &&
+                currentRecords !== null  > 0 ? (
+                  currentRecords.map((item, i) => {
+                    // {item.sheetName}
                     return (
                       <tbody style={{ borderTop: "0px" }} key={i}>
                         <tr>
                           {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
                           {/* <td>{item.id}</td> */}
-                          <td>{item.image}</td>
-                          <td>{item.productName}</td>
-                          <td>{item.sku}</td>
-                          <td>{item.brand}</td>
-                          <td>{item.channels}</td>
+                          <td>{item.fileName}</td>
+                          {/* <td>{item.updatedBy}</td> */}
+                          <td>{item.updatedAt}</td>
+                          {/* <td>{item.brandName}</td>
+                          <td>{item.channels}</td> */}
                           <td>{item.status}</td>
-
                           <td
                             style={{ textDecoration: "none", color: "#4466f2" }}
                           >
@@ -494,9 +508,9 @@ function BulkUpload({ currentPgNo }) {
                               alt="download"
                               width={40}
                               height={35}
-                              onClick={() => {
-                                setShowBrandCreationForm(true);
-                              }}
+                              // onClick={() => {
+                              //   // setShowBrandCreationForm(true);
+                              // }}
                             />
                             {/* <marker
                                   onClick={() => {

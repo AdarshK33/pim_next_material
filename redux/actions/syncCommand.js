@@ -27,13 +27,15 @@ export const bulkListingDataFailure = (error) => {
 
 
 
-export const bulkListingApi = (info) => {
+export const bulkListingApi = (pageNumber,pageSize,toDate,fromDate) => {
 
+
+  // console.log(pageNumber,pageSize,toDate,fromDate,"bulkListingApi")
   const data = {
-    pageNumber:info?.pageNumber,
-    pageSize: info.pageSize,
-    startDate: info.fromDate,
-    endDate: info.toDate
+    pageNumber:pageNumber,
+    pageSize: pageSize,
+    startDate: fromDate,
+    endDate: toDate
   }
 
 
@@ -41,15 +43,15 @@ export const bulkListingApi = (info) => {
 return (dispatch) => {
     dispatch(bulkListingDataLoading("BULK....", "BULK"));
     client
-      .post("/api/syncCommand/bulkLisitng", data)
+      .post("/api/syncCommand/blukListing", data)
       .then((response) => {
-        console.log("----------BLUK-----", response);
+        // console.log("----------BLUK-----", response);
        
-        if (response.status === 201) {
-           console.log("BLUK==>", response.data.result);
+        if (response.status === 200) {
+          //  console.log("BLUK==>", response.data);
           dispatch(
             bulkListingDataSuccess(
-              response.data.result,
+              response.data,
               "Bluck Lisitng Successfully",
               "BLUK LISITNG"
             )

@@ -193,10 +193,10 @@ export const getCountryApi = () => {
       dispatch(getCountryDataLoading('COUNTRY....', 'COUNTRY'));
       client.get("/api/onboardQuery/getCountry")
         .then((response) => {
-          console.log("hello api response",response.status)
+          // console.log("hello api response",response.status)
         //   console.log(response)
           if (response?.status === 200 ) {
-              console.log("hello API SUCCESS2", response);
+              // console.log("hello API SUCCESS2", response);
             dispatch(getCountryDataSuccess(response.data));
           }
         })
@@ -212,10 +212,10 @@ export const getBrandDropdownApi = () => {
       dispatch(getBrandDropdownDataLoading('GET BRAND....', 'DROPDOWN'));
       client.get("/api/onboardQuery/getBrandDropdown")
         .then((response) => {
-          console.log("hello getbrandDropdown",response)
+          // console.log("hello getbrandDropdown",response)
         //   console.log(response)
           if (response?.status === 200 ) {
-              console.log("hello API status getbrandDropdown", response);
+              // console.log("hello API status getbrandDropdown", response);
             dispatch(getBrandDropdownSuccess(response.data));
           }
         })
@@ -232,10 +232,10 @@ export const getChannelsApi = () => {
       dispatch(getChannelsDataLoading('CHANNELS....', 'CHANNELS'));
       client.get("/api/onboardQuery/getChannels")
         .then((response) => {
-          console.log("api response",response)
+          // console.log("api response",response)
         //   console.log(response)
           if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
+              // console.log("API SUCCESS2", response.data.result);
             dispatch(getChannelsDataSuccess(response.data.result));
           }
         })
@@ -281,10 +281,10 @@ export const getBrandByIdApi = (brandId) => {
       client
       .post("/api/onboardQuery/getBrandById",data)
       .then((response) => {
-          console.log("api response",response)
+          // console.log("api response",response)
         //   console.log(response)
           if (response?.status=== 200) {
-              console.log("API SUCCESS2", response.data.result);
+              // console.log("API SUCCESS2", response.data.result);
             dispatch(getBrandByIdDataSuccess(response.data.result));
           }
         })

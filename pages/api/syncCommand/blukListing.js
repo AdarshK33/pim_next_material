@@ -5,15 +5,18 @@ export default async function handler(req, res) {
 		// 'http://sync-command-handler.theretailinsightsdemos.com/api/v1/sync/files?pageNo=0&pageSize=1' \
 
 	const body = req.body;
+	const pageNumberid = body.pageNumber
+	// console.log(pageNumberid,"pageNumberid")
 
 	const config = {
 		method: 'post',
-		url: `/sync/files?pageNo=${body.pageNoValue}&pageSize=${body.pageSizeValue}`,
+		url: `/sync/files?pageNo=${body.pageNumber}&pageSize=${body.pageSize}`,
 		data: body,
 	};
  
 	syncCommandServer(config)
 		.then(response => {
+			// console.log(response,"hello syncCommandServer")
 			if (response.status === 200) {
 				res.status(200).json(response.data.result);
                 Promise.resolve();

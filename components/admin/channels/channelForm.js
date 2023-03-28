@@ -21,10 +21,10 @@ import styles from "./channel.module.css"
 function ChannelForm({ classModal, onSuccess, notifySucess }) {
   const [itemData, setItemData] = useState();
   const [brandSelect, setBrandDropdown] = useState();
-  const [marketplaceSelect, setMarketplaceData] = useState();
+  // const [marketplaceSelect, setMarketplaceData] = useState();
   const [countrySelect, setCountryData] = useState();
 
-console.log("hello marketplaceSelect ",marketplaceSelect)
+// console.log("hello marketplaceSelect ",marketplaceSelect)
   
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ console.log("hello marketplaceSelect ",marketplaceSelect)
   const initialValues = {
     channelName: "",
     brandId:"",
-    marketPlaceId: "",
+    // marketPlaceId: "",
     countryId: "",
     description: ""
   };
@@ -76,9 +76,9 @@ console.log("hello marketplaceSelect ",marketplaceSelect)
     let channelBrandId = {
       id: values.brandId,
     };
-    let channelMarketPlaceId = {
-      id: values.marketPlaceId,
-    };
+    // let channelMarketPlaceId = {
+    //   id: values.marketPlaceId,
+    // };
     let channelCountryId = {
       id: values.countryId,
     };
@@ -86,13 +86,13 @@ console.log("hello marketplaceSelect ",marketplaceSelect)
       name: values.description.trim(),
     };
   
-    console.log("val", channelName);
-    if (channelName.name === "" || channelDescription.name === "" || channelBrandId.id===""||channelCountryId.id===""||channelMarketPlaceId.id==="") {
+    // console.log("val", channelName);
+    if (channelName.name === "" || channelDescription.name === "" || channelBrandId.id===""||channelCountryId.id==="") {
       notify("err");
     } else {
       let infoData={
         channelName  : channelName.name,
-        marketPlaceId: channelMarketPlaceId.id,
+        // marketPlaceId: channelMarketPlaceId.id,
         brandId      :channelBrandId.id,
         countryId    :channelCountryId.id,
         description  :channelDescription.name
@@ -137,7 +137,7 @@ console.log("hello marketplaceSelect ",marketplaceSelect)
                                    setFieldValue={setFieldValue}
                                   />
                   </div>
-                  <div className={`${styles.channel_dropdown}`}>
+                  {/* <div className={`${styles.channel_dropdown}`}>
                                 <FormikControl
                                     control="reactSelect"
                                     selectOpts={MarketplaceData}
@@ -147,7 +147,7 @@ console.log("hello marketplaceSelect ",marketplaceSelect)
                                     setFieldValue={setFieldValue}
                                   />
                   </div>
-           
+            */}
                   <div className={`${styles.channel_dropdown}`}>
                                 <FormikControl
                                     control="reactSelect"
