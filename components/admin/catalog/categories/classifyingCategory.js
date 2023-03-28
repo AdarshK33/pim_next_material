@@ -106,6 +106,11 @@ function classifyingCategory({ currentPgNo }) {
 
   }, []);
 
+  const { userEmail,userRole ,userBrand} = useSelector(state => {
+   
+    return state.loginReducer;
+  });
+
 
 
   // const { loginUser } = useSelector(({app}) => {
@@ -117,7 +122,7 @@ function classifyingCategory({ currentPgNo }) {
   
 
   useEffect(() => {
-   dispatch(getCategoriesApis(user?.brand))
+   dispatch(getCategoriesApis(userBrand))
   //  dispatch( updateCategoryApi({
   //   categoryId: 79,
   //   name: 'nokia mobile',
@@ -263,11 +268,11 @@ function findNestedObj(entireObj, keyToFind, valToFind) {
     if (!toast.isActive(toastId.current)) {
       if (val && type=== 'create') {
         toastId.current = toast("Category added Successfully !!!");
-        dispatch(getCategoriesApis(user?.brand)) //login  user brand
+        dispatch(getCategoriesApis(userBrand)) //login  user brand
       }
       if (val && type=='update') {
         toastId.current = toast("Category Updated Successfully !!!");
-       dispatch(getCategoriesApis(user?.brand)) // login user brand call
+       dispatch(getCategoriesApis(userBrand)) // login user brand call
       }if(val && type=='file_uploaded')
       toastId.current = toast(" File Uploaded Successfully !!!");
     }

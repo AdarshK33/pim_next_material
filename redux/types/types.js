@@ -75,6 +75,14 @@ export const CREATE_GROUP_DATA_SUCCESS = "CREATE_GROUP_DATA_SUCCESS";
 export const CREATE_GROUP_DATA_FAILURE = "CREATE_GROUP_DATA_FAILURE";
 
 export const SET_EMAIL = "SET_EMAIL";
+export const USER_DETAILS = "USER_DETAILS";
+export const USER_BRAND = "USER_BRAND";
+
+export const USER_EMAIL = "USER_EMAIL";
+
+export const USER_ROLE = "USER_ROLE";
+
+
 export const INIT_APP_SUCCESS = "INIT_APP_SUCCESS";
 export const INIT_APP_FAILURE = "INIT_APP_FAILURE";
 

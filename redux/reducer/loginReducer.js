@@ -3,13 +3,20 @@ import {
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAILURE,
     USER_LOGIN_AT,
-    USER_LOGIN_RT
+    USER_LOGIN_RT,
+    USER_ROLE,
+    USER_BRAND,
+    USER_EMAIL
 } from "../types/types";
 
 const initialState = {
     loading: false,
     isLogin: {}, //storing status login time 201 //logout time 0
     error: {},
+    loginUser:{},
+    userEmail:{},
+    userRole:{},
+    userBrand:{},
     // accessToken:{},
     // refreshToken:{}
 };
@@ -28,6 +35,27 @@ const loginReducer = (state = initialState, action) => {
                 isLogin:action.payload,
                 error: {},
             };
+        case USER_ROLE:
+                return {
+                    ...state,
+                    loading: false,
+                    userRole:action.payload,
+                    error: {},
+                };
+        case USER_BRAND:
+                    return {
+                        ...state,
+                        loading: false,
+                        userBrand:action.payload,
+                        error: {},
+                    };
+        case USER_EMAIL:
+                        return {
+                            ...state,
+                            loading: false,
+                        userEmail:action.payload,
+                            error: {},
+                        };
         case USER_LOGIN_FAILURE:
             return {
                 ...state,
