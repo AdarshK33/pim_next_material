@@ -98,7 +98,7 @@ useEffect(() => {
         // status: brandByIdData?.isActive
       }
       setItemData(infoData)
-      // console.log("infoData",infoData);
+     // console.log("infoData",infoData);
       const apiRes = await updateBrandApi(infoData);
       if (apiRes === "err") {
         console.log("hello  if classModal")  

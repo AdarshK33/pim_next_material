@@ -8,14 +8,15 @@ export default async function handler(req, res) {
 	
 	const config = {
 		method: 'post',
-		url: 'brand',
+		url: '/brand',
 		data: body,
 	};
 
 	onboardServer(config)
 		.then(response => {
+			// console.log("hello BRAND",response)
 			if (response.status === 200) {
-				res.status(200).json(response.data.result);
+				res.status(200).json(response.data);
                 Promise.resolve();
 			}
 		})

@@ -177,11 +177,11 @@ useEffect(() => {
   }
  //   /*-----------------Pagination------------------*/
  const recordPerPage = 5;
- const totalRecords = 20;
+ const totalRecords = channelGet?.totalElements;
  const pageRange = 5;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = channelGet;
+ const currentRecords = channelGet?.content;
 
  const handlePageChange = pageNumber => {
    setCurrentPage(pageNumber);
@@ -239,7 +239,8 @@ useEffect(() => {
                   <th scope="col">{TABLE_HEADERS[0].Channels.action}</th>
                 </tr>
               </thead>
-                {currentRecords !== null &&
+                {currentRecords&&
+                currentRecords !== null &&
                   currentRecords.length > 0
                   ? (
                     currentRecords.map((item, i) => {

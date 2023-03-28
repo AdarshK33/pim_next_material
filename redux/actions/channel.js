@@ -67,7 +67,7 @@ export const updateChannelDataFailure = (error) => {
 
 export const createChannelApi = (data) => {
   // let result = false;
-  console.log("hello  ChannelPageApi called", data);
+  // console.log("hello  ChannelPageApi called", data);
   return (dispatch) => {
     dispatch(createChannelDataLoading("Channel....", "Channel"));
     client
@@ -128,8 +128,8 @@ export const updateChannelApi = (info) => {
     brandName: info.brandName,
     marketplaceName: info.marketplaceName
 }
-  console.log("hello  updateChannelApi called",info)
-  console.log("hello  updateChannelApi data",data)
+  // console.log("hello  updateChannelApi called",info)
+  // console.log("hello  updateChannelApi data",data)
 
   return (dispatch) => {
     dispatch(updateChannelDataLoading("Channel....", "Channel"));

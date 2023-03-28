@@ -50,12 +50,14 @@ import {updateCategoryApi} from "../../../../redux/actions/catalog"
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { createCategoryApi } from "../../../../redux/actions/catalog";
 
+import useUser from "../../../../utils/useUser";
 
 
 import Dropzone from 'react-dropzone';
 import { getBrandDropdownApi} from "../../../../redux/actions/onboardQuery";
 
 function classifyingCategory({ currentPgNo }) {
+  const { user, mutateUser } = useUser();
   const [list, setList] = useState({ content: [] });
   // const [loading, setLoading] = useState(true);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
@@ -74,7 +76,7 @@ function classifyingCategory({ currentPgNo }) {
 
   
 
-  console.log("setParentName",parentName)
+  // console.log("user",user.brand)
 
   const [subCategoryName, setSubCategoryName ]= useState();
    
@@ -86,7 +88,7 @@ function classifyingCategory({ currentPgNo }) {
   const [slugError, setSlugError] = useState(false);
   
 
-  console.log("hello parentName",parentName);
+  // console.log("hello parentName",parentName);
   
 
   
@@ -104,6 +106,11 @@ function classifyingCategory({ currentPgNo }) {
 
   }, []);
 
+  const { userEmail,userRole ,userBrand} = useSelector(state => {
+   
+    return state.loginReducer;
+  });
+
 
 
   // const { loginUser } = useSelector(({app}) => {
@@ -111,11 +118,11 @@ function classifyingCategory({ currentPgNo }) {
   //   return {loginUser: app?.loggedIn,};
   // });
   
-  console.log("hello selectedTreeForUpdate",selectedTreeForUpdate)
+  // console.log("hello selectedTreeForUpdate",selectedTreeForUpdate)
   
 
   useEffect(() => {
-   dispatch(getCategoriesApis("Puma"))
+   dispatch(getCategoriesApis(userBrand))
   //  dispatch( updateCategoryApi({
   //   categoryId: 79,
   //   name: 'nokia mobile',
@@ -187,7 +194,7 @@ const keysToUpdate = {
 
 const treeUpdated = updateDisplayNameToLabel(categoriesData, keysToUpdate);
 
-console.log("hello tree",treeUpdated);
+// console.log("hello tree",treeUpdated);
  //   /*----------------- catagory menu------------------*/
 
 
@@ -261,11 +268,11 @@ function findNestedObj(entireObj, keyToFind, valToFind) {
     if (!toast.isActive(toastId.current)) {
       if (val && type=== 'create') {
         toastId.current = toast("Category added Successfully !!!");
-        dispatch(getCategoriesApis("Puma")) //login  user brand
+        dispatch(getCategoriesApis(userBrand)) //login  user brand
       }
       if (val && type=='update') {
         toastId.current = toast("Category Updated Successfully !!!");
-       dispatch(getCategoriesApis("Puma")) // login user brand call
+       dispatch(getCategoriesApis(userBrand)) // login user brand call
       }if(val && type=='file_uploaded')
       toastId.current = toast(" File Uploaded Successfully !!!");
     }
@@ -379,9 +386,9 @@ function findNestedObj(entireObj, keyToFind, valToFind) {
 
 
 const onSelect = (selectedKeys, info) => {
-  console.log('hello selected', selectedKeys,'hello info',info);
+  // console.log('hello selected', selectedKeys,'hello info',info);
   if(selectedKeys.length !==0){
-  console.log("hello selected match",findNested(treeUpdated, "key", selectedKeys[0])); 
+  // console.log("hello selected match",findNested(treeUpdated, "key", selectedKeys[0])); 
 
   setSelectedTreeForUpdate(findNested(treeUpdated, "key", selectedKeys[0]))
   }// returns object  selectedKeys  empty dont send
@@ -570,7 +577,7 @@ const submitHandler = async(e) => {
 
 
 
-  console.log("hello add info", addNewInfo);
+  // console.log("hello add info", addNewInfo);
   //apis(UpdateInfo)
 
   dispatch( createCategoryApi(addNewInfo));
@@ -629,7 +636,7 @@ const submitUpdateHandler = async(e) => {
 // // }
 // //
 if(!addNewChild){
-  console.log("hello update info", UpdateInfo);
+  // console.log("hello update info", UpdateInfo);
   //apis(UpdateInfo)
 
   dispatch( updateCategoryApi(UpdateInfo));
@@ -667,7 +674,7 @@ if (apiRes === "err") {
   }
 
 
-  console.log("hello addFirstChildInfo info", addFirstChildInfo);
+  // console.log("hello addFirstChildInfo info", addFirstChildInfo);
 
   dispatch( createCategoryApi(addFirstChildInfo));
 
@@ -702,7 +709,7 @@ if(addNewChild &&selectedTreeForUpdate && parentName ){
   }
 
 
-  console.log("hello addChildInfo info", addChildInfo);
+  // console.log("hello addChildInfo info", addChildInfo);
 
   dispatch( createCategoryApi(addChildInfo));
 

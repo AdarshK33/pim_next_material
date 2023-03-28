@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 	
 
 	let id=body.categoryId
-	console.log("hello id",id)
+	// console.log("hello id",id)
 	const config = {
 		method: 'put',
 		url: `/catalog/category/${id}`,
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 	};
 	catalogServer(config)
 		.then(response => {
-	console.log("hello response",response)
+	// console.log("hello response",response)
 
 			if (response.status === 200) {
 				res.status(200).json(response.data);

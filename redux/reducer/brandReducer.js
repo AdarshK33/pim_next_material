@@ -27,7 +27,7 @@ const brandReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                brandCreate:action,
+                brandCreate:action.payload,
                 error: {},
             };
         case CREATE_BRAND_DATA_FAILURE:
@@ -47,7 +47,7 @@ const brandReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     loading: false,
-                    brandUpdate:action,
+                    brandUpdate:action.payload,
                     error: {},
                 };
             case  UPDATE_BRAND_DATA_FAILURE:

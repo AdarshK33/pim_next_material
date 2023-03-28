@@ -10,6 +10,7 @@ import {
   UPDATE_BRAND_DATA_FAILURE,
 } from "../types/types";
 import { client } from "../../utils/axios";
+import { toast } from "react-toastify";
 
 export const createBrandDataLoading = () => {
   return {
@@ -55,22 +56,26 @@ return (dispatch) => {
     client
       .post("/api/onboard/createBrand", data)
       .then((response) => {
-        // console.log("---------------", response.status);
-       
-        if (response.status === 201) {
+        // console.log("-------CREATE--------", response);
+        if (response.data.statusCode === 201) {
+          toast.info("Brand Name added Successfully !!!");
           // console.log("BrandGreat==>", response.data.result);
           dispatch(
             createBrandDataSuccess(
-              response.data.result,
+              response.data.statusCode,
               "Brand Create Successfully",
               "BRAND CREATE"
             )
           );
-        } else throw new Error("");
+        } 
+        else{
+          toast.error("Brand Failed!!!");
+          //  throw new Error("");
+        }
       })
       .catch((err) => {
+        toast.error("Brand Failed!!!");
         console.log("error caught in -> actions/brand/create", err);
-        
         dispatch(
           createBrandDataFailure(err, "Something went wrong", "BRAND CREATE")
         );

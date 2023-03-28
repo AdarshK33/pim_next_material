@@ -115,10 +115,10 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
     // console.log("hello called bbbb",e.target.value)
     setBrandName(e.target.value);
   };
-  const  marketplaceHandler = (e) => {
-    // console.log("hello called mmmmm",e.target.value)
-    setMarketplaceName(e.target.value);
-  };
+  // const  marketplaceHandler = (e) => {
+  //   // console.log("hello called mmmmm",e.target.value)
+  //   setMarketplaceName(e.target.value);
+  // };
 
   const changeHandler = (e) => {
     setState({
@@ -176,22 +176,22 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
       return false;
     }
   };
-  const marketValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (
-      marketplaceName !== "" &&
-      marketplaceName !== null &&
-      marketplaceName !== undefined
-    ) {
-      setMarketplaceNameError(false);
-      // console.log("marketplaceName Success");
-      return true;
-    } else {
-      setMarketplaceNameError(true);
-      // console.log("marketplaceName Error");
-      return false;
-    }
-  };
+  // const marketValidations = () => {
+  //   const nameValid = /^[a-zA-Z\b]+$/;
+  //   if (
+  //     marketplaceName !== "" &&
+  //     marketplaceName !== null &&
+  //     marketplaceName !== undefined
+  //   ) {
+  //     setMarketplaceNameError(false);
+  //     // console.log("marketplaceName Success");
+  //     return true;
+  //   } else {
+  //     setMarketplaceNameError(true);
+  //     // console.log("marketplaceName Error");
+  //     return false;
+  //   }
+  // };
 
 
   const channelDescriptionValidations = () => {
@@ -217,8 +217,9 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
           (channelNameValidations() == true)  &
           (channelDescriptionValidations() == true)  &
           (countryValidations() == true)  &
-          (brandValidations() == true)  &
-          (marketValidations() == true)  
+          (brandValidations() == true) 
+          //  &
+          // (marketValidations() == true)  
 
         ) {
           return true;
@@ -244,10 +245,10 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
           channelDescription : state.channelDescription,
           countryName:countryName,
           brandName : brandName,
-          marketplaceName: marketplaceName
+          // marketplaceName: marketplaceName
         // },
     }
-    console.log("hello update info", UpdateInfo);
+    // console.log("hello update info", UpdateInfo);
     //apis(UpdateInfo)
    
     dispatch( updateChannelApi(UpdateInfo));
@@ -362,7 +363,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
           </Form.Group>
         </div>
         </Row>
-        <Row style={{ marginBottom: ".2rem" }}>
+        {/* <Row style={{ marginBottom: ".2rem" }}>
         <div className="col-sm-12">
           <Form.Group>
             <Form.Label>
@@ -394,7 +395,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
                 )}
           </Form.Group>
         </div>
-        </Row>
+        </Row> */}
         <Row style={{ marginBottom: ".2rem" }}>
          <div className="col-sm-12">
               <Form.Group>

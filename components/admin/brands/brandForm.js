@@ -23,7 +23,6 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
 
-
   const selectOpts = [
     { value: "true", label: "Active" },
     { value: "false", label: "In-Active" }
@@ -38,15 +37,22 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
 
   }, [itemData]);
 
-  const notify = (type) => {
-    if (!toast.isActive(toastId.current)) {
-      if (type !== "err") {
-        toastId.current = toast.success("Brand added Successfully !!!");
-      } else {
-        toastId.current = toast.error("Brand fields cannot be empty !!!");
-      }
-    }
-  };
+  const { brandCreate } = useSelector(state => {
+    // console.log("hello",state)
+    return state.brandReducer;
+  });
+  
+
+  // const notify = (type,brandCreate) => {
+  //   if (!toast.isActive(toastId.current)) {
+  //     if (type !== "err") {
+  //       toastId.current = toast.success("Brand added Successfully !!!");
+  //     }
+  //     else {
+  //       toastId.current = toast.error("Brand fields Conflict !!!");
+  //     }
+  //   }
+  // };
     const initialValues = {
     brandName: "",
     description:"",
@@ -76,9 +82,10 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
 
     if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "") {
       console.log("notify");
-      notify("err");
+      // notify("err",null);
     } 
     else {
+      
       let infoData={
         brandName: brndName.name,
         description:brndDiscription.name,
@@ -93,7 +100,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       if (apiRes === "err") {
         formik.setSubmitting(false);
       } else {    
-        notifySucess(true);
+        // notifySucess(true);
         classModal();
       }
     }
