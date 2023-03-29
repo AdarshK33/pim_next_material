@@ -145,9 +145,10 @@ function BulkUpload({ currentPgNo }) {
       })
       .then((response) => {
         // console.log(response);
-        alert('File uploaded')
+        toast.info("Bulk File uploaded Successfully !!!");
       })
       .catch((error) => {
+        toast.error("Bulk File uploaded Failed!!!");
         console.log(error);
       });
   };
