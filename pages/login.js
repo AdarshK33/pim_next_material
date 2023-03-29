@@ -37,9 +37,11 @@ function Login() {
     return state.loginReducer;
   });
 
-  // console.log("userlogin",isLogin)
+  console.log("userlogin",isLogin)
     useEffect(() => {
       if(isLogin===201){
+  console.log("userlogin useeeffect 201",isLogin)
+
         Router.push("/pim/dashboard");
       }
     }, [isLogin]);
