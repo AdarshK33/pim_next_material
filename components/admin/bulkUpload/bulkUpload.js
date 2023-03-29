@@ -199,6 +199,8 @@ function BulkUpload({ currentPgNo }) {
     console.log("hello pageNumber adarsh ",pageNumber)
     if(toDate && fromDate){
     dispatch(bulkListingApi(pageNumber,10,toDate.toISOString(),fromDate.toISOString()));
+    }else{
+      toast.info("Please  select  Date !!!");
     }
   };
   /*-----------------Pagination------------------*/
@@ -471,14 +473,14 @@ function BulkUpload({ currentPgNo }) {
                     {/* <th scope="col">S. No</th> */}
                     {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
                     <th scope="col">{TABLE_HEADERS[0].BulkUpload.name}</th>
-                    {/* <th scope="col">
+                    <th scope="col">
                       {TABLE_HEADERS[0].BulkUpload.uploadedby}
-                    </th> */}
+                    </th>
                     <th scope="col">
                       {TABLE_HEADERS[0].BulkUpload.uploadedat}
                     </th>
-                    {/* <th scope="col">{TABLE_HEADERS[0].BulkUpload.brand}</th> */}
-                    {/* <th scope="col">{TABLE_HEADERS[0].BulkUpload.channels}</th> */}
+                    <th scope="col">{TABLE_HEADERS[0].BulkUpload.brand}</th>
+                    <th scope="col">{TABLE_HEADERS[0].BulkUpload.channels}</th>
                     <th scope="col">{TABLE_HEADERS[0].BulkUpload.status}</th>
                     <th scope="col"></th>
                   </tr>
@@ -493,10 +495,10 @@ function BulkUpload({ currentPgNo }) {
                           {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
                           {/* <td>{item.id}</td> */}
                           <td>{item.fileName}</td>
-                          {/* <td>{item.updatedBy}</td> */}
+                          <td>{item.updatedBy}</td>
                           <td>{item.updatedAt}</td>
-                          {/* <td>{item.brandName}</td>
-                          <td>{item.channels}</td> */}
+                          <td>{item.brandName}</td>
+                          <td>{item.channels}</td>
                           <td>{item.status}</td>
                           <td
                             style={{ textDecoration: "none", color: "#4466f2" }}

@@ -14,9 +14,9 @@ const initialState = {
     isLogin: {}, //storing status login time 201 //logout time 0
     error: {},
     loginUser:{},
-    userEmail:{},
-    userRole:{},
-    userBrand:{},
+    userEmail:[],
+    userRole:[],
+    userBrand:[],
     // accessToken:{},
     // refreshToken:{}
 };

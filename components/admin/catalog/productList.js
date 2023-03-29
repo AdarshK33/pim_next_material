@@ -229,7 +229,7 @@ const totalRecords = allProductData?.totalElements;
   );
   const bulkUploadNavigate = () => {
     //  redirect to bulk page
-    router.push("/pim/bulkUpload?list=bulkUpload");
+    router.push("/pim/bulkUpload");
   };
 
   return (
