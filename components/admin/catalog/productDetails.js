@@ -2,10 +2,11 @@ import React, { Fragment, useState, useMemo, useEffect } from "react";
 import { Navbar, Container } from "react-bootstrap";
 import Link from "next/link";
 import { useRouter } from 'next/router'
+import { Row, Col, Form, Button } from "react-bootstrap";
 
 // import { Tabs } from 'antd';
 import FormikControl from "../../../components/public/formik/formikControl";
-import { Form, Formik } from "formik";
+// import { Form, Formik } from "formik";
 import styles from "../../../components/public/common.module.css";
 import { Tabs } from 'antd';
 import {  getProductPimCodeApi } from "../../../redux/actions/catalogQuery";//testing
@@ -18,7 +19,16 @@ function ProductDetail() {
   const { query } = useRouter();
   const dispatch = useDispatch();
  const [codeBrand, setCodeBrand] = useState([]);
+ const [state, setState] = useState();
 
+
+const changeHandler = (e) => {
+  setState({
+    ...state,
+    [e.target.name]: e.target.value,
+  });
+
+};
 
  useEffect(() => {
   setCodeBrand(query.list) //testing
@@ -49,7 +59,52 @@ const { productPimCodeData } = useSelector(state => {
   return state.catalogQueryReducer;
 });
   
-  console.log("hello productPimCodeData",productPimCodeData)
+  // console.log("hello productPimCodeData",productPimCodeData)
+
+
+  
+
+
+  const sectionRender = screenType => {
+            return productPimCodeData?.pimModelSku?.Master?.xyz.map((item, index) => {
+      
+                if (screenType === "DESKTOP") {
+     
+                    return inputRender(item, index);
+                }
+             
+            });
+        };
+
+   
+
+    const inputRender = (sectionItem, index) => {
+            return (
+
+               
+            <div className="col-sm-3 " style={{ marginBottom: "1rem" }}key={index}>
+              <Form.Group>
+                <Form.Label>
+                  <span className=".font12">{sectionItem.displayName}</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="channelName"
+                  value={sectionItem.value}
+                  onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  // style={channelNameError ? { borderColor: "red" } : {}}
+                  placeholder={sectionItem.keyName}
+                  // disabled={sectionItem.mutable}
+                />
+               
+              </Form.Group>
+            </div>
+            );
+        };
+    
+    
  
 
   
@@ -63,112 +118,12 @@ const { productPimCodeData } = useSelector(state => {
                          </div>
                        
                      </div>
-                     <div className="row">
-                         <Formik initialValues={initialValues} onSubmit={onSubmit}>
-                         {({ isSubmitting }) => {
-                             return (
-                             
-                             <Form className="mx-0 font12">
-                                 <div className="row w-80">
-                                 <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                 placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                             <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 </div>
-                                 <div className="row w-80">
-                                 <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                             <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 </div>
-     
-     
-                             </Form>
-                             );
-                         }}
-                         </Formik>  
-              
-                   </div>
+                     <Form>
+         <Row style={{ marginBottom: ".2rem" }}>
+         {sectionRender('DESKTOP')}
+            </Row>
+        
+            </Form>
      
                    
          </div>
@@ -179,90 +134,127 @@ const { productPimCodeData } = useSelector(state => {
                          </div>
                        
                      </div>
-                     <div className="row">
-                         <Formik initialValues={initialValues} onSubmit={onSubmit}>
-                         {({ isSubmitting }) => {
-                             return (
-                             
-                             <Form className="mx-0 font12">
-                                 <div className="row w-80">
-                                 <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                             <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 <div className="col-3 ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 </div>
-                                 <div className="row w-80">
-                                 <div className="col-3 ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                             <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 <div className="col-3  ">
-                                 <FormikControl
-                                 control="input"
-                                 type="input"
-                                 classprops="form-group mb-3 col-md-12"
-                                 className="form-control form-control-sm px-0 py-2 text-center border-0"
-                                   placeholder="Product Name"
-                                 name="Name"
-                                 id="Name"
-                                 />
-                                 </div>
-                                 </div>
-     
-     
-                             </Form>
-                             );
-                         }}
-                         </Formik>  
-              
-                   </div>
+                     <Form>
+
+                     <Row style={{ marginBottom: ".2rem" }}>
+         <div className="col-sm-3 ">
+              <Form.Group>
+                <Form.Label>
+                  {/* <span className=".font12">Channel Name</span> */}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="channelName"
+                  // value={state.channelName}
+                  // onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  // style={channelNameError ? { borderColor: "red" } : {}}
+                  placeholder="Product Name"
+                  // disabled={disabled}
+                />
+               
+              </Form.Group>
+            </div>
+            <div className="col-sm-3 ">
+              <Form.Group>
+                <Form.Label>
+                  {/* <span className=".font12">Channel Name</span> */}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="channelName"
+                  // value={state.channelName}
+                  // onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  // style={channelNameError ? { borderColor: "red" } : {}}
+                  placeholder="Product Name"
+                  // disabled={disabled}
+                />
+               
+              </Form.Group>
+            </div>
+            <div className="col-sm-3 ">
+              <Form.Group>
+                <Form.Label>
+                  {/* <span className=".font12">Channel Name</span> */}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="channelName"
+                  // value={state.channelName}
+                  // onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  // style={channelNameError ? { borderColor: "red" } : {}}
+                  placeholder="Product Name"
+                  // disabled={disabled}
+                />
+               
+              </Form.Group>
+            </div>
+            </Row>
+            <Row style={{ marginBottom: ".2rem" }}>
+         <div className="col-sm-3 ">
+              <Form.Group>
+                <Form.Label>
+                  {/* <span className=".font12">Product Name</span> */}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="channelName"
+                  // value={state.channelName}
+                  // onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  // style={channelNameError ? { borderColor: "red" } : {}}
+                  placeholder="Product Name"
+                  // disabled={disabled}
+                />
+               
+              </Form.Group>
+            </div>
+            <div className="col-sm-3 ">
+              <Form.Group>
+                <Form.Label>
+                  {/* <span className=".font12">Channel Name</span> */}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="channelName"
+                  // value={state.channelName}
+                  // onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  // style={channelNameError ? { borderColor: "red" } : {}}
+                  placeholder="Product Name"
+                  // disabled={disabled}
+                />
+               
+              </Form.Group>
+            </div>
+            <div className="col-sm-3 ">
+              <Form.Group>
+                <Form.Label>
+                  {/* <span className=".font12">Channel Name</span> */}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="channelName"
+                  // value={state.channelName}
+                  // onChange={changeHandler}
+                  required
+                  maxLength="250"
+                  // style={channelNameError ? { borderColor: "red" } : {}}
+                  placeholder="Product Name"
+                  // disabled={disabled}
+                />
+               
+              </Form.Group>
+            </div>
+            </Row>
+            </Form>
      
                    
          </div>
@@ -294,6 +286,14 @@ const { productPimCodeData } = useSelector(state => {
          
            </>
         )
+    }
+
+    const shopifyAttributeRender=()=>{
+      return(
+        <>
+        <p> No Record found</p>
+        </>
+      )
     }
     const initialValues = {
         name: "",
@@ -335,10 +335,10 @@ const { productPimCodeData } = useSelector(state => {
                 </div>
             </div>
              <Tabs onChange={selectedTab} type="card">
-              <TabPane tab="Default" key="1">{attributeRender()}</TabPane>
-              <TabPane tab="Shopify" key="2">{attributeRender()}</TabPane>
-              <TabPane tab="Amazon" key="3">{attributeRender()}</TabPane>
-              <TabPane tab="Gallery" key="4">{attributeRender()}</TabPane>
+              <TabPane tab="Master" key="1">{attributeRender()}</TabPane>
+              <TabPane tab="Shopify" key="2">{shopifyAttributeRender()}</TabPane>
+              <TabPane tab="Amazon" key="3">{shopifyAttributeRender()}</TabPane>
+              <TabPane tab="Images" key="4">{shopifyAttributeRender()}</TabPane>
              </Tabs>
         </Fragment>
       

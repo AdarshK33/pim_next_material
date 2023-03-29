@@ -13,7 +13,9 @@ async function handler(req, res) {
 	};
 	authServer(config)
 		.then( async response => {
-            // console.log("hello response",response.data.result.at)
+			
+		
+            // console.log("hello login response",response.data)
 			if (response.status === 200) {
 				req.session = {
 					...req.session,
@@ -23,8 +25,8 @@ async function handler(req, res) {
 					loggedIn: true,
 				};
 
-				 await req.session.save();
-				 res.status(200).json(response.data);
+				await req.session.save();
+				res.status(200).json(response.data);
                 Promise.resolve();
 			}
 		})

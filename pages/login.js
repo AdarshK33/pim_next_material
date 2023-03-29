@@ -2,7 +2,7 @@ import React, { useContext, useEffect,useState } from "react";
 import Link from 'next/link';
 import GoogleAuth from "../components/utility/googleAuth";
 // import { Auth } from "./_app";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import {connect, useSelector} from 'react-redux'
 // import LoginForm from "../components/public/loginForm";
 import Image from 'next/image';
@@ -24,7 +24,7 @@ import RedirectLogin from "../pages/redirectLogin";
 import { withIronSessionSsr } from "iron-session/next";
 
 function Login() {
-  const router = useRouter();
+  // const router = useRouter();
   const dispatch = useDispatch();
   // const { user, mutateUser } = useUser();
 
@@ -37,9 +37,10 @@ function Login() {
     return state.loginReducer;
   });
 
+  // console.log("userlogin",isLogin)
     useEffect(() => {
       if(isLogin===201){
-        router.push("/pim/dashboard");
+        Router.push("/pim/dashboard");
       }
     }, [isLogin]);
 
