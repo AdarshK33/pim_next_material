@@ -102,12 +102,7 @@ const { productPimCodeData } = useSelector(state => {
             "value": "",
             "mutable": true
           },
-          {
-            "displayName": "ProductUrl",
-            "keyName": "productUrl",
-            "value": "diet-coke",
-            "mutable": true
-          },
+        
           {
             "displayName": "Price",
             "keyName": "price",
@@ -123,80 +118,45 @@ const { productPimCodeData } = useSelector(state => {
           {
             "displayName": "Position",
             "keyName": "position",
-            "value": "ml",
+            "value": "1",
             "mutable": true
           },
           {
-            "displayName": "UOMValue",
-            "keyName": "uomValue",
-            "value": "300",
+            "displayName": "Name",
+            "keyName": "name",
+            "value": "cover",
             "mutable": true
           },
           {
-            "displayName": "PkgType",
-            "keyName": "pkgType",
-            "value": "box",
+            "displayName": "Compare_at_price",
+            "keyName": "compare_at_price",
+            "value": "900",
             "mutable": true
           },
+         
           {
-            "displayName": "PkgQty",
-            "keyName": "pkgQty",
-            "value": "10",
-            "mutable": true
-          },
-          {
-            "displayName": "Mrp",
-            "keyName": "mrp",
+            "displayName": "Grams",
+            "keyName": "grams",
             "value": "400",
             "mutable": true
           },
           {
-            "displayName": "UPC",
-            "keyName": "upc",
+            "displayName": "Variant_Image",
+            "keyName": "variant_Image",
             "value": "UP32423",
-            "mutable": true
-          },
-          {
-            "displayName": "ExpiryDate",
-            "keyName": "expiryDate",
-            "value": "20-02-2024",
-            "mutable": true
-          },
-          {
-            "displayName": "Manufacturer",
-            "keyName": "manufacturer",
-            "value": "stepto",
-            "mutable": true
-          },
-          {
-            "displayName": "ManufacturerLocation",
-            "keyName": "manufacturingLocation",
-            "value": "mumbai",
-            "mutable": true
-          },
-          {
-            "displayName": "ManufactureDate",
-            "keyName": "manufacturedDate",
-            "value": "12-01-2022",
-            "mutable": true
-          },
-          {
-            "displayName": "BatchNo",
-            "keyName": "batchNo",
-            "value": "BCH_123",
             "mutable": true
           },
           
           {
-            "displayName": "Comments",
-            "keyName": "comments",
-            "value": "Test comments",
+            "displayName": "Option1",
+            "keyName": "option1",
+            "value": "",
             "mutable": true
           },
           {
-            "displayName": "IsVariant",
-            "keyName": "isVariant",
-            "value": "Y",
+            "displayName": "Option1",
+            "keyName": "option2",
+            "value": "",
             "mutable": true
           },
            {
