@@ -17,6 +17,8 @@ import {
     CREATE_GROUP_DATA_FAILURE
   } from "../types/types";
   import { client } from "../../utils/axios";
+import { toast } from "react-toastify";
+
   
   export const createCategoryDataLoading = () => {
     return {
@@ -133,6 +135,8 @@ import {
         .then((response) => {
           // console.log("---------------", response.status);
           if (response.status === 200) {
+          toast.info("Category Added Successfully !!!");
+
             // console.log("API category==>", response.data.result);
             dispatch(
               createCategoryDataSuccess(
@@ -144,6 +148,7 @@ import {
           } else throw new Error("");
         })
         .catch((err) => {
+          toast.error("Category Failed!!!");
           console.log("error caught in -> actions/category/createCategoryApi", err);
           dispatch(
           createCategoryDataFailure(err, "Something went wrong", "CATEGORY CREATE")
@@ -166,6 +171,7 @@ import {
         .then((response) => {
           console.log("rrrrrr",response)
           if (response.status === 200) {
+            toast.info("Category Update Successfully !!!");
             // console.log("BrandGreat==>", response.data);
             dispatch(
               updateCategoryDataSuccess(
@@ -177,6 +183,8 @@ import {
           } else throw new Error("");
         })
         .catch((err) => {
+          toast.error("Category Failed!!!");
+
           console.log("error caught in -> actions/catalog/updateCategoryApi", err);
           dispatch(
             updateCategoryDataFailure(err, "Something went wrong", "CATEGORY UPDATE")

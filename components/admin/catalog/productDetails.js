@@ -62,7 +62,177 @@ const { productPimCodeData } = useSelector(state => {
   // console.log("hello productPimCodeData",productPimCodeData)
 
 
+  const shopifydata= {
+    "pimShopifyModelSku": {
+      "Shopify": {
+        "xyz": [
+          {
+            "displayName": "Vendor",
+            "keyName": "vendor",
+            "value": "APOLLO RI",
+            "mutable": true
+          },
+          {
+            "displayName": "Title",
+            "keyName": "title",
+            "value": "SUZUKI",
+            "mutable": true
+          },
+          {
+            "displayName": "Status",
+            "keyName": "status",
+            "value": "Active",
+            "mutable": true
+          },
+          {
+            "displayName": "Product_type",
+            "keyName": "product_type",
+            "value": "",
+            "mutable": true
+          },
+          {
+            "displayName": "Tags",
+            "keyName": "tags",
+            "value": "Tag3,Tag4",
+            "mutable": true
+          },
+          {
+            "displayName": "ProductImage",
+            "keyName": "productImage",
+            "value": "",
+            "mutable": true
+          },
+          {
+            "displayName": "ProductUrl",
+            "keyName": "productUrl",
+            "value": "diet-coke",
+            "mutable": true
+          },
+          {
+            "displayName": "Price",
+            "keyName": "price",
+            "value": "",
+            "mutable": true
+          },
+          {
+            "displayName": "Sku",
+            "keyName": "sku",
+            "value": "DTE1000",
+            "mutable": true
+          },
+          {
+            "displayName": "Position",
+            "keyName": "position",
+            "value": "ml",
+            "mutable": true
+          },
+          {
+            "displayName": "UOMValue",
+            "keyName": "uomValue",
+            "value": "300",
+            "mutable": true
+          },
+          {
+            "displayName": "PkgType",
+            "keyName": "pkgType",
+            "value": "box",
+            "mutable": true
+          },
+          {
+            "displayName": "PkgQty",
+            "keyName": "pkgQty",
+            "value": "10",
+            "mutable": true
+          },
+          {
+            "displayName": "Mrp",
+            "keyName": "mrp",
+            "value": "400",
+            "mutable": true
+          },
+          {
+            "displayName": "UPC",
+            "keyName": "upc",
+            "value": "UP32423",
+            "mutable": true
+          },
+          {
+            "displayName": "ExpiryDate",
+            "keyName": "expiryDate",
+            "value": "20-02-2024",
+            "mutable": true
+          },
+          {
+            "displayName": "Manufacturer",
+            "keyName": "manufacturer",
+            "value": "stepto",
+            "mutable": true
+          },
+          {
+            "displayName": "ManufacturerLocation",
+            "keyName": "manufacturingLocation",
+            "value": "mumbai",
+            "mutable": true
+          },
+          {
+            "displayName": "ManufactureDate",
+            "keyName": "manufacturedDate",
+            "value": "12-01-2022",
+            "mutable": true
+          },
+          {
+            "displayName": "BatchNo",
+            "keyName": "batchNo",
+            "value": "BCH_123",
+            "mutable": true
+          },
+          
+          {
+            "displayName": "Comments",
+            "keyName": "comments",
+            "value": "Test comments",
+            "mutable": true
+          },
+          {
+            "displayName": "IsVariant",
+            "keyName": "isVariant",
+            "value": "Y",
+            "mutable": true
+          },
+           {
+            "displayName": "Weight",
+            "keyName": "weight",
+            "value": "89",
+            "mutable": true
+          },
+           {
+            "displayName": "Weight_unit",
+            "keyName": "weight_unit",
+            "value": "Kg",
+            "mutable": true
+          }
+        ]
+      }
+    },
+   
+  }
   
+
+  const sectionShopifyRender = screenType => {
+            return shopifydata?.pimShopifyModelSku?.Shopify?.xyz.map((item, index) => {
+      
+                if (screenType === "DESKTOP") {
+     
+                    return inputRender(item, index);
+                }
+             
+            });
+        };
+
+   
+
+    
+    
 
 
   const sectionRender = screenType => {
@@ -291,7 +461,46 @@ const { productPimCodeData } = useSelector(state => {
     const shopifyAttributeRender=()=>{
       return(
         <>
-        <p> No Record found</p>
+        <div className={styles.main_Attri}> 
+                  <div className="row ">
+                       <div className="col-12 ">
+                           <p className="sub_title_name">Bussiness Attributes</p>
+                       </div>
+                     
+                   </div>
+                   <Form>
+       <Row style={{ marginBottom: ".2rem" }}>
+       {sectionShopifyRender('DESKTOP')}
+          </Row>
+      
+          </Form>
+   
+                 
+       </div>
+      
+       
+         </>
+      )
+    }
+
+    
+    const amazonAttributeRender=()=>{
+      return(
+        <>
+        <div>
+        No Record Found
+        </div>
+      
+        </>
+      )
+    }
+    const imagesAttributeRender=()=>{
+      return(
+        <>
+        <div>
+        No Record Found
+        </div>
+      
         </>
       )
     }
@@ -337,8 +546,8 @@ const { productPimCodeData } = useSelector(state => {
              <Tabs onChange={selectedTab} type="card">
               <TabPane tab="Master" key="1">{attributeRender()}</TabPane>
               <TabPane tab="Shopify" key="2">{shopifyAttributeRender()}</TabPane>
-              <TabPane tab="Amazon" key="3">{shopifyAttributeRender()}</TabPane>
-              <TabPane tab="Images" key="4">{shopifyAttributeRender()}</TabPane>
+              <TabPane tab="Amazon" key="3">{amazonAttributeRender()}</TabPane>
+              <TabPane tab="Images" key="4">{imagesAttributeRender()}</TabPane>
              </Tabs>
         </Fragment>
       
