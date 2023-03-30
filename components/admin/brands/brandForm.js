@@ -43,16 +43,14 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   });
   
 
-  // const notify = (type,brandCreate) => {
-  //   if (!toast.isActive(toastId.current)) {
-  //     if (type !== "err") {
-  //       toastId.current = toast.success("Brand added Successfully !!!");
-  //     }
-  //     else {
-  //       toastId.current = toast.error("Brand fields Conflict !!!");
-  //     }
-  //   }
-  // };
+  const notify = (type) => {
+    if (!toast.isActive(toastId.current)) {
+      if (type === "err") {
+        toastId.current = toast.error("Brand fields Empty !!!");
+      }
+    
+    }
+  };
     const initialValues = {
     brandName: "",
     description:"",
@@ -82,7 +80,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
 
     if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "") {
       console.log("notify");
-      // notify("err",null);
+      notify("err");
     } 
     else {
       

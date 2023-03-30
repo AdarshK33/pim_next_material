@@ -103,7 +103,7 @@ function classifyingCategory({ currentPgNo }) {
   useEffect(() => {
    
     dispatch(getBrandDropdownApi());
-
+    dispatch(getCategoriesApis(user?.brand))
   }, []);
 
   // const { userEmail,userRole ,userBrand} = useSelector(state => {
@@ -117,18 +117,19 @@ function classifyingCategory({ currentPgNo }) {
   //   console.log("hello app",app)
   //   return {loginUser: app?.loggedIn,};
   // });
+
   
   // console.log("hello selectedTreeForUpdate",selectedTreeForUpdate)
   
 
   useEffect(() => {
-   dispatch(getCategoriesApis(user.brand))
+   dispatch(getCategoriesApis(user?.brand))
   //  dispatch( updateCategoryApi({
   //   categoryId: 79,
   //   name: 'nokia mobile',
     
   // }))
-  }, []);
+  }, [user]);
   
 
 
@@ -157,10 +158,12 @@ const { categoriesData,loading } = useSelector(state => {
       })
       .then((response) => {
         // console.log(response);
-        notify(true,'file_uploaded')
+        // notify(true,'file_uploaded')
+        toast.info("Category File uploaded Successfully !!!");
         // alert('File uploaded')
       })
       .catch((error) => {
+        toast.error("File uploaded Failed!!!");
         console.log(error);
       });
   };
@@ -266,15 +269,15 @@ function findNestedObj(entireObj, keyToFind, valToFind) {
   };
   const notify = (val,type) => {
     if (!toast.isActive(toastId.current)) {
-      if (val && type=== 'create') {
-        toastId.current = toast("Category added Successfully !!!");
-        dispatch(getCategoriesApis(user.brand)) //login  user brand
-      }
-      if (val && type=='update') {
-        toastId.current = toast("Category Updated Successfully !!!");
-       dispatch(getCategoriesApis(user.brand)) // login user brand call
-      }if(val && type=='file_uploaded')
-      toastId.current = toast(" File Uploaded Successfully !!!");
+      // if (val && type=== 'create') {
+      //   // toastId.current = toast("Category added Successfully !!!");
+      //   dispatch(getCategoriesApis(user.brand)) //login  user brand
+      // }
+      // if (val && type=='update') {
+      //   toastId.current = toast("Category Updated Successfully !!!");
+      //  dispatch(getCategoriesApis(user.brand)) // login user brand call
+      // }if(val && type=='file_uploaded')
+      // toastId.current = toast(" File Uploaded Successfully !!!");
     }
   };
   const tabsList = useMemo(() => {
@@ -585,9 +588,10 @@ const submitHandler = async(e) => {
 const apiRes = await createCategoryApi(addNewInfo);
 if (apiRes === "err") {
 //  formik.setSubmitting(false);
-} else {    
-  notify(true,'create')
-}
+} 
+// else {    
+  // notify(true,'create')
+// }/
 };
   
 }
@@ -645,7 +649,7 @@ const apiRes = await updateCategoryApi(UpdateInfo);
 if (apiRes === "err") {
 //  formik.setSubmitting(false);
 } else {    
-  notify(true ,'update')
+  // notify(true ,'update')
   setState({
     ...state,
     categoryName:'' ,
@@ -682,7 +686,7 @@ if (apiRes === "err") {
   if (apiRes === "err") {
   //  formik.setSubmitting(false);
   } else {    
-    notify(true ,'create')
+    // notify(true ,'create')
     setState({
       ...state,
       categoryName:'' ,
@@ -717,7 +721,7 @@ if(addNewChild &&selectedTreeForUpdate && parentName ){
   if (apiRes === "err") {
   //  formik.setSubmitting(false);
   } else {    
-    notify(true ,'create')
+    // notify(true ,'create')
     setState({
       ...state,
       categoryName:'' ,
