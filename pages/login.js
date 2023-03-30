@@ -17,6 +17,7 @@ import user from "../assets/icons/userLogin.svg"
 import key from "../assets/icons/loginkey.svg"
 import { useDispatch } from "react-redux";
 
+import { ToastContainer, toast } from "react-toastify";
 
 import {userLoginApi } from "../redux/actions/login";
 import useUser  from "../utils/useUser"
@@ -37,7 +38,7 @@ function Login() {
     return state.loginReducer;
   });
 
-  console.log("userlogin",isLogin)
+  // console.log("userlogin",isLogin)
     useEffect(() => {
       if(isLogin===201){
   console.log("userlogin useeeffect 201",isLogin)
@@ -206,7 +207,7 @@ useEffect(() => {
             </div>
            </div>
        </div>
-
+       <ToastContainer />
         </>
 
       )

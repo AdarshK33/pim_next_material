@@ -15,7 +15,7 @@ async function handler(req, res) {
 		.then( async response => {
 			
 		
-            console.log("hello login response",response)
+            // console.log("hello login response",response)
 			if (response.status === 200) {
 				req.session = {
 					...req.session,
@@ -24,19 +24,19 @@ async function handler(req, res) {
 					},
 					loggedIn: true,
 				};
-				console.log("hello 1")
+				// console.log("hello 1")
 				
 				await req.session.save();
 				;
-				console.log("hello 2")
+				// console.log("hello 2")
 				res.status(200).json(response.data);
 				
-				console.log("hello 3")
+				// console.log("hello 3")
 				
                 Promise.resolve();
 			
 			}
-			console.log("hello 4")
+			// console.log("hello 4")
 		})
 		.catch(err => {
             console.log("error caught in -> api/login/userLogin", err);
