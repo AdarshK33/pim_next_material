@@ -8,7 +8,7 @@ function ReactSelect(props) {
     function handleChange(selectedValue) {
         setSelectedOption(selectedValue);
         setFieldValue && setFieldValue(name, selectedValue.value)
-        console.log("value Selected", selectedValue);
+        // console.log("value Selected", selectedValue);
     }
 
     return (

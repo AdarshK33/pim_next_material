@@ -35,7 +35,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   
 
   useEffect(() => {
-    console.log("itemData",itemData);
+    // console.log("itemData",itemData);
     dispatch(createBrandApi(itemData));
     // dispatch(getBrandApi()); 
   }, [itemData]);
@@ -56,7 +56,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   };
 
   const onSubmit = async (values, formik) => {
-    console.log("values",values);
+    // console.log("values",values);
     let brndName = {
       name: values.name.trim(),
     };

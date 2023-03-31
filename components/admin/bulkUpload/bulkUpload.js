@@ -100,7 +100,7 @@ function BulkUpload({ currentPgNo }) {
     return state.syncCommandReducer;
   });
 
-    console.log("bulkListData",bulkListData)
+    // console.log("bulkListData",bulkListData)
 
 
   const onBrandCreationSuccess = useCallback(() => {

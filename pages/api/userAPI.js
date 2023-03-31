@@ -7,7 +7,7 @@ export default withIronSessionApiRoute(userRoute, sessionOption);
 
 async function userRoute(req, res) {
   if (req.session.user) {
-    console.log("hello api user",req.session.user)
+    // console.log("hello api user",req.session.user)
     // in a real world application you might read the user id from the session and then do a database request
     // to get more information on the user if needed
     res.json({

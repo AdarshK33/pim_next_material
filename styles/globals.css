@@ -1528,6 +1528,12 @@ button[aria-checked="true"] {
   .modal-backdrop.show {
     opacity: .2 !important;
 }
+.table tbody td{
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
 
 
+}
 }

@@ -251,7 +251,7 @@ const submitHandler = async(e) => {
         precedence: 0
       
   }
-  console.log("hello update info", UpdateInfo);
+  // console.log("hello update info", UpdateInfo);
   //apis(UpdateInfo)
  dispatch( createCategoryApi(UpdateInfo));
 
@@ -274,7 +274,7 @@ const submitNewHandler = async(e) => {
   const newValue = checkNewCategoryValidation();
 
 if (newValue === true) {
-  console.log("Inside the category submit");
+  // console.log("Inside the category submit");
   // setSaveclick(true);
 
   const UpdateInfo = {
@@ -284,7 +284,7 @@ if (newValue === true) {
       precedence: 0
     
 }
-console.log("hello new category info", UpdateInfo);
+// console.log("hello new category info", UpdateInfo);
 //apis(UpdateInfo)
 dispatch( createCategoryApi(UpdateInfo));
 
