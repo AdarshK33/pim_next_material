@@ -760,7 +760,7 @@ useEffect(async () => {
   })
   setBrandName(selectedTreeForUpdate?.brandName)
   let parentObj=findNestedObj(categoriesData, 'id', selectedTreeForUpdate?.parentCategoryId);
-  console.log(parentObj,"parentObj")
+  // console.log(parentObj,"parentObj")
 
   setParentName(parentObj?.name) //selected parent name
   setParentId(selectedTreeForUpdate?.key) // new parent create

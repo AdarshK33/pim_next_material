@@ -104,7 +104,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
     }
 
     
-  },[])
+  },[channelByIdData])
 
  
   const countryHandler = (e) => {
@@ -264,7 +264,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
 <>
     <div className="bg-white p-3 br3">
     {loading ? <p>Loading...</p>:null}
-    {!loading  ?( 
+    {!loading  && channelByIdData?.channel  ?( 
       <>
       <div className={styles.update_main}>
 

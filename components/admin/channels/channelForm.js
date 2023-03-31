@@ -44,7 +44,7 @@ function ChannelForm({ classModal, onSuccess, notifySucess }) {
 	});
 
   useEffect(() => {
-    console.log("itemData",itemData);
+    // console.log("itemData",itemData);
     if(itemData){
     dispatch(createChannelApi(itemData));
     }
@@ -69,7 +69,7 @@ function ChannelForm({ classModal, onSuccess, notifySucess }) {
   };
 
   const onSubmit = async (values, formik) => {
-    console.log("values",values);
+    // console.log("values",values);
     let channelName = {
       name: values.channelName.trim(),
     };

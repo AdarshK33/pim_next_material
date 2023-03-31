@@ -81,7 +81,7 @@ useEffect(() => {
     dispatch(getChannelListApi(currentPage,5));
     // console.log("hello called get",currentPage)
    
-}, [currentPage]);
+}, []);
 
 
 
