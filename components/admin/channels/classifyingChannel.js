@@ -28,8 +28,13 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  CommonUpdateForm from "../../public/commonUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createChannelApi, getChannelApi } from "../../../redux/actions/channel";
+import { getChannelListApi} from "../../../redux/actions/channel";
+import {getChannelByIdApi} from "../../../redux/actions/onboardQuery";
+
 import Image from 'next/image';
+import UpdateChannelForm from './updateChannelForm';
+
+import { getCountryApi ,getBrandDropdownApi,getMarketplaceApi} from "../../../redux/actions/onboardQuery";
 
 
 import marker from "../../../assets/icons/marker 1.svg";
@@ -44,32 +49,44 @@ function classifyingChannel({ currentPgNo }) {
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+ const [currentPage, setCurrentPage] = useState(0);
 
+
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
+  
+  const handleEdit = (Id)=> {
+    // console.log(Id,"hello item")
+    setShowUpdateForm(true),
+    // setBrandUpdateID(item.brandId)
+    dispatch(getChannelByIdApi(Id)) 
+}
+  
+useEffect(() => {
+  dispatch(getCountryApi());
+  dispatch(getBrandDropdownApi());
+  dispatch(getMarketplaceApi());
+}, []);
+
+  const { channelGet } = useSelector(state => {
+    // console.log("hello",state)
+    return state.channelReducer;
+  });
 
   useEffect(() => {
-    //  dispatch(createChannelApi(dataObj));
-    dispatch(getChannelApi());
+    //  dispatch(createBrandApi(dataObj));
+    dispatch(getChannelListApi(currentPage,5));
+    // console.log("hello called get",currentPage)
    
-  }, []);
+}, []);
 
-  const { isLogin } = useSelector(state => {
-    console.log("hello state",state)
-		return state.channelReducer;
-	});
-console.log("hello ChannelGet",isLogin)
-  // const getAllChannelsData = async (payload) => {
-  //   !loading && setLoading(true);
-  //   const apiRes = await getAllChannels(payload);
-  //   if (apiRes === "err") {
-  //   } else {
-  //     unstable_batchedUpdates(() => {
-  //       setList(apiRes.data);
-  //       setItemsCount(apiRes.data.totalElements);
-  //       setItemData({});
-  //       setLoading(false);
-  //     });
-  //   }
-  // };
+
+
+// console.log("hello channelGet",channelGet)
+
   const notify = (val) => {
     if (!toast.isActive(toastId.current)) {
       if (val) {
@@ -105,7 +122,8 @@ console.log("hello ChannelGet",isLogin)
     setItemData({});
     const apiRes = await getchannelById(item);
     if (apiRes === "err") {
-    } else {
+    } 
+    else {
       setItemData(apiRes.data);
     }
   };
@@ -158,18 +176,27 @@ console.log("hello ChannelGet",isLogin)
     });
   }
  //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
- const recordPerPage = 10;
- const totalRecords = tableData.length;
- const pageRange = 10;
+ const recordPerPage = 5;
+ const totalRecords = channelGet?.totalElements;
+ const pageRange = 5;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = tableData;
+ const currentRecords = channelGet?.content;
 
  const handlePageChange = pageNumber => {
    setCurrentPage(pageNumber);
+   dispatch(getChannelListApi(pageNumber-1,5));
  }
  /*-----------------Pagination------------------*/
+ const onBrandCreationSuccess = useCallback(() => {
+  // setShowBrandCreationForm(false);
+  setShowUpdateForm(false)
+  // getAllBrandsData({ pageSize: 10, pageNo: 0 });
+  // toastRef.current.toastHandler({
+  //   response: "suc",
+  //   // position: "middle-center",
+  // });
+}, []);
 
   return (
     <Fragment>
@@ -210,13 +237,13 @@ console.log("hello ChannelGet",isLogin)
                   <th scope="col">{TABLE_HEADERS[0].Channels.totalProductsInactive}</th>
                   <th scope="col">{TABLE_HEADERS[0].Channels.status}</th>
                   <th scope="col">{TABLE_HEADERS[0].Channels.action}</th>
-
                 </tr>
               </thead>
-                {tableData !== null &&
-                  tableData.length > 0
+                {currentRecords&&
+                currentRecords !== null &&
+                  currentRecords.length > 0
                   ? (
-                    tableData.map((item, i) => {
+                    currentRecords.map((item, i) => {
 
                       return (
                         <tbody style={{borderTop: "0px"}}
@@ -225,11 +252,11 @@ console.log("hello ChannelGet",isLogin)
                           <tr>
                             {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
                             {/* <td>{item.id}</td> */}
-                            <td>{item.name}</td>
-                            <td>{item.discription}</td>
+                            <td>{item.channelName}</td>
+                            <td>{item.description}</td>
                             <td>{item.lastUploaded}</td>
                             <td>{item.totalProductsActive}</td>
-                            <td>{item.totalProductsInactive}</td>
+                            <td>{item.totalProductsInActive}</td>
                             <td>{item.status}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/${item.id}`}> */}
@@ -239,9 +266,7 @@ console.log("hello ChannelGet",isLogin)
 							                alt="edit"
                               width={35}
 							                height={30}
-                              onClick={() => {
-                                setShowChannelCreationForm(true)
-                              }}
+                              onClick={()=>handleEdit(item.channelId)}
 						                  />
                               {/* <marker
                                   onClick={() => {
@@ -249,6 +274,24 @@ console.log("hello ChannelGet",isLogin)
                                   }}
                                 /> */}
                               {/* </Link> */}
+
+                              <CustomModal
+                                      show={showUpdateForm}
+                                      closeModal={() => 
+                                      setShowUpdateForm(false)
+                                      }           
+                                  
+                                      size="md"
+                                      centered={true}
+                                      body={
+                                        <UpdateChannelForm
+                                          table={TABLE_HEADERS[0].Channels.table}
+                                          classModal={() => setShowUpdateForm(false)}
+                                          onSuccess={onBrandCreationSuccess}
+                                          notifySucess={() => notify(true)}
+                                        />
+                                  }
+                                />
                             </td>
                           </tr>
                         </tbody>
@@ -290,7 +333,7 @@ console.log("hello ChannelGet",isLogin)
             tableContainarClass="my-3 catalog-list"
           /> */}
         {/* )} */}
-        <CustomModal
+           {/* <CustomModal
             show={showChannelCreationForm}
             closeModal={() => setShowChannelCreationForm(false)}
             size="md"
@@ -301,9 +344,9 @@ console.log("hello ChannelGet",isLogin)
                 classModal={() => setShowChannelCreationForm(false)}
                 onSuccess={onchannelCreationSuccess}
                 notifySucess={() => notify(true)}
-              />
-        }
-      />
+              /> */}
+        {/* } */}
+      {/* /> */}
 
         {itemsCount && totalItems}
       </div>

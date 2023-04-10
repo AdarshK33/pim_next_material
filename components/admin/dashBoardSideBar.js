@@ -40,12 +40,12 @@ function DashBoardSideBar({ defaultValue }) {
         // },
         {
           name: "Categories",
-          link: "/dashboard/catalog?list=categories",
+          link: "/pim/categories",
           list_name: "categories",
         },
         {
           name: "Products",
-          link: "/dashboard/catalog?list=products",
+          link: "/pim/products",
           list_name: "products",
         },
         // {
@@ -64,7 +64,7 @@ function DashBoardSideBar({ defaultValue }) {
       name: "Brands",
       icon: brand,
       id: "brands",
-      link: "/dashboard/brands?list=brands_categories",
+      link: "/pim/brands",
       list: [
         // {
         //   name: "Classifying Category",
@@ -92,21 +92,21 @@ function DashBoardSideBar({ defaultValue }) {
       name: "Channels",
       icon:distribution ,
       id: "channels",
-      link: "/dashboard/channels?list=channels",
+      link: "/pim/channels",
       list: [],
     },
     {
       name: "User Management",
       icon:process ,
       id: "usermanagement",
-      link: "/dashboard/userManagement?list=userManagement",
+      link: "/pim/userManagement",
       list: [],
     },
     { 
     name: "Bulk Upload", 
     icon: inventory, 
     id: "bulkupload", 
-    link: "/dashboard/bulkUpload?list=bulkUpload",
+    link: "/pim/bulkUpload",
     list: [] 
     },
     {
@@ -114,7 +114,7 @@ function DashBoardSideBar({ defaultValue }) {
       icon: upload,
       id: "mediaUpload",
       list: [],
-      link: "/dashboard/mediaUpload?list=mediaUpload",
+      link: "/pim/mediaUpload",
     },
   ];
 

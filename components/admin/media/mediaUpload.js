@@ -25,8 +25,9 @@ import CustomModal from "../../public/customModal";
 import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
-function BulkUpload({ currentPgNo }) {
+function MediaUpload({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
   const [loading, setLoading] = useState(true);
   const [itemData, setItemData] = useState({});
@@ -44,6 +45,14 @@ function BulkUpload({ currentPgNo }) {
     currentPgNo(0);
   }, []);
 
+
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
+  
+  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
     getAllProducts({ pageSize: 10, pageNo: 0 });
@@ -66,6 +75,16 @@ function BulkUpload({ currentPgNo }) {
       });
     }
   };
+  const tableData = [];
+
+  for (let i = 1; i <= 10; i++) {
+    tableData.push({
+      id: "11100" + i,
+      name: "Brand" + i,
+      discription: "discription" + i,
+    });
+  }
+
 
   //   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -98,16 +117,7 @@ function BulkUpload({ currentPgNo }) {
     }
   };
 
-  const tableData = [];
-
-  for (let i = 1; i <= 10; i++) {
-    tableData.push({
-      id: "11100" + i,
-      name: "Brand" + i,
-      discription: "discription" + i,
-    });
-  }
-
+  
   const onChange = (date, dateString) => {
     console.log(date, dateString);
   };
@@ -332,4 +342,4 @@ function ProductListTd({ data, itemData, setItemData }) {
 const mapDispatchToProps = {
   currentPgNo: actions.currentPgNo,
 };
-export default connect(null, mapDispatchToProps)(React.memo(BulkUpload));
+export default connect(null, mapDispatchToProps)(React.memo(MediaUpload));

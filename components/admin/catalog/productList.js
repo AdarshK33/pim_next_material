@@ -26,6 +26,9 @@ import { ToastContainer, toast } from "react-toastify";
 import FormikControl from "../../public/formik/formikControl";
 import { DatePicker, Space } from 'antd';
 import calendar from "../../../assets/icons/calendar.svg";
+import {  getAllProductApi } from "../../../redux/actions/catalogQuery";//testing
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProductList({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -33,12 +36,72 @@ function ProductList({ currentPgNo }) {
   const [itemData, setItemData] = useState({});
   const [itemsCount, setItemsCount] = useState(null);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
+ const [currentPage, setCurrentPage] = useState(0);
+ const [productDataList, setProductDataList] = useState();
+
+ 
+ const router = useRouter();
+  const dispatch = useDispatch();
 
   const selectOpts = [
     { value: "Brand 1", label: "xyz" },
     { value: "Brand 2", label: "Brand 2" },
     { value: "Brand 3", label: "Brand 3  " },
   ];
+
+  
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
+  
+  // console.log("hello productDataList",productDataList)
+  
+  useEffect(() => {
+    dispatch(getAllProductApi(currentPage,10)); //testing
+}, [currentPage]);
+
+const { allProductData } = useSelector(state => {
+  // console.log("hello",state)
+  return state.catalogQueryReducer;
+});
+  
+  console.log("hello allProductData",allProductData.content)
+
+  useEffect(() => {
+    if (
+      allProductData  &&
+      allProductData !== null &&
+      allProductData !== undefined &&
+      Object.keys( allProductData).length !== 0
+
+    ) {
+    const res = Object.entries(allProductData?.content[0] )
+ 
+    const DataList = [];
+   
+        res.map(data =>{
+            console.log("data 1",data)
+    
+            const newObj = {};
+            newObj.pimCode = data[0]
+            // data[0].forEach(column =>{
+            //   newObj[column.keyName] = column.value;
+            // }) 
+          data[1].forEach(column =>{
+            newObj[column.keyName] = column.value;
+          }) 
+          
+          DataList.push(newObj);
+          
+    
+        })
+          // console.log(" pim code productDataList",DataList)
+           setProductDataList(DataList)
+      }
+}, [allProductData]);
+  
+  
 
   useEffect(() => {
     getAllProductData({ pageSize: 10, pageNo: 0 });
@@ -93,16 +156,16 @@ function ProductList({ currentPgNo }) {
   }, [itemData]);
 
    //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
  const recordPerPage = 10;
-const totalRecords = tableData?.length;
+const totalRecords = allProductData?.totalElements;
  const pageRange = 10;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = tableData;
+ const currentRecords = productDataList;
 
  const handlePageChange = pageNumber => {
-   setCurrentPage(pageNumber);
+  // console.log("hello pageNumber",pageNumber-1)
+   setCurrentPage(pageNumber-1);
  }
  /*-----------------Pagination------------------*/
   const totalItems = useMemo(
@@ -164,6 +227,10 @@ const totalRecords = tableData?.length;
       ))}
     </Fragment>
   );
+  const bulkUploadNavigate = () => {
+    //  redirect to bulk page
+    router.push("/pim/bulkUpload");
+  };
 
   return (
     <Fragment>
@@ -175,7 +242,10 @@ const totalRecords = tableData?.length;
         </div>
         <div className={`col-2 p-3 text-end align-self-center ${styles.set_laptop_right}`}>
           <button
-            onClick={() => setShowBrandCreationForm(true)}
+            // onClick={() => setShowBrandCreationForm(true)}
+           
+            onClick={() => bulkUploadNavigate()} //  redirect to bulk page
+
             className={`btn btn-sm ${styles.add_bulk_button_text}`}
 
           >
@@ -284,29 +354,29 @@ const totalRecords = tableData?.length;
 
                 </tr>
               </thead>
-                {tableData !== null &&
-                  tableData.length > 0
+                {productDataList !== null &&
+                  productDataList?.length > 0
                   ? (
-                    tableData.map((item, i) => {
-
+                    productDataList.map((item, i) => {
+                    //  console.log("mmmmmmmmmmmmmmmmm",item)
                       return (
                         <tbody style={{borderTop: "0px"}}
                         
                     key={i}>
                           <tr>
                             {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
-                            {/* <td>{item.id}</td> */}
-                            <td>{item.image}</td>
-                            <td>{item.productName}</td>
-                            <td>{item.sku}</td>
+                            {/* <td>{item}</td> */}
+                            <td>{item.image??'NA'}</td>
+                            <td>{item.productName??'NA'}</td>
+                            <td>{item.sku??'NA'}</td>
                             <td>{item.brand}</td>
-                            <td>{item.channels}</td>
-                            <td>{item.category}</td>
-                            <td>{item.subcategory}</td>
-                            <td>{item.status}</td>
+                            <td>{item.channels??'NA'}</td>
+                            <td>{item.category??'NA'}</td>
+                            <td>{item.subcategory??'NA'}</td>
+                            <td>{item.status??'NA'}</td>
 
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
-                              <Link href={`/catalog/product?list=productDetails/${item.id}`}>
+                              <Link href={`/catalog/product?list=productDetails/${item.pimCode}/${item.brand}`}>
                             <Image
                               className="px-2"
 							                src={marker}

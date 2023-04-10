@@ -3,9 +3,9 @@ import withSession from "../../../utils/session";
 
 async function handler(req, res) {
     // return new Promise((resolve, reject) => {
-		const { user: { token = "" } = {}, loggedIn } = req.session;
+		const { user: { at = "" } = {}, loggedIn } = req.session;
 	const body = req.body;
-	// console.log("rrrrrrrrrrr",req)
+	
 	const config = {
 		method: 'post', 
 		url: '/auth/login/CUSTOM',
@@ -13,23 +13,34 @@ async function handler(req, res) {
 	};
 	authServer(config)
 		.then( async response => {
-            console.log("hello response",response)
+			
+		
+            // console.log("hello login response",response)
 			if (response.status === 200) {
 				req.session = {
 					...req.session,
 					user: {
-						...response.data[2], //token
+						...response.data.result, //user detaisl and token
 					},
 					loggedIn: true,
 				};
-				 await req.session.save();
-				 res.status(200).json(response.data);
+				// console.log("hello 1")
+				
+				await req.session.save();
+				;
+				// console.log("hello 2")
+				res.status(200).json(response.data);
+				
+				// console.log("hello 3")
+				
                 Promise.resolve();
+			
 			}
+			// console.log("hello 4")
 		})
 		.catch(err => {
             console.log("error caught in -> api/login/userLogin", err);
-            console.log(err.response);
+            // console.log(err.response);
 			if (err?.response?.data) {
 				const { status = {} } = err?.response;
 				res.status(status).json(err.response.data.error +' '+ status);

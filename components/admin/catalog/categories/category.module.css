@@ -140,7 +140,6 @@ and (min-device-width: 1200px)
 and (max-device-width: 1500px) 
 { 
 
-  
 
 .dash_board_pagination{
   display: flex;
@@ -194,6 +193,13 @@ and (max-device-width: 1500px)
 }
 .submit_button{
   background-color: #419794  ;
+  color:white;
+  font-family: Gill-medium;
+  font-weight: 600;
+}
+
+.not_slected_submit_button{
+  background-color: #757575  ;
   color:white;
   font-family: Gill-medium;
   font-weight: 600;

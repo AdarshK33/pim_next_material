@@ -1,5 +1,9 @@
 import {
 
+  GET_BRAND_DROPDOWN_DATA_LOADING,
+  GET_BRAND_DROPDOWN_DATA_SUCCESS,
+  GET_BRAND_DROPDOWN_DATA_FAILURE,
+  
     GET_CHANNEL_BYID_DATA_LOADING,
     GET_CHANNEL_BYID_DATA_SUCCESS,
     GET_CHANNEL_BYID_DATA_FAILURE,
@@ -20,9 +24,53 @@ import {
     GET_COUNTRY_DATA_SUCCESS,
     GET_COUNTRY_DATA_FAILURE,
     
+    GET_BRAND_DATA_LOADING,
+    GET_BRAND_DATA_SUCCESS,
+    GET_BRAND_DATA_FAILURE,
 
 } from "../types/types";
 import { client } from "../../utils/axios";
+
+export const getBrandDataLoading = () => {
+  return {
+    type: GET_BRAND_DATA_LOADING,
+  };
+};
+export const getBrandDataSuccess = (data) => {
+  return {
+    type: GET_BRAND_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getBrandDataFailure = (error) => {
+  return {
+    type: GET_BRAND_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+
+
+export const getBrandDropdownDataLoading = () => {
+  return {
+    type: GET_BRAND_DROPDOWN_DATA_LOADING,
+  };
+};
+export const getBrandDropdownSuccess = (data) => {
+  return {
+    type: GET_BRAND_DROPDOWN_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getBrandDropdownFailure = (error) => {
+  return {
+    type: GET_BRAND_DROPDOWN_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+
+
 
 
 export const getBrandByIdDataLoading = () => {
@@ -87,6 +135,7 @@ export const getCountryDataLoading = () => {
     };
 };
 export const getCountryDataSuccess = (data) => {
+  // console.log("hello action",data)
     return {
         type: GET_COUNTRY_DATA_SUCCESS,
         payload: data,
@@ -127,8 +176,8 @@ export const getMarketplaceApi = () => {
         .then((response) => {
           console.log("api response",response)
         //   console.log(response)
-          if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
+          if (response?.status === 200) {
+              console.log("API SUCCESS2", response.data);
             dispatch(getMarketplaceDataSuccess(response.data.result));
           }
         })
@@ -144,16 +193,35 @@ export const getCountryApi = () => {
       dispatch(getCountryDataLoading('COUNTRY....', 'COUNTRY'));
       client.get("/api/onboardQuery/getCountry")
         .then((response) => {
-          console.log("api response",response)
+          // console.log("hello api response",response.status)
         //   console.log(response)
-          if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
-            dispatch(getCountryDataSuccess(response.data.result));
+          if (response?.status === 200 ) {
+              // console.log("hello API SUCCESS2", response);
+            dispatch(getCountryDataSuccess(response.data));
           }
         })
         .catch((err) => {
           console.log("actions/onboardQuery/ GET COUNTRY =>FAILURE", err);
           dispatch(getCountryDataFailure(err));
+        });
+    };
+  };
+
+export const getBrandDropdownApi = () => {
+    return (dispatch) => {
+      dispatch(getBrandDropdownDataLoading('GET BRAND....', 'DROPDOWN'));
+      client.get("/api/onboardQuery/getBrandDropdown")
+        .then((response) => {
+          // console.log("hello getbrandDropdown",response)
+        //   console.log(response)
+          if (response?.status === 200 ) {
+              // console.log("hello API status getbrandDropdown", response);
+            dispatch(getBrandDropdownSuccess(response.data));
+          }
+        })
+        .catch((err) => {
+          console.log("actions/onboardQuery/ GET BRAND => DROPDOWN FAILURE", err);
+          dispatch(getBrandDropdownFailure(err));
         });
     };
   };
@@ -164,10 +232,10 @@ export const getChannelsApi = () => {
       dispatch(getChannelsDataLoading('CHANNELS....', 'CHANNELS'));
       client.get("/api/onboardQuery/getChannels")
         .then((response) => {
-          console.log("api response",response)
+          // console.log("api response",response)
         //   console.log(response)
           if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
+              // console.log("API SUCCESS2", response.data.result);
             dispatch(getChannelsDataSuccess(response.data.result));
           }
         })
@@ -178,16 +246,20 @@ export const getChannelsApi = () => {
     };
   };
 
+export const getChannelByIdApi = (channelId) => {
+  // console.log("hello getChannelByIdApi",channelId)
+  const data = {
+    channelId: channelId
+  }
 
-export const getChannelByIdApi = (data) => {
     return (dispatch) => {
       dispatch(getChannelByIdDataLoading('CHANNEL BY ID....', 'CHANNEL BY ID'));
-      client.get("/api/onboardQuery/getChannelById",data)
+      client.post("/api/onboardQuery/getChannelById",data)
         .then((response) => {
-          console.log("api response",response)
+          // console.log("api response",response)
         //   console.log(response)
           if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
+              // console.log("API SUCCESS2", response.data.result);
             dispatch(getChannelByIdDataSuccess(response.data.result));
           }
         })
@@ -198,15 +270,21 @@ export const getChannelByIdApi = (data) => {
     };
   };
 
-export const getBrandByIdApi = (data) => {
+export const getBrandByIdApi = (brandId) => {
+  const data = {
+    brandId: brandId
+  }
+
+  // console.log("hello redux getBrandByIdApi",data)
     return (dispatch) => {
       dispatch(getBrandByIdDataLoading('BRAND BY ID....', 'BRAND BY ID'));
-      client.get("/api/onboardQuery/getChannels",data)
-        .then((response) => {
-          console.log("api response",response)
+      client
+      .post("/api/onboardQuery/getBrandById",data)
+      .then((response) => {
+          // console.log("api response",response)
         //   console.log(response)
-          if (response?.data?.statusCode === 200) {
-              console.log("API SUCCESS2", response.data.result);
+          if (response?.status=== 200) {
+              // console.log("API SUCCESS2", response.data.result);
             dispatch(getBrandByIdDataSuccess(response.data.result));
           }
         })
@@ -217,3 +295,29 @@ export const getBrandByIdApi = (data) => {
     };
   };
 
+export const getBrandListApi = (pageNumber,pageSize) => {
+
+  
+  const data = {
+    pageNumber: pageNumber,
+    pageSize: pageSize
+  }
+
+  // console.log("hello action data ",data)
+    return (dispatch) => {
+      dispatch(getBrandDataLoading("BRAND....", "BRAND"));
+      client
+        .post("/api/onboardQuery/getBrand",data)
+        .then((response) => {
+        // console.log("api response", response);
+        if (response?.status === 200) {
+            // console.log("API SUCCESS2", response.data.result);
+            dispatch(getBrandDataSuccess(response.data.result));
+          }
+        })
+        .catch((err) => {
+          console.log("actions/brand/brand GET =>FAILURE", err);
+          dispatch(getBrandDataFailure(err));
+        });
+    };
+  };

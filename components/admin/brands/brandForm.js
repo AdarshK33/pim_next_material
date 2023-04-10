@@ -23,27 +23,32 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
 
-
   const selectOpts = [
     { value: "true", label: "Active" },
     { value: "false", label: "In-Active" }
   ];
 
   useEffect(() => {
-    console.log("itemData",itemData);
     if(itemData){
+    // console.log("itemData",itemData);
     dispatch(createBrandApi(itemData));
-    // dispatch(getBrandApi()); 
     }
+    // dispatch(getBrandApi()); 
+
   }, [itemData]);
+
+  const { brandCreate } = useSelector(state => {
+    // console.log("hello",state)
+    return state.brandReducer;
+  });
+  
 
   const notify = (type) => {
     if (!toast.isActive(toastId.current)) {
-      if (type !== "err") {
-        toastId.current = toast.success("Brand added Successfully !!!");
-      } else {
-        toastId.current = toast.error("Brand fields cannot be empty !!!");
+      if (type === "err") {
+        toastId.current = toast.error("Brand fields Empty !!!");
       }
+    
     }
   };
     const initialValues = {
@@ -55,7 +60,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   };
 
   const onSubmit = async (values, formik) => {
-    console.log("values",values);
+    // console.log("values",values);
 
     let brndName = {
       name: values.brandName.trim(),
@@ -73,29 +78,29 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       name: values.mobile.trim(),
     };
 
-
-
     if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" || brandContact.name === "" || brandMobile.name === "") {
       console.log("notify");
       notify("err");
-    } else {
+    } 
+    else {
+      
       let infoData={
         brandName: brndName.name,
         description:brndDiscription.name,
-        contactPerson: brandEmail.name,
-        emailId: brandContact.name,
+        contactPerson: brandContact.name,
+        emailId: brandEmail.name,
         mobile: brandMobile.name
       }
       setItemData(infoData)
-      console.log("infoData--brand",infoData);
+      // console.log("infoData--brand",infoData);
 
-      // const apiRes = await createBrandApi(brndName);
-      // if (apiRes === "err") {
-      //   formik.setSubmitting(false);
-      // } else {    
-      //   notifySucess(true);
-      //   classModal();
-      // }
+      const apiRes = await createBrandApi(infoData);
+      if (apiRes === "err") {
+        formik.setSubmitting(false);
+      } else {    
+        // notifySucess(true);
+        classModal();
+      }
     }
   };
 

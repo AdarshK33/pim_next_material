@@ -47,17 +47,25 @@ function classifyingUser({ currentPgNo }) {
   const dispatch = useDispatch();
 
 
+  
+  // const { loginUser } = useSelector(({app}) => {
+  //   console.log("hello app",app)
+  //   return {loginUser: app?.loggedIn,};
+  // });
+  
+  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+
   useEffect(() => {
     //  dispatch(createBrandApi(dataObj));
-    dispatch(getBrandApi());
+    // dispatch(getBrandApi());
    
   }, []);
 
-  const { isLogin } = useSelector(state => {
-    console.log("hello state",state)
-		return state.brandReducer;
-	});
-console.log("hello brandGet",isLogin)
+//   const { isLogin } = useSelector(state => {
+//     console.log("hello state",state)
+// 		return state.brandReducer;
+// 	});
+// console.log("hello brandGet",isLogin)
   const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);

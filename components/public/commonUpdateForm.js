@@ -29,7 +29,7 @@ function CommonUpdateForm({table, classModal, onSuccess, notifySucess }) {
     let brndDiscription = {
       name: values.discription.trim(),
     };
-    console.log("val", brndName);
+    // console.log("val", brndName);
     if (brndName.name === "" || brndDiscription.name === "" ) {
       notify("err");
     } else {

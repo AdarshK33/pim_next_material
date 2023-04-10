@@ -29,7 +29,7 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  UpdateBrandForm from "./updateBrandForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import {  getBrandListApi ,getBrandByIdApi} from "../../../redux/actions/onboardQuery";
 import Image from 'next/image';
 
 
@@ -41,29 +41,54 @@ function classifyingBrand({ currentPgNo }) {
   const [loading, setLoading] = useState(true);
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
   const [showBrandUpdateForm, setShowBrandUpdateForm] = useState(false);
+  const [brandUpdateID, setBrandUpdateID] = useState();
+  const [currentPage, setCurrentPage] = useState(0);
+
+
   const [itemData, setItemData] = useState({});
   const toastRef = useRef(null);
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
+  const [getData, setGetData] = useState({"pageNumber":"1","pageSize":"10"});
 
+  const handleEdit = (brandId)=> {
+      // console.log(brandId,"hello item.brandId")
+      setShowBrandUpdateForm(true),
+      // setBrandUpdateID(item.brandId)
+      dispatch( getBrandByIdApi(brandId)) 
+  }
+// const { loginUser } = useSelector(({app}) => {
+//   console.log("hello app",app)
+//   return {loginUser: app?.loggedIn,};
+// });
 
-  useEffect(() => {
-    //  dispatch(createBrandApi(dataObj));
-    dispatch(getBrandApi());
-   
-  }, [brandGet]);
+// console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
 
-  const { brandGet } = useSelector(state => {
-    console.log("hello",state)
-		return state.brandReducer;
-	});
-console.log("hello brandGet",brandGet)
-  const getAllBrandsData = async (payload) => {
+const { brandGet } = useSelector(state => {
+  // console.log("hello",state)
+  return state.onBoardQueryReducer;
+});
+
+// const { brandCreate } = useSelector(state => {
+//   // console.log("hello",state)
+//   return state.brandReducer;
+// });
+
+// console.log("hello brandCreate",brandCreate)
+
+useEffect(() => {
+    // if(currentPage){
+    dispatch(getBrandListApi(currentPage,5));
+    // }
+}, []);
+
+const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
     const apiRes = await getAllBrands(payload);
     if (apiRes === "err") {
     } else {
+
       unstable_batchedUpdates(() => {
         setList(apiRes.data);
         setItemsCount(apiRes.data.totalElements);
@@ -112,10 +137,10 @@ console.log("hello brandGet",brandGet)
     }
   };
 
-  useEffect(() => {
-    getAllBrandsData({ pageSize: 10, pageNo: 0 });
-    currentPgNo(0);
-  }, []);
+  // useEffect(() => {
+  //   getAllBrandsData({ pageSize: 10, pageNo: 0 });
+  //   currentPgNo(0);
+  // }, []);
 
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
@@ -150,26 +175,19 @@ console.log("hello brandGet",brandGet)
     </Fragment>
   );
 
-  // const tableData = [];
 
-  // for (let i = 1; i <= 10; i++) {
-  //   tableData.push({
-  //     id: "11100"+i,
-  //     name: "Brand" + i,
-  //     discription: "discription" + (i),
-  //   });
-  // }
  //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
- const recordPerPage = 10;
- const totalRecords = brandGet.length;
- const pageRange = 10;
+ const recordPerPage = 5;
+ const totalRecords =brandGet.totalElements;
+ const pageRange = 5;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = brandGet;
+ const currentRecords = brandGet?.content;
 
  const handlePageChange = pageNumber => {
+  // console.log(pageNumber,"ppppppppppppppp")
    setCurrentPage(pageNumber);
+   dispatch(getBrandListApi(pageNumber-1,5));
  }
  /*-----------------Pagination------------------*/
 
@@ -216,7 +234,8 @@ console.log("hello brandGet",brandGet)
 
                 </tr>
               </thead>
-                {currentRecords !== null &&
+                {currentRecords &&
+                currentRecords !== null &&
                   currentRecords.length > 0
                   ? (
                     currentRecords.map((item, i) => {
@@ -234,19 +253,36 @@ console.log("hello brandGet",brandGet)
                             <td>{item.contactPerson}</td>
                             <td>{item.totalCategories}</td>
                             <td>{item.totalSKUs}</td>
-                              <td>{item?.isActive === true ? "Active" : "In-Active"}</td>
+                            <td>{item?.status === true ? "Active" : "In-Active"}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
-                              {/* <Link href={`/${item.id}`}> */}
+                              {/* <Link href={`/dashboard/brands?list=brands_categories/${item.brandId}`}> */}
                             <Image
                               className="px-2"
 							                src={marker}
 							                alt="edit"
                               width={35}
 							                height={30}
-                              onClick={() => {
-                                setShowBrandUpdateForm(true)
-                              }}
+                              onClick={()=>handleEdit(item.brandId)}
 						                  />
+
+                          <CustomModal
+                                      show={showBrandUpdateForm}
+                                      closeModal={() => 
+                                        setShowBrandUpdateForm(false)
+                                      }
+
+                                      
+                                      size="md"
+                                      centered={true}
+                                      body={
+                                        <UpdateBrandForm
+                                          table={TABLE_HEADERS[0].Brand.table}
+                                          classModal={() => setShowBrandUpdateForm(false)}
+                                          onSuccess={onBrandCreationSuccess}
+                                          notifySucess={() => notify(true)}
+                                        />
+                                  }
+                                />
                               {/* <marker
                                   onClick={() => {
                                     setShowBrandCreationForm(true)
@@ -294,9 +330,9 @@ console.log("hello brandGet",brandGet)
             tableContainarClass="my-3 catalog-list"
           /> */}
         {/* )} */}
-        <CustomModal
+        {/* <CustomModal
             show={showBrandUpdateForm}
-            closeModal={() => setShowBrandUpdateForm(false)}
+            closeModal={() => setShowBrandUpdateForm(false,(item._id))}
             size="md"
             centered={true}
             body={
@@ -307,7 +343,7 @@ console.log("hello brandGet",brandGet)
                 notifySucess={() => notify(true)}
               />
         }
-      />
+      /> */}
 
         {itemsCount && totalItems}
       </div>

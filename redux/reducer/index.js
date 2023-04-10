@@ -5,14 +5,25 @@ import channelReducer from "./channelReducer"
 
 import loginReducer from "./loginReducer";
 import onBoardQueryReducer from "./onboardQueryReducer";
+// import app from "./appReducer"
+import catalogQueryReducer from "./catalogQueryReducer"
+import catalogReducer from "./catalogReducer";
+import bulkReducer from "./bulkReducer";
+import syncCommandReducer from "./syncCommandReducer";
+
 
 
 const rootReducer = combineReducers({
+  // app,
   reducer,
   brandReducer,
   loginReducer,
   onBoardQueryReducer,
-  channelReducer
+  channelReducer,
+  catalogQueryReducer,
+  catalogReducer,
+  bulkReducer,
+  syncCommandReducer
 });
 
 export default rootReducer;
