@@ -159,5 +159,7 @@ and (max-device-width: 1500px)
   }
   
 
-
+  .update_main{
+    font-family:Gill-medium ;
+  }
 }

@@ -121,22 +121,22 @@ export const createChannelApi = (data) => {
 export const updateChannelApi = (info) => {
 
   const data = {
-    channelId:info?.id,
-    channelName: info.channelName,
-    channelDescription:info.channelDescription,
-    countryName: info.countryName,
-    brandName: info.brandName,
-    marketplaceName: info.marketplaceName
+    channelId:info?.channelId,
+    // channelName: info.channelName,
+    description:info.channelDescription,
+    // countryName: info.countryName,
+    // brandName: info.brandName,
+    // marketplaceName: info.marketplaceName
 }
   // console.log("hello  updateChannelApi called",info)
-  // console.log("hello  updateChannelApi data",data)
+  console.log("hello  updateChannelApi data",data)
 
   return (dispatch) => {
     dispatch(updateChannelDataLoading("Channel....", "Channel"));
     client
       .post("/api/channel/updateChannel", data)
       .then((response) => {
-        console.log("ChannelGreat==>", response);
+        console.log("Hello ChannelGreat==>", response);
 
         if (response.status === 200) {
           console.log("ChannelGreat data==>", response.data);

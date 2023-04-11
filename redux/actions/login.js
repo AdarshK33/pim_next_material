@@ -57,8 +57,9 @@ export const userLoginApi = (data) => {
             .post("/api/login/userLogin",data)
         .then((response) => {
             console.log("hello userLoginApi",response)
+            toast.info("Login Successfully !!!");
                 if (response?.data?.statusCode === 201) {
-                    toast.info("Login Successfully !!!");
+                  
                     console.log("hello Login post==>", response.data);
                     dispatch(userLoginSuccess(response?.data?.statusCode, 'Login Post Successfully', 'LOGIN POST'));
                     dispatch(userRole(response?.data?.result?.role, 'Login role saved Successfully', 'LOGIN DETAILS'));
@@ -71,7 +72,7 @@ export const userLoginApi = (data) => {
                 } else throw new Error("")
             })
             .catch((err) => {
-                toast.error("Login Failed!!!");
+                toast.error("User Not Found!!!");
                 console.log("error caught in -> actions/login", err);
                 dispatch(userLoginFailure(err, 'Something went wrong', 'LOGIN POST'));
             });
