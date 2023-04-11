@@ -1536,4 +1536,8 @@ button[aria-checked="true"] {
 
 
 }
+.loginMainPage{
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
 }

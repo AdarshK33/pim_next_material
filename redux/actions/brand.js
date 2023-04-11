@@ -89,13 +89,14 @@ export const updateBrandApi = (info) => {
   //console.log("hello  brandupdateApi info",info)
   const data = {
         brandId:info?.brandId,
-        brandName: info.brandName,
+        // brandName: info.brandName,
         description:info.description,
         contactPerson: info.contactPerson,
-        emailId: info.emailId,
+        emailId: info.brandEmail,
         mobile: info.mobile
   }
- // console.log("hello  brandupdateApi data",data)
+
+ console.log("hello  brandupdateApi data",data)
 
   return (dispatch) => {
     dispatch(updateBrandDataLoading("BRAND....", "BRAND"));
@@ -104,6 +105,7 @@ export const updateBrandApi = (info) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
+          toast.info("Brand Updated Successfully !!!");
           // console.log("BrandGreat==>", response.data);
           dispatch(
             updateBrandDataSuccess(
@@ -115,6 +117,7 @@ export const updateBrandApi = (info) => {
         } else throw new Error("");
       })
       .catch((err) => {
+        toast.error("Brand update Failed!!!");
         console.log("error caught in -> actions/brand/update", err);
         dispatch(
           updateBrandDataFailure(err, "Something went wrong", "BRAND UPDATE")

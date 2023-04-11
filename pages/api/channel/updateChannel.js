@@ -2,12 +2,13 @@ import { onboardServer } from '../../../utils/axios';
 
 export default async function handler(req, res) {
     // return new Promise((resolve, reject) => {
-		
+
 	const body = req.body;
 	
 	let id=body.channelId
 	
-	// console.log("helo server",id)
+	console.log("hello server",id)
+	// http://onboard-command-handler.theretailinsightsdemos.com/api/v1/channel/6
 	const config = {
 		method: 'patch',
 		url: `/channel/${id}`,
@@ -15,7 +16,7 @@ export default async function handler(req, res) {
 	};
 	onboardServer(config)
 		.then(response => {
-			// console.log("hello rrrrrrrrrrrr",response)
+			 console.log("hello response",response)
 			if (response.status === 200) {
 				res.status(200).json(response.data);
                 Promise.resolve();

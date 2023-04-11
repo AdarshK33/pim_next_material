@@ -13,22 +13,26 @@ import {  getProductPimCodeApi } from "../../../redux/actions/catalogQuery";//te
 
 import { useDispatch, useSelector } from "react-redux";
 
+import SubmitButton from "../../public/formik/submitButton";
+
 
 function ProductDetail() {
   const TabPane = Tabs.TabPane;
   const { query } = useRouter();
   const dispatch = useDispatch();
  const [codeBrand, setCodeBrand] = useState([]);
- const [state, setState] = useState();
+ const [stateInput, setStateInput] = useState();
 
+ const [checkUpdate, setcheckUpdate]= useState(false);
 
-const changeHandler = (e) => {
-  setState({
-    ...state,
+const InputChangeHandler = (e) => {
+ 
+  setStateInput({
+    ...stateInput,
     [e.target.name]: e.target.value,
   });
-
-};
+  setcheckUpdate(true)
+}
 
  useEffect(() => {
   setCodeBrand(query.list) //testing
@@ -59,6 +63,15 @@ const { productPimCodeData } = useSelector(state => {
   return state.catalogQueryReducer;
 });
   
+useEffect(() =>{
+  const inputState = new Object()
+  productPimCodeData?.pimModelSku?.Master?.xyz.forEach((item) => {
+    return inputState[item.keyName] = item.value
+  })
+
+  setStateInput(inputState);
+
+}, [productPimCodeData])
   // console.log("hello productPimCodeData",productPimCodeData)
 
 
@@ -193,8 +206,21 @@ const { productPimCodeData } = useSelector(state => {
 
     
     
+  const getInputValue = (keyName) =>{
+   try{
+      return stateInput[keyName]
+   }catch(error){
+    return ''
+   } 
+  }
+  const submitInputHandler = async (e) => {
+    e.preventDefault();
+    console.log("hello input called")
+    setcheckUpdate(false)
 
+  }
 
+  console.log("stateInput",stateInput)
   const sectionRender = screenType => {
             return productPimCodeData?.pimModelSku?.Master?.xyz.map((item, index) => {
       
@@ -209,6 +235,7 @@ const { productPimCodeData } = useSelector(state => {
    
 
     const inputRender = (sectionItem, index) => {
+           
             return (
 
                
@@ -219,9 +246,9 @@ const { productPimCodeData } = useSelector(state => {
                 </Form.Label>
                 <Form.Control
                   type="text"
-                  name="channelName"
-                  value={sectionItem.value}
-                  onChange={changeHandler}
+                  name={sectionItem.keyName}
+                  value={getInputValue(sectionItem.keyName)}
+                  onChange={InputChangeHandler}
                   required
                   maxLength="250"
                   // style={channelNameError ? { borderColor: "red" } : {}}
@@ -252,7 +279,23 @@ const { productPimCodeData } = useSelector(state => {
          <Row style={{ marginBottom: ".2rem" }}>
          {sectionRender('DESKTOP')}
             </Row>
-        
+            {checkUpdate &&
+               <div className="col-12 text-center pt-3">
+               {/* <SubmitButton
+                 onClick={ setcheckUpdate(false)}
+                 type="button"
+                 name="CANCEL"
+                 className="btn btn-sm save_btn_secondary py-1 px-5 br3"
+               /> */}
+               <SubmitButton
+                onClick={submitInputHandler}
+                 type="submit"
+                 name="UPDATE"
+                 className="btn btn-sm save_btn_secondary py-1 px-5 br3 mx-2"
+               />
+             </div>
+            }
+         
             </Form>
      
                    

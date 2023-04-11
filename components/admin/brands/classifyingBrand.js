@@ -70,18 +70,23 @@ const { brandGet } = useSelector(state => {
   return state.onBoardQueryReducer;
 });
 
-// const { brandCreate } = useSelector(state => {
-//   // console.log("hello",state)
-//   return state.brandReducer;
-// });
+const { brandCreate ,brandUpdate} = useSelector(state => {
+  // console.log("hello",state)
+  return state.brandReducer;
+});
 
-// console.log("hello brandCreate",brandCreate)
+console.log("hello brandCreate",brandCreate,brandUpdate)
 
 useEffect(() => {
-    // if(currentPage){
+    if(currentPage){
     dispatch(getBrandListApi(currentPage,5));
-    // }
+    }
 }, []);
+useEffect(() => {
+  if(brandUpdate&&brandCreate){
+  dispatch(getBrandListApi(currentPage,5));
+  }
+}, [brandUpdate,brandCreate]);
 
 const getAllBrandsData = async (payload) => {
     !loading && setLoading(true);
@@ -189,6 +194,7 @@ const getAllBrandsData = async (payload) => {
    setCurrentPage(pageNumber);
    dispatch(getBrandListApi(pageNumber-1,5));
  }
+ 
  /*-----------------Pagination------------------*/
 
   return (

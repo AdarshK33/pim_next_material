@@ -235,20 +235,20 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
     const value = checkValidations();
 
     if (value === true) {
-      // console.log("Inside the channel submit");
+      console.log("hello Inside the channel submit",channelByIdData.id);
       // setSaveclick(true);
 
       const UpdateInfo = {
         // updateData: {
           channelId:channelByIdData?.id,
-          channelName: state.channelName,
+          // / channelName: state.channelName,
           channelDescription : state.channelDescription,
-          countryName:countryName,
-          brandName : brandName,
+          // countryName:countryName,
+          // brandName : brandName,
           // marketplaceName: marketplaceName
         // },
     }
-    // console.log("hello update info", UpdateInfo);
+    console.log("hello update info", UpdateInfo);
     //apis(UpdateInfo)
    
     dispatch( updateChannelApi(UpdateInfo));
@@ -284,7 +284,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
                   maxLength="250"
                   style={channelNameError ? { borderColor: "red" } : {}}
                   placeholder="Channel"
-                  // disabled={disabled}
+                  disabled={true}
                 />
                 {channelNameError ? (
                   <p style={{ color: "red" }}> ** Please enter channel Name </p>
@@ -309,7 +309,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
               onChange={(e) => countryHandler(e)}
               required
               style={countryNameError ? { borderColor: "red" } : {}}
-              // disabled={disabled}
+              disabled={true}
             >
               <option value="">Select Country</option>
               {
@@ -343,7 +343,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
               onChange={(e) => brandHandler(e)}
               required
               style={brandNameError ? { borderColor: "red" } : {}}
-              // disabled={disabled}
+              disabled={true}
             >
               <option value="">Select Brand</option>
               {
@@ -439,7 +439,7 @@ function UpdateChannelForm({ classModal, onSuccess, notifySucess }) {
                 </div>
          </Form>
          </div>
-      </>
+      </> 
    
    ):null}
    

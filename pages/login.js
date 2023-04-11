@@ -95,7 +95,7 @@ useEffect(() => {
       <>
        {user  && (
         <>
-          <div className="page-container d-flex p-2">
+          <div className="page-container d-flex p-2 loginMainPage">
            
            <div className="m-auto">
              
