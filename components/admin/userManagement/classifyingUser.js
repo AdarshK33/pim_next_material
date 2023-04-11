@@ -29,7 +29,10 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import  CommonUpdateForm from "../../public/commonUpdateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import {  getUserListApi,getRoleApi } from "../../../redux/actions/login";
+import {  getBrandDropdownApi } from "../../../redux/actions/onboardQuery";
+
+
 import Image from 'next/image';
 
 
@@ -45,6 +48,7 @@ function classifyingUser({ currentPgNo }) {
   const [itemsCount, setItemsCount] = useState(null);
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(0);
 
 
   
@@ -53,13 +57,22 @@ function classifyingUser({ currentPgNo }) {
   //   return {loginUser: app?.loggedIn,};
   // });
   
-  // console.log("hello bbbbbbbbbbbbbbbbb",loginUser)
+  
 
   useEffect(() => {
-    //  dispatch(createBrandApi(dataObj));
-    // dispatch(getBrandApi());
-   
+     dispatch(getBrandDropdownApi());
+     dispatch(getRoleApi());
+
+    dispatch(getUserListApi(currentPage,5));
   }, []);
+
+  const { userGet,roleGet } = useSelector(state => {
+   
+    return state.loginReducer;
+  });
+
+  // console.log("hello uuuuuuuuuuuuuuuuu",roleGet)
+
 
 //   const { isLogin } = useSelector(state => {
 //     console.log("hello state",state)
@@ -167,16 +180,16 @@ function classifyingUser({ currentPgNo }) {
     });
   }
  //   /*-----------------Pagination------------------*/
- const [currentPage, setCurrentPage] = useState(1);
- const recordPerPage = 10;
- const totalRecords = tableData.length;
- const pageRange = 10;
+ const recordPerPage = 5;
+ const totalRecords = userGet.totalElements;
+ const pageRange = 5;
  const indexOfLastRecord = currentPage * recordPerPage;
  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = tableData;
+ const currentRecords = userGet.content;
 
  const handlePageChange = pageNumber => {
    setCurrentPage(pageNumber);
+   dispatch(getUserListApi(pageNumber-1,5));
  }
  /*-----------------Pagination------------------*/
 
@@ -220,10 +233,11 @@ function classifyingUser({ currentPgNo }) {
 
                 </tr>
               </thead>
-                {tableData !== null &&
-                  tableData.length > 0
+                {currentRecords &&
+                currentRecords !== null &&
+                  currentRecords.length > 0
                   ? (
-                    tableData.map((item, i) => {
+                    currentRecords.map((item, i) => {
 
                       return (
                         <tbody style={{borderTop: "0px"}}
@@ -244,9 +258,9 @@ function classifyingUser({ currentPgNo }) {
 							                alt="edit"
                               width={35}
 							                height={30}
-                              onClick={() => {
-                                setShowBrandCreationForm(true)
-                              }}
+                              // onClick={() => {
+                              //   setShowBrandCreationForm(true)
+                              // }}
 						                  />
                               {/* <marker
                                   onClick={() => {
@@ -295,7 +309,7 @@ function classifyingUser({ currentPgNo }) {
             tableContainarClass="my-3 catalog-list"
           /> */}
         {/* )} */}
-        <CustomModal
+        {/* <CustomModal
             show={showBrandCreationForm}
             closeModal={() => setShowBrandCreationForm(false)}
             size="md"
@@ -308,7 +322,7 @@ function classifyingUser({ currentPgNo }) {
                 notifySucess={() => notify(true)}
               />
         }
-      />
+      /> */}
 
         {itemsCount && totalItems}
       </div>
