@@ -11,6 +11,7 @@ import ClassifyingBrand from "./brands/classifyingBrand";
 import ClassifyingChannel from "./channels/classifyingChannel";
 import ClassifyingUser from "./userManagement/classifyingUser";
 import MediaUpload from "./media/mediaUpload";
+import ChannelAttributes from "./channels/channelAttributes";
 
 function DashBoardContent() {
 
@@ -30,6 +31,7 @@ function DashBoardContent() {
             case 'channels': return <ClassifyingChannel />;
             case 'userManagement': return <ClassifyingUser />;
             case 'mediaUpload': return <MediaUpload />;
+            case 'channelattribute': return <ChannelAttributes />;
             
             default : return <DashBoardView />;
         }

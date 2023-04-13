@@ -1536,4 +1536,12 @@ button[aria-checked="true"] {
 
 
 }
+
+.ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder
+{
+  padding-inline-end: 30px !important;
+}
+.ant-select-selection-item{
+  margin-left: 14px;
+}
 }
