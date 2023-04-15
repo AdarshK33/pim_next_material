@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./channel.module.css";
 import FormikControl from "../../public/formik/formikControl";
 import TABLE_HEADERS from "../../public/tableHeader";
@@ -7,16 +7,28 @@ import checkbox from "../../public/formik/checkbox";
 import Form from "react-bootstrap/Form";
 import FormCheck from "react-bootstrap/FormCheck";
 import { Checkbox, Button, Dropdown, Select } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { channelAttributeApiList } from "../../../redux/actions/channel";
 
 const ChannelAttributes = () => {
-  const { Option } = Select;
-  const selectOpts = [
-    { value: "Brand 1", label: "xyz" },
-    { value: "Brand 2", label: "Brand 2" },
-    { value: "Brand 3", label: "Brand 3  " },
-  ];
+  const dispatch = useDispatch();
+  const [channel, setChannel] = useState("shopify");
+  const [currentPage, setCurrentPage] = useState(0);
 
- 
+  const { channelAttribute } = useSelector((state) => {
+    return state.channelReducer;
+  });
+
+  // const pimAttribute = pimAttributes?.map((item) => console.log("item",item.keyName) );
+
+  // console.log("channelAttribute",channelAttribute.content.pimAttributes);
+
+  const { Option } = Select;
+
+  const selectOpts = [
+    { value: "shopify", label: "Shopify" },
+    { value: "amazon", label: "Amazon" },
+  ];
 
   const tableData = [];
 
@@ -40,40 +52,52 @@ const ChannelAttributes = () => {
   // }
 
   //   /*-----------------Pagination------------------*/
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordPerPage = 10;
-  const totalRecords = tableData.length;
-  const pageRange = 10;
+  const recordPerPage = 5;
+  const totalRecords = channelAttribute?.totalElements;
+  const pageRange = 5;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
+  const currentRecords = channelAttribute?.content?.pimAttributes;
+  const channelAttributes = channelAttribute?.content?.channelAttributes;
+     console.log("channelAttributes", currentRecords, channelAttributes, channelAttribute);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+    dispatch(channelAttributeApiList(channel, pageNumber - 1, 5));
   };
 
-  const items = [  // remove it after
-    {
-      key: "1",
-      label: "Attribute",
-    },
-    {
-      key: "2",
-      label: "Attribute",
-    },
-    {
-      key: "3",
-      label: "Attribute",
-    },
-  ];
+  useEffect(() => {
+    dispatch(channelAttributeApiList(channel, currentPage, 5));
+  }, []);
 
-  const obj ={
-    item:true,
-  }
- const [check, setCheck] = useState(false); 
- const handleCheckChange = (e) => {
-  setCheck(e.target.checked);
- } 
+  // const items = [  // remove it after
+  //   {
+  //     key: "1",
+  //     label: "Attribute",
+  //   },
+  //   {
+  //     key: "2",
+  //     label: "Attribute",
+  //   },
+  //   {
+  //     key: "3",
+  //     label: "Attribute",
+  //   },
+  // ];
+
+ 
+  // const [check, setCheck] = useState(false);
+  // const handleCheckChange = (e) => {
+  //   setCheck(e.target.checked);
+  // };
+ 
+const attributes = channelAttributes?.shopify?.attributes;
+console.log("att",attributes);
+
+const options = attributes?.map(attr => ({
+  value: attr.attributeId?.toString(),
+  label: attr.keyName
+}));
 
   return (
     <>
@@ -109,8 +133,11 @@ const ChannelAttributes = () => {
               <FormikControl
                 control="reactSelect"
                 selectOpts={selectOpts}
-                placeholder="Channel"
+                placeholder="channel"
                 isMulti={false}
+                onChange={(selectedOption) => {
+                  setChannel(selectedOption.value);
+                }}
               />
             </div>
             <div className="col-4 mr-2">
@@ -136,14 +163,16 @@ const ChannelAttributes = () => {
                     {/* <th scope="col">Amazon</th> */}
                   </tr>
                 </thead>
-                {tableData !== null && tableData.length > 0 ? (
-                  tableData.map((item, i) => {
+                {currentRecords &&
+                currentRecords !== null &&
+                currentRecords?.length > 0 ? (
+                  currentRecords.map((item, i) => {
                     return (
                       <tbody style={{ borderTop: "0px" }} key={i}>
                         <tr>
                           {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
                           {/* <td>{item.id}</td> */}
-                          <td>{item.Attributes}</td>
+                          <td>{item?.keyName}</td>
                           {/* <td className="d-flex align-items-center justify-content-center">
                             <FormikControl
                               control="reactSelect"
@@ -165,37 +194,26 @@ const ChannelAttributes = () => {
                             >
                               <Button>bottom</Button>
                             </Dropdown> */}
-                            {
-                              check === true ? 
                             
-                            <Select
-                              showSearch
-                              style={{ width: 150 }}
-                              placeholder="Attribute"
-                              optionFilterProp="children"
-                              // onChange={onChange}
-                              // onFocus={onFocus}
-                              // onBlur={onBlur}
-                              // onSearch={onSearch}
-                              filterOption={(input, option) =>
-                                option.props.children
-                                  .toLowerCase()
-                                  .indexOf(input.toLowerCase()) >= 0
-                              }
-                            >
-                              <Option value="jack">Jack</Option>
-                              <Option value="lucy">Lucy</Option>
-                              <Option value="tom">Tom</Option>
-                            </Select> :
-                            <Select
-                              defaultValue="lucy"
-                              style={{ width: 150 }}
-                              disabled
-                            >
-                              <Option value="lucy">Lucy</Option>
-                            </Select>
-                  }
-                            <Checkbox  checked={check} onChange={handleCheckChange} />
+                              <Select
+                                showSearch
+                                style={{ width: 200 }}
+                                placeholder="Select an attribute"
+                                optionFilterProp="children"
+                                onChange={onChange}
+                                filterOption={(input, option) =>
+                                  (option?.label ?? "")
+                                    .toLowerCase()
+                                    .includes(input.toLowerCase())
+                                }
+                                options={options}
+                                
+                              />
+                        
+                            <Checkbox
+                              // checked={check}
+                              // onChange={handleCheckChange}
+                            />
                           </td>
                         </tr>
                       </tbody>
