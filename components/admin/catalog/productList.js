@@ -29,6 +29,7 @@ import calendar from "../../../assets/icons/calendar.svg";
 import {  getAllProductApi } from "../../../redux/actions/catalogQuery";//testing
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { Row, Col, Form, Button } from "react-bootstrap";
 
 function ProductList({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -280,30 +281,108 @@ const totalRecords = allProductData?.totalElements;
             />
           </div>
           </div>
-          <div className="col-2">
-            <FormikControl
-              control="reactSelect"
-              selectOpts={selectOpts}
-              placeholder="Brand"
-              isMulti={true}
-            />
-          </div>
-          <div className="col-2">
-            <FormikControl
-              control="reactSelect"
-              selectOpts={selectOpts}
-              placeholder="Channel"
-              isMulti={false}
-            />
-          </div>
-          <div className="col-2">
+          <div  className="col-6">
+          <Form>
+       
+       
+       <div className="row">
+       <div  className="col-4">
+          
+            <Form.Group>
+                {/* <Form.Label>
+                  <span> Brand </span>
+                </Form.Label> */}
+                <Form.Control
+                  as="select"
+                  name="brandNameId"
+                  // value={brandName}
+                  // onChange={(e) => brandHandler(e)}
+                  required
+                  // style={brandNameError ? { borderColor: "red" } : {}}
+                  // disabled={disabled}
+                >
+                  <option value="">Brand</option>
+                  {/* {
+                    brandDropdownGet &&
+                    brandDropdownGet.map((item, i) => {
+                      return (
+                        <option key={item.value}>{item.label}</option>
+                      );
+                    })
+                    } */}
+                </Form.Control>
+               
+              </Form.Group>
+</div>
+<div  className="col-4">
+              <Form.Group>
+                {/* <Form.Label>
+                  <span> Brand </span>
+                </Form.Label> */}
+                <Form.Control
+                  as="select"
+                  name="brandNameId"
+                  // value={brandName}
+                  // onChange={(e) => brandHandler(e)}
+                  required
+                  // style={brandNameError ? { borderColor: "red" } : {}}
+                  // disabled={disabled}
+                >
+                  <option value="">Channel</option>
+                  {/* {
+                    brandDropdownGet &&
+                    brandDropdownGet.map((item, i) => {
+                      return (
+                        <option key={item.value}>{item.label}</option>
+                      );
+                    })
+                    } */}
+                </Form.Control>
+               
+              </Form.Group>
+     </div>
+     <div  className="col-4">
+              <Form.Group>
+                {/* <Form.Label>
+                  <span> Brand </span>
+                </Form.Label> */}
+                <Form.Control
+                  as="select"
+                  name="brandNameId"
+                  // value={brandName}
+                  // onChange={(e) => brandHandler(e)}
+                  required
+                  // style={brandNameError ? { borderColor: "red" } : {}}
+                  // disabled={disabled}
+                >
+                  <option value="">Category</option>
+                  {/* {
+                    brandDropdownGet &&
+                    brandDropdownGet.map((item, i) => {
+                      return (
+                        <option key={item.value}>{item.label}</option>
+                      );
+                    })
+                    } */}
+                </Form.Control>
+               
+              </Form.Group>
+     </div>
+              </div>
+   
+     
+     
+       
+         </Form>
+         </div>
+          {/* <div className="col-2">
             <FormikControl
               control="reactSelect"
               selectOpts={selectOpts}
               placeholder="Category"
               isMulti={false}
             />
-          </div>
+          </div> */}
         </div>
         </div>
         <div className={`col-2 p-3 text-end align-self-center d-flex ${styles.button_add}`}>
@@ -370,7 +449,7 @@ const totalRecords = allProductData?.totalElements;
                             <td>{item.productName??'NA'}</td>
                             <td>{item.sku??'NA'}</td>
                             <td>{item.brand}</td>
-                            <td>{item.channels??'NA'}</td>
+                            <td>{item.channel}</td>
                             <td>{item.category??'NA'}</td>
                             <td>{item.subcategory??'NA'}</td>
                             <td>{item.status??'NA'}</td>
@@ -378,7 +457,7 @@ const totalRecords = allProductData?.totalElements;
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               <Link href={`/catalog/product?list=productDetails/${item.pimCode}/${item.brand}`}>
                             <Image
-                              className="px-2"
+                              className=  {`px-2  ${styles.listing_edit}`}
 							                src={marker}
 							                alt="edit"
                               width={35}

@@ -132,5 +132,8 @@
     .button_add{
       padding: 0rem !important;
     }
+    .listing_edit{
+      cursor: pointer;
+    }
   }  
   

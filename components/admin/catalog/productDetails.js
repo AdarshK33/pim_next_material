@@ -22,6 +22,10 @@ function ProductDetail() {
   const dispatch = useDispatch();
  const [codeBrand, setCodeBrand] = useState([]);
  const [stateInput, setStateInput] = useState();
+ const [channelData, setChannelData] = useState();
+ const [shopifyChannelData, setShopifyChannelData] = useState();
+
+ 
 
  const [checkUpdate, setcheckUpdate]= useState(false);
 
@@ -63,146 +67,144 @@ const { productPimCodeData } = useSelector(state => {
   return state.catalogQueryReducer;
 });
   
-useEffect(() =>{
-  const inputState = new Object()
-  productPimCodeData?.pimModelSku?.Master?.xyz.forEach((item) => {
-    return inputState[item.keyName] = item.value
-  })
+//useEffect(() =>{
+//   const inputState = new Object()
+//   productPimCodeData?.master?.modelAttributes?.General.forEach((item) => {
+//     return inputState[item.keyName] = item.value
+//   })
 
-  setStateInput(inputState);
-
-}, [productPimCodeData])
-  // console.log("hello productPimCodeData",productPimCodeData)
+//   setStateInput(inputState);
 
 
-  const shopifydata= {
-    "pimShopifyModelSku": {
-      "Shopify": {
-        "xyz": [
-          {
-            "displayName": "Vendor",
-            "keyName": "vendor",
-            "value": "APOLLO RI",
-            "mutable": true
-          },
-          {
-            "displayName": "Title",
-            "keyName": "title",
-            "value": "SUZUKI",
-            "mutable": true
-          },
-          {
-            "displayName": "Status",
-            "keyName": "status",
-            "value": "Active",
-            "mutable": true
-          },
-          {
-            "displayName": "Product_type",
-            "keyName": "product_type",
-            "value": "",
-            "mutable": true
-          },
-          {
-            "displayName": "Tags",
-            "keyName": "tags",
-            "value": "Tag3,Tag4",
-            "mutable": true
-          },
-          {
-            "displayName": "ProductImage",
-            "keyName": "productImage",
-            "value": "",
-            "mutable": true
-          },
-        
-          {
-            "displayName": "Price",
-            "keyName": "price",
-            "value": "",
-            "mutable": true
-          },
-          {
-            "displayName": "Sku",
-            "keyName": "sku",
-            "value": "DTE1000",
-            "mutable": true
-          },
-          {
-            "displayName": "Position",
-            "keyName": "position",
-            "value": "1",
-            "mutable": true
-          },
-          {
-            "displayName": "Name",
-            "keyName": "name",
-            "value": "cover",
-            "mutable": true
-          },
-          {
-            "displayName": "Compare_at_price",
-            "keyName": "compare_at_price",
-            "value": "900",
-            "mutable": true
-          },
-         
-          {
-            "displayName": "Grams",
-            "keyName": "grams",
-            "value": "400",
-            "mutable": true
-          },
-          {
-            "displayName": "Variant_Image",
-            "keyName": "variant_Image",
-            "value": "UP32423",
-            "mutable": true
-          },
-          
-          {
-            "displayName": "Option1",
-            "keyName": "option1",
-            "value": "",
-            "mutable": true
-          },
-          {
-            "displayName": "Option1",
-            "keyName": "option2",
-            "value": "",
-            "mutable": true
-          },
-           {
-            "displayName": "Weight",
-            "keyName": "weight",
-            "value": "89",
-            "mutable": true
-          },
-           {
-            "displayName": "Weight_unit",
-            "keyName": "weight_unit",
-            "value": "Kg",
-            "mutable": true
-          }
-        ]
-      }
-    },
+
+// }, [productPimCodeData])
+  console.log("hello shopifyChannelData",shopifyChannelData)
+
+  useEffect(() =>{
+
+    if(!productPimCodeData.master){
+      return ;
+    }
+    const obj=productPimCodeData.master.modelAttributes;
+
+     return Object.entries(obj).map(([key, value]) => {
+    // console.log("key",value)
+    const inputState = new Object()
    
-  }
+      value.forEach((val, index) => {
+      console.log("iiiii",val.value)
+
+ 
+      return inputState[val.keyName] = val.value
   
+     })
+     setStateInput(inputState);
 
-  const sectionShopifyRender = screenType => {
-            return shopifydata?.pimShopifyModelSku?.Shopify?.xyz.map((item, index) => {
-      
-                if (screenType === "DESKTOP") {
+    });
+  
+  
+ 
+  
+  }, [productPimCodeData])
+    console.log("hello productPimCodeData",productPimCodeData)
+
+
+  useEffect(() => {
+    if( productPimCodeData?.channel!== undefined &&
+      productPimCodeData?.channel !== null &&
+      productPimCodeData?.channel){
+        const dynamicMapObject = Object.keys(productPimCodeData?.channel).reduce((result, key) => {
+          result[key] = productPimCodeData?.channel[key];
+          return result;
+          }, {});
+          console.log("hello cccccccc",dynamicMapObject);
      
-                    return inputRender(item, index);
-                }
-             
-            });
-        };
+           const data2 = Object.entries(dynamicMapObject);
+          let result={};
+          for(let [key, {value}] of data2) {
+            result[key] = value;
+          }
+          /* console.log("result",result); */
+            
+            // console.log("ddddddddddddddd",data2)
+            setChannelData(data2)
+      }
+    
+      
 
-   
+
+  }, [productPimCodeData]);
+
+
+ const sectionChannelRender = screenType => {
+  if(screenType==="SHOPIFY"){
+    if(!productPimCodeData?.channel?.SHOPIFY?.modelAttributes){
+        return ;
+      }
+
+const obj2=productPimCodeData?.channel?.SHOPIFY?.modelAttributes;
+return Object.entries(obj2).map(([key, value]) => {
+  console.log("hello 1",key,value)
+  return  value.map((val, index) => {
+    // if (screenType === "DESKTOP") {
+      return inputShopifyRender(val);
+    //  }
+    })
+
+});
+
+        }
+   if(screenType==="amazon"){
+          if(!productPimCodeData?.channel?.amazon?.modelAttributes){
+              return ;
+            }
+      
+      const obj2=productPimCodeData?.channel?.amazon?.modelAttributes;
+      return Object.entries(obj2).map(([key, value]) => {
+        console.log("hello 1",key,value)
+        return  value.map((val, index) => {
+          // if (screenType === "DESKTOP") {
+            return inputShopifyRender(val);
+          //  }
+          })
+      
+      });
+      
+              }
+  }; 
+
+
+
+
+
+    const inputShopifyRender = (sectionItem, index) => {
+      console.log("hello sectionItem",sectionItem)
+              return (
+  
+                 
+              
+      <div className="col-sm-3 " style={{ marginBottom: "1rem" }}key={index}>
+                <Form.Group>
+                  <Form.Label>
+                    <span className=".font12">{sectionItem.displayName}</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="channelName"
+                    value={sectionItem.value}
+                    // onChange={changeHandler}
+                    required
+                    maxLength="250"
+                    // style={channelNameError ? { borderColor: "red" } : {}}
+                    placeholder={sectionItem.keyName}
+                    // disabled={sectionItem.mutable}
+                  />
+                 
+                </Form.Group>
+              </div>
+              );
+          };
+      
 
     
     
@@ -220,22 +222,36 @@ useEffect(() =>{
 
   }
 
-  console.log("stateInput",stateInput)
+  
   const sectionRender = screenType => {
-            return productPimCodeData?.pimModelSku?.Master?.xyz.map((item, index) => {
-      
-                if (screenType === "DESKTOP") {
+    if(!productPimCodeData.master){
+      return ;
+    }
+    const obj=productPimCodeData.master.modelAttributes;
+     return Object.entries(obj).map(([key, value]) => {
+    console.log("key",value)
+    return  value.map((val, index) => {
+      if (screenType === "DESKTOP") {
      
-                    return inputRender(item, index);
-                }
-             
-            });
-        };
+        return inputRender(val, index);
+       }
+  
+     })
+    });
+
+
+ 
+
+
+
+     };
 
    
 
     const inputRender = (sectionItem, index) => {
            
+
+      console.log("sectionItem",sectionItem)
             return (
 
                
@@ -261,17 +277,67 @@ useEffect(() =>{
             );
         };
     
-    
- 
 
+    const sectionSkuRender = screenType => {
+      if(!productPimCodeData.master){
+        return ;
+      }
+      const obj2=productPimCodeData.master.skuAttributes;
+      return Object.entries(obj2).map(([key, value]) => {
+      return Object.entries(value).map(([key, val]) => {
+
+      return  val.map((sku, index) => {
+     console.log("key2222",sku)
+
+       if (screenType === "DESKTOP") {
+         return inputRender2(sku);
+        }
+       })
+      })
+     });
+       };
+
+       const inputRender2 = (sectionItem, index) => {
+           
+
+        console.log("sectionItemmm",sectionItem)
+              return (
   
+       
+                 
+              <div className="col-sm-3 " style={{ marginBottom: "1rem" }}key={index}>
+                <Form.Group>
+                  <Form.Label>
+                    <span className=".font12">{sectionItem.displayName}</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name={sectionItem.keyName}
+                    value={getInputValue(sectionItem.keyName)}
+                    onChange={InputChangeHandler}
+                     
+                    maxLength="250"
+                    // style={channelNameError ? { borderColor: "red" } : {}}
+                    placeholder={sectionItem.keyName}
+                    // disabled={sectionItem.mutable}
+                  />
+                 
+                </Form.Group>
+              </div>
+      
+              );
+          };
+      
+
+
     const attributeRender=()=>{
         return (
           <>
           <div className={styles.main_Attri}> 
                     <div className="row ">
                          <div className="col-12 ">
-                             <p className="sub_title_name">Bussiness Attributes</p>
+           
+                             <p className="sub_title_name">modelAttributes</p>
                          </div>
                        
                      </div>
@@ -295,7 +361,6 @@ useEffect(() =>{
                />
              </div>
             }
-         
             </Form>
      
                    
@@ -303,7 +368,73 @@ useEffect(() =>{
          <div className={styles.main_Attri}> 
                     <div className="row ">
                          <div className="col-12 ">
-                             <p className="sub_title_name">Marketing Attributes</p>
+                             <p className="sub_title_name">skuAttributes</p>
+                         </div>
+                       
+                     </div>
+                     <Form>
+
+                     <Row style={{ marginBottom: ".2rem" }}>
+                     {sectionSkuRender('DESKTOP')}
+            </Row>
+          
+            </Form>
+     
+                   
+         </div>
+         <div className="button_section">
+             <div className={styles.add_buttons}>
+                 <div className="col-2 p-3 text-end align-self-center">
+                 <button
+                    //  onClick={() => setShowBrandCreationForm(true)}
+                     className={`btn btn-sm ${styles.add_button_text}`}
+     
+                 >
+                     {/* <img src="/icons/add.png" alt="add-icon" /> */}
+                     + New Group
+                 </button>
+                 </div>
+                 <div className="col-2 p-3 ">
+                 <button
+                    //  onClick={() => setShowBrandCreationForm(true)}
+                     className={`btn btn-sm ${styles.add_button_text}`}
+     
+                 >
+                     {/* <img src="/icons/add.png" alt="add-icon" /> */}
+                     + New Attribute
+                 </button>
+                 </div>
+             </div>
+       
+         </div>
+         
+           </>
+        )
+    }
+    const channelAttributeRender=(channelType)=>{
+    
+      return(
+        <>
+        <div className={styles.main_Attri}> 
+                  <div className="row ">
+                       <div className="col-12 ">
+                           <p className="sub_title_name">modelAttributes</p>
+                       </div>
+                     
+                   </div>
+                   <Form>
+       <Row style={{ marginBottom: ".2rem" }}>
+       {sectionChannelRender(channelType)}
+          </Row>
+      
+          </Form>
+   
+                 
+       </div>
+       <div className={styles.main_Attri}> 
+                    <div className="row ">
+                         <div className="col-12 ">
+                             <p className="sub_title_name">skuAttributes</p>
                          </div>
                        
                      </div>
@@ -431,59 +562,11 @@ useEffect(() =>{
      
                    
          </div>
-         <div className="button_section">
-             <div className={styles.add_buttons}>
-                 <div className="col-2 p-3 text-end align-self-center">
-                 <button
-                    //  onClick={() => setShowBrandCreationForm(true)}
-                     className={`btn btn-sm ${styles.add_button_text}`}
-     
-                 >
-                     {/* <img src="/icons/add.png" alt="add-icon" /> */}
-                     + New Group
-                 </button>
-                 </div>
-                 <div className="col-2 p-3 ">
-                 <button
-                    //  onClick={() => setShowBrandCreationForm(true)}
-                     className={`btn btn-sm ${styles.add_button_text}`}
-     
-                 >
-                     {/* <img src="/icons/add.png" alt="add-icon" /> */}
-                     + New Attribute
-                 </button>
-                 </div>
-             </div>
-       
-         </div>
-         
-           </>
-        )
-    }
-
-    const shopifyAttributeRender=()=>{
-      return(
-        <>
-        <div className={styles.main_Attri}> 
-                  <div className="row ">
-                       <div className="col-12 ">
-                           <p className="sub_title_name">Bussiness Attributes</p>
-                       </div>
-                     
-                   </div>
-                   <Form>
-       <Row style={{ marginBottom: ".2rem" }}>
-       {sectionShopifyRender('DESKTOP')}
-          </Row>
-      
-          </Form>
-   
-                 
-       </div>
-      
-       
          </>
       )
+    
+
+
     }
 
     
@@ -537,6 +620,7 @@ useEffect(() =>{
    
   function selectedTab(key) {
     console.log(key);
+  
   }
 
     return (
@@ -547,10 +631,20 @@ useEffect(() =>{
                 </div>
             </div>
              <Tabs onChange={selectedTab} type="card">
-              <TabPane tab="Master" key="1">{attributeRender()}</TabPane>
-              <TabPane tab="Shopify" key="2">{shopifyAttributeRender()}</TabPane>
-              <TabPane tab="Amazon" key="3">{amazonAttributeRender()}</TabPane>
-              <TabPane tab="Images" key="4">{imagesAttributeRender()}</TabPane>
+             <TabPane tab="Master" key="1">
+
+      {attributeRender()}
+
+             </TabPane>
+              
+             
+              {channelData?.map((tab, index) => (
+    <TabPane tab={tab[0]} key={index+2}>
+      {/* {tab[0]} */}
+     {channelAttributeRender(tab[0])}
+    </TabPane>
+  ))}
+
              </Tabs>
         </Fragment>
       
