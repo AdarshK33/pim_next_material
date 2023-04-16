@@ -8,11 +8,12 @@ import Form from "react-bootstrap/Form";
 import FormCheck from "react-bootstrap/FormCheck";
 import { Checkbox, Button, Dropdown, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { channelAttributeApiList } from "../../../redux/actions/channel";
+import { channelAttributeApiList, channelMappingApi } from "../../../redux/actions/channel";
 
 const ChannelAttributes = () => {
   const dispatch = useDispatch();
-  const [channel, setChannel] = useState("shopify");
+  const [channel, setChannel] = useState("Shopify");
+  console.log("channel state", channel);
   const [currentPage, setCurrentPage] = useState(0);
 
   const { channelAttribute } = useSelector((state) => {
@@ -21,7 +22,7 @@ const ChannelAttributes = () => {
 
   // const pimAttribute = pimAttributes?.map((item) => console.log("item",item.keyName) );
 
-  // console.log("channelAttribute",channelAttribute.content.pimAttributes);
+  // console.log("channelAttribute", channelAttribute.content.pimAttributes);
 
   const { Option } = Select;
 
@@ -59,7 +60,16 @@ const ChannelAttributes = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = channelAttribute?.content?.pimAttributes;
   const channelAttributes = channelAttribute?.content?.channelAttributes;
-     console.log("channelAttributes", currentRecords, channelAttributes, channelAttribute);
+  console.log(
+    "channelAttributes",
+    currentRecords,
+    channelAttributes,
+    channelAttribute
+  );
+
+  const [modifiedPimRecord, setModifiedPimRecord] = useState([]);
+
+  console.log("modifiedCurrentRecord", modifiedPimRecord);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -68,36 +78,74 @@ const ChannelAttributes = () => {
 
   useEffect(() => {
     dispatch(channelAttributeApiList(channel, currentPage, 5));
+    const updatedRecord = currentRecords?.map((obj) => ({
+      ...obj,
+      isChecked: false,
+      selectedChannelAttributes: {},
+    }));
+    setModifiedPimRecord(updatedRecord);
   }, []);
 
-  // const items = [  // remove it after
-  //   {
-  //     key: "1",
-  //     label: "Attribute",
-  //   },
-  //   {
-  //     key: "2",
-  //     label: "Attribute",
-  //   },
-  //   {
-  //     key: "3",
-  //     label: "Attribute",
-  //   },
-  // ];
-
- 
   // const [check, setCheck] = useState(false);
-  // const handleCheckChange = (e) => {
-  //   setCheck(e.target.checked);
-  // };
- 
-const attributes = channelAttributes?.shopify?.attributes;
-console.log("att",attributes);
+  const onChangeOfCheckBox = (e, item) => {
+    console.log("on click of checkbox", e.target.checked, item);
+    const data = modifiedPimRecord.map((arr) => {
+      if (arr.id === item.id) {
+        return {
+          ...arr,
+          isChecked: !item.isChecked,
+        };
+      } else return arr;
+    });
+    console.log("data", data);
+    setModifiedPimRecord(data);
+  };
 
-const options = attributes?.map(attr => ({
-  value: attr.attributeId?.toString(),
-  label: attr.keyName
-}));
+  const attributes = channelAttributes?.[channel]?.attributes;
+  console.log("att", attributes);
+
+  const options = attributes?.map((attr) => ({
+    value: attr.id,
+    label: attr.aliasKeyName,
+  }));
+  const onSelectdropdown =  (value, item) => {
+    console.log("selected dropdown", attributes, value);
+    // // get selected pim attribute - item
+    // // get all custom attribute - attributes
+    // // get selected dropdown custom attributes - e
+
+    const selectedChannelAttributes = attributes.filter(
+      (arr) => arr.id === value
+    )[0];
+    const pimAttribute = modifiedPimRecord.map((arr) => {
+      if (arr.id === item.id) {
+        return {
+          ...arr,
+          selectedChannelAttributes,
+        };
+      } else return arr;
+    });
+    console.log("pimAttribute", pimAttribute);
+    setModifiedPimRecord(pimAttribute);
+  };
+
+  const onSubmit = () => {
+    const mappedAttributes = modifiedPimRecord.map(arr => {
+      console.log('Inside map function', arr)
+      if (arr.isChecked && Object.keys(arr.selectedChannelAttributes).length) {
+        return {
+          attributeId: arr.id,
+          channelAttribute: arr.selectedChannelAttributes
+        }
+      }
+    })
+
+    const data = {
+      mappedAttributes,
+      unMappedAttributes: {}
+    }
+    console.log('Request body data', data)
+  }
 
   return (
     <>
@@ -133,15 +181,19 @@ const options = attributes?.map(attr => ({
               <FormikControl
                 control="reactSelect"
                 selectOpts={selectOpts}
-                placeholder="channel"
+                placeholder={channel.charAt(0).toUpperCase() + channel.slice(1)}
                 isMulti={false}
+                defaultValue={selectOpts[0]}
+                //  value={channel}
                 onChange={(selectedOption) => {
                   setChannel(selectedOption.value);
                 }}
               />
             </div>
             <div className="col-4 mr-2">
-              <button className={`btn btn-sm ${style.add_button_text}`}>
+              <button className={`btn btn-sm ${style.add_button_text}`} 
+              onClick={onSubmit}
+              >
                 Submit
               </button>
             </div>
@@ -156,63 +208,41 @@ const options = attributes?.map(attr => ({
                   style={{ backgroundColor: "#2f3c4e" }}
                 >
                   <tr style={{ backgroundColor: "#f5f6f8" }}>
-                    {/* <th scope="col">S. No</th> */}
-                    {/* <th scope="col">{TABLE_HEADERS[0].Brand.id} </th> */}
                     <th scope="col">Attributes</th>
-                    <th scope="col">Shopify</th>
-                    {/* <th scope="col">Amazon</th> */}
+                    <th scope="col">
+                      {channel.charAt(0).toUpperCase() + channel.slice(1)}
+                    </th>
                   </tr>
                 </thead>
-                {currentRecords &&
-                currentRecords !== null &&
-                currentRecords?.length > 0 ? (
-                  currentRecords.map((item, i) => {
+                {modifiedPimRecord &&
+                modifiedPimRecord !== null &&
+                modifiedPimRecord?.length > 0 ? (
+                  modifiedPimRecord.map((item, i) => {
                     return (
                       <tbody style={{ borderTop: "0px" }} key={i}>
                         <tr>
-                          {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
-                          {/* <td>{item.id}</td> */}
-                          <td>{item?.keyName}</td>
-                          {/* <td className="d-flex align-items-center justify-content-center">
-                            <FormikControl
-                              control="reactSelect"
-                              selectOpts={selectOpts}
-                              placeholder="Attribute"
-                              isMulti={false}
-                            />
-                            <Checkbox />
-                          </td> */}
+                          <td>{item?.aliasKeyName}</td>
                           <td>
-                            {/* <Dropdown
-                              menu={{
-                                items,
+                            <Select
+                              showSearch
+                              style={{ width: 200 }}
+                              placeholder="Select an attribute"
+                              optionFilterProp="children"
+                              onChange={(e) => {
+                                onSelectdropdown(e, item);
                               }}
-                              placement="bottom"
-                              arrow={{
-                                pointAtCenter: true,
-                              }}
-                            >
-                              <Button>bottom</Button>
-                            </Dropdown> */}
-                            
-                              <Select
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Select an attribute"
-                                optionFilterProp="children"
-                                onChange={onChange}
-                                filterOption={(input, option) =>
-                                  (option?.label ?? "")
-                                    .toLowerCase()
-                                    .includes(input.toLowerCase())
-                                }
-                                options={options}
-                                
-                              />
-                        
+                              disabled={item?.isChecked === true}
+                              // onSearch={onSearch}
+                              filterOption={(input, option) =>
+                                (option?.label ?? "")
+                                  .toLowerCase()
+                                  .includes(input.toLowerCase())
+                              }
+                              options={options}
+                            />
+
                             <Checkbox
-                              // checked={check}
-                              // onChange={handleCheckChange}
+                              onChange={(e) => onChangeOfCheckBox(e, item)}
                             />
                           </td>
                         </tr>

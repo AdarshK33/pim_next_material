@@ -11,6 +11,9 @@ import {
   GET_CHANNEL_ATTRIBUTE_LOADING,
   GET_CHANNEL_ATTRIBUTE_SUCCESS,
   GET_CHANNEL_ATTRIBUTE_FAILURE,
+  CHANNEL_MAPPING_LOADING,
+  CHANNEL_MAPPING_SUCCESS,
+  CHANNEL_MAPPING_FAILURE,
 } from "../types/types";
 import { client } from "../../utils/axios";
 
@@ -85,6 +88,25 @@ export const getChannelAttributeFailure = (error) => {
     payload: error,
   };
 };
+
+export const channelMappingLoading = () => {
+  return {
+    type: CHANNEL_MAPPING_LOADING,
+  };
+};
+export const channelMappingSuccess = (data) => {
+  return {
+    type: CHANNEL_MAPPING_SUCCESS,
+    payload: data,
+  };
+};
+export const channelMappingFailure = (error) => {
+  return {
+    type: CHANNEL_MAPPING_FAILURE,
+    payload: error,
+  };
+};
+
 
 export const createChannelApi = (data) => {
   // let result = false;
@@ -236,4 +258,31 @@ export const channelAttributeApiList = (channelFilter,pageNumber, pageSize) => {
         dispatch(getChannelAttributeFailure(err));
       });
   };
+};
+
+export const channelMappingApi = () => {
+  // const data = {
+  //   channelFilter:channelFilter,
+  //   pageNo: pageNumber,
+  //   pageSize: pageSize,
+  // };
+
+
+  // return (dispatch) => {
+  //   dispatch(channelMappingLoading("loading...", "channel"));
+  //   client
+  //     .post("/api/channel/channelMapping")
+  //     .then((response) => {
+  //       console.log("response of channel mapping", response);
+
+  //       if (response?.status === 200) {
+  //         console.log("response of channel mapping", response);
+  //         dispatch(channelMappingSuccess(response.data.result));
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log("error of channel mapping", err);
+  //       dispatch(channelMappingFailure(err));
+  //     });
+  // };
 };
