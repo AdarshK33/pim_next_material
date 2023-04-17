@@ -8,12 +8,20 @@ import {
   UPDATE_CHANNEL_DATA_LOADING,
   UPDATE_CHANNEL_DATA_SUCCESS,
   UPDATE_CHANNEL_DATA_FAILURE,
+  GET_CHANNEL_ATTRIBUTE_LOADING,
+  GET_CHANNEL_ATTRIBUTE_SUCCESS,
+  GET_CHANNEL_ATTRIBUTE_FAILURE,
+  CHANNEL_MAPPING_LOADING,
+  CHANNEL_MAPPING_SUCCESS,
+  CHANNEL_MAPPING_FAILURE,
 } from "../types/types";
 const initialState = {
   loading: false,
   channelCreate: {},
   channelGet: {},
   channelUpdate: {},
+  channelAttribute: {},
+  channelMapping: {},
   error: {},
 };
 const channelReducer = (state = initialState, action) => {
@@ -76,6 +84,47 @@ const channelReducer = (state = initialState, action) => {
         channelUpdate: [],
         error: action,
       };
+    case GET_CHANNEL_ATTRIBUTE_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_CHANNEL_ATTRIBUTE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        channelAttribute: action.payload,
+        error: {},
+      };
+    case GET_CHANNEL_ATTRIBUTE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        channelAttribute: [],
+        error: action.payload,
+      };
+
+    case CHANNEL_MAPPING_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CHANNEL_MAPPING_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        channelMapping: action.payload,
+        error: {},
+      };
+    case CHANNEL_MAPPING_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        channelMapping: [],
+        error: action.payload,
+      };
+
     default:
       return state;
   }

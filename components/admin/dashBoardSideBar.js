@@ -93,7 +93,14 @@ function DashBoardSideBar({ defaultValue }) {
       icon:distribution ,
       id: "channels",
       link: "/pim/channels",
-      list: [],
+      list: [
+        {
+          name: "Attribute Mapping",
+          link: "/pim/channelattribute",
+          list_name: "channelattribute",
+        }
+
+      ],
     },
     {
       name: "User Management",
