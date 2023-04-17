@@ -30,6 +30,8 @@ import {  getAllProductApi } from "../../../redux/actions/catalogQuery";//testin
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import {  getBrandDropdownApi } from "../../../redux/actions/onboardQuery";//testing
+
 
 function ProductList({ currentPgNo }) {
   const [productList, setProductList] = useState({ content: [] });
@@ -39,7 +41,9 @@ function ProductList({ currentPgNo }) {
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
  const [currentPage, setCurrentPage] = useState(0);
  const [productDataList, setProductDataList] = useState();
+ const [brandName, setBrandName] = useState();
 
+ 
  
  const router = useRouter();
   const dispatch = useDispatch();
@@ -59,7 +63,7 @@ function ProductList({ currentPgNo }) {
   // console.log("hello productDataList",productDataList)
   
   useEffect(() => {
-    dispatch(getAllProductApi(currentPage,10)); //testing
+    dispatch(getAllProductApi(currentPage,10,brandName)); //testing
 }, [currentPage]);
 
 const { allProductData } = useSelector(state => {
@@ -105,9 +109,22 @@ const { allProductData } = useSelector(state => {
   
 
   useEffect(() => {
+
+    dispatch(getBrandDropdownApi()); //testing
     getAllProductData({ pageSize: 10, pageNo: 0 });
     currentPgNo(0);
   }, []);
+
+  const { brandDropdownGet } = useSelector(state => {
+   
+    return state.onBoardQueryReducer;
+  });
+  //  console.log("hello brandDropdownGet",brandDropdownGet)
+   const brandHandler = (e) => {
+    // console.log("hello called bbbb",e.target.value)
+    dispatch(getAllProductApi(currentPage,10,e.target.value))
+    setBrandName(e.target.value);
+  };
 
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
@@ -295,21 +312,21 @@ const totalRecords = allProductData?.totalElements;
                 <Form.Control
                   as="select"
                   name="brandNameId"
-                  // value={brandName}
-                  // onChange={(e) => brandHandler(e)}
+                  value={brandName}
+                  onChange={(e) => brandHandler(e)}
                   required
                   // style={brandNameError ? { borderColor: "red" } : {}}
                   // disabled={disabled}
                 >
                   <option value="">Brand</option>
-                  {/* {
+                  {
                     brandDropdownGet &&
                     brandDropdownGet.map((item, i) => {
                       return (
                         <option key={item.value}>{item.label}</option>
                       );
                     })
-                    } */}
+                    }
                 </Form.Control>
                
               </Form.Group>
@@ -433,10 +450,10 @@ const totalRecords = allProductData?.totalElements;
 
                 </tr>
               </thead>
-                {productDataList !== null &&
-                  productDataList?.length > 0
+                {currentRecords && currentRecords !== null &&
+                  currentRecords?.length > 0
                   ? (
-                    productDataList.map((item, i) => {
+                    currentRecords.map((item, i) => {
                     //  console.log("mmmmmmmmmmmmmmmmm",item)
                       return (
                         <tbody style={{borderTop: "0px"}}
