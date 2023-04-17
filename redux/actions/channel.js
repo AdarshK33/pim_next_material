@@ -260,29 +260,23 @@ export const channelAttributeApiList = (channelFilter,pageNumber, pageSize) => {
   };
 };
 
-export const channelMappingApi = () => {
-  // const data = {
-  //   channelFilter:channelFilter,
-  //   pageNo: pageNumber,
-  //   pageSize: pageSize,
-  // };
+export const channelMappingApi = data => {
 
-
-  // return (dispatch) => {
-  //   dispatch(channelMappingLoading("loading...", "channel"));
-  //   client
-  //     .post("/api/channel/channelMapping")
-  //     .then((response) => {
-  //       console.log("response of channel mapping", response);
-
-  //       if (response?.status === 200) {
-  //         console.log("response of channel mapping", response);
-  //         dispatch(channelMappingSuccess(response.data.result));
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log("error of channel mapping", err);
-  //       dispatch(channelMappingFailure(err));
-  //     });
-  // };
+  return (dispatch) => {
+    dispatch(channelMappingLoading("loading...", "channel"));
+    client
+      .post("/api/channel/channelMapping", data)
+      .then((response) => {
+        console.log("response of channel mapping", response);
+        if (response?.status === 200) {
+          console.log("response of channel mapping", response);
+          dispatch(channelMappingSuccess(response.data.result));
+          dispatch(channelAttributeApiList(Shopify, 0, 5));
+        }
+      })
+      .catch((err) => {
+        console.log("error of channel mapping", err);
+        dispatch(channelMappingFailure(err));
+      });
+  };
 };

@@ -69,7 +69,7 @@ const ChannelAttributes = () => {
 
   const [modifiedPimRecord, setModifiedPimRecord] = useState([]);
 
-  console.log("modifiedCurrentRecord", modifiedPimRecord);
+  console.log("modifiedCurrentRecord ", modifiedPimRecord);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -78,13 +78,19 @@ const ChannelAttributes = () => {
 
   useEffect(() => {
     dispatch(channelAttributeApiList(channel, currentPage, 5));
-    const updatedRecord = currentRecords?.map((obj) => ({
-      ...obj,
-      isChecked: false,
-      selectedChannelAttributes: {},
-    }));
-    setModifiedPimRecord(updatedRecord);
   }, []);
+
+  useEffect(() => {
+    const updatedRecord = currentRecords?.map((obj) => {
+      const hasChannelAttribute = obj.channelAttributes && Object.keys(obj.channelAttributes).length;
+      return {
+        ...obj,
+        isChecked: hasChannelAttribute,
+        selectedChannelAttributes: {},
+      }
+    });
+    setModifiedPimRecord(updatedRecord);
+  }, [currentRecords])
 
   // const [check, setCheck] = useState(false);
   const onChangeOfCheckBox = (e, item) => {
@@ -109,11 +115,6 @@ const ChannelAttributes = () => {
     label: attr.aliasKeyName,
   }));
   const onSelectdropdown =  (value, item) => {
-    console.log("selected dropdown", attributes, value);
-    // // get selected pim attribute - item
-    // // get all custom attribute - attributes
-    // // get selected dropdown custom attributes - e
-
     const selectedChannelAttributes = attributes.filter(
       (arr) => arr.id === value
     )[0];
@@ -125,26 +126,33 @@ const ChannelAttributes = () => {
         };
       } else return arr;
     });
-    console.log("pimAttribute", pimAttribute);
     setModifiedPimRecord(pimAttribute);
   };
 
   const onSubmit = () => {
     const mappedAttributes = modifiedPimRecord.map(arr => {
-      console.log('Inside map function', arr)
-      if (arr.isChecked && Object.keys(arr.selectedChannelAttributes).length) {
+      if (Object.keys(arr.selectedChannelAttributes).length) {
         return {
           attributeId: arr.id,
           channelAttribute: arr.selectedChannelAttributes
         }
       }
-    })
+    }).filter(arr => arr)
 
     const data = {
       mappedAttributes,
       unMappedAttributes: {}
     }
     console.log('Request body data', data)
+    dispatch(channelMappingApi(data))
+  }
+
+  const setDefaultOption = item => {
+    const  { channelAttributes: attr } = item
+    if (attr && Object.keys(attr).length) return {
+      value: attr.id,
+      label: attr.aliasKeyName,
+    }
   }
 
   return (
@@ -158,23 +166,6 @@ const ChannelAttributes = () => {
               </p>
             </div>
           </div>
-
-          {/* <div className="col-2">
-            <FormikControl
-              control="reactSelect"
-              selectOpts={selectOpts}
-              placeholder="Channel"
-              isMulti={false}
-            />
-          </div>
-          <div className="col-2 p-3 text-end align-self-center">
-          <button
-            className={`btn btn-sm ${style.add_button_text}`}
-          >
-            {/* <img src="/icons/add.png" alt="add-icon" /> */}
-          {/* Update */}
-          {/* </button> */}
-          {/* </div> */}
 
           <div className="row pb-0 d-flex align-items-center justify-content-between">
             <div className="col-2">
@@ -231,7 +222,8 @@ const ChannelAttributes = () => {
                               onChange={(e) => {
                                 onSelectdropdown(e, item);
                               }}
-                              disabled={item?.isChecked === true}
+                              defaultValue={() => setDefaultOption(item)}
+                              disabled={item?.isChecked}
                               // onSearch={onSearch}
                               filterOption={(input, option) =>
                                 (option?.label ?? "")
@@ -242,6 +234,7 @@ const ChannelAttributes = () => {
                             />
 
                             <Checkbox
+                              checked={item.isChecked}
                               onChange={(e) => onChangeOfCheckBox(e, item)}
                             />
                           </td>

@@ -1,17 +1,13 @@
-import {catalogQueryServer} from '../../../utils/axios';
+import { catalogServer } from '../../../utils/axios';
 import withSession from '../../../utils/session';
 
 function handler(req, res){
-    // const body = req.body;
-    // const channelFilter = body.channelFilter
-    // const pageNo = body.pageNo   
-    // const pageSize = body.pageSize
-    // const {user: {at =""} ={}, loggedIn} = req.session;
     const config = {
-        method:"post",
+        method: "post",
         url:`/catalog/channel_mapping`,
+        data: req.body
     };
-    catalogQueryServer(config)
+    catalogServer(config)
     .then((response) => {
         if(response.status === 200){
             res.status(200).json(response.data);
