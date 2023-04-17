@@ -32,7 +32,7 @@ function MyProfile() {
               <Dropdown.Menu>
                 <Dropdown.Item href="#/action-1">Role: {user.role}</Dropdown.Item>
                 <Dropdown.Item href="#/action-1">Email: {user.email}</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Brand : {user.brand}</Dropdown.Item>
+                {/* <Dropdown.Item href="#/action-1">Brand : {user.brand}</Dropdown.Item> */}
                 <Dropdown.Divider />
                 <i className="fa fa-user"></i>
                 <Dropdown.Item 

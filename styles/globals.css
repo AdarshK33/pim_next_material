@@ -1544,4 +1544,8 @@ button[aria-checked="true"] {
 .ant-select-selection-item{
   margin-left: 14px;
 }
+.loginMainPage{
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
 }

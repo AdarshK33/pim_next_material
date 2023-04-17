@@ -257,7 +257,7 @@ useEffect(() => {
                             <td>{item.lastUploaded}</td>
                             <td>{item.totalProductsActive}</td>
                             <td>{item.totalProductsInActive}</td>
-                            <td>{item.status}</td>
+                            <td>{item?.status === true ? "Active" : "In-Active"}</td>
                             <td  style={{ textDecoration: "none" ,color: "#4466f2"}}>
                               {/* <Link href={`/${item.id}`}> */}
                             <Image

@@ -12,13 +12,23 @@ import FormikControl from "../../public/formik/formikControl";
 import SubmitButton from "../../public/formik/submitButton";
 // import { createBrandApi } from "../../utility/apiUtility";
 import * as Yup from "yup";
-import { createBrandApi, getBrandApi } from "../../../redux/actions/brand";
+import {  createUserApi } from "../../../redux/actions/login";
 import { useDispatch, useSelector } from "react-redux";
 
 function BrandForm({ classModal, onSuccess, notifySucess }) {
   const [itemData, setItemData] = useState();
   const toastId = React.useRef(null);
   const dispatch = useDispatch();
+
+
+  const { userGet,roleGet } = useSelector(state => {
+   
+    return state.loginReducer;
+  });
+  const { brandDropdownGet } = useSelector(state => {
+   
+    return state.onBoardQueryReducer;
+  });
 
   const roleOpts = [
     { value: "admin", label: "Admin" },
@@ -35,9 +45,11 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
   
 
   useEffect(() => {
+    if(itemData){
     // console.log("itemData",itemData);
-    dispatch(createBrandApi(itemData));
+    dispatch(createUserApi(itemData));
     // dispatch(getBrandApi()); 
+    }
   }, [itemData]);
 
   const notify = (type) => {
@@ -45,48 +57,44 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       if (type !== "err") {
         toastId.current = toast.success("Brand added Successfully !!!");
       } else {
-        toastId.current = toast.error("Brand fields cannot be empty !!!");
+        toastId.current = toast.error("User fields cannot be empty !!!");
       }
     }
   };
   const initialValues = {
-    name: "",
-    discription: "",
-    email:""
+    email: "",
+    role: "",
+    brand:""
   };
 
   const onSubmit = async (values, formik) => {
-    // console.log("values",values);
-    let brndName = {
-      name: values.name.trim(),
-    };
-    let brndDiscription = {
-      name: values.discription.trim(),
-    };
-    let brandEmail = {
+    console.log("hello values",values);
+    let userEmail = {
       name: values.email.trim(),
     };
+    let userRole = {
+      name: values.role,
+    };
+    let userBrand = {
+      name: values.brand,
+    };
     // console.log("val", brndName);
-    if (brndName.name === "" || brndDiscription.name === "" || brandEmail.name === "" ) {
+    if (userEmail.name === "" || userRole.name === "" || userBrand.name === "" ) {
       notify("err");
     } else {
       let infoData={
-        brandId: 0,
-        brandName: brndName.name,
-        description:brndDiscription.name,
-        address: null,
-        contactPerson: null,
-        emailId: brandEmail.name,
-        mobile: null,
-        imageUrl: null,
-        brandShortcode: null,
+        email: userEmail.name,
+        brandId: userBrand.name,
+        roleId: userRole.name
       }
+    // console.log("hello infoData", infoData);
+
       setItemData(infoData)
-      // const apiRes = await createBrandApi(brndName);
+      const apiRes = await createUserApi(infoData);
       if (apiRes === "err") {
         formik.setSubmitting(false);
       } else {    
-        notifySucess(true);
+        // notifySucess(true);
         classModal();
       }
     }
@@ -96,7 +104,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
     <>
       <div className="bg-white p-3 br3">
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ isSubmitting }) => {
+          {({ isSubmitting ,setFieldValue}) => {
             return (
               <Form className="row mx-0 font12">
 
@@ -110,7 +118,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   id="email"
                 />
 
-                <FormikControl
+                {/* <FormikControl
                   control="input"
                   type="text"
                   classprops="form-group mb-3 col-md-12 boldtxt"
@@ -118,25 +126,30 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
                   label="Password"
                   name="password"
                   id="password"
-                />
+                /> */}
 
               <p className="px-2 py-0 boldtxt">Role Type</p>
                 <FormikControl
                   control="reactSelect"
                   className="px-2 py-1"
-                  selectOpts={roleOpts}
+                  selectOpts={roleGet}
                   placeholder="Select"
+                  name="role"
                   label="Role Type"
                   isMulti={false}
+                  setFieldValue={setFieldValue}
                 />
+             
 
               <p className="px-2 py-2 boldtxt">Brand</p>
                 <FormikControl
                   control="reactSelect"
                   className="px-2 py-1"
-                  selectOpts={brandOpts}
+                  selectOpts={brandDropdownGet}
                   placeholder="Select"
                   isMulti={false}
+                  name="brand"
+                  setFieldValue={setFieldValue}
                 />
 
                 <div className="col-12 text-center pt-5">

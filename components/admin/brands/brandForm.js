@@ -86,6 +86,7 @@ function BrandForm({ classModal, onSuccess, notifySucess }) {
       
       let infoData={
         brandName: brndName.name,
+        brandShortCode:brndName.name,
         description:brndDiscription.name,
         contactPerson: brandContact.name,
         emailId: brandEmail.name,

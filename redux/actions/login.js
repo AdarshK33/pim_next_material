@@ -5,6 +5,17 @@ import {
     USER_ROLE,
     USER_BRAND,
     USER_EMAIL,
+    GET_USER_LIST_DATA_LOADING ,
+    GET_USER_LIST_DATA_SUCCESS,
+    GET_USER_LIST_DATA_FAILURE,
+    
+    GET_ROLE_DATA_LOADING ,
+    GET_ROLE_DATA_SUCCESS,
+    GET_ROLE_DATA_FAILURE,
+    
+    CREATE_USER_DATA_LOADING,
+    CREATE_USER_DATA_SUCCESS,
+    CREATE_USER_DATA_FAILURE,
 
 } from "../types/types";
 
@@ -49,6 +60,68 @@ export const userEmail = (data) => {
     };
 };
 
+export const getUserDataLoading = () => {
+    return {
+        type: GET_USER_LIST_DATA_LOADING
+    };
+  };
+  export const getUserDataSuccess = (data) => {
+    return {
+        type: GET_USER_LIST_DATA_SUCCESS,
+        payload: data,
+    };
+  };
+  export const getUserDataFailure = (error) => {
+    return {
+        type: GET_USER_LIST_DATA_FAILURE,
+        payload: error,
+    };
+  };
+
+
+  export const getRoleDataLoading = () => {
+    return {
+        type: GET_ROLE_DATA_LOADING
+    };
+  };
+  export const getRoleDataSuccess = (data) => {
+    return {
+        type: GET_ROLE_DATA_SUCCESS,
+        payload: data,
+    };
+  };
+  export const getRoleDataFailure = (error) => {
+    return {
+        type: GET_ROLE_DATA_FAILURE,
+        payload: error,
+    };
+  };
+
+
+
+  export const createUserDataLoading = () => {
+    return {
+      type: CREATE_USER_DATA_LOADING,
+    };
+  };
+  export const createUserDataSuccess = (data) => {
+    return {
+      type: CREATE_USER_DATA_SUCCESS,
+      payload: data,
+    };
+  };
+  export const createUserDataFailure = (error) => {
+    return {
+      type: CREATE_USER_DATA_FAILURE,
+      payload: error,
+    };
+  };
+
+
+
+
+
+
 export const userLoginApi = (data) => {
     // console.log("hello  userLoginApi called",data)
     return (dispatch) => {
@@ -57,8 +130,9 @@ export const userLoginApi = (data) => {
             .post("/api/login/userLogin",data)
         .then((response) => {
             console.log("hello userLoginApi",response)
+            toast.info("Login Successfully !!!");
                 if (response?.data?.statusCode === 201) {
-                    toast.info("Login Successfully !!!");
+                  
                     console.log("hello Login post==>", response.data);
                     dispatch(userLoginSuccess(response?.data?.statusCode, 'Login Post Successfully', 'LOGIN POST'));
                     dispatch(userRole(response?.data?.result?.role, 'Login role saved Successfully', 'LOGIN DETAILS'));
@@ -71,10 +145,90 @@ export const userLoginApi = (data) => {
                 } else throw new Error("")
             })
             .catch((err) => {
-                toast.error("Login Failed!!!");
+                toast.error("User Not Found!!!");
                 console.log("error caught in -> actions/login", err);
                 dispatch(userLoginFailure(err, 'Something went wrong', 'LOGIN POST'));
             });
     };
 };
   
+export const getUserListApi = (pageNo,pageSize) => {
+    const data = {
+      pageNo: pageNo,
+      pageSize: pageSize
+  
+    }
+      return (dispatch) => {
+        dispatch(getUserDataLoading('USER....', 'USER'));
+        client.post("/api/login/userList",data)
+          .then((response) => {
+             console.log(" getUserListApi response",response)
+            
+            if (response?.data.statusCode === 200) {
+                console.log("API SUCCESS2", response.data);
+              dispatch(getUserDataSuccess(response.data.result));
+            }
+          })
+          .catch((err) => {
+            console.log("actions/login/GET USER LIST =>FAILURE", err);
+            dispatch(getUserDataFailure(err));
+          });
+      };
+    };
+  
+
+export const getRoleApi = () => {
+        return (dispatch) => {
+          dispatch(getRoleDataLoading('ROLE....', 'ROLE'));
+          client.get("/api/login/getRole")
+            .then((response) => {
+              // console.log("hello api response",response.status)
+            //   console.log(response)
+              if (response?.status === 200 ) {
+                   console.log("hello API  getRoleApi SUCCESS2", response);
+                dispatch(getRoleDataSuccess(response.data));
+              }
+            })
+            .catch((err) => {
+              console.log("actions/login/ GET ROLE =>FAILURE", err);
+              dispatch(getRoleDataFailure(err));
+            });
+        };
+      };
+
+
+ export const createUserApi = (data) => {
+        // let result = false;
+        // console.log("hello   called", data);
+        return (dispatch) => {
+          dispatch(createUserDataLoading("USER CREATE....", "USER"));
+          client
+            .post("/api/login/userCreate", data)
+            .then((response) => {
+              console.log("---------userApi------", response.status);
+              // result = true;
+              if (response.status === 200) {
+                toast.info("User Create Successfully !!!");
+                console.log("user ==>", response.data.result);
+                dispatch(
+                    createUserDataSuccess(
+                    response.data.result,
+                    "User Create Successfully",
+                    "User CREATE"
+                  )
+                );
+              } else throw new Error("");
+            })
+            .catch((err) => {
+              toast.error("User Data Not Found!!!");
+              console.log("error caught in -> actions/login/createUser", err);
+              //result = false;
+              dispatch(
+                createUserDataFailure(err, "Something went wrong", "User CREATE")
+              );
+            });
+      
+          // return result;
+        };
+      };
+      

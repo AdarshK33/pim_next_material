@@ -6,7 +6,18 @@ import {
     USER_LOGIN_RT,
     USER_ROLE,
     USER_BRAND,
-    USER_EMAIL
+    USER_EMAIL,
+    GET_USER_LIST_DATA_LOADING ,
+    GET_USER_LIST_DATA_SUCCESS,
+    GET_USER_LIST_DATA_FAILURE,
+
+    GET_ROLE_DATA_LOADING ,
+    GET_ROLE_DATA_SUCCESS,
+    GET_ROLE_DATA_FAILURE,
+    CREATE_USER_DATA_LOADING,
+    CREATE_USER_DATA_SUCCESS,
+    CREATE_USER_DATA_FAILURE,
+
 } from "../types/types";
 
 const initialState = {
@@ -17,6 +28,9 @@ const initialState = {
     userEmail:[],
     userRole:[],
     userBrand:[],
+    userGet:{},
+    roleGet:{},
+    newUser:{}
     // accessToken:{},
     // refreshToken:{}
 };
@@ -76,7 +90,66 @@ const loginReducer = (state = initialState, action) => {
                     //     loading: false,
                     //     refreshToken:action.rt,
                     //     error: {},
-                    // };              
+                    // };  
+        case GET_USER_LIST_DATA_LOADING:
+                return {
+                ...state,
+                loading: true,
+                };
+        case GET_USER_LIST_DATA_SUCCESS:
+                return {
+                    ...state,
+                    loading: false,
+                    userGet: action.payload,
+                    error: {},
+                };
+        case GET_USER_LIST_DATA_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                userGet: [],
+                error: action,
+            };
+                                
+            case GET_ROLE_DATA_LOADING:
+                return {
+                ...state,
+                loading: true,
+                };
+        case GET_ROLE_DATA_SUCCESS:
+                return {
+                    ...state,
+                    loading: false,
+                    roleGet: action.payload,
+                    error: {},
+                };
+        case GET_ROLE_DATA_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                roleGet: [],
+                error: action,
+            };
+                                
+            case CREATE_USER_DATA_LOADING:
+                return {
+                ...state,
+                loading: true,
+                };
+        case CREATE_USER_DATA_SUCCESS:
+                return {
+                    ...state,
+                    loading: false,
+                    newUser: action.payload,
+                error: {},
+                };
+        case CREATE_USER_DATA_FAILURE:                  
+        return {
+            ...state,
+            loading: false,
+            newUser: [],
+            error: action,
+        };  
         default:
             return state;
     }
