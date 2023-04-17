@@ -143,11 +143,11 @@ export const getProductPimCodeDataFailure = (error) => {
 
 
 
-export const getAllProductApi = (pageNo,pageSize) => {
+export const getAllProductApi = (pageNo,pageSize,brandName) => {
   const data = {
     pageNo: pageNo,
-    pageSize: pageSize
-
+    pageSize: pageSize,
+    brandName:brandName
   }
     return (dispatch) => {
       dispatch(getAllProductDataLoading('PRODUCTs....', 'PRODUCTs'));
