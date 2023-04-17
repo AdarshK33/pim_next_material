@@ -41,7 +41,7 @@ function ProductList({ currentPgNo }) {
   const [showBrandCreationForm, setShowBrandCreationForm] = useState(false);
  const [currentPage, setCurrentPage] = useState(0);
  const [productDataList, setProductDataList] = useState();
- const [brandName, setBrandName] = useState();
+ const [brandName, setBrandName] = useState(null);
 
  
  
@@ -62,6 +62,13 @@ function ProductList({ currentPgNo }) {
   
   // console.log("hello productDataList",productDataList)
   
+  useEffect(() => {
+    if(brandName){
+      console.log("hello brand selected")
+    dispatch(getAllProductApi(currentPage,10,brandName)) 
+    }//testing
+}, [brandName]);
+ 
   useEffect(() => {
     dispatch(getAllProductApi(currentPage,10,brandName)); //testing
 }, [currentPage]);
@@ -122,9 +129,13 @@ const { allProductData } = useSelector(state => {
   //  console.log("hello brandDropdownGet",brandDropdownGet)
    const brandHandler = (e) => {
     // console.log("hello called bbbb",e.target.value)
-    dispatch(getAllProductApi(currentPage,10,e.target.value))
+    setCurrentPage(0)
+    console.log("hello brand selected")
     setBrandName(e.target.value);
+    
   };
+
+  console.log(currentPage,"currentPage")
 
   const onBrandCreationSuccess = useCallback(() => {
     setShowBrandCreationForm(false);
@@ -184,6 +195,12 @@ const totalRecords = allProductData?.totalElements;
  const handlePageChange = pageNumber => {
   // console.log("hello pageNumber",pageNumber-1)
    setCurrentPage(pageNumber-1);
+  console.log("hello paagination",)
+ 
+    dispatch(getAllProductApi(pageNumber-1,10,brandName));
+
+  
+
  }
  /*-----------------Pagination------------------*/
   const totalItems = useMemo(
@@ -318,7 +335,7 @@ const totalRecords = allProductData?.totalElements;
                   // style={brandNameError ? { borderColor: "red" } : {}}
                   // disabled={disabled}
                 >
-                  <option value="">Brand</option>
+                  <option value=''>Brand</option>
                   {
                     brandDropdownGet &&
                     brandDropdownGet.map((item, i) => {
