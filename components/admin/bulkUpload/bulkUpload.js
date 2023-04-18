@@ -58,15 +58,17 @@ function BulkUpload({ currentPgNo }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-    
+  const [templateName, setTemplateName] = useState(null);
+
+  
   const [state, setState] = useState({
     toDate: null,
     fromDate: null
   });
   const selectOpts = [
-    { value: "Brand 1", label: "xyz" },
-    { value: "Brand 2", label: "Brand 2" },
-    { value: "Brand 3", label: "Brand 3  " },
+    { value: "Brand 1", label: "channel 1" },
+    { value: "Brand 2", label: "channel 2" },
+    { value: "Brand 3", label: "channel 3  " },
   ];
 
   useEffect(() => {
@@ -79,7 +81,7 @@ function BulkUpload({ currentPgNo }) {
   });
 
  
-  const optionsss = Object.entries(templateData).map(([key, value]) => {
+  const optionsTemplate = Object.entries(templateData).map(([key, value]) => {
     return {
       label: key,
       options: value.map(({ id, templateName }) => ({
@@ -90,7 +92,7 @@ function BulkUpload({ currentPgNo }) {
   });
 
 
- console.log("hello templateData",optionsss)
+//  console.log("hello templateData",optionsTemplate)
 
 
 
@@ -106,6 +108,7 @@ function BulkUpload({ currentPgNo }) {
 
  const handleTemplateChange = (selectedOption) => {
   setSelectedOption(selectedOption.value);
+  setTemplateName(selectedOption.label)
   console.log(`Option selected:`, selectedOption.value);
 }
 
@@ -164,9 +167,11 @@ function BulkUpload({ currentPgNo }) {
     });
   }, []);
 
+
+
   const handleClick = (id) => {
     if(!id){
-      toast.info("Please select template!!!");
+      toast.error("Please select template!!!");
     }else{
     // setShowBrandCreationForm(true)
     axios.get(`http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1/sync/template/${id}`, {
@@ -180,7 +185,7 @@ function BulkUpload({ currentPgNo }) {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', `template${id}.csv`);
+        link.setAttribute('download', `${templateName}.csv`);
         document.body.appendChild(link);
         link.click();
       })
@@ -412,24 +417,25 @@ function BulkUpload({ currentPgNo }) {
                   />
                 </div>
               </div>
-              <div className={`col-2 ${styles.dropdown_select}`}>
+               {/*  Rakesh told  to remove */}
+              {/* <div className={`col-2 ${styles.dropdown_select}`}>
                 <FormikControl
                   control="reactSelect"
-                  selectOpts={optionsss}
+                  selectOpts={options}
                   placeholder="Brand"
                   isMulti={true}
                 />
-              </div>
-              <div className={`col-2 ${styles.dropdown_select}`}>
+              </div> */}
+              {/* <div className={`col-2 ${styles.dropdown_select}`}>
                 <FormikControl
                   control="reactSelect"
                   selectOpts={selectOpts}
                   placeholder="Channel"
                   isMulti={false}
                 />
-              </div>
+              </div> */}
 
-              <div className={`col-2 ${styles.dropdown_select}`}>
+              <div className={`col-3 ${styles.dropdown_select}`}>
                 {/* <FormikControl
                   control="reactSelect"
                   selectOpts={}
@@ -437,7 +443,7 @@ function BulkUpload({ currentPgNo }) {
                   isMulti={false}
                 /> */}
                 <Select
-                 options={optionsss} 
+                 options={optionsTemplate} 
                  placeholder="Template"
                 //  value={selectedOption}
                  onChange={handleTemplateChange}
@@ -448,7 +454,9 @@ function BulkUpload({ currentPgNo }) {
           <div
             className={`col-2 p-3 text-end align-self-center d-flex  ${styles.set_laptop_right}`}
           >
-            <div>
+
+              {/*  Rakesh told  to remove */}
+            {/* <div>
               <Image
                 className="px-2"
                 src={download}
@@ -459,14 +467,14 @@ function BulkUpload({ currentPgNo }) {
               //   setShowBrandCreationForm(true)
               // }}
               />
-            </div>
-            <button
+            </div> */}
+            {/* <button
               onClick={() => setShowBrandCreationForm(true)}
               className={`btn btn-sm ${styles.add_button_text}`}
             >
               {/* <img src="/icons/add.png" alt="add-icon" /> */}
-              Download Masters
-            </button>
+              {/* Download Masters
+            </button>  */}
           </div>
 
           <div

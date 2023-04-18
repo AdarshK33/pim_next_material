@@ -2,7 +2,11 @@
 const {
     ONBOARD_SERVICE_URL,
 	AUTH_SERVICE_URL,
-	ONBOARD_QUERY_SERVICE_URL
+	ONBOARD_QUERY_SERVICE_URL,
+	CATALOG_SERVICE_URL,
+	CATALOG_QUERY_SERVICE_URL,
+	SYNC_COMMAND_SERVICE_URL,
+	SYNC_QUERY_SERVICE_URL
 } = process.env;
 
 module.exports = {
@@ -10,7 +14,11 @@ module.exports = {
 	env: {
 		ONBOARD_SERVICE_URL,
 		AUTH_SERVICE_URL,
-		ONBOARD_QUERY_SERVICE_URL
+		ONBOARD_QUERY_SERVICE_URL,
+		CATALOG_SERVICE_URL,
+		CATALOG_QUERY_SERVICE_URL,
+		SYNC_COMMAND_SERVICE_URL,
+		SYNC_QUERY_SERVICE_URL
 	},
 	// images: {
 	// 	domains: [
@@ -19,3 +27,5 @@ module.exports = {
 	// 	disableStaticImages: false,
 	// },
 };
+
+
