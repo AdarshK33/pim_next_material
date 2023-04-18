@@ -89,7 +89,8 @@ const { productPimCodeData } = useSelector(state => {
     // mapping the master.modelAttributes for input field
     const obj=productPimCodeData.master.modelAttributes;
     const inputState = new Object()
-    Object.entries(obj).forEach(value => {
+    Object.entries(obj).map(([key, value]) => {
+    // Object.entries(obj).forEach(value => {
 
       value.forEach((val ) => {
       inputState[val.keyName] = val.value
