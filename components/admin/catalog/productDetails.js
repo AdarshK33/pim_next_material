@@ -85,6 +85,8 @@ const { productPimCodeData } = useSelector(state => {
     if(!productPimCodeData.master){
       return ;
     }
+
+    // mapping the master.modelAttributes for input field
     const obj=productPimCodeData.master.modelAttributes;
 
      return Object.entries(obj).map(([key, value]) => {
@@ -92,7 +94,7 @@ const { productPimCodeData } = useSelector(state => {
     const inputState = new Object()
    
       value.forEach((val, index) => {
-      console.log("iiiii",val.value)
+      // console.log("iiiii",val.value)
 
  
       return inputState[val.keyName] = val.value
@@ -110,6 +112,7 @@ const { productPimCodeData } = useSelector(state => {
 
 
   useEffect(() => {
+    // / mapping the master.channel tab for input field
     if( productPimCodeData?.channel!== undefined &&
       productPimCodeData?.channel !== null &&
       productPimCodeData?.channel){
@@ -117,7 +120,7 @@ const { productPimCodeData } = useSelector(state => {
           result[key] = productPimCodeData?.channel[key];
           return result;
           }, {});
-          console.log("hello cccccccc",dynamicMapObject);
+          // console.log("hello cccccccc",dynamicMapObject);
      
            const data2 = Object.entries(dynamicMapObject);
           let result={};
@@ -136,7 +139,7 @@ const { productPimCodeData } = useSelector(state => {
   }, [productPimCodeData]);
 
 
- const sectionChannelRender = screenType => {
+const sectionChannelRender = screenType => {
   if(screenType==="SHOPIFY"){
     if(!productPimCodeData?.channel?.SHOPIFY?.modelAttributes){
         return ;
@@ -147,7 +150,7 @@ return Object.entries(obj2).map(([key, value]) => {
   console.log("hello 1",key,value)
   return  value.map((val, index) => {
     // if (screenType === "DESKTOP") {
-      return inputShopifyRender(val);
+      return inputChannelRender(val);
     //  }
     })
 
@@ -164,7 +167,7 @@ return Object.entries(obj2).map(([key, value]) => {
         console.log("hello 1",key,value)
         return  value.map((val, index) => {
           // if (screenType === "DESKTOP") {
-            return inputShopifyRender(val);
+            return inputChannelRender(val);
           //  }
           })
       
@@ -174,11 +177,8 @@ return Object.entries(obj2).map(([key, value]) => {
   }; 
 
 
-
-
-
-    const inputShopifyRender = (sectionItem, index) => {
-      console.log("hello sectionItem",sectionItem)
+const inputChannelRender = (sectionItem, index) => {
+      // console.log("hello sectionItem",sectionItem)
               return (
   
                  
@@ -207,7 +207,7 @@ return Object.entries(obj2).map(([key, value]) => {
       
 
     
-    
+     // set value in input filed  in master attribute
   const getInputValue = (keyName) =>{
    try{
       return stateInput[keyName]
@@ -222,8 +222,8 @@ return Object.entries(obj2).map(([key, value]) => {
 
   }
 
-  
-  const sectionRender = screenType => {
+  // master input render
+  const sectionMasterRender = screenType => {
     if(!productPimCodeData.master){
       return ;
     }
@@ -233,7 +233,7 @@ return Object.entries(obj2).map(([key, value]) => {
     return  value.map((val, index) => {
       if (screenType === "DESKTOP") {
      
-        return inputRender(val, index);
+        return inputMasterRender(val, index);
        }
   
      })
@@ -246,9 +246,7 @@ return Object.entries(obj2).map(([key, value]) => {
 
      };
 
-   
-
-    const inputRender = (sectionItem, index) => {
+    const inputMasterRender = (sectionItem, index) => {
            
 
       console.log("sectionItem",sectionItem)
@@ -277,7 +275,8 @@ return Object.entries(obj2).map(([key, value]) => {
             );
         };
     
-
+//  *   //
+//sku render
     const sectionSkuRender = screenType => {
       if(!productPimCodeData.master){
         return ;
@@ -290,14 +289,14 @@ return Object.entries(obj2).map(([key, value]) => {
      console.log("key2222",sku)
 
        if (screenType === "DESKTOP") {
-         return inputRender2(sku);
+         return inputSkuRender2(sku);
         }
        })
       })
      });
        };
 
-       const inputRender2 = (sectionItem, index) => {
+       const inputSkuRender2 = (sectionItem, index) => {
            
 
         console.log("sectionItemmm",sectionItem)
@@ -328,9 +327,11 @@ return Object.entries(obj2).map(([key, value]) => {
               );
           };
       
+//    *   //
 
 
-    const attributeRender=()=>{
+
+    const attributeMasterRender=()=>{
         return (
           <>
           <div className={styles.main_Attri}> 
@@ -343,7 +344,7 @@ return Object.entries(obj2).map(([key, value]) => {
                      </div>
                      <Form>
          <Row style={{ marginBottom: ".2rem" }}>
-         {sectionRender('DESKTOP')}
+         {sectionMasterRender('DESKTOP')}
             </Row>
             {checkUpdate &&
                <div className="col-12 text-center pt-3">
@@ -569,27 +570,7 @@ return Object.entries(obj2).map(([key, value]) => {
 
     }
 
-    
-    const amazonAttributeRender=()=>{
-      return(
-        <>
-        <div>
-        No Record Found
-        </div>
-      
-        </>
-      )
-    }
-    const imagesAttributeRender=()=>{
-      return(
-        <>
-        <div>
-        No Record Found
-        </div>
-      
-        </>
-      )
-    }
+  
     const initialValues = {
         name: "",
         discription: ""
@@ -633,7 +614,7 @@ return Object.entries(obj2).map(([key, value]) => {
              <Tabs onChange={selectedTab} type="card">
              <TabPane tab="Master" key="1">
 
-      {attributeRender()}
+      {attributeMasterRender()}
 
              </TabPane>
               

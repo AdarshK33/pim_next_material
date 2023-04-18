@@ -61,10 +61,11 @@ const syncCommandServer = axios.create({
 	},
 });
 
+console.log("bulkListData",process.env.SYNC_QUERY_SERVICE_URL)
 
 const syncQueryServer = axios.create({
-	// baseURL: process.env.SYNC_QUERY_SERVICE_URL,
-	baseURL:"http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1",
+	baseURL: process.env.SYNC_QUERY_SERVICE_URL,
+	// baseURL:"http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1",
 
 	// timeout: 1000 * 10,
 	headers: {
