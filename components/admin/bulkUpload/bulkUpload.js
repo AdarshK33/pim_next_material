@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { connect } from "react-redux";
 import folder from "../../../assets/icons/folder.svg";
-
+import Select from "react-select";
 
 import { getAllProducts, getProductById } from "../../utility/apiUtility";
 import CustomTable from "../../public/customTable";
@@ -37,6 +37,8 @@ import Dropzone from 'react-dropzone';
 import { createBulkApi } from "../../../redux/actions/bulk";
 
 import { bulkListingApi } from "../../../redux/actions/syncCommand";
+import { getTemplateApi } from "../../../redux/actions/syncQuery";
+
 
 
 function BulkUpload({ currentPgNo }) {
@@ -54,7 +56,8 @@ function BulkUpload({ currentPgNo }) {
   const [toDate,setToDate] = useState(null)
 
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [options, setOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
     
   const [state, setState] = useState({
     toDate: null,
@@ -66,7 +69,56 @@ function BulkUpload({ currentPgNo }) {
     { value: "Brand 3", label: "Brand 3  " },
   ];
 
-  
+  useEffect(() => {
+ dispatch(getTemplateApi());
+  }, []);
+
+  const { templateData } = useSelector(state => {
+   
+    return state.syncQueryReducer;
+  });
+
+ 
+  const optionsss = Object.entries(templateData).map(([key, value]) => {
+    return {
+      label: key,
+      options: value.map(({ id, templateName }) => ({
+        value: id,
+        label: templateName
+      }))
+    };
+  });
+
+
+ console.log("hello templateData",optionsss)
+
+
+
+
+
+
+
+
+
+
+
+
+
+ const handleTemplateChange = (selectedOption) => {
+  setSelectedOption(selectedOption.value);
+  console.log(`Option selected:`, selectedOption.value);
+}
+
+
+
+
+
+
+
+
+
+
+
   const fromDateHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
@@ -112,9 +164,12 @@ function BulkUpload({ currentPgNo }) {
     });
   }, []);
 
-  const handleClick = () => {
-    setShowBrandCreationForm(true)
-    axios.get('http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1/sync/template', {
+  const handleClick = (id) => {
+    if(!id){
+      toast.info("Please select template!!!");
+    }else{
+    // setShowBrandCreationForm(true)
+    axios.get(`http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1/sync/template/${id}`, {
       responseType: "blob",
       headers: {
         "Content-Type": "application/zip"
@@ -125,11 +180,12 @@ function BulkUpload({ currentPgNo }) {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'template.zip');
+        link.setAttribute('download', `template${id}.csv`);
         document.body.appendChild(link);
         link.click();
       })
       .catch(err => console.error(err))
+    }
   }
 
   const onDrop = (acceptedFiles) => {
@@ -138,7 +194,7 @@ function BulkUpload({ currentPgNo }) {
       formData.append('file', file);
     });
     axios
-      .post('http://sync-command-handler.theretailinsightsdemos.com/api/v1/sync/bulk', formData, {
+      .post(`http://sync-command-handler.theretailinsightsdemos.com/api/v1/sync/bulk/${selectedOption}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -359,7 +415,7 @@ function BulkUpload({ currentPgNo }) {
               <div className={`col-2 ${styles.dropdown_select}`}>
                 <FormikControl
                   control="reactSelect"
-                  selectOpts={selectOpts}
+                  selectOpts={optionsss}
                   placeholder="Brand"
                   isMulti={true}
                 />
@@ -371,6 +427,21 @@ function BulkUpload({ currentPgNo }) {
                   placeholder="Channel"
                   isMulti={false}
                 />
+              </div>
+
+              <div className={`col-2 ${styles.dropdown_select}`}>
+                {/* <FormikControl
+                  control="reactSelect"
+                  selectOpts={}
+                  placeholder="Template"
+                  isMulti={false}
+                /> */}
+                <Select
+                 options={optionsss} 
+                 placeholder="Template"
+                //  value={selectedOption}
+                 onChange={handleTemplateChange}
+                 />
               </div>
             </div>
           </div>
@@ -408,11 +479,16 @@ function BulkUpload({ currentPgNo }) {
                 alt="download"
                 width={40}
                 height={35}
-                onClick={handleClick}
+                 onClick={() => {
+                  handleClick(selectedOption)
+              }}
+                // onClick={handleClick(selectedOption)}
               />
             </div>
             <button
-              onClick={handleClick}
+              onClick={() => {
+                  handleClick(selectedOption)
+              }}
               className={`btn btn-sm ${styles.add_button_text}`}
             >
               {/* <img src="/icons/add.png" alt="add-icon" /> */}

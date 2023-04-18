@@ -28,7 +28,6 @@ const authServer = axios.create({
 		"Content-Type": "application/json",
 	},
 });
-//console.log("hello ONBOARD_QUERY_SERVICE_URL",process.env.ONBOARD_QUERY_SERVICE_URL)
 const onboardQueryServer = axios.create({
 	baseURL: process.env.ONBOARD_QUERY_SERVICE_URL,
 	// timeout: 1000 * 10,
@@ -61,6 +60,19 @@ const syncCommandServer = axios.create({
 		"Content-Type": "application/json",
 	},
 });
+
+
+const syncQueryServer = axios.create({
+	// baseURL: process.env.SYNC_QUERY_SERVICE_URL,
+	baseURL:"http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1",
+
+	// timeout: 1000 * 10,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});
+
+
 
 onboardServer.setJwtToken = newToken => {
 	token = newToken;
@@ -139,4 +151,4 @@ const syncServer = axios.create({
 	},
 });
 
-export { client, onboardServer, authServer, onboardQueryServer, catalogServer, catalogQueryServer, syncServer,syncCommandServer };
+export { client, onboardServer, authServer, onboardQueryServer, catalogServer, catalogQueryServer, syncServer,syncCommandServer,syncQueryServer };

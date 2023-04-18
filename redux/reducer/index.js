@@ -11,7 +11,7 @@ import catalogReducer from "./catalogReducer";
 import bulkReducer from "./bulkReducer";
 import syncCommandReducer from "./syncCommandReducer";
 
-
+import syncQueryReducer from "./syncQueryReducer"
 
 const rootReducer = combineReducers({
   // app,
@@ -23,7 +23,8 @@ const rootReducer = combineReducers({
   catalogQueryReducer,
   catalogReducer,
   bulkReducer,
-  syncCommandReducer
+  syncCommandReducer,
+  syncQueryReducer
 });
 
 export default rootReducer;
