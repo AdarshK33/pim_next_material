@@ -88,27 +88,19 @@ const { productPimCodeData } = useSelector(state => {
 
     // mapping the master.modelAttributes for input field
     const obj=productPimCodeData.master.modelAttributes;
-
-     return Object.entries(obj).map(([key, value]) => {
-    // console.log("key",value)
     const inputState = new Object()
-   
-      value.forEach((val, index) => {
-      // console.log("iiiii",val.value)
+    Object.entries(obj).forEach(value => {
 
- 
-      return inputState[val.keyName] = val.value
-  
+      value.forEach((val ) => {
+      inputState[val.keyName] = val.value
      })
-     setStateInput(inputState);
-
     });
   
-  
+    setStateInput(inputState);
  
   
   }, [productPimCodeData])
-    console.log("hello productPimCodeData",productPimCodeData)
+    console.log("hello stateInput",stateInput)
 
 
   useEffect(() => {
@@ -249,7 +241,7 @@ const inputChannelRender = (sectionItem, index) => {
     const inputMasterRender = (sectionItem, index) => {
            
 
-      console.log("sectionItem",sectionItem)
+      // console.log("sectionItem",sectionItem)
             return (
 
                
