@@ -1,53 +1,37 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useReducer, Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import withRedux from "next-redux-wrapper";
-import PublicHeader from "../components/public/publicHeader";
-import "../styles/globals.css";
-import { useRouter } from "next/router";
-import Cookies from "universal-cookie";
-import { refreshTokenApi } from "../components/utility/apiUtility";
-import { mainStore } from "../redux/store";
-// import RouteGuard from "../components/RouteGuard";
+import * as React from "react";
+import PropTypes from "prop-types";
+import Head from "next/head";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { CacheProvider } from "@emotion/react";
+import theme from "../src/theme/theme";
+import createEmotionCache from "../src/createEmotionCache";
+import FullLayout from "../src/layouts/FullLayout";
+import "../styles/style.css";
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
 
-export const Auth = React.createContext();
+export default function MyApp(props) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-function MyApp({ Component, pageProps }) {
-  const LoginStat = {
-    isLogin: useSelector((state) => state.reducer.isLogin),
-    token: useSelector((state) => state.reducer.token),
-  };
-  const router = useRouter();
-  const cookies = new Cookies();
-  const [loading, setLoading] = useState(
-    cookies.get("tokenExp") ? cookies.get("tokenExp") > Date.now() : false
-  );
-
-  const refreshToken = async () => {
-    const refreshData = await refreshTokenApi();
-    if (refreshData === "err") {
-    } else {
-      cookies.set("token", refreshData.data.accessToken);
-      cookies.set("tokenExp", refreshData.data.accessTokenExpiryTime);
-      cookies.set("refreshToken", refreshData.data.refreshToken);
-      setLoading(false);
-    }
-  };
-
-  return loading ? (
-    <div className="d-flex min90vh">Loading...</div>
-  ) : (
-    <Fragment>
-      <Auth.Provider value={{ loginState: LoginStat }}>
-        {router.route !== "/login" && router.route !== "/signup" &&router.route !== "/dashboard/dashboard" && (
-          <PublicHeader />
-        )}
-        {/* <RouteGuard> */}
+  return (
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <title>PIM</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <FullLayout>
           <Component {...pageProps} />
-        {/* </RouteGuard> */}
-      </Auth.Provider>
-    </Fragment>
+        </FullLayout>
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
 
-export default withRedux(mainStore, { debug: false })(MyApp);
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  emotionCache: PropTypes.object,
+  pageProps: PropTypes.object.isRequired,
+};
