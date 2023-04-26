@@ -21,6 +21,10 @@ import Menuitems from "./MenuItems";
 import Buynow from "./Buynow";
 import { useRouter } from "next/router";
 import SideBarContent from "./siderBarContent"
+import Image from 'next/image';
+import styles from "./sidebar.module.css"
+
+import ProfileDD from "../header/ProfileDD";
 
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
@@ -44,7 +48,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
       <Divider />
 
       <div>
-      MY  Profile comp.
+      <ProfileDD />
       </div>
       <Divider />
       <Box mt={2}>
@@ -65,18 +69,16 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                     }),
                   }}
                 >
-                  <ListItemIcon>
-                    <FeatherIcon
-                      style={{
-                        color: `${location === item.href ? "white" : ""} `,
-                      }}
-                      icon={item.icon}
-                      width="20"
-                      height="20"
-                    />
-                  </ListItemIcon>
+                   <Image
+                              className="px-2"
+                              src={item.icon}
+							                alt="edit"
+                              width={25}
+							                height={25}
+                            
+						                  />
 
-                  <ListItemText onClick={onSidebarClose}>
+                  <ListItemText onClick={onSidebarClose} className={styles.menu_item}>
                     {item.title}
                   </ListItemText>
                 </ListItem>
