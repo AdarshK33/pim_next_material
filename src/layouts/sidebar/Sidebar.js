@@ -13,12 +13,15 @@ import {
   Collapse,
   ListItemIcon,
   ListItemText,
+  Divider
 } from "@mui/material";
 import FeatherIcon from "feather-icons-react";
 import LogoIcon from "../logo/LogoIcon";
 import Menuitems from "./MenuItems";
 import Buynow from "./Buynow";
 import { useRouter } from "next/router";
+import SideBarContent from "./siderBarContent"
+
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const [open, setOpen] = React.useState(true);
@@ -38,6 +41,12 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const SidebarContent = (
     <Box p={2} height="100%">
       <LogoIcon />
+      <Divider />
+
+      <div>
+      MY  Profile comp.
+      </div>
+      <Divider />
       <Box mt={2}>
         <List>
           {Menuitems.map((item, index) => (
@@ -72,7 +81,10 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                   </ListItemText>
                 </ListItem>
               </NextLink>
+              {/* <SidebarContent data={item.list} /> */}
+                
             </List>
+            
           ))}
         </List>
       </Box>

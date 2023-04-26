@@ -10,9 +10,24 @@ const Menuitems = [
     href: "/buttons",
   },
   {
-    title: "Forms",
-    icon: "layout",
-    href: "/forms",
+    title: "Catalog",
+    icon: "disc",
+    href: "/buttons",
+    list: [
+      {
+        title: "Categories",
+        href: "/categories",
+      },
+      {
+        title: "Products",
+        href: "/products",
+      }
+    ],
+  },
+  {
+    title: "Channels",
+    icon: "disc",
+    href: "/channels",
   },
   {
     title: "Alerts",
