@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import {
   Grid,
   Box,
@@ -18,8 +18,19 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import styles from "./login.module.css";
+import { useDispatch,useSelector} from "react-redux";
+import {userLoginApi,getUserListApi } from "../redux/actions/login";
+
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+
+  const { userGet,roleGet } = useSelector(state => {
+   
+    return state.loginReducer;
+  });
+
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -30,7 +41,24 @@ const Login = () => {
     event.preventDefault();
   };
   console.log("bulkListData", process.env.SYNC_QUERY_SERVICE_URL);
+console.log("userGet",userGet)
 
+
+
+
+useEffect(() => {
+  // let infoData={
+  //   email: 'demo@gmail.com',
+  //   password:'@gmail.com$Apollo',
+  // }
+
+  // console.log("itemData",itemData);
+ 
+  dispatch(getUserListApi(
+    0,10
+  ));
+  
+}, []);
   return (
     <div className={styles.mainContainer}>
       <Grid spacing={0} className={styles.container}>

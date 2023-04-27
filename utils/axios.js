@@ -1,11 +1,11 @@
 import axios from "axios";
 // import { toast } from "../common-components/Toast";
-import {
-	ONBOARD_QUERY_SERVICE_URL
-} from "../components/utility/apiEndPoints";
+// import {
+// 	ONBOARD_QUERY_SERVICE_URL
+// } from "../components/utility/apiEndPoints";
 
 let token;
-let blacklist = ["trackorder"];
+// let blacklist = ["trackorder"];
 
 const client = axios.create({
 	// timeout: 1000 * 20,

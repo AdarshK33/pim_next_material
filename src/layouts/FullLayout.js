@@ -46,6 +46,7 @@ const FullLayout = ({ children }) => {
             backgroundColor: "#fbfbfb",
           }}
           toggleMobileSidebar={() => setSidebarOpen(!isSidebarOpen)}
+          moduleName={'NAME'}
         />
         )}
     
