@@ -4,7 +4,32 @@
 .roundedCircle {
   border-radius: 100%;
 }
-.adarsh{
+.adarsh {
   color: red;
   font-size: 14px;
+}
+.menu_item {
+  margin-left: 20px !important;
+}
+
+th,
+td {
+  text-align: center !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 200px !important;
+  position: relative !important;
+}
+th {
+  color: #419794 !important;
+  font-weight: 600 !important;
+}
+.action_center {
+  text-align: center !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 200px !important;
+  position: relative !important;
 }
