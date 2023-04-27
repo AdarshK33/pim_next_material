@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Box,
@@ -18,47 +18,55 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import styles from "./login.module.css";
-import { useDispatch,useSelector} from "react-redux";
-import {userLoginApi,getUserListApi } from "../redux/actions/login";
-
+import { useDispatch, useSelector } from "react-redux";
+import { userLoginApi } from "../redux/actions/login";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [value, setValue] = useState(2);
+  const [hover, setHover] = useState(-1);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [itemData, setItemData] = useState();
+  console.log("username", username, password);
+  // const { userGet,roleGet } = useSelector(state => {
 
+  //   return state.loginReducer;
+  // });
 
-  const { userGet,roleGet } = useSelector(state => {
-   
-    return state.loginReducer;
-  });
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
 
-  const [value, setValue] = React.useState(2);
-  const [hover, setHover] = React.useState(-1);
-  const [showPassword, setShowPassword] = React.useState(false);
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  console.log("bulkListData", process.env.SYNC_QUERY_SERVICE_URL);
-console.log("userGet",userGet)
 
+  const submitHandler = () => {
+    if (username === "" || password === "") {
+      alert("Username or Password cannot be blank");
+    } else {
+      let loginData = {
+        email: username,
+        password: password,
+      };
+      setItemData(loginData);
+    }
+  };
 
+  useEffect(() => {
+    if (itemData) {
+      dispatch(userLoginApi(itemData));
+    }
+  }, [itemData]);
 
-
-useEffect(() => {
-  // let infoData={
-  //   email: 'demo@gmail.com',
-  //   password:'@gmail.com$Apollo',
-  // }
-
-  // console.log("itemData",itemData);
- 
-  dispatch(getUserListApi(
-    0,10
-  ));
-  
-}, []);
   return (
     <div className={styles.mainContainer}>
       <Grid spacing={0} className={styles.container}>
@@ -78,7 +86,7 @@ useEffect(() => {
                   label="User Name"
                   variant="outlined"
                 /> */}
-                <FormControl  variant="outlined">
+                <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-account">
                     User Name
                   </InputLabel>
@@ -86,10 +94,12 @@ useEffect(() => {
                     id="outlined-adornment-account"
                     endAdornment={
                       <InputAdornment position="end">
-                        <AccountCircleIcon/>
+                        <AccountCircleIcon />
                       </InputAdornment>
                     }
                     label="User Name"
+                    value={username}
+                    onChange={handleUsernameChange}
                   />
                 </FormControl>
                 {/* <TextField
@@ -98,7 +108,7 @@ useEffect(() => {
                   type="password"
                   variant="outlined"
                 /> */}
-                <FormControl  variant="outlined">
+                <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
                     Password
                   </InputLabel>
@@ -122,6 +132,8 @@ useEffect(() => {
                       </InputAdornment>
                     }
                     label="Password"
+                    value={password}
+                    onChange={handlePasswordChange}
                   />
                 </FormControl>
                 <Button
@@ -133,8 +145,8 @@ useEffect(() => {
                     margin: "40px 0 10px 0",
                   }}
                   mt={2}
-                  onClick={(e) => {
-                    submitHandler(e);
+                  onClick={() => {
+                    submitHandler();
                   }}
                 >
                   Get Started
