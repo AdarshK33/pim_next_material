@@ -1,15 +1,9 @@
-
 import dashboard from "../../../assets/icons/dashboard.svg";
 import attributes from "../../../assets/icons/attributes.svg";
 import category from "../../../assets/icons/category.svg";
 import products from "../../../assets/icons/products.svg";
 import user from "../../../assets/icons/user.svg";
 // import userImg from "../../../assets/icons/userImg.svg";
-
-
-
-
-
 
 const Menuitems = [
   {
@@ -22,16 +16,16 @@ const Menuitems = [
     title: "CATEGORY",
     icon: category,
     href: "/category",
-    // list: [
-    //   {
-    //     title: "Categories",
-    //     href: "/categories",
-    //   },
-    //   {
-    //     title: "Products",
-    //     href: "/products",
-    //   }
-    // ],
+    list: [
+      {
+        title: "ATTRIBUTE",
+        href: "/forms",
+      },
+      {
+        title: "ATTRIBUTE SET",
+        href: "/alerts",
+      },
+    ],
   },
   {
     title: "ATTRIBUTES",
@@ -42,7 +36,17 @@ const Menuitems = [
   {
     title: "PRODUCTS",
     icon: products,
-    href: "#",
+    href: "/rating",
+    list: [
+      {
+        title: "FORMATION",
+        href: "/buttons",
+      },
+      {
+        title: "ACTIVE",
+        href: "/image",
+      },
+    ],
   },
   {
     title: "CHANNELS",
@@ -54,14 +58,12 @@ const Menuitems = [
     icon: user,
     href: "#",
   },
- 
+
   {
     title: "USER & ROLE",
     icon: user,
     href: "#",
   },
- 
- 
 ];
 
 export default Menuitems;

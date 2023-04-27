@@ -1,4 +1,11 @@
-import React from "react";
+import React, {
+  Fragment,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import NextLink from "next/link";
 import PropTypes from "prop-types";
 import {
@@ -13,82 +20,131 @@ import {
   Collapse,
   ListItemIcon,
   ListItemText,
-  Divider
+  Divider,
 } from "@mui/material";
 import FeatherIcon from "feather-icons-react";
 import LogoIcon from "../logo/LogoIcon";
 import Menuitems from "./MenuItems";
 import Buynow from "./Buynow";
 import { useRouter } from "next/router";
-import SideBarContent from "./siderBarContent"
-import Image from 'next/image';
-import styles from "./sidebar.module.css"
+import SideBarContent from "./siderBarContent";
+import Image from "next/image";
+import styles from "./sidebar.module.css";
 
 import ProfileDD from "../header/ProfileDD";
 
-
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const [submenuOpen, setSubmenuOpen] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState("");
+
+  const [openSecondLevel, setOpenSecondLevel] = React.useState(true);
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const handleClickSecondLevel = () => {
+    setOpenSecondLevel(!openSecondLevel);
+  };
+
+  const handleMenuClick = (title) => {
+    if (title === selectedMenu) {
+      setSubmenuOpen(!submenuOpen);
+    } else {
+      setSelectedMenu(title);
+      setSubmenuOpen(true);
+    }
+  };
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-  const handleClick = (index) => {
-    if (open === index) {
-      setOpen((prevopen) => !prevopen);
-    } else {
-      setOpen(index);
-    }
-  };
   let curl = useRouter();
   const location = curl.pathname;
 
   const SidebarContent = (
-    <Box p={2} height="100%">
+    <Box p={2} height="100%" className={styles.bg_color}>
       <LogoIcon />
       <Divider />
 
       <div>
-      <ProfileDD />
+        <ProfileDD />
       </div>
       <Divider />
       <Box mt={2}>
-        <List>
-          {Menuitems.map((item, index) => (
-            <List component="li" disablePadding key={item.title}>
-              <NextLink href={item.href}>
-                <ListItem
-                  onClick={() => handleClick(index)}
-                  button
-                  selected={location === item.href}
-                  sx={{
-                    mb: 1,
-                    ...(location === item.href && {
-                      color: "white",
-                      backgroundColor: (theme) =>
-                        `${theme.palette.primary.main}!important`,
-                    }),
-                  }}
-                >
-                   <Image
-                              className="px-2"
-                              src={item.icon}
-							                alt="edit"
-                              width={25}
-							                height={25}
-                            
-						                  />
-
-                  <ListItemText onClick={onSidebarClose} className={styles.menu_item}>
-                    {item.title}
-                  </ListItemText>
-                </ListItem>
-              </NextLink>
-              {/* <SidebarContent data={item.list} /> */}
-                
-            </List>
-            
-          ))}
-        </List>
+        <div className={styles.roots}>
+          <List>
+            {Menuitems.map((menuitem, index) => {
+              return (
+                <div key={index}>
+                  <List component="li" disablePadding>
+                    <NextLink href={menuitem.href}>
+                      <ListItem
+                        // button
+                        onClick={() => handleMenuClick(menuitem.title)}
+                        // onClick={() => handleClick(index)}
+                        // button
+                        selected={location === menuitem.href}
+                        sx={{
+                          mb: 1,
+                          ...(location === menuitem.href && {
+                            color: "#419794",
+                            // backgroundColor: (theme) =>
+                            //   `${theme.palette.primary.main}!important`,
+                          }),
+                        }}
+                      >
+                        <ListItemIcon>
+                          {/* <img src={menuitem.icon} alt={menuitem.title} /> */}
+                          <Image
+                            // className="px-2 "
+                            src={menuitem.icon}
+                            alt="edit"
+                            width={35}
+                            height={30}
+                            // onClick={()=>handleEdit(item.brandId)}
+                          />
+                        </ListItemIcon>
+                        <ListItemText primary={menuitem.title} />
+                        {menuitem.list && submenuOpen ? "" : ""}
+                      </ListItem>
+                    </NextLink>
+                  </List>
+                  {menuitem.list && (
+                    <Collapse
+                      in={menuitem.title === selectedMenu && submenuOpen}
+                      timeout="auto"
+                      unmountOnExit
+                    >
+                      <List component="div" disablePadding>
+                        {menuitem.list.map((submenu, index) => {
+                          return (
+                            <NextLink href={submenu.href}>
+                              <ListItem
+                                key={index}
+                                button
+                                className={styles.nesteds}
+                                sx={{
+                                  mb: 1,
+                                  ...(location === submenu.href && {
+                                    color: "#419794",
+                                    // backgroundColor: (theme) =>
+                                    //   `${theme.palette.primary.main}!important`,
+                                  }),
+                                }}
+                              >
+                                <ListItemText primary={submenu.title} />
+                              </ListItem>
+                            </NextLink>
+                          );
+                        })}
+                      </List>
+                    </Collapse>
+                  )}
+                </div>
+              );
+            })}
+          </List>
+        </div>
       </Box>
 
       {/* <Buynow /> */}

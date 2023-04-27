@@ -34,7 +34,7 @@ const Header = ({ sx, customClass, toggleMobileSidebar, position,moduleName }) =
           <FeatherIcon icon="menu" width="20" height="20" />
         </IconButton>
        
-        <Typography variant="h2">{moduleName}</Typography>
+        {/* <Typography variant="h2">{moduleName}</Typography> */}
         {/* ------------------------------------------- */}
         {/* Search Dropdown */}
         {/* ------------------------------------------- */}
