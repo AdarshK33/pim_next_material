@@ -10,7 +10,6 @@ import Sidebar from "./sidebar/Sidebar";
 import Footer from "./footer/Footer";
 import { useRouter } from "next/router";
 
-
 const MainWrapper = experimentalStyled("div")(() => ({
   display: "flex",
   minHeight: "100vh",
@@ -23,7 +22,7 @@ const PageWrapper = experimentalStyled("div")(({ theme }) => ({
   flex: "1 1 auto",
   overflow: "hidden",
 
-  backgroundColor: theme.palette.secondary.dark,//use for layout
+  backgroundColor: theme.palette.secondary.dark, //use for layout
   [theme.breakpoints.up("lg")]: {
     paddingTop: "64px",
   },
@@ -39,17 +38,17 @@ const FullLayout = ({ children }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   return (
     <MainWrapper>
-     {router.route !== "/login" && router.route !== "/signup" && (
-          <Header
+      {router.route !== "/" && router.route !== "/signup" && (
+        <Header
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#fbfbfb",
           }}
           toggleMobileSidebar={() => setSidebarOpen(!isSidebarOpen)}
-          moduleName={'NAME'}
+          moduleName={"NAME"}
         />
-        )}
-    
+      )}
+
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}
