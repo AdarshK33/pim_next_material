@@ -1,14 +1,11 @@
-import Attributes from '../../src/components/attributes';
-
-
+import Attributes from "../../src/components/attributes";
 
 function index() {
-
-    return (
-        <>
-            <Attributes />
-        </>
-    )
+  return (
+    <>
+      <Attributes />
+    </>
+  );
 }
 
 export default index;

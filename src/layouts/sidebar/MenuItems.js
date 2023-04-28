@@ -22,7 +22,7 @@ const Menuitems = [
       },
       {
         title: "ATTRIBUTES",
-        href: "/alerts",
+        href: "/attributes",
       },
     ],
   },
@@ -41,11 +41,7 @@ const Menuitems = [
       },
     ],
   },
-  {
-    title: "ATTRIBUTES",
-    icon: attributes,
-    href: "#",
-  },
+
   // {
   //   title: "PRODUCTS",
   //   icon: products,

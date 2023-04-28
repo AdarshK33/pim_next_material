@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Box,
@@ -18,16 +18,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import styles from "./login.module.css";
-import { useDispatch,useSelector} from "react-redux";
-import {userLoginApi,getUserListApi } from "../redux/actions/login";
-
+import { useDispatch, useSelector } from "react-redux";
+import { userLoginApi, getUserListApi } from "../redux/actions/login";
 
 const Login = () => {
   const dispatch = useDispatch();
 
-
-  const { userGet,roleGet } = useSelector(state => {
-   
+  const { userGet, roleGet } = useSelector((state) => {
     return state.loginReducer;
   });
 
@@ -41,24 +38,18 @@ const Login = () => {
     event.preventDefault();
   };
   console.log("bulkListData", process.env.SYNC_QUERY_SERVICE_URL);
-console.log("userGet",userGet)
+  console.log("userGet", userGet);
 
+  useEffect(() => {
+    // let infoData={
+    //   email: 'demo@gmail.com',
+    //   password:'@gmail.com$Apollo',
+    // }
 
+    // console.log("itemData",itemData);
 
-
-useEffect(() => {
-  // let infoData={
-  //   email: 'demo@gmail.com',
-  //   password:'@gmail.com$Apollo',
-  // }
-
-  // console.log("itemData",itemData);
- 
-  dispatch(getUserListApi(
-    0,10
-  ));
-  
-}, []);
+    dispatch(getUserListApi(0, 10));
+  }, []);
   return (
     <div className={styles.mainContainer}>
       <Grid spacing={0} className={styles.container}>
@@ -78,7 +69,7 @@ useEffect(() => {
                   label="User Name"
                   variant="outlined"
                 /> */}
-                <FormControl  variant="outlined">
+                <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-account">
                     User Name
                   </InputLabel>
@@ -86,7 +77,7 @@ useEffect(() => {
                     id="outlined-adornment-account"
                     endAdornment={
                       <InputAdornment position="end">
-                        <AccountCircleIcon/>
+                        <AccountCircleIcon />
                       </InputAdornment>
                     }
                     label="User Name"
@@ -98,7 +89,7 @@ useEffect(() => {
                   type="password"
                   variant="outlined"
                 /> */}
-                <FormControl  variant="outlined">
+                <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
                     Password
                   </InputLabel>
