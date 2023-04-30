@@ -1,7 +1,7 @@
-import React,{useState} from "react";
-import styles from './channels.module.css';
-import Image from 'next/image';
-import edit from '../../../assets/icons/edit.svg';
+import React, { useState } from "react";
+import styles from "./userManagement.module.css";
+import Image from "next/image";
+import edit from "../../../assets/icons/edit.svg";
 import {
   Grid,
   Button,
@@ -20,21 +20,16 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-const Channels = () => {
-
+const UserManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const tableData = [];
 
   for (let i = 1; i <= 5; i++) {
     tableData.push({
-      name: "amazon" + i,
-      desc: "cloths" + i,
-      last: "NA" + i,
-      tpa: "0" + i,
-      tpia: "0" + i,
-      status: "Active",
-
+      email: "demo@gmail.com" + i,
+      sku: "ADMIN" + i,
+      brand: "Nike" + i,
     });
   }
 
@@ -49,16 +44,15 @@ const Channels = () => {
     setCurrentPage(value);
   };
 
-  
-  return(
+  return (
     <>
-    <Grid container spacing={0}>
+      <Grid container spacing={0}>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
-                Channels
+                User Management
               </Typography>
               <Button variant="outlined" color="success" component="label">
                 Add New
@@ -71,12 +65,9 @@ const Channels = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>#</TableCell>
-                      <TableCell align="right">NAME</TableCell>
-                      <TableCell align="right">DESCRIPTION</TableCell>
-                      <TableCell align="right">LAST UPLOADED</TableCell>
-                      <TableCell align="right">TOTAL PRODUCT ACTIVE</TableCell>
-                      <TableCell align="right">TOTAL PRODUCT INACTIVE</TableCell>
-                      <TableCell align="right">STATUS</TableCell>
+                      <TableCell align="right">EMAIL</TableCell>
+                      <TableCell align="right">ROLE TYPE</TableCell>
+                      <TableCell align="right">BRAND</TableCell>
                       <TableCell align="right">ACTION</TableCell>
                     </TableRow>
                   </TableHead>
@@ -91,12 +82,9 @@ const Channels = () => {
                         <TableCell component="th" scope="row">
                           {i + 1 + indexOfFirstRecord}
                         </TableCell>
-                        <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.desc}</TableCell>
-                        <TableCell align="right">{row.last}</TableCell>
-                        <TableCell align="right">{row.tpa}</TableCell>
-                        <TableCell align="right">{row.tpia}</TableCell>
-                        <TableCell align="right">{row.status}</TableCell>
+                        <TableCell align="right">{row.email}</TableCell>
+                        <TableCell align="right">{row.sku}</TableCell>
+                        <TableCell align="right">{row.brand}</TableCell>
                         <div className="action_center">
                           <Image
                             className="px-2 "
@@ -126,7 +114,7 @@ const Channels = () => {
         </Grid>
       </Grid>
     </>
-  )
+  );
 };
 
-export default Channels;
+export default UserManagement;
