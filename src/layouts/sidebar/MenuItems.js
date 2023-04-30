@@ -33,7 +33,7 @@ const Menuitems = [
     list: [
       {
         title: "ALL PRODUCTS",
-        href: "#",
+        href: "/allProducts",
       },
       {
         title: "ACTIVE PRODUCTS",
