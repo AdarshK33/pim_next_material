@@ -20,6 +20,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import styles from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoginApi } from "../redux/actions/login";
+import { withIronSessionSsr } from "iron-session/next";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Login = () => {
 
   const submitHandler = () => {
     if (username === "" || password === "") {
-      alert("Username or Password cannot be blank");
+      alert("Plase Enter UserName and Password");
     } else {
       let loginData = {
         email: username,
@@ -169,3 +170,36 @@ const Login = () => {
 };
 
 export default Login;
+
+// // its working
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    const user = await req?.session?.user;
+
+    console.log("hello login", user);
+
+    if (user) {
+      return {
+        redirect: {
+          destination: "/userManagement",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        user: req.session.user || null,
+      },
+    };
+  },
+  {
+    cookieName: "PIMSESSION",
+    password: "760848aa-c385-4321-ba49-75201fa0de80",
+    cookieOptions: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      maxAge: 60 * 60 * 24,
+    },
+  }
+);
