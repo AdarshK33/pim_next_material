@@ -21,9 +21,13 @@ import styles from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoginApi } from "../redux/actions/login";
 import { withIronSessionSsr } from "iron-session/next";
+import Router from "next/router";
 
-const Login = () => {
+const Login = (user) => {
   const dispatch = useDispatch();
+  const { isLogin } = useSelector((state) => {
+    return state.loginReducer;
+  });
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
   const [username, setUsername] = useState("");
@@ -67,6 +71,13 @@ const Login = () => {
       dispatch(userLoginApi(itemData));
     }
   }, [itemData]);
+  useEffect(() => {
+    if (isLogin === 201) {
+      // console.log("userlogin useeeffect 201", isLogin);
+
+      Router.push("/userManagement");
+    }
+  }, [isLogin, user]);
 
   return (
     <div className={styles.mainContainer}>

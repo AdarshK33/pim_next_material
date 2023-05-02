@@ -171,7 +171,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   return (
     <Drawer
       anchor="left"
-      open={isMobileSidebarOpen}
+      open={isSidebarOpen}
       onClose={onSidebarClose}
       PaperProps={{
         sx: {

@@ -217,7 +217,7 @@ export const createUserApi = (data) => {
         console.log("---------userApi------", response.status);
         // result = true;
         if (response.status === 200) {
-          toast.info("User Create Successfully !!!");
+          // toast.info("User Create Successfully !!!");
           console.log("user ==>", response.data.result);
           dispatch(
             createUserDataSuccess(
@@ -229,7 +229,7 @@ export const createUserApi = (data) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        toast.error("User Data Not Found!!!");
+        // toast.error("User Data Not Found!!!");
         console.log("error caught in -> actions/login/createUser", err);
         //result = false;
         dispatch(

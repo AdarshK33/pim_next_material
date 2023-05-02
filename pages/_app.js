@@ -16,8 +16,14 @@ import { withIronSessionSsr } from "iron-session/next";
 const clientSideEmotionCache = createEmotionCache();
 
 function MyApp(props) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps,
+    // user,
+  } = props;
 
+  // console.log("hello user", user);
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -33,13 +39,6 @@ function MyApp(props) {
     </CacheProvider>
   );
 }
-
-MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  emotionCache: PropTypes.object,
-  pageProps: PropTypes.object.isRequired,
-};
-export default withRedux(mainStore, { debug: false })(MyApp);
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
@@ -75,3 +74,10 @@ export const getServerSideProps = withIronSessionSsr(
     },
   }
 );
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  emotionCache: PropTypes.object,
+  pageProps: PropTypes.object.isRequired,
+};
+export default withRedux(mainStore, { debug: false })(MyApp);
