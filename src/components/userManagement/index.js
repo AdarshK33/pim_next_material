@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./userManagement.module.css";
 import Image from "next/image";
 import edit from "../../../assets/icons/edit.svg";
@@ -20,8 +20,24 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
+import CustomModal from "../../common/customModal";
+import AddForm from "./AddForm.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
+
 const UserManagement = () => {
+  const { userGet, roleGet } = useSelector((state) => {
+    return state.loginReducer;
+  });
+  const dispatch = useDispatch();
+  const [showUserAddForm, setShowUserAddForm] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    dispatch(getUserListApi(currentPage - 1, 5));
+    dispatch(getRoleApi());
+  }, []);
 
   const tableData = [];
 
@@ -34,14 +50,16 @@ const UserManagement = () => {
   }
 
   const recordPerPage = 5;
-  const totalRecords = tableData.length;
+  const totalRecords = userGet.totalElements;
   const pageRange = 5;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
+  const currentRecords = userGet?.content;
 
   const handlePaginationChange = (event, value) => {
     setCurrentPage(value);
+    console.log(value, "value");
+    dispatch(getUserListApi(value - 1, 5));
   };
 
   return (
@@ -51,13 +69,23 @@ const UserManagement = () => {
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
-              <Typography variant="h2" className={styles.main_title}>
+              <Typography variant="h7" className={styles.main_title}>
                 User Management
               </Typography>
-              <Button variant="outlined" color="success" component="label">
+              <Button
+                variant="outlined"
+                color="success"
+                component="label"
+                onClick={() => setShowUserAddForm(true)}
+              >
                 Add New
                 {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
+              <CustomModal
+                openModal={showUserAddForm}
+                closeModal={() => setShowUserAddForm(false)}
+                body={<AddForm classModal={() => setShowUserAddForm(false)} />}
+              />
             </Grid>
             <CardContent>
               <TableContainer component={Paper}>
@@ -66,45 +94,55 @@ const UserManagement = () => {
                     <TableRow>
                       <TableCell>#</TableCell>
                       <TableCell align="right">EMAIL</TableCell>
-                      <TableCell align="right">ROLE TYPE</TableCell>
-                      <TableCell align="right">BRAND</TableCell>
+                      <TableCell align="right">ROLE</TableCell>
+
                       <TableCell align="right">ACTION</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {tableData.map((row, i) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {i + 1 + indexOfFirstRecord}
-                        </TableCell>
-                        <TableCell align="right">{row.email}</TableCell>
-                        <TableCell align="right">{row.sku}</TableCell>
-                        <TableCell align="right">{row.brand}</TableCell>
-                        <div className="action_center">
-                          <Image
-                            className="px-2 "
-                            src={edit}
-                            alt="edit"
-                            width={35}
-                            height={30}
-                            // onClick={()=>handleEdit(item.brandId)}
-                          />
-                        </div>
+                    {currentRecords &&
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
+                      currentRecords.map((row, i) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {i + 1 + indexOfFirstRecord}
+                          </TableCell>
+                          <TableCell align="right">{row.email}</TableCell>
+                          <TableCell align="right">{row.role}</TableCell>
+                          <TableCell align="right">{row.status}</TableCell>
+                          <div className="action_center">
+                            <Image
+                              className="px-2 "
+                              src={edit}
+                              alt="edit"
+                              width={35}
+                              height={30}
+                              // onClick={()=>handleEdit(item.brandId)}
+                            />
+                          </div>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={12}>No Record Found</TableCell>
                       </TableRow>
-                    ))}
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
               <Stack spacing={2}>
                 <div className={styles.category_pagination}>
                   <Pagination
-                    count={10}
+                    count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
+                    showFirstButton
+                    showLastButton
                     onChange={handlePaginationChange}
                   />
                 </div>

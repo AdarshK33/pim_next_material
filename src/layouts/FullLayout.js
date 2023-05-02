@@ -38,7 +38,7 @@ const FullLayout = ({ children }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   return (
     <MainWrapper>
-      {router.route !== "/" && router.route !== "/signup" && (
+      {router.route !== "/" && router.route !== "/login" && (
         <Header
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",

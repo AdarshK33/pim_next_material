@@ -10,14 +10,20 @@ import FullLayout from "../src/layouts/FullLayout";
 import "../styles/style.css";
 import withRedux from "next-redux-wrapper";
 import { mainStore } from "../redux/store";
-
+import { withIronSessionSsr } from "iron-session/next";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
- function MyApp(props) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+function MyApp(props) {
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps,
+    // user,
+  } = props;
 
+  // console.log("hello user", user);
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -33,6 +39,41 @@ const clientSideEmotionCache = createEmotionCache();
     </CacheProvider>
   );
 }
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    try {
+      const user = req?.session?.user || null;
+      console.log("hello app", user);
+      if (!user) {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false,
+          },
+        };
+      }
+
+      return {
+        props: {
+          user: req?.session?.user || null,
+        },
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+  {
+    cookieName: "PIMSESSION",
+    password: "760848aa-c385-4321-ba49-75201fa0de80",
+    cookieOptions: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      maxAge: 60 * 60 * 24,
+    },
+  }
+);
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,

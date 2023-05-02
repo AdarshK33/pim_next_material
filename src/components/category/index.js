@@ -11,53 +11,76 @@ import Image from "next/image";
 
 import styles from "./category.module.css";
 
+import { Button, Card, CardContent, Typography } from "@mui/material";
+
 import {
   Grid,
-  Button,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+  FormControl,
+  FormLabel,
+  InputLabel,
+  Input,
+  Select,
+  MenuItem,
+  TextField,
+} from "@material-ui/core";
+
+import TreeView from "@mui/lab/TreeView";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import TreeItem from "@mui/lab/TreeItem";
 
 const Category = () => {
-  const tableData = [];
-
-  for (let i = 1; i <= 5; i++) {
-    tableData.push({
-      id: "11100" + i,
-      sku: "Sku" + i,
-      name: "Name" + i,
-      brand: "Brand" + i,
-      channels: "Channels" + i,
-      category: "Category" + i,
-    });
-  }
-  //   /*-----------------Pagination------------------*/
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const recordPerPage = 5;
-  const totalRecords = tableData.length;
-  const pageRange = 5;
-  const indexOfLastRecord = currentPage * recordPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
-
-  const handlePaginationChange = (event, value) => {
-    setCurrentPage(value);
-  };
-
-  /*-----------------Pagination------------------*/
-
+  const data = [
+    {
+      id: "root-1",
+      name: "Parent 1",
+      children: [
+        {
+          id: "1",
+          name: "Child - 1",
+        },
+        {
+          id: "3",
+          name: "Child - 3",
+          children: [
+            {
+              id: "4",
+              name: "Child - 4",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "root-2",
+      name: "Parent 2",
+      children: [
+        {
+          id: "5",
+          name: "Child - 5",
+        },
+        {
+          id: "6",
+          name: "Child - 6",
+          children: [
+            {
+              id: "7",
+              name: "Child - 7",
+            },
+          ],
+        },
+      ],
+    },
+  ];
+  const renderTree = (nodes) => (
+    <>
+      {nodes.map((node) => (
+        <TreeItem key={node.id} nodeId={node.id} label={node.name}>
+          {Array.isArray(node.children) ? renderTree(node.children) : null}
+        </TreeItem>
+      ))}
+    </>
+  );
   return (
     <>
       <Grid container spacing={0}>
@@ -73,74 +96,137 @@ const Category = () => {
           </Grid> */}
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
-              <Typography variant="h2" className={styles.main_title}>
+              <Typography variant="h7" className={styles.main_title}>
                 Category
               </Typography>
               <Button variant="outlined" color="success" component="label">
-                Upload Products
-                <input hidden accept="image/*" multiple type="file" />
+                + Add New
+                {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
             </Grid>
-            <CardContent>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>#</TableCell>
 
-                      <TableCell>ID</TableCell>
+            <Grid container spacing={2} className={styles.category_menu}>
+              <Grid md={4}>
+                <TreeView
+                  aria-label="rich object"
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpanded={["root-1", "root-2"]}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                  sx={{
+                    height: 400,
+                    flexGrow: 1,
+                    maxWidth: 400,
+                    overflowY: "auto",
+                  }}
+                >
+                  {renderTree(data)}
+                </TreeView>
+              </Grid>
 
-                      <TableCell>SKU</TableCell>
-                      <TableCell align="right">PRODUCT NAME</TableCell>
-                      <TableCell align="right">BRAND</TableCell>
-                      <TableCell align="right">CHANNELS</TableCell>
-                      <TableCell align="right">CATEGORY</TableCell>
-                      <TableCell align="right">ACTION</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {tableData.map((row, i) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
+              <Grid
+                container
+                spacing={2}
+                md={8}
+                className={styles.category_form}
+              >
+                <form>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6} className={styles.category_input}>
+                      <TextField
+                        id="outlined-name"
+                        label="Name"
+                        type="text"
+                        variant="standard"
+                        fullWidth
+                      />
+                    </Grid>
+
+                    <Grid item xs={6} className={styles.category_input}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-helper-label">
+                          Parent Category
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-helper-label"
+                          id="demo-simple-select-helper"
+                          value=""
+                          label="Category"
+                          // onChange={handleChange}
+                        >
+                          <MenuItem value=""></MenuItem>
+                          <MenuItem value={10}>Ten</MenuItem>
+                          <MenuItem value={20}>Twenty</MenuItem>
+                          <MenuItem value={30}>Thirty</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6} className={styles.category_input}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-helper-label">
+                          Sub Category
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-helper-label"
+                          id="demo-simple-select-helper"
+                          value=""
+                          label="Category"
+                          // onChange={handleChange}
+                        >
+                          <MenuItem value=""></MenuItem>
+                          <MenuItem value={10}>Ten</MenuItem>
+                          <MenuItem value={20}>Twenty</MenuItem>
+                          <MenuItem value={30}>Thirty</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6} className={styles.category_input}>
+                      <TextField
+                        id="outlined-description"
+                        label="Slug"
+                        type="text"
+                        variant="standard"
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <TextField
+                        fullWidth
+                        id="outlined-name"
+                        label="Description"
+                        type="text"
+                        variant="standard"
+                        maxRows={4}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      spacing={2}
+                      justifyContent="flex-end"
+                      className={styles.addButton}
+                    >
+                      {/* <Button
+                        // onClick={classModal}
+                        variant="outlined"
+                        color="secondary"
                       >
-                        <TableCell component="th" scope="row">
-                          {i + 1 + indexOfFirstRecord}
-                        </TableCell>
-                        <TableCell align="right">{row.id}</TableCell>
+                        CANCEL
+                      </Button> */}
 
-                        <TableCell align="right">{row.sku}</TableCell>
-                        <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.brand}</TableCell>
-                        <TableCell align="right">{row.channels}</TableCell>
-                        <TableCell align="right">{row.category}</TableCell>
-                        <div className="action_center">
-                          <Image
-                            className="px-2 "
-                            src={edit}
-                            alt="edit"
-                            width={35}
-                            height={30}
-                            // onClick={()=>handleEdit(item.brandId)}
-                          />
-                        </div>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <Stack spacing={2}>
-                <div className={styles.category_pagination}>
-                  <Pagination
-                    count={10}
-                    page={currentPage}
-                    onChange={handlePaginationChange}
-                  />
-                </div>
-              </Stack>
-            </CardContent>
+                      <Button
+                        variant="outlined"
+                        // onClick={submitHandler}
+                        type="submit"
+                        // variant="contained"
+                        color="success"
+                      >
+                        SUBMIT
+                      </Button>
+                    </Grid>
+                    {/* </div> */}
+                  </Grid>
+                </form>
+              </Grid>
+            </Grid>
           </Card>
         </Grid>
       </Grid>

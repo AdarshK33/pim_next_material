@@ -4,7 +4,7 @@ import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import PropTypes from "prop-types";
 // Dropdown Component
 import SearchDD from "./SearchDD";
-// import ProfileDD from "./ProfileDD";
+import ProfileDD from "./ProfileDD";
 import {
   Grid,
   Button,
@@ -14,7 +14,13 @@ import {
   Typography,
 } from "@mui/material";
 
-const Header = ({ sx, customClass, toggleMobileSidebar, position,moduleName }) => {
+const Header = ({
+  sx,
+  customClass,
+  toggleMobileSidebar,
+  position,
+  moduleName,
+}) => {
   return (
     <AppBar sx={sx} position={position} elevation={0} className={customClass}>
       <Toolbar>
@@ -30,10 +36,9 @@ const Header = ({ sx, customClass, toggleMobileSidebar, position,moduleName }) =
             },
           }}
         >
-     
           <FeatherIcon icon="menu" width="20" height="20" />
         </IconButton>
-       
+
         {/* <Typography variant="h2">{moduleName}</Typography> */}
         {/* ------------------------------------------- */}
         {/* Search Dropdown */}
@@ -43,13 +48,12 @@ const Header = ({ sx, customClass, toggleMobileSidebar, position,moduleName }) =
         {/* ------------ End Menu icon ------------- */}
 
         <Box flexGrow={1} />
-       
-        {/* <ProfileDD /> */}
+
+        <ProfileDD />
         {/* ------------------------------------------- */}
         {/* Profile Dropdown */}
         {/* ------------------------------------------- */}
       </Toolbar>
-     
     </AppBar>
   );
 };
