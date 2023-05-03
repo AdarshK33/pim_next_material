@@ -96,6 +96,7 @@ const UserManagement = () => {
                       <TableCell align="right">EMAIL</TableCell>
                       <TableCell align="right">ROLE</TableCell>
 
+                      <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ACTION</TableCell>
                     </TableRow>
                   </TableHead>

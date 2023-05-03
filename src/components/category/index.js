@@ -22,7 +22,7 @@ import {
   Select,
   MenuItem,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -106,7 +106,7 @@ const Category = () => {
             </Grid>
 
             <Grid container spacing={2} className={styles.category_menu}>
-              <Grid md={4}>
+              <Grid md={3}>
                 <TreeView
                   aria-label="rich object"
                   defaultCollapseIcon={<ExpandMoreIcon />}
@@ -125,13 +125,13 @@ const Category = () => {
 
               <Grid
                 container
-                spacing={2}
-                md={8}
+                spacing={3}
+                md={7}
                 className={styles.category_form}
               >
                 <form>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6} className={styles.category_input}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={4} className={styles.category_input}>
                       <TextField
                         id="outlined-name"
                         label="Name"
@@ -141,9 +141,12 @@ const Category = () => {
                       />
                     </Grid>
 
-                    <Grid item xs={6} className={styles.category_input}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-helper-label">
+                    <Grid item xs={4} className={styles.category_input}>
+                      <FormControl fullWidth variant="standard">
+                        <InputLabel
+                          id="demo-simple-select-standard-label"
+                          variant="standard"
+                        >
                           Parent Category
                         </InputLabel>
                         <Select
@@ -160,9 +163,12 @@ const Category = () => {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={6} className={styles.category_input}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-helper-label">
+                    <Grid item xs={4} className={styles.category_input}>
+                      <FormControl fullWidth variant="standard">
+                        <InputLabel
+                          id="demo-simple-select-standard-label"
+                          variant="standard"
+                        >
                           Sub Category
                         </InputLabel>
                         <Select
@@ -179,7 +185,7 @@ const Category = () => {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={6} className={styles.category_input}>
+                    {/* <Grid item xs={6} className={styles.category_input}>
                       <TextField
                         id="outlined-description"
                         label="Slug"
@@ -187,7 +193,7 @@ const Category = () => {
                         variant="standard"
                         fullWidth
                       />
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} md={12}>
                       <TextField
                         fullWidth
@@ -195,7 +201,8 @@ const Category = () => {
                         label="Description"
                         type="text"
                         variant="standard"
-                        maxRows={4}
+                        multiline
+                        rows={4}
                       />
                     </Grid>
                     <Grid

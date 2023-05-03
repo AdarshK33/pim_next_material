@@ -18,7 +18,8 @@ import {
   TextField,
   Button,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
 import { createUserApi } from "../../../redux/actions/login";
 
@@ -120,11 +121,13 @@ function AddForm({ classModal }) {
             )}
           </Grid>
           <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-helper-label">Role</InputLabel>
+            <FormControl fullWidth variant="standard">
+              <InputLabel id="demo-simple-select-standard-label">
+                Role
+              </InputLabel>
               <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
                 label="Role"
                 value={role}
                 onChange={roleHandler}
@@ -132,7 +135,7 @@ function AddForm({ classModal }) {
                 <MenuItem value=""></MenuItem>
                 {loginReducer?.roleGet &&
                   loginReducer?.roleGet?.map((item, i) => {
-                    return <MenuItem value={item.value}>{item.label}</MenuItem>;
+                    return <MenuItem value={item.value}>{item.name}</MenuItem>;
                   })}
               </Select>
             </FormControl>
@@ -155,10 +158,10 @@ function AddForm({ classModal }) {
 
             <Button
               variant="outlined"
-              onClick={(e) => submitHandler(e)}
               type="submit"
               // variant="contained"
               color="success"
+              onClick={(e) => submitHandler(e)}
             >
               SUBMIT
             </Button>

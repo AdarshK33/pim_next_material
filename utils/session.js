@@ -6,9 +6,11 @@ export const sessionOption = {
   cookieOptions: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production" ? true : false,
-    maxAge: 60 * 60 * 24,
+    maxAge: 60 * 2,
   },
 };
+
+console.log("PIMSESSION_TIMEOUT", process.env.PIMSESSION_TIMEOUT);
 
 export default function withSession(route) {
   return withIronSessionApiRoute(route, sessionOption);

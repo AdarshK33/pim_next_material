@@ -12,19 +12,21 @@ import loginReducer from "./loginReducer";
 // import syncCommandReducer from "./syncCommandReducer";
 
 // import syncQueryReducer from "./syncQueryReducer"
+import catalogServiceNewReducer from "./catalogServiceNew";
 
 const rootReducer = combineReducers({
   // app,
-//   reducer,
+  //   reducer,
   // brandReducer,
-   loginReducer,
-//   onBoardQueryReducer,
-//   channelReducer,
-//   catalogQueryReducer,
-//   catalogReducer,
-//   bulkReducer,
-//   syncCommandReducer,
-//   syncQueryReducer
+  loginReducer,
+  //   onBoardQueryReducer,
+  //   channelReducer,
+  //   catalogQueryReducer,
+  //   catalogReducer,
+  //   bulkReducer,
+  //   syncCommandReducer,
+  //   syncQueryReducer,
+  catalogServiceNewReducer,
 });
 
 export default rootReducer;

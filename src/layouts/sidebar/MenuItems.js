@@ -9,7 +9,7 @@ const Menuitems = [
   {
     title: "DASHBOARD",
     icon: dashboard,
-    href: "#",
+    href: "/dashboard",
   },
   {
     title: "MASTER",

@@ -1,4 +1,4 @@
-import { authServer } from "../../../utils/axios";
+import { catalogServiceNew } from "../../../utils/axios";
 import withSession from "../../../utils/session";
 
 function handler(req, res) {
@@ -8,25 +8,29 @@ function handler(req, res) {
 
   const { user: { at = "" } = {}, loggedIn } = req.session;
 
-  // console.log(at, "hello tttttttt");
-  //   http://auth-command-handler.theretailinsightsdemos.com/api/v1/auth/users?pageNo=0&pageSize=50
-  // http://auth-command-handler.theretailinsightsdemos.com/api/v1/auth/users?pageNo=0&pageSize=10
+  //   http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes_set?page_No=0&page_size=10
+  // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes_set?page_No=0&page_size=5
   const config = {
     method: "get",
-    url: `/auth/users?pageNo=${body.pageNo}&pageSize=${body.pageSize}`,
+    url: `/catalog/attributes_set?page_No=${body.page_No}&page_size=${body.page_size}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
+    // data: body,
   };
-  authServer(config)
+  catalogServiceNew(config)
     .then((response) => {
+      // console.log("res1", response);
       if (response.status === 200) {
         res.status(200).json(response.data);
         Promise.resolve();
       }
     })
     .catch((err) => {
-      console.log("error caught in -> pages/api/login/userList.js", err);
+      console.log(
+        "error caught in -> pages/api/catalogServiceNew/attributeList.js",
+        err
+      );
       if (err?.response?.data) {
         const { status = {} } = err?.response;
         res.status(status).json(err.response.data.error + " " + status);
