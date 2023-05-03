@@ -10,3 +10,17 @@
   width: 20%;
   border-bottom: 2px solid #ffcf76;
 }
+.category_menu {
+  margin-top: 20px !important;
+  height: 400px;
+}
+.category_form {
+  margin-left: 5px !important;
+}
+.category_input {
+  padding: 15px !important;
+}
+
+.addButton {
+  margin-top: 20px !important;
+}

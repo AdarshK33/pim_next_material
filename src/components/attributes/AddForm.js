@@ -27,6 +27,13 @@ function AddForm({ classModal }) {
     Description: "",
   });
 
+  // const dropdownOptions = categoryDropdown.map(item => ({
+  //   value: item.id,
+  //   label: item.name
+  // }));
+
+  // console.log(dropdownOptions)
+
   const submitHandler = (e) => {
     e.preventDefault();
   };
