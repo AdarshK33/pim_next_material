@@ -32,4 +32,5 @@ th {
   white-space: nowrap !important;
   max-width: 200px !important;
   position: relative !important;
+  padding: 10px;
 }

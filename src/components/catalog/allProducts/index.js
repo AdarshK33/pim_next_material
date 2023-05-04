@@ -22,6 +22,8 @@ import {
   CardContent,
   Typography,
   Checkbox,
+  Container,
+  LinearProgress,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -38,12 +40,11 @@ const AllProducts = () => {
 
   for (let i = 1; i <= 5; i++) {
     tableData.push({
-      id: "11100" + i,
-      sku: "Sku" + i,
-      name: "Name" + i,
-      brand: "Brand" + i,
-      channels: "Channels" + i,
-      category: "Category" + i,
+      id: "DTE000" + i,
+      name: "Dolo 650mg",
+      category: "PHARMA",
+      formation: `${i}0%`,
+      status: "Draft",
     });
   }
   //   /*-----------------Pagination------------------*/
@@ -63,6 +64,7 @@ const AllProducts = () => {
   /*-----------------Pagination------------------*/
 
   const [value, setValue] = useState(0);
+  const [progress, setProgress] = React.useState(10);
 
   const handleNext = () => {
     setValue((prevValue) => prevValue + 1);
@@ -73,19 +75,14 @@ const AllProducts = () => {
   };
 
   const handleNextClick = () => {
-    if (value < 3) {
+    if (value < 2) {
       // assuming you have 3 tabs in total
       setValue(value + 1);
       // alert(`Moving to ${tabLabels[value + 1]} tab`);
     }
   };
 
-  const tabLabels = [
-    "Draft",
-    "Ready for review",
-    "Revalidate",
-    "Ready for publish",
-  ];
+  const tabLabels = ["Draft", "Ready for review", "Revalidate"];
 
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -102,6 +99,36 @@ const AllProducts = () => {
       </div>
     );
   }
+
+  function LinearProgressWithLabel(props) {
+    return (
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ width: "100%", mr: 1 }}>
+          <LinearProgress variant="determinate" {...props} style={{padding:"6px"}} />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color="text.secondary">{`${Math.round(
+            props.value
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
+  }
+
+  LinearProgressWithLabel.propTypes = {
+    value: PropTypes.number.isRequired,
+  };
+
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setProgress((prevProgress) =>
+  //       prevProgress >= 100 ? 10 : prevProgress + 10
+  //     );
+  //   }, 800);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
 
   return (
     <>
@@ -177,179 +204,65 @@ const AllProducts = () => {
                   />
                 </div>
               </Stack> */}
-              <Box sx={{ maxWidth: { xs: 320, sm: 480 }}}>
-              <Tabs value={value} onChange={handleChange} >
-                <Tab label={tabLabels[0]} />
-                <Tab label={tabLabels[1]} />
-                <Tab label={tabLabels[2]} />
-                <Tab label={tabLabels[3]} />
-              </Tabs>
+              <Box sx={{ maxWidth: 1200 }}>
+                {/* <Container maxWidth="xl"> */}
+                <Tabs value={value} onChange={handleChange}>
+                  <Tab label={tabLabels[0]} className={styles.tab} />
+                  <Tab label={tabLabels[1]} className={styles.tab} />
+                  <Tab label={tabLabels[2]} className={styles.tab} />
+                </Tabs>
+                {/* </Container> */}
               </Box>
               <TabPanel value={value} index={0} onNext={handleNext}>
                 <Table style={{ margin: "10px 0" }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
                       <TableCell>ITEM ID</TableCell>
                       <TableCell>NAME</TableCell>
                       <TableCell>CATEGORY</TableCell>
                       <TableCell>FORMATION</TableCell>
                       <TableCell>STATUS</TableCell>
+                      <TableCell>DETAILS</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>Item 1</TableCell>
-                      <TableCell>Category A</TableCell>
-                      <TableCell>Formation X</TableCell>
-                      <TableCell>Draft</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell>2</TableCell>
-                      <TableCell>Item 2</TableCell>
-                      <TableCell>Category B</TableCell>
-                      <TableCell>Formation Y</TableCell>
-                      <TableCell>Draft</TableCell>
-                    </TableRow>
-                    {/* Add more rows as needed */}
-                  </TableBody>
-                </Table>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNextClick}
-                >
-                  READY FOR REVIEW
-                </Button>
-              </TabPanel>
-              <TabPanel value={value} index={1} onNext={handleNext}>
-                <Table style={{ margin: "10px 0" }}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell>ITEM ID</TableCell>
-                      <TableCell>NAME</TableCell>
-                      <TableCell>CATEGORY</TableCell>
-                      <TableCell>FORMATION</TableCell>
-                      <TableCell>STATUS</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>Item 1</TableCell>
-                      <TableCell>Category A</TableCell>
-                      <TableCell>Formation X</TableCell>
-                      <TableCell>Draft</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell>2</TableCell>
-                      <TableCell>Item 2</TableCell>
-                      <TableCell>Category B</TableCell>
-                      <TableCell>Formation Y</TableCell>
-                      <TableCell>Draft</TableCell>
-                    </TableRow>
-                    {/* Add more rows as needed */}
-                  </TableBody>
-                </Table>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNextClick}
-                >
-                  REVALIDATE
-                </Button>
-              </TabPanel>
-              <TabPanel value={value} index={2} onNext={handleNext}>
-                <Table style={{ margin: "10px 0" }}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell>ITEM ID</TableCell>
-                      <TableCell>NAME</TableCell>
-                      <TableCell>CATEGORY</TableCell>
-                      <TableCell>FORMATION</TableCell>
-                      <TableCell>STATUS</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>Item 1</TableCell>
-                      <TableCell>Category A</TableCell>
-                      <TableCell>Formation X</TableCell>
-                      <TableCell>Revalidate</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell>2</TableCell>
-                      <TableCell>Item 2</TableCell>
-                      <TableCell>Category B</TableCell>
-                      <TableCell>Formation Y</TableCell>
-                      <TableCell>Revalidate</TableCell>
-                    </TableRow>
-                    {/* Add more rows as needed */}
-                  </TableBody>
-                </Table>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNextClick}
-                >
-                  READY FOR PUBLISH
-                </Button>
-              </TabPanel>
-              <TabPanel value={value} index={3} onNext={handleNext}>
-                <Table style={{ margin: "10px 0" }}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>ITEM ID</TableCell>
-                      <TableCell>NAME</TableCell>
-                      <TableCell>CATEGORY</TableCell>
-                      <TableCell>FORMATION</TableCell>
-                      <TableCell>STATUS</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>1</TableCell>
-                      <TableCell>Item 1</TableCell>
-                      <TableCell>Category A</TableCell>
-                      <TableCell>Formation X</TableCell>
-                      <TableCell>Ready for publish</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>2</TableCell>
-                      <TableCell>Item 2</TableCell>
-                      <TableCell>Category B</TableCell>
-                      <TableCell>Formation Y</TableCell>
-                      <TableCell>Ready for publish</TableCell>
-                    </TableRow>
-                    {/* Add more rows as needed */}
+                    {currentRecords &&
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
+                      currentRecords.map((row, i) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {row.id}
+                          </TableCell>
+                          <TableCell>{row.name}</TableCell>
+                          <TableCell>{row.category}</TableCell>
+                          <TableCell>
+                            {" "}
+                            <LinearProgressWithLabel value={progress} />
+                          </TableCell>
+                          <TableCell>{row.status}</TableCell>
+                          <div className="action_center">
+                            <Image
+                              className="px-2"
+                              src={edit}
+                              alt="edit"
+                              width={30}
+                              height={25}
+                              // onClick={()=>handleEdit(item.brandId)}
+                            />
+                          </div>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={12}>No Record Found</TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
                 {/* <Button
@@ -357,8 +270,155 @@ const AllProducts = () => {
                   color="primary"
                   onClick={handleNextClick}
                 >
-                  DRAFT
+                  READY FOR REVIEW
                 </Button> */}
+                <div className={styles.category_pagination}>
+                  <Pagination
+                    count={Math.ceil(totalRecords / recordPerPage)}
+                    page={currentPage}
+                    showFirstButton
+                    showLastButton
+                    onChange={handlePaginationChange}
+                  />
+                </div>
+              </TabPanel>
+              <TabPanel value={value} index={1} onNext={handleNext}>
+                <Table style={{ margin: "10px 0" }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>ITEM ID</TableCell>
+                      <TableCell>NAME</TableCell>
+                      <TableCell>CATEGORY</TableCell>
+                      <TableCell>FORMATION</TableCell>
+                      <TableCell>STATUS</TableCell>
+                      <TableCell>DETAILS</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {currentRecords &&
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
+                      currentRecords.map((row, i) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {row.id}
+                          </TableCell>
+                          <TableCell>{row.name}</TableCell>
+                          <TableCell>{row.category}</TableCell>
+                          <TableCell>
+                            {" "}
+                            <LinearProgressWithLabel value={progress} />
+                          </TableCell>
+                          <TableCell style={{color:"#f4c476"}}>Ready for review</TableCell>
+                          <div className="action_center">
+                            <Image
+                              className="px-2"
+                              src={edit}
+                              alt="edit"
+                              width={30}
+                              height={25}
+                              // onClick={()=>handleEdit(item.brandId)}
+                            />
+                          </div>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={12}>No Record Found</TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+                {/* <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNextClick}
+                >
+                  REVALIDATE
+                </Button> */}
+                <div className={styles.category_pagination}>
+                  <Pagination
+                    count={Math.ceil(totalRecords / recordPerPage)}
+                    page={currentPage}
+                    showFirstButton
+                    showLastButton
+                    onChange={handlePaginationChange}
+                  />
+                </div>
+              </TabPanel>
+              <TabPanel value={value} index={2} onNext={handleNext}>
+                <Table style={{ margin: "10px 0" }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>ITEM ID</TableCell>
+                      <TableCell>NAME</TableCell>
+                      <TableCell>CATEGORY</TableCell>
+                      <TableCell>FORMATION</TableCell>
+                      <TableCell>STATUS</TableCell>
+                      <TableCell>DETAILS</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {currentRecords &&
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
+                      currentRecords.map((row, i) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {row.id}
+                          </TableCell>
+                          <TableCell>{row.name}</TableCell>
+                          <TableCell>{row.category}</TableCell>
+                          <TableCell>
+                            {" "}
+                            <LinearProgressWithLabel value={progress} />
+                          </TableCell>
+                          <TableCell style={{color:"red"}}>Revalidate</TableCell>
+                          <div className="action_center">
+                            <Image
+                              className="px-2"
+                              src={edit}
+                              alt="edit"
+                              width={30}
+                              height={25}
+                              // onClick={()=>handleEdit(item.brandId)}
+                            />
+                          </div>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={12}>No Record Found</TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+                {/* <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNextClick}
+                >
+                  READY FOR PUBLISH
+                </Button> */}
+                <div className={styles.category_pagination}>
+                  <Pagination
+                    count={Math.ceil(totalRecords / recordPerPage)}
+                    page={currentPage}
+                    showFirstButton
+                    showLastButton
+                    onChange={handlePaginationChange}
+                  />
+                </div>
               </TabPanel>
             </CardContent>
           </Card>
