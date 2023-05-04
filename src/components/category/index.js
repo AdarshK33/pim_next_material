@@ -22,7 +22,7 @@ import {
   Select,
   MenuItem,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -83,7 +83,7 @@ const Category = () => {
   );
   return (
     <>
-      <Grid container spacing={0}>
+      <Grid container>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           {/* <Grid item md={4}>
@@ -95,18 +95,18 @@ const Category = () => {
             </button>
           </Grid> */}
           <Card sx={{ p: 5 }}>
-            <Grid container spacing={2} justifyContent="space-between">
+            <Grid spacing={2} justifyContent="space-between">
               <Typography variant="h7" className={styles.main_title}>
                 Category
               </Typography>
-              <Button variant="outlined" color="success" component="label">
+              {/* <Button variant="outlined" color="success" component="label">
                 + Add New
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+
+              </Button> */}
             </Grid>
 
-            <Grid container spacing={2} className={styles.category_menu}>
-              <Grid md={4}>
+            <Grid spacing={2} className={styles.category_menu}>
+              <Grid md={3}>
                 <TreeView
                   aria-label="rich object"
                   defaultCollapseIcon={<ExpandMoreIcon />}
@@ -123,15 +123,10 @@ const Category = () => {
                 </TreeView>
               </Grid>
 
-              <Grid
-                container
-                spacing={2}
-                md={8}
-                className={styles.category_form}
-              >
-                <form>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6} className={styles.category_input}>
+              {/* <Grid spacing={3} md={7} className={styles.category_form}> */}
+              {/* <form>
+                  <Grid spacing={3}>
+                    <Grid item xs={4} className={styles.category_input}>
                       <TextField
                         id="outlined-name"
                         label="Name"
@@ -141,9 +136,12 @@ const Category = () => {
                       />
                     </Grid>
 
-                    <Grid item xs={6} className={styles.category_input}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-helper-label">
+                    <Grid item xs={4} className={styles.category_input}>
+                      <FormControl fullWidth variant="standard">
+                        <InputLabel
+                          id="demo-simple-select-standard-label"
+                          variant="standard"
+                        >
                           Parent Category
                         </InputLabel>
                         <Select
@@ -160,9 +158,12 @@ const Category = () => {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={6} className={styles.category_input}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-helper-label">
+                    <Grid item xs={4} className={styles.category_input}>
+                      <FormControl fullWidth variant="standard">
+                        <InputLabel
+                          id="demo-simple-select-standard-label"
+                          variant="standard"
+                        >
                           Sub Category
                         </InputLabel>
                         <Select
@@ -179,7 +180,7 @@ const Category = () => {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={6} className={styles.category_input}>
+                    {/* <Grid item xs={6} className={styles.category_input}>
                       <TextField
                         id="outlined-description"
                         label="Slug"
@@ -187,19 +188,20 @@ const Category = () => {
                         variant="standard"
                         fullWidth
                       />
-                    </Grid>
-                    <Grid item xs={12} md={12}>
+                    </Grid> */}
+              {/* <Grid item xs={12} md={12}>
                       <TextField
                         fullWidth
                         id="outlined-name"
                         label="Description"
                         type="text"
                         variant="standard"
-                        maxRows={4}
+                        multiline
+                        rows={4}
                       />
                     </Grid>
                     <Grid
-                      container
+                      
                       spacing={2}
                       justifyContent="flex-end"
                       className={styles.addButton}
@@ -211,8 +213,7 @@ const Category = () => {
                       >
                         CANCEL
                       </Button> */}
-
-                      <Button
+              {/* <Button
                         variant="outlined"
                         // onClick={submitHandler}
                         type="submit"
@@ -222,10 +223,10 @@ const Category = () => {
                         SUBMIT
                       </Button>
                     </Grid>
-                    {/* </div> */}
-                  </Grid>
-                </form>
-              </Grid>
+                    </div> */}
+              {/* </Grid> */}
+              {/* </form> */}
+              {/* </Grid> */}
             </Grid>
           </Card>
         </Grid>

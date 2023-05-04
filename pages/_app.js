@@ -70,7 +70,7 @@ export const getServerSideProps = withIronSessionSsr(
     cookieOptions: {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
-      maxAge: 60 * 60 * 24,
+      maxAge: 60 * 2,
     },
   }
 );

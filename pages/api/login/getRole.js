@@ -1,13 +1,19 @@
 import { authServer } from "../../../utils/axios";
+import withSession from "../../../utils/session";
 
 function handler(req, res) {
+  const { user: { at = "" } = {}, loggedIn } = req.session;
   const config = {
     method: "get",
     url: "/auth/role/dropdown",
+    headers: {
+      Authorization: `Bearer ${at}`,
+    },
   };
   authServer(config)
     .then((response) => {
       if (response.status === 200) {
+        // console.log(response.data.result);
         res.status(200).json(response.data.result);
         Promise.resolve();
       }
@@ -22,4 +28,4 @@ function handler(req, res) {
     });
 }
 
-export default handler;
+export default withSession(handler);

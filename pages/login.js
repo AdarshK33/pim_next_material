@@ -23,6 +23,8 @@ import { userLoginApi } from "../redux/actions/login";
 import { withIronSessionSsr } from "iron-session/next";
 import Router from "next/router";
 
+import { sessionOption } from "../utils/session";
+
 const Login = (user) => {
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => {
@@ -34,7 +36,7 @@ const Login = (user) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [itemData, setItemData] = useState();
-  console.log("username", username, password);
+  // console.log("username", username, password);
   // const { userGet,roleGet } = useSelector(state => {
 
   //   return state.loginReducer;
@@ -73,15 +75,13 @@ const Login = (user) => {
   }, [itemData]);
   useEffect(() => {
     if (isLogin === 201) {
-      // console.log("userlogin useeeffect 201", isLogin);
-
-      Router.push("/userManagement");
+      Router.push("/dashboard");
     }
   }, [isLogin, user]);
 
   return (
     <div className={styles.mainContainer}>
-      <Grid spacing={0} className={styles.container}>
+      <Grid className={styles.container}>
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 4 }} className={styles.loginCard}>
             <Typography variant="h1" className={styles.loginPara}>
@@ -187,12 +187,12 @@ export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
     const user = await req?.session?.user;
 
-    console.log("hello login", user);
+    // console.log("hello login", user);
 
     if (user) {
       return {
         redirect: {
-          destination: "/userManagement",
+          destination: "/dashboard",
           permanent: false,
         },
       };
@@ -204,13 +204,5 @@ export const getServerSideProps = withIronSessionSsr(
       },
     };
   },
-  {
-    cookieName: "PIMSESSION",
-    password: "760848aa-c385-4321-ba49-75201fa0de80",
-    cookieOptions: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      maxAge: 60 * 60 * 24,
-    },
-  }
+  sessionOption
 );

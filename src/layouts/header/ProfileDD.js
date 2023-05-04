@@ -66,6 +66,7 @@ const ProfileDD = () => {
             >
               My Profile
             </Typography>
+
             <FeatherIcon icon="chevron-down" width="20" height="20" />
           </Box>
         </Box>
@@ -83,7 +84,7 @@ const ProfileDD = () => {
         }}
       >
         <Box>
-          <Box p={2} pt={0}>
+          {/* <Box p={2} pt={0}>
             <List
               component="nav"
               aria-label="secondary mailbox folder"
@@ -102,8 +103,8 @@ const ProfileDD = () => {
                 <ListItemText primary="My Settings" />
               </ListItemButton>
             </List>
-          </Box>
-          <Divider />
+          </Box> */}
+          {/* <Divider /> */}
           <Box p={2}>
             <Link to="/">
               <Button fullWidth variant="contained" color="primary">

@@ -14,19 +14,16 @@ import {
 import BaseCard from "../src/components/baseCard/BaseCard";
 
 const Forms = () => {
-
-
   const submitHandler = async (e) => {
-console.log("helllo ",e)
-  }
-  
+    console.log("helllo ", e);
+  };
+
   const changeHandler = (e) => {
-   
     console.log("hello input", e.target.value);
   };
 
   return (
-    <Grid container spacing={0}>
+    <Grid container>
       <Grid item xs={12} lg={12}>
         <BaseCard title="Form Layout">
           <Stack spacing={3}>
@@ -95,8 +92,14 @@ console.log("helllo ",e)
             </FormControl>
           </Stack>
           <br />
-        
-          <Button variant="contained" mt={2}  onClick={(e) => {submitHandler(e)}}>
+
+          <Button
+            variant="contained"
+            mt={2}
+            onClick={(e) => {
+              submitHandler(e);
+            }}
+          >
             Submit
           </Button>
         </BaseCard>

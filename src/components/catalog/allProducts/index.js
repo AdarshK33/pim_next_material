@@ -132,11 +132,11 @@ const AllProducts = () => {
 
   return (
     <>
-      <Grid container spacing={0}>
+      <Grid container>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
-            <Grid container spacing={2} justifyContent="space-between">
+            <Grid spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
                 Products
               </Typography>

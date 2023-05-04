@@ -28,40 +28,44 @@ import Image from "next/image";
 import edit from "../../../assets/icons/edit.svg";
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getAttributeListApi } from "../../../redux/actions/catalogServiceNew";
+import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
+import { getCategoryDropdown } from "../../../redux/actions/onboardQueryServer";
 
 const Attributes = () => {
+  const { catalogServiceNewReducer } = useSelector((state) => {
+    return state;
+  });
+  const dispatch = useDispatch();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const tableData = [];
+  useEffect(() => {
+    dispatch(getAttributeListApi(currentPage - 1, 5));
+    dispatch(getRoleApi());
+    dispatch(getCategoryDropdown());
+  }, []);
 
-  for (let i = 1; i <= 5; i++) {
-    tableData.push({
-      Name: "Ax master" + i,
-      Description: "Description" + i,
-      Category: "Name" + i,
-      Owner: "abc" + i,
-      Priority: 1 + i,
-    });
-  }
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 5;
-  const totalRecords = tableData.length;
+  const totalRecords = catalogServiceNewReducer?.attributeGet?.totalElements;
   const pageRange = 5;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
+  const currentRecords = catalogServiceNewReducer?.attributeGet?.content;
 
   const handlePaginationChange = (event, value) => {
     setCurrentPage(value);
+    dispatch(getAttributeListApi(value - 1, 5));
   };
 
   /*-----------------Pagination------------------*/
 
   return (
     <>
-      <Grid container spacing={0}>
+      <Grid container>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           {/* <Grid item md={4}>
@@ -102,51 +106,61 @@ const Attributes = () => {
                     <TableRow>
                       <TableCell>#</TableCell>
                       <TableCell>NAME</TableCell>
-                      <TableCell>DESCRIPTION</TableCell>
-                      <TableCell align="right">CATEGORY</TableCell>
-                      <TableCell align="right">OWNER</TableCell>
-                      <TableCell align="right">PRIORITY SEQUENCE</TableCell>
+                      <TableCell>ROLE</TableCell>
+                      <TableCell align="right">DESCRIPTION</TableCell>
+                      <TableCell align="right">PRECEDENCE</TableCell>
+                      <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ACTION</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {tableData.map((row, i) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {i + 1 + indexOfFirstRecord}
-                        </TableCell>
-                        <TableCell align="right">{row.Name}</TableCell>
-
-                        <TableCell align="right">{row.Description}</TableCell>
-
-                        <TableCell align="right">{row.Category}</TableCell>
-                        <TableCell align="right">{row.Owner}</TableCell>
-                        <TableCell align="right">{row.Priority}</TableCell>
-                        <div className="action_center">
-                          <Image
-                            className="px-2 "
-                            src={edit}
-                            alt="edit"
-                            width={35}
-                            height={30}
-                            // onClick={()=>handleEdit(item.brandId)}
-                          />
-                        </div>
+                    {currentRecords &&
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
+                      currentRecords.map((row, i) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {i + 1 + indexOfFirstRecord}
+                          </TableCell>
+                          <TableCell align="right">{row.name}</TableCell>
+                          <TableCell align="right">{row.role}</TableCell>
+                          <TableCell align="right">{row.description}</TableCell>
+                          <TableCell align="right">{row.precedence}</TableCell>
+                          <TableCell align="right">
+                            {row?.active === true ? "Active" : "In-Active"}
+                          </TableCell>
+                          <div className="action_center">
+                            <Image
+                              className="px-2 "
+                              src={edit}
+                              alt="edit"
+                              width={30}
+                              height={25}
+                              // onClick={()=>handleEdit(item.brandId)}
+                            />
+                          </div>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={12}>No Record Found</TableCell>
                       </TableRow>
-                    ))}
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
               <Stack spacing={2}>
                 <div className={styles.attribute_pagination}>
                   <Pagination
-                    count={10}
+                    count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
+                    showFirstButton
+                    showLastButton
                     onChange={handlePaginationChange}
                   />
                 </div>

@@ -72,7 +72,7 @@ const itemData = [
 ];
 const Images = () => {
   return (
-    <Grid container spacing={0}>
+    <Grid container>
       <Grid item xs={12} lg={12}>
         <BaseCard title="Grid Image">
           <ImageList

@@ -4,16 +4,17 @@ import withSession from "../../../utils/session";
 async function handler(req, res) {
   // return new Promise((resolve, reject) => {
   const { user: { at = "" } = {}, loggedIn } = req.session;
+
   const body = req.body;
 
   const config = {
     method: "post",
-    url: "/auth/login/CUSTOM",
+    url: "/in/login",
     data: body,
   };
   authServer(config)
     .then(async (response) => {
-      // console.log("hello login response",response)
+      console.log("hello login response", response.data.result);
       if (response.status === 200) {
         req.session = {
           ...req.session,

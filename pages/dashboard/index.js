@@ -1,15 +1,15 @@
-import React from "react";
-import UserManagement from "../../src/components/userManagement";
+import React, { useState, useEffect } from "react";
+
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOption } from "../../utils/session";
 
-const index = () => {
+function index() {
   return (
-    <div>
-      <UserManagement />
-    </div>
+    <>
+      <div></div>
+    </>
   );
-};
+}
 
 export default index;
 

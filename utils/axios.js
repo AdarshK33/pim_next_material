@@ -8,84 +8,86 @@ let token;
 // let blacklist = ["trackorder"];
 
 const client = axios.create({
-	// timeout: 1000 * 20,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  // timeout: 1000 * 20,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 const onboardServer = axios.create({
-	baseURL: process.env.ONBOARD_SERVICE_URL,
-	// timeout: 1000 * 10,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.ONBOARD_SERVICE_URL,
+  // timeout: 1000 * 10,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 const authServer = axios.create({
-	baseURL: process.env.AUTH_SERVICE_URL,
-	// timeout: 1000 * 10,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.AUTH_SERVICE_URL,
+  // timeout: 1000 * 10,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 const onboardQueryServer = axios.create({
-	baseURL: process.env.ONBOARD_QUERY_SERVICE_URL,
-	// timeout: 1000 * 10,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.ONBOARD_QUERY_SERVICE_URL,
+  // timeout: 1000 * 10,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 const catalogServer = axios.create({
-	baseURL: process.env.CATALOG_SERVICE_URL,
-	// timeout: 1000 * 10,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.CATALOG_SERVICE_URL,
+  // timeout: 1000 * 10,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 const catalogQueryServer = axios.create({
-	baseURL: process.env.CATALOG_QUERY_SERVICE_URL,
-	// timeout: 1000 * 10,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.CATALOG_QUERY_SERVICE_URL,
+  // timeout: 1000 * 10,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
-
-
 
 const syncCommandServer = axios.create({
-	baseURL: process.env.SYNC_COMMAND_SERVICE_URL,
-	// timeout: 1000 * 10,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.SYNC_COMMAND_SERVICE_URL,
+  // timeout: 1000 * 10,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
-
-console.log("bulkListData",process.env.SYNC_QUERY_SERVICE_URL)
 
 const syncQueryServer = axios.create({
-	baseURL: process.env.SYNC_QUERY_SERVICE_URL,
-	// baseURL:"http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1",
+  baseURL: process.env.SYNC_QUERY_SERVICE_URL,
+  // baseURL:"http://apollo-sync-query-handler.theretailinsightsdemos.com/api/v1",
 
-	// timeout: 1000 * 10,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  // timeout: 1000 * 10,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
+const catalogServiceNew = axios.create({
+  baseURL: process.env.CATALOG_NEW_SERVICE_URL,
 
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+console.log("CATALOG_NEW_SERVICE_URL", process.env.CATALOG_NEW_SERVICE_URL);
 
-onboardServer.setJwtToken = newToken => {
-	token = newToken;
+onboardServer.setJwtToken = (newToken) => {
+  token = newToken;
 };
-authServer.setJwtToken = newToken => {
-	token = newToken;
+authServer.setJwtToken = (newToken) => {
+  token = newToken;
 };
 
-onboardQueryServer.setJwtToken = newToken => {
-	token = newToken;
+onboardQueryServer.setJwtToken = (newToken) => {
+  token = newToken;
 };
-
 
 // server.setSessionId = SessionId => {
 // 	session = SessionId;
@@ -145,11 +147,22 @@ onboardQueryServer.setJwtToken = newToken => {
 // };
 
 const syncServer = axios.create({
-	baseURL: process.env.SYNC_SERVICE_URL,
-	// timeout: 1000 * 10,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.SYNC_SERVICE_URL,
+  // timeout: 1000 * 10,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-export { client, onboardServer, authServer, onboardQueryServer, catalogServer, catalogQueryServer, syncServer,syncCommandServer,syncQueryServer };
+export {
+  client,
+  onboardServer,
+  authServer,
+  onboardQueryServer,
+  catalogServer,
+  catalogQueryServer,
+  syncServer,
+  syncCommandServer,
+  syncQueryServer,
+  catalogServiceNew,
+};

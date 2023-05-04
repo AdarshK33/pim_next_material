@@ -66,9 +66,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
       <LogoIcon />
       <Divider />
 
-      <div>
-        <ProfileDD />
-      </div>
+      <div>{/* <ProfileDD /> */}</div>
       <Divider />
       <Box mt={2}>
         <div className={styles.roots}>
@@ -99,12 +97,15 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                             // className="px-2 "
                             src={menuitem.icon}
                             alt="edit"
-                            width={35}
-                            height={30}
+                            width={20}
+                            height={20}
                             // onClick={()=>handleEdit(item.brandId)}
                           />
                         </ListItemIcon>
-                        <ListItemText primary={menuitem.title} />
+                        <ListItemText
+                          primary={menuitem.title}
+                          className={styles.text_menu}
+                        />
                         {menuitem.list && submenuOpen ? "" : ""}
                       </ListItem>
                     </NextLink>
@@ -132,7 +133,10 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                                   }),
                                 }}
                               >
-                                <ListItemText primary={submenu.title} />
+                                <ListItemText
+                                  primary={submenu.title}
+                                  className={styles.text_sub_menu}
+                                />
                               </ListItem>
                             </NextLink>
                           );

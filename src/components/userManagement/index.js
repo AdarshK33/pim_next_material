@@ -22,6 +22,8 @@ import Stack from "@mui/material/Stack";
 
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
+import UpdateForm from "./UpdateForm.js";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
 
@@ -31,6 +33,7 @@ const UserManagement = () => {
   });
   const dispatch = useDispatch();
   const [showUserAddForm, setShowUserAddForm] = useState(false);
+  const [showUserUpdateForm, setShowUserUpdateForm] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -70,7 +73,7 @@ const UserManagement = () => {
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h7" className={styles.main_title}>
-                User Management
+                Users
               </Typography>
               <Button
                 variant="outlined"
@@ -96,6 +99,7 @@ const UserManagement = () => {
                       <TableCell align="right">EMAIL</TableCell>
                       <TableCell align="right">ROLE</TableCell>
 
+                      <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ACTION</TableCell>
                     </TableRow>
                   </TableHead>
@@ -121,11 +125,21 @@ const UserManagement = () => {
                               className="px-2 "
                               src={edit}
                               alt="edit"
-                              width={35}
-                              height={30}
+                              width={30}
+                              height={25}
                               // onClick={()=>handleEdit(item.brandId)}
+                              onClick={() => setShowUserUpdateForm(true)}
                             />
                           </div>
+                          <CustomModal
+                            openModal={showUserUpdateForm}
+                            closeModal={() => setShowUserUpdateForm(false)}
+                            body={
+                              <UpdateForm
+                                classModal={() => setShowUserUpdateForm(false)}
+                              />
+                            }
+                          />
                         </TableRow>
                       ))
                     ) : (

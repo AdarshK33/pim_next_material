@@ -18,31 +18,86 @@ import {
   TextField,
   Button,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import styles from "./attribute.module.css";
+import { useDispatch, useSelector } from "react-redux";
 
 function AddForm({ classModal }) {
-  const [state, setState] = useState({
-    Name: "",
-    Description: "",
+  const dispatch = useDispatch();
+
+  const { loginReducer, catalogQueryReducer } = useSelector((state) => {
+    return state;
   });
 
-  // const dropdownOptions = categoryDropdown.map(item => ({
-  //   value: item.id,
-  //   label: item.name
-  // }));
+  const dropdownOptions = catalogQueryReducer?.categoryDropdown.map((item) => ({
+    value: item.id,
+    name: item.name,
+  }));
 
-  // console.log(dropdownOptions)
+  console.log("cccccccccccccccc", dropdownOptions);
+  const [roleError, setRoleError] = useState(false);
+  const [role, setRole] = useState("");
+
+  const [categoryError, setCategoryError] = useState(false);
+  const [category, setCategory] = useState("");
+
+  const roleValidations = () => {
+    const nameValid = /^[a-zA-Z\b]+$/;
+    if (role !== "" && role !== null && role !== undefined) {
+      setRoleError(false);
+
+      return true;
+    } else {
+      setRoleError(true);
+      return false;
+    }
+  };
+  const categoryValidations = () => {
+    const nameValid = /^[a-zA-Z\b]+$/;
+    if (role !== "" && role !== null && role !== undefined) {
+      setRoleError(false);
+
+      return true;
+    } else {
+      setRoleError(true);
+      return false;
+    }
+  };
+  const checkValidations = () => {
+    // console.log("isChecked");
+    if ((categoryValidations() == true) & (roleValidations() == true)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const roleHandler = (e) => {
+    setRole(e.target.value);
+  };
+  const categoryHandler = (e) => {
+    setCategory(e.target.value);
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
+    const value = checkValidations();
+
+    if (value === true) {
+      let infoData = {
+        email: emailName,
+        roleId: role,
+      };
+      console.log("hello ADD infoData");
+
+      // dispatch(createUserApi(infoData));
+    }
   };
   return (
     <>
       <div className={styles.add_title}> Add Attribute Set</div>
       <form>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
+        <Grid container>
+          <Grid item xs={12}>
             <TextField
               id="outlined-name"
               label="Name"
@@ -51,87 +106,96 @@ function AddForm({ classModal }) {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-              id="outlined-description"
+              fullWidth
+              id="outlined-name"
               label="Description"
               type="text"
               variant="standard"
-              fullWidth
+              multiline
+              rows={3}
             />
           </Grid>
           <Grid item xs={6}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-helper-label">
+            <FormControl fullWidth variant="standard">
+              <InputLabel id="demo-simple-select-standard-label">
                 Category
               </InputLabel>
               <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
-                value=""
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
                 label="Category"
-                // onChange={handleChange}
+                value={category}
+                onChange={categoryHandler}
               >
                 <MenuItem value=""></MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {dropdownOptions &&
+                  dropdownOptions.map((item, i) => {
+                    return <MenuItem value={item.value}>{item.name}</MenuItem>;
+                  })}
               </Select>
             </FormControl>
           </Grid>
           <Grid item xs={6}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-helper-label">
+            <FormControl fullWidth variant="standard">
+              <InputLabel id="demo-simple-select-standard-label">
                 Owner
               </InputLabel>
               <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
-                value=""
-                label="Category"
-                // onChange={handleChange}
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                label="Role"
+                value={role}
+                onChange={roleHandler}
               >
                 <MenuItem value=""></MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {loginReducer?.roleGet &&
+                  loginReducer?.roleGet?.map((item, i) => {
+                    return <MenuItem value={item.value}>{item.name}</MenuItem>;
+                  })}
               </Select>
             </FormControl>
+            {roleError ? (
+              <p style={{ color: "red" }}>** Please choose role</p>
+            ) : (
+              <p></p>
+            )}
           </Grid>
           <Grid item xs={6}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-helper-label">
+            <FormControl fullWidth variant="standard">
+              <InputLabel id="demo-simple-select-standard-label">
                 Priority Sequence
               </InputLabel>
               <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
                 value=""
                 label="Category"
                 // onChange={handleChange}
               >
                 <MenuItem value=""></MenuItem>
-                <MenuItem value={1}>Ten</MenuItem>
+                <MenuItem value={1}>One</MenuItem>
                 <MenuItem value={2}>Two</MenuItem>
                 <MenuItem value={3}>Three</MenuItem>
               </Select>
             </FormControl>
           </Grid>
           <Grid item xs={6}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-helper-label">
+            <FormControl fullWidth variant="standard">
+              <InputLabel id="demo-simple-select-standard-label">
                 Status
               </InputLabel>
               <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
                 value=""
                 label="Staus"
                 // onChange={handleChange}
               >
                 <MenuItem value=""></MenuItem>
-                <MenuItem value={10}>Active</MenuItem>
-                <MenuItem value={20}>In-Active</MenuItem>
+                <MenuItem value={true}>Active</MenuItem>
+                <MenuItem value={false}>In-Active</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -143,7 +207,6 @@ function AddForm({ classModal }) {
             </div> */}
           <Grid
             container
-            spacing={2}
             justifyContent="space-around"
             className={styles.addButton}
           >

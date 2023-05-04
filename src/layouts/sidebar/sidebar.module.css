@@ -12,5 +12,15 @@
 }
 
 .bg_color {
-  background-image: linear-gradient(180deg, #ffffff, #fdb834) !important;
+  background-image: linear-gradient(180deg, #ffffff, #c0bea8) !important;
+}
+
+.text_menu span {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+
+.text_sub_menu span {
+  font-weight: 700 !important;
+  font-size: 14px !important;
 }
