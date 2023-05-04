@@ -25,7 +25,7 @@ import { createUserApi } from "../../../redux/actions/login";
 
 import styles from "./userManagement.module.css";
 
-function AddForm({ classModal }) {
+function UpdateForm({ classModal }) {
   const { loginReducer } = useSelector((state) => {
     return state;
   });
@@ -100,7 +100,7 @@ function AddForm({ classModal }) {
   };
   return (
     <>
-      <div className={styles.add_title}> Add User</div>
+      <div className={styles.add_title}> Update User</div>
       <form>
         <Grid spacing={2}>
           <Grid item xs={12}>
@@ -145,7 +145,24 @@ function AddForm({ classModal }) {
               <p></p>
             )}
           </Grid>
-
+          <Grid item xs={12}>
+            <FormControl fullWidth variant="standard">
+              <InputLabel id="demo-simple-select-standard-label">
+                Status
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value=""
+                label="Staus"
+                // onChange={handleChange}
+              >
+                <MenuItem value=""></MenuItem>
+                <MenuItem value={true}>Active</MenuItem>
+                <MenuItem value={false}>In-Active</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
           <Grid
             spacing={2}
             justifyContent="space-around"
@@ -162,7 +179,7 @@ function AddForm({ classModal }) {
               color="success"
               onClick={(e) => submitHandler(e)}
             >
-              SUBMIT
+              UPDATE
             </Button>
           </Grid>
           {/* </div> */}
@@ -172,4 +189,4 @@ function AddForm({ classModal }) {
   );
 }
 
-export default AddForm;
+export default UpdateForm;

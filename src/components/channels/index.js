@@ -1,7 +1,7 @@
-import React,{useState} from "react";
-import styles from './channels.module.css';
-import Image from 'next/image';
-import edit from '../../../assets/icons/edit.svg';
+import React, { useState } from "react";
+import styles from "./channels.module.css";
+import Image from "next/image";
+import edit from "../../../assets/icons/edit.svg";
 import {
   Grid,
   Button,
@@ -21,7 +21,6 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 const Channels = () => {
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const tableData = [];
@@ -34,7 +33,6 @@ const Channels = () => {
       tpa: "0" + i,
       tpia: "0" + i,
       status: "Active",
-
     });
   }
 
@@ -49,14 +47,13 @@ const Channels = () => {
     setCurrentPage(value);
   };
 
-  
-  return(
+  return (
     <>
-    <Grid container spacing={0}>
+      <Grid container spacing={0}>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
-            <Grid container spacing={2} justifyContent="space-between">
+            <Grid spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
                 Channels
               </Typography>
@@ -75,7 +72,9 @@ const Channels = () => {
                       <TableCell align="right">DESCRIPTION</TableCell>
                       <TableCell align="right">LAST UPLOADED</TableCell>
                       <TableCell align="right">TOTAL PRODUCT ACTIVE</TableCell>
-                      <TableCell align="right">TOTAL PRODUCT INACTIVE</TableCell>
+                      <TableCell align="right">
+                        TOTAL PRODUCT INACTIVE
+                      </TableCell>
                       <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ACTION</TableCell>
                     </TableRow>
@@ -126,7 +125,7 @@ const Channels = () => {
         </Grid>
       </Grid>
     </>
-  )
+  );
 };
 
 export default Channels;

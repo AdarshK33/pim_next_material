@@ -22,6 +22,8 @@ import Stack from "@mui/material/Stack";
 
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
+import UpdateForm from "./UpdateForm.js";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
 
@@ -31,6 +33,7 @@ const UserManagement = () => {
   });
   const dispatch = useDispatch();
   const [showUserAddForm, setShowUserAddForm] = useState(false);
+  const [showUserUpdateForm, setShowUserUpdateForm] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -125,8 +128,18 @@ const UserManagement = () => {
                               width={35}
                               height={30}
                               // onClick={()=>handleEdit(item.brandId)}
+                              onClick={() => setShowUserUpdateForm(true)}
                             />
                           </div>
+                          <CustomModal
+                            openModal={showUserUpdateForm}
+                            closeModal={() => setShowUserUpdateForm(false)}
+                            body={
+                              <UpdateForm
+                                classModal={() => setShowUserUpdateForm(false)}
+                              />
+                            }
+                          />
                         </TableRow>
                       ))
                     ) : (

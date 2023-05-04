@@ -3,7 +3,7 @@ import BaseCard from "../src/components/baseCard/BaseCard";
 
 const Paginations = () => {
   return (
-    <Grid container spacing={0}>
+    <Grid container>
       <Grid item xs={12} lg={12}>
         <BaseCard title="Paginations">
           <Stack spacing={2}>

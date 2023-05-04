@@ -6,7 +6,7 @@ import { combineReducers } from "redux";
 import loginReducer from "./loginReducer";
 // import onBoardQueryReducer from "./onboardQueryReducer";
 // // import app from "./appReducer"
-// import catalogQueryReducer from "./catalogQueryReducer"
+import catalogQueryReducer from "./catalogQueryReducer";
 // import catalogReducer from "./catalogReducer";
 // import bulkReducer from "./bulkReducer";
 // import syncCommandReducer from "./syncCommandReducer";
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   loginReducer,
   //   onBoardQueryReducer,
   //   channelReducer,
-  //   catalogQueryReducer,
+  catalogQueryReducer,
   //   catalogReducer,
   //   bulkReducer,
   //   syncCommandReducer,

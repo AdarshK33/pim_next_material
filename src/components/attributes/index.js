@@ -31,6 +31,7 @@ import AddForm from "./AddForm.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getAttributeListApi } from "../../../redux/actions/catalogServiceNew";
 import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
+import { getCategoryDropdown } from "../../../redux/actions/onboardQueryServer";
 
 const Attributes = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
@@ -43,6 +44,7 @@ const Attributes = () => {
   useEffect(() => {
     dispatch(getAttributeListApi(currentPage - 1, 5));
     dispatch(getRoleApi());
+    dispatch(getCategoryDropdown());
   }, []);
 
   //   /*-----------------Pagination------------------*/
@@ -63,7 +65,7 @@ const Attributes = () => {
 
   return (
     <>
-      <Grid container spacing={0}>
+      <Grid container>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           {/* <Grid item md={4}>

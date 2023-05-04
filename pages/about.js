@@ -10,7 +10,7 @@ import {
 
 export default function About() {
   return (
-    <Grid container spacing={0}>
+    <Grid container>
       {/* ------------------------- row 1 ------------------------- */}
       <Grid item xs={12} lg={12}>
         <Card>

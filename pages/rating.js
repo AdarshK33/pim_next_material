@@ -20,7 +20,7 @@ const Ratings = () => {
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
   return (
-    <Grid container spacing={0}>
+    <Grid container>
       <Grid item xs={12} lg={12}>
         <BaseCard title="Basic rating">
           <Box

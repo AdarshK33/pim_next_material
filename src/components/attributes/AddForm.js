@@ -25,22 +25,21 @@ import { useDispatch, useSelector } from "react-redux";
 function AddForm({ classModal }) {
   const dispatch = useDispatch();
 
-  const { loginReducer } = useSelector((state) => {
+  const { loginReducer, catalogQueryReducer } = useSelector((state) => {
     return state;
   });
 
+  const dropdownOptions = catalogQueryReducer?.categoryDropdown.map((item) => ({
+    value: item.id,
+    name: item.name,
+  }));
+
+  console.log("cccccccccccccccc", dropdownOptions);
   const [roleError, setRoleError] = useState(false);
   const [role, setRole] = useState("");
-  // const dropdownOptions = categoryDropdown.map(item => ({
-  //   value: item.id,
-  //   label: item.name
-  // }));
 
-  // console.log(dropdownOptions)
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-  };
+  const [categoryError, setCategoryError] = useState(false);
+  const [category, setCategory] = useState("");
 
   const roleValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -53,15 +52,20 @@ function AddForm({ classModal }) {
       return false;
     }
   };
+  const categoryValidations = () => {
+    const nameValid = /^[a-zA-Z\b]+$/;
+    if (role !== "" && role !== null && role !== undefined) {
+      setRoleError(false);
+
+      return true;
+    } else {
+      setRoleError(true);
+      return false;
+    }
+  };
   const checkValidations = () => {
     // console.log("isChecked");
-    if (
-      (emailValidations() == true) &
-      (roleValidations() == true)
-
-      //  &
-      // (marketValidations() == true)
-    ) {
+    if ((categoryValidations() == true) & (roleValidations() == true)) {
       return true;
     } else {
       return false;
@@ -69,6 +73,24 @@ function AddForm({ classModal }) {
   };
   const roleHandler = (e) => {
     setRole(e.target.value);
+  };
+  const categoryHandler = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const value = checkValidations();
+
+    if (value === true) {
+      let infoData = {
+        email: emailName,
+        roleId: role,
+      };
+      console.log("hello ADD infoData");
+
+      // dispatch(createUserApi(infoData));
+    }
   };
   return (
     <>
@@ -103,14 +125,15 @@ function AddForm({ classModal }) {
               <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
-                value=""
                 label="Category"
-                // onChange={handleChange}
+                value={category}
+                onChange={categoryHandler}
               >
                 <MenuItem value=""></MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {dropdownOptions &&
+                  dropdownOptions.map((item, i) => {
+                    return <MenuItem value={item.value}>{item.name}</MenuItem>;
+                  })}
               </Select>
             </FormControl>
           </Grid>

@@ -59,11 +59,11 @@ const ChannelAttributes = () => {
 
   return (
     <>
-      <Grid container spacing={0}>
+      <Grid container>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
-            <Grid container spacing={2} justifyContent="space-between">
+            <Grid spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
                 Channel Attribute Mapping
               </Typography>
@@ -122,23 +122,23 @@ const ChannelAttributes = () => {
                           />
                         </div> */}
                         <TableCell align="right">
-                        <FormControl style={{width:"200px"}}>
-                          <InputLabel id="demo-simple-select-label">
-                            Select an Attribute
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={age}
-                            label="Age"
-                            onChange={handleChange}
-                          >
-                            <MenuItem value={10}>UOM</MenuItem>
-                            <MenuItem value={20}>QUANTITY</MenuItem>
-                            <MenuItem value={30}>INVENTORY_QTY</MenuItem>
-                          </Select>
-                        </FormControl>
-                        <Checkbox />
+                          <FormControl style={{ width: "200px" }}>
+                            <InputLabel id="demo-simple-select-label">
+                              Select an Attribute
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={age}
+                              label="Age"
+                              onChange={handleChange}
+                            >
+                              <MenuItem value={10}>UOM</MenuItem>
+                              <MenuItem value={20}>QUANTITY</MenuItem>
+                              <MenuItem value={30}>INVENTORY_QTY</MenuItem>
+                            </Select>
+                          </FormControl>
+                          <Checkbox />
                         </TableCell>
                       </TableRow>
                     ))}

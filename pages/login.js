@@ -83,7 +83,7 @@ const Login = (user) => {
 
   return (
     <div className={styles.mainContainer}>
-      <Grid spacing={0} className={styles.container}>
+      <Grid className={styles.container}>
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 4 }} className={styles.loginCard}>
             <Typography variant="h1" className={styles.loginPara}>
