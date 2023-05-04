@@ -73,7 +73,7 @@ const UserManagement = () => {
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h7" className={styles.main_title}>
-                User Management
+                Users
               </Typography>
               <Button
                 variant="outlined"
