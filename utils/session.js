@@ -10,7 +10,7 @@ export const sessionOption = {
   },
 };
 
-console.log("PIMSESSION_TIMEOUT", process.env.PIMSESSION_TIMEOUT);
+// console.log("PIMSESSION_TIMEOUT", process.env.PIMSESSION_TIMEOUT);
 
 export default function withSession(route) {
   return withIronSessionApiRoute(route, sessionOption);

@@ -76,7 +76,7 @@ const catalogServiceNew = axios.create({
     "Content-Type": "application/json",
   },
 });
-console.log("CATALOG_NEW_SERVICE_URL", process.env.CATALOG_NEW_SERVICE_URL);
+// console.log("CATALOG_NEW_SERVICE_URL", process.env.CATALOG_NEW_SERVICE_URL);
 
 onboardServer.setJwtToken = (newToken) => {
   token = newToken;
