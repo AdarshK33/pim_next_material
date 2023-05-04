@@ -37,7 +37,7 @@ const FullLayout = ({ children }) => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   return (
-    <div className={style.main_fullLayout}>
+    <MainWrapper>
       {router.route !== "/" && router.route !== "/login" && (
         <Header
           sx={{
@@ -66,7 +66,7 @@ const FullLayout = ({ children }) => {
           <Footer />
         </Container>
       </PageWrapper>
-    </div>
+    </MainWrapper>
   );
 };
 

@@ -1,3 +1,18 @@
+/* .main_fullLayout {
+  display: flex;
+  min-height: 100vh !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+.pageWrapper_fullayout {
+  display: flex! !important;
+  flex: 1 1 auto !important;
+  overflow: hidden !important;
+  padding-top: 64px !important;
+  background-color: #ffffff !important;
+} */
+
 .borderRadius {
   border-radius: 6px;
 }
@@ -32,13 +47,4 @@ th {
   white-space: nowrap !important;
   max-width: 200px !important;
   position: relative !important;
-}
-
-
-
-.main_fullLayout{
-  display: flex !important,
-  minHeight: 100vh !important,
-  overflow: hidden !important,
-  width: 100% !important,
 }
