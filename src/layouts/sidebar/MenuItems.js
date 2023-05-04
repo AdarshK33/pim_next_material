@@ -1,5 +1,5 @@
 import dashboard from "../../../assets/images/ICONS/Dashboard.svg";
-import master from "../../../assets/images/ICONS/master.svg";
+import master from "../../../assets/images/ICONS/Master.svg";
 
 import media from "../../../assets/images/ICONS/Media.svg";
 
