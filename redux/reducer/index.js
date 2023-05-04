@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 // import reducer from "./reducer";
 // import brandReducer from "./brandReducer";
-// import channelReducer from "./channelReducer"
+import channelReducer from "./channelReducer";
 
 import loginReducer from "./loginReducer";
 // import onBoardQueryReducer from "./onboardQueryReducer";
@@ -27,6 +27,14 @@ const rootReducer = combineReducers({
   //   syncCommandReducer,
   //   syncQueryReducer,
   catalogServiceNewReducer,
+  loginReducer,
+  //   onBoardQueryReducer,
+  channelReducer,
+  //   catalogQueryReducer,
+  //   catalogReducer,
+  //   bulkReducer,
+  //   syncCommandReducer,
+  //   syncQueryReducer
 });
 
 export default rootReducer;

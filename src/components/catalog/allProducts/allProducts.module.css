@@ -10,3 +10,42 @@
   width: 20%;
   border-bottom: 2px solid #ffcf76;
 }
+
+.tab {
+  width: 300px;
+  height: 50px;
+}
+
+@media (max-width: 600px) {
+  .tab {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  .tab {
+    width: 50%;
+    height: auto;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  .tab {
+    width: 33.33%;
+    height: auto;
+  }
+}
+
+@media (min-width: 1201px) {
+  .tab {
+    width: 25%;
+    height: auto;
+  }
+}
+
+.category_pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
