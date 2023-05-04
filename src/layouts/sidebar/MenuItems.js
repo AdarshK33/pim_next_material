@@ -1,9 +1,14 @@
-import dashboard from "../../../assets/icons/dashboard.svg";
-import attributes from "../../../assets/icons/attributes.svg";
-import category from "../../../assets/icons/category.svg";
-import products from "../../../assets/icons/products.svg";
-import user from "../../../assets/icons/user.svg";
-import userImg from "../../../assets/icons/userImg.svg";
+import dashboard from "../../../assets/images/ICONS/Dashboard.svg";
+import master from "../../../assets/images/ICONS/master.svg";
+
+import media from "../../../assets/images/ICONS/Media.svg";
+
+import products from "../../../assets/images/ICONS/Products.svg";
+
+import Publish from "../../../assets/images/ICONS/Publish.svg";
+import upload from "../../../assets/images/ICONS/Upload.svg";
+
+import userManagement from "../../../assets/images/ICONS/UserManagement.svg";
 
 const Menuitems = [
   {
@@ -13,7 +18,7 @@ const Menuitems = [
   },
   {
     title: "MASTER",
-    icon: category,
+    icon: master,
     href: "",
     list: [
       {
@@ -27,12 +32,12 @@ const Menuitems = [
     ],
   },
   {
-    title: "CATALOG",
-    icon: userImg,
+    title: "PRODUCTS",
+    icon: products,
     href: "#",
     list: [
       {
-        title: "ALL PRODUCTS",
+        title: "FORMATION",
         href: "/allProducts",
       },
       {
@@ -58,10 +63,14 @@ const Menuitems = [
   //   ],
   // },
   {
-    title: "CHANNELS",
-    icon: userImg,
-    href: "/channels",
+    title: "PUBLISH",
+    icon: Publish,
+    href: "#",
     list: [
+      {
+        title: "CHANNELS",
+        href: "/channels",
+      },
       {
         title: "ATTRIBUTES MAPPING",
         href: "/channelAttributes",
@@ -70,13 +79,28 @@ const Menuitems = [
   },
   {
     title: "USER MANAGEMENT",
-    icon: user,
-    href: "/userManagement",
+    icon: userManagement,
+    href: "#",
+    list: [
+      {
+        title: "ROLES",
+        href: "#",
+      },
+      {
+        title: "USERS",
+        href: "/userManagement",
+      },
+    ],
+  },
+  {
+    title: "BULK UPLOAD",
+    icon: upload,
+    href: "#",
   },
 
   {
     title: "MEDIA",
-    icon: user,
+    icon: media,
     href: "#",
   },
 ];

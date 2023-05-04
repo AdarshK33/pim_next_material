@@ -125,8 +125,8 @@ const UserManagement = () => {
                               className="px-2 "
                               src={edit}
                               alt="edit"
-                              width={35}
-                              height={30}
+                              width={30}
+                              height={25}
                               // onClick={()=>handleEdit(item.brandId)}
                               onClick={() => setShowUserUpdateForm(true)}
                             />

@@ -99,10 +99,10 @@ const Category = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Category
               </Typography>
-              <Button variant="outlined" color="success" component="label">
+              {/* <Button variant="outlined" color="success" component="label">
                 + Add New
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+
+              </Button> */}
             </Grid>
 
             <Grid spacing={2} className={styles.category_menu}>
@@ -123,8 +123,8 @@ const Category = () => {
                 </TreeView>
               </Grid>
 
-              <Grid spacing={3} md={7} className={styles.category_form}>
-                <form>
+              {/* <Grid spacing={3} md={7} className={styles.category_form}> */}
+              {/* <form>
                   <Grid spacing={3}>
                     <Grid item xs={4} className={styles.category_input}>
                       <TextField
@@ -189,7 +189,7 @@ const Category = () => {
                         fullWidth
                       />
                     </Grid> */}
-                    <Grid item xs={12} md={12}>
+              {/* <Grid item xs={12} md={12}>
                       <TextField
                         fullWidth
                         id="outlined-name"
@@ -201,6 +201,7 @@ const Category = () => {
                       />
                     </Grid>
                     <Grid
+                      
                       spacing={2}
                       justifyContent="flex-end"
                       className={styles.addButton}
@@ -212,8 +213,7 @@ const Category = () => {
                       >
                         CANCEL
                       </Button> */}
-
-                      <Button
+              {/* <Button
                         variant="outlined"
                         // onClick={submitHandler}
                         type="submit"
@@ -223,10 +223,10 @@ const Category = () => {
                         SUBMIT
                       </Button>
                     </Grid>
-                    {/* </div> */}
-                  </Grid>
-                </form>
-              </Grid>
+                    </div> */}
+              {/* </Grid> */}
+              {/* </form> */}
+              {/* </Grid> */}
             </Grid>
           </Card>
         </Grid>
