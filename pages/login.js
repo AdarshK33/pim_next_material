@@ -74,9 +74,7 @@ const Login = (user) => {
     }
   }, [itemData]);
   useEffect(() => {
-    if (isLogin === 201) {
-      // console.log("userlogin useeeffect 201", isLogin);
-
+    if (isLogin === 201) 
       Router.push("/dashboard");
     }
   }, [isLogin, user]);

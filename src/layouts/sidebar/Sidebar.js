@@ -66,9 +66,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
       <LogoIcon />
       <Divider />
 
-      <div>
-        <ProfileDD />
-      </div>
+      <div>{/* <ProfileDD /> */}</div>
       <Divider />
       <Box mt={2}>
         <div className={styles.roots}>
