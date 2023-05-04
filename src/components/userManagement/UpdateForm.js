@@ -102,7 +102,7 @@ function UpdateForm({ classModal }) {
     <>
       <div className={styles.add_title}> Update User</div>
       <form>
-        <Grid spacing={2}>
+        <Grid container>
           <Grid item xs={12}>
             <TextField
               id="outlined-name"
@@ -164,7 +164,7 @@ function UpdateForm({ classModal }) {
             </FormControl>
           </Grid>
           <Grid
-            spacing={2}
+            container
             justifyContent="space-around"
             className={styles.addButton}
           >

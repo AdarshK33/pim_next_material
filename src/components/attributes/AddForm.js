@@ -96,7 +96,7 @@ function AddForm({ classModal }) {
     <>
       <div className={styles.add_title}> Add Attribute Set</div>
       <form>
-        <Grid container spacing={2}>
+        <Grid container>
           <Grid item xs={12}>
             <TextField
               id="outlined-name"
@@ -207,7 +207,6 @@ function AddForm({ classModal }) {
             </div> */}
           <Grid
             container
-            spacing={2}
             justifyContent="space-around"
             className={styles.addButton}
           >

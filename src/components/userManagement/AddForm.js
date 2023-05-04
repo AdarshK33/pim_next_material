@@ -102,7 +102,7 @@ function AddForm({ classModal }) {
     <>
       <div className={styles.add_title}> Add User</div>
       <form>
-        <Grid spacing={2}>
+        <Grid container>
           <Grid item xs={12}>
             <TextField
               id="outlined-name"
@@ -147,7 +147,7 @@ function AddForm({ classModal }) {
           </Grid>
 
           <Grid
-            spacing={2}
+            container
             justifyContent="space-around"
             className={styles.addButton}
           >
