@@ -1,4 +1,11 @@
-import React from "react";
+import React, {
+  Fragment,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import {
   experimentalStyled,
   useMediaQuery,
@@ -33,27 +40,39 @@ const PageWrapper = experimentalStyled("div")(({ theme }) => ({
 
 const FullLayout = ({ children }) => {
   const router = useRouter();
-  const [isSidebarOpen, setSidebarOpen] = React.useState(false);
-  const [isMobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (router.route == "/" || !router.route == "/login") {
+      // console.log("called use efect route", isSidebarOpen);
+      setSidebarOpen(false);
+      setMobileSidebarOpen(false);
+    }
+  }, [router]);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  // console.log("called  route", isSidebarOpen);
+
   return (
     <MainWrapper>
       {router.route !== "/" && router.route !== "/login" && (
-        <Header
-          sx={{
-            paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
-            backgroundColor: "#fbfbfb",
-          }}
-          toggleMobileSidebar={() => setSidebarOpen(!isSidebarOpen)}
-          moduleName={"NAME"}
-        />
-      )}
+        <>
+          <Header
+            sx={{
+              paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
+              backgroundColor: "#fbfbfb",
+            }}
+            toggleMobileSidebar={() => setSidebarOpen(!isSidebarOpen)}
+            moduleName={"NAME"}
+          />
 
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        isMobileSidebarOpen={isMobileSidebarOpen}
-        onSidebarClose={() => setSidebarOpen(!isSidebarOpen)}
-      />
+          <Sidebar
+            isSidebarOpen={isSidebarOpen}
+            isMobileSidebarOpen={isMobileSidebarOpen}
+            onSidebarClose={() => setSidebarOpen(!isSidebarOpen)}
+          />
+        </>
+      )}
       <PageWrapper>
         <Container
           maxWidth={false}
