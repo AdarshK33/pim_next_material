@@ -6,7 +6,7 @@ export const sessionOption = {
   cookieOptions: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production" ? true : false,
-    maxAge: 60 * 8,
+    maxAge: 60 * 60 * 2,
   },
 };
 
