@@ -34,10 +34,14 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { useRouter } from "next/router";
+import { getAllProductsApi } from "../../../../redux/actions/catalogServiceNew";
+import { useDispatch, useSelector } from "react-redux";
 
 const AllProducts = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const tableData = [];
-
   for (let i = 1; i <= 5; i++) {
     tableData.push({
       id: "DTE000" + i,
@@ -118,6 +122,15 @@ const AllProducts = () => {
   LinearProgressWithLabel.propTypes = {
     value: PropTypes.number.isRequired,
   };
+
+  function handleEdit() {
+    router.push(`/productDetails`);
+  }
+
+
+  useEffect(() => {
+   dispatch(getAllProductsApi(0,5,"DRAFTED"));
+  },[]);
 
   // useEffect(() => {
   //   const timer = setInterval(() => {
@@ -322,7 +335,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={()=>handleEdit(item.brandId)}
+                              onClick={()=>handleEdit()}
                             />
                           </div>
                         </TableRow>

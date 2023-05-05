@@ -2,12 +2,16 @@ import {
   ATTRIBUTE_LIST_LOADING,
   ATTRIBUTE_LIST_SUCCESS,
   ATTRIBUTE_LIST_FAILURE,
+  GET_ALL_PRODUCT_LOADING,
+  GET_ALL_PRODUCT_SUCCESS,
+  GET_ALL_PRODUCT_FAILURE,
 } from "../types/types";
 
 const initialState = {
   loading: false,
 
   attributeGet: {},
+  getAllProducts: {},
 
   // refreshToken:{}
 };
@@ -31,6 +35,26 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         attributeGet: [],
+        error: action,
+      };
+
+    case GET_ALL_PRODUCT_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_ALL_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        getAllProducts: action.payload,
+        error: {},
+      };
+    case GET_ALL_PRODUCT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        getAllProducts: [],
         error: action,
       };
 
