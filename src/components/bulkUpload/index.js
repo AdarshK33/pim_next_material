@@ -45,7 +45,7 @@ import Stack from "@mui/material/Stack";
 
 const BulkUpload = (props) => {
   const dispatch = useDispatch();
-  console.log("ppppppppppp", props.user);
+  // console.log("ppppppppppp", props.user);
   const { user: { at = "" } = {}, loggedIn } = props.user;
   const [currentPage, setCurrentPage] = useState(1);
 
