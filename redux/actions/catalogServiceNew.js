@@ -8,6 +8,9 @@ import {
   BULK_UPLOAD_LOADING,
   BULK_UPLOAD_SUCCESS,
   BULK_UPLOAD_FAILURE,
+  GET_PRODUCT_DETAILS_LOADING,
+  GET_PRODUCT_DETAILS_SUCCESS,
+  GET_PRODUCT_DETAILS_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -64,6 +67,24 @@ export const bulkUploadDataSuccess = (data) => {
 export const bulkUploadDataFailure = (error) => {
   return {
     type: BULK_UPLOAD_FAILURE,
+    payload: error,
+  };
+};
+
+export const getProductDetailsLoading = () => {
+  return {
+    type: GET_PRODUCT_DETAILS_LOADING,
+  };
+};
+export const getProductDetailsSuccess = (data) => {
+  return {
+    type: GET_PRODUCT_DETAILS_SUCCESS,
+    payload: data,
+  };
+};
+export const getProductDetailsFailure = (error) => {
+  return {
+    type: GET_PRODUCT_DETAILS_FAILURE,
     payload: error,
   };
 };
@@ -149,6 +170,28 @@ export const bulkUploadApi = (data) => {
         dispatch(
           bulkUploadDataFailure(err, "Something went wrong", "BulkUploadApi")
         );
+      });
+  };
+};
+
+export const productDetailsApi = (data) => {
+  console.log("hello", data);
+  return (dispatch) => {
+    dispatch(getProductDetailsLoading("PRODUCT....", "DETAILS"));
+    uploadClient
+      .post("/api/catalogServiceNew/productDetails", data)
+      .then((response) => {
+        console.log("---------PRODUCT DETAILS------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        dispatch(getProductDetailsSuccess(response.data.result)); // } else throw new Error("");
+      })
+      .catch((err) => {
+        // toast.error("User Data Not Found!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/productDetailApi",
+          err
+        );
+
+        dispatch(getProductDetailsFailure(err));
       });
   };
 };
