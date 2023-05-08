@@ -40,8 +40,8 @@ const PageWrapper = experimentalStyled("div")(({ theme }) => ({
 
 const FullLayout = ({ children }) => {
   const router = useRouter();
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(true);
 
   useEffect(() => {
     if (router.route == "/" || !router.route == "/login") {
