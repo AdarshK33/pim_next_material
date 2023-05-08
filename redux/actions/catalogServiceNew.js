@@ -2,9 +2,9 @@ import {
   ATTRIBUTE_LIST_LOADING,
   ATTRIBUTE_LIST_SUCCESS,
   ATTRIBUTE_LIST_FAILURE,
-  GET_ALL_PRODUCT_LOADING,
-  GET_ALL_PRODUCT_SUCCESS,
-  GET_ALL_PRODUCT_FAILURE,
+  GET_ALL_PRODUCT_LIST_LOADING,
+  GET_ALL_PRODUCT_LIST_SUCCESS,
+  GET_ALL_PRODUCT_LIST_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -28,20 +28,20 @@ export const attributeListFailure = (error) => {
   };
 };
 
-export const allProductLoading = () => {
+export const getAllProductListLoading = () => {
   return {
-    type: GET_ALL_PRODUCT_LOADING,
+    type: GET_ALL_PRODUCT_LIST_LOADING,
   };
 };
-export const allProductSuccess = (data) => {
+export const getAllProductListSuccess = (data) => {
   return {
-    type: GET_ALL_PRODUCT_SUCCESS,
+    type: GET_ALL_PRODUCT_LIST_SUCCESS,
     payload: data,
   };
 };
-export const allProductFailure = (error) => {
+export const getAllProductListFailure = (error) => {
   return {
-    type: GET_ALL_PRODUCT_FAILURE,
+    type: GET_ALL_PRODUCT_LIST_FAILURE,
     payload: error,
   };
 };
@@ -73,33 +73,30 @@ export const getAttributeListApi = (pageNo, pageSize) => {
   };
 };
 
-
-export const getAllProductsApi = (pageNo, pageSize, productStatus) => {
+export const getAllProductListApi = (pageNo, pageSize, status) => {
   const data = {
     pageNo: pageNo,
     pageSize: pageSize,
-    sortBy: "updatedAt",
-    productStatus: productStatus,
+    status: status,
   };
-  console.log("data",data);
   return (dispatch) => {
-    dispatch(allProductLoading("ALLPRODUCT....", "ALLPRODUCT"));
+    dispatch(getAllProductListLoading("ATTRIBUTE....", "ATTRIBUTE"));
     client
       .post("/api/catalogServiceNew/allProducts", data)
       .then((response) => {
-        console.log(" getAllProductApi response", response);
+        console.log(" getAttributeListApi response", response);
 
         if (response?.data.statusCode === 200) {
           console.log("API SUCCESS2", response.data);
-          dispatch(allProductSuccess(response.data.result));
+          dispatch(getAllProductListSuccess(response.data.result));
         }
       })
       .catch((err) => {
         console.log(
-          "actions/catalogServiceNew/GET ALLPRODUCT =>FAILURE",
+          "actions/catalogServiceNew/GET ALL Product LIST =>FAILURE",
           err
         );
-        dispatch(allProductFailure(err));
+        dispatch(getAllProductListFailure(err));
       });
   };
 };

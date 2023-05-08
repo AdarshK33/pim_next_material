@@ -35,7 +35,7 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useRouter } from "next/router";
-import { getAllProductsApi } from "../../../../redux/actions/catalogServiceNew";
+import { getAllProductListApi } from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
 
 const AllProducts = () => {
@@ -129,7 +129,7 @@ const AllProducts = () => {
 
 
   useEffect(() => {
-   dispatch(getAllProductsApi(0,5,"DRAFTED"));
+   dispatch(getAllProductListApi(0,5,"DRAFTED"));
   },[]);
 
   // useEffect(() => {

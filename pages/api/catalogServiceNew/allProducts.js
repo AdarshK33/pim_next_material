@@ -8,19 +8,19 @@ function handler(req, res) {
 
   const { user: { at = "" } = {}, loggedIn } = req.session;
 
-  //http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/getAllProduct?pageNo=0&pageSize=5&sortBy=updatedAt&productStatus=DRAFTED
+  // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/getAllProduct?pageNo=0&pageSize=10&sortBy=updatedAt&productStatus=DRAFTED
+
   const config = {
     method: "get",
-    url: `/catalog/getAllProduct?pageNo=${body.pageNo}&pageSize=${body.pageSize}&sortBy=${body.sortBy}&productStatus=${body.productStatus}`,
+    url: `/catalog/getAllProduct?pageNo=${body.pageNo}&pageSize=${body.pageSize}&sortBy=updatedAt&productStatus=${body.status}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
     // data: body,
   };
-  console.log("saqlain", config);
   catalogServiceNew(config)
     .then((response) => {
-      console.log("res1", response);
+      // console.log("res1", response);
       if (response.status === 200) {
         res.status(200).json(response.data);
         Promise.resolve();
@@ -28,7 +28,7 @@ function handler(req, res) {
     })
     .catch((err) => {
       console.log(
-        "error caught in -> pages/api/catalogServiceNew/getAllProducts.js",
+        "error caught in -> pages/api/catalogServiceNew/getallproduct.js.js",
         err
       );
       if (err?.response?.data) {
