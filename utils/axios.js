@@ -7,6 +7,13 @@ import axios from "axios";
 let token;
 // let blacklist = ["trackorder"];
 
+const uploadClient = axios.create({
+  // timeout: 1000 * 20,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+
 const client = axios.create({
   // timeout: 1000 * 20,
   headers: {
@@ -155,6 +162,7 @@ const syncServer = axios.create({
 });
 
 export {
+  uploadClient,
   client,
   onboardServer,
   authServer,

@@ -96,7 +96,7 @@ function AddForm({ classModal }) {
     <>
       <div className={styles.add_title}> Add Attribute Set</div>
       <form>
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               id="outlined-name"
@@ -117,6 +117,7 @@ function AddForm({ classModal }) {
               rows={3}
             />
           </Grid>
+
           <Grid item xs={6}>
             <FormControl fullWidth variant="standard">
               <InputLabel id="demo-simple-select-standard-label">
@@ -199,12 +200,7 @@ function AddForm({ classModal }) {
               </Select>
             </FormControl>
           </Grid>
-          {/* <div className={`text-center`}> */}
-          {/* <div>
-              <Button onClick={classModal} variant="outlined" color="secondary">
-                CANCEL
-              </Button>
-            </div> */}
+
           <Grid
             container
             justifyContent="space-around"
@@ -224,7 +220,6 @@ function AddForm({ classModal }) {
               SUBMIT
             </Button>
           </Grid>
-          {/* </div> */}
         </Grid>
       </form>
     </>

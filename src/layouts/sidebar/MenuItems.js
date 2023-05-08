@@ -95,7 +95,7 @@ const Menuitems = [
   {
     title: "BULK UPLOAD",
     icon: upload,
-    href: "#",
+    href: "/bulkUpload",
   },
 
   {

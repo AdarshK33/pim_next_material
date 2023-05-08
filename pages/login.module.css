@@ -1,24 +1,25 @@
-.mainContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../assets//images/backgrounds/Pim_wallpaper.jpg);
+  background-size: 100%;
 }
 
-.container{
-    width: 35%;
+.container {
+  width: 35%;
 }
 
-.paragraph{
-    padding: 15px 0 10px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.paragraph {
+  padding: 15px 0 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-.loginPara{
-    padding: 0 0 40px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.loginPara {
+  padding: 0 0 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
