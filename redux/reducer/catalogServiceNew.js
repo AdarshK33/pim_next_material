@@ -8,6 +8,9 @@ import {
   BULK_UPLOAD_LOADING,
   BULK_UPLOAD_SUCCESS,
   BULK_UPLOAD_FAILURE,
+  GET_PRODUCT_DETAILS_LOADING,
+  GET_PRODUCT_DETAILS_SUCCESS,
+  GET_PRODUCT_DETAILS_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -16,6 +19,7 @@ const initialState = {
   attributeGet: {},
   getAllProducts: {},
   bulkUpload: {},
+  productDetails: {},
 
   // refreshToken:{}
 };
@@ -62,27 +66,45 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         error: action,
       };
 
-      case BULK_UPLOAD_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case BULK_UPLOAD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        bulkUpload: action.payload,
-        error: {},
-      };
-    case BULK_UPLOAD_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        bulkUpload: [],
-        error: action,
-      };
+    case BULK_UPLOAD_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case BULK_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bulkUpload: action.payload,
+        error: {},
+      };
+    case BULK_UPLOAD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        bulkUpload: [],
+        error: action,
+      };
 
-
+    case GET_PRODUCT_DETAILS_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_PRODUCT_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        productDetails: action.payload,
+        error: {},
+      };
+    case GET_PRODUCT_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        productDetails: [],
+        error: action,
+      };
 
     default:
       return state;

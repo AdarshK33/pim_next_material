@@ -8,6 +8,9 @@ import {
   BULK_UPLOAD_LOADING,
   BULK_UPLOAD_SUCCESS,
   BULK_UPLOAD_FAILURE,
+  GET_PRODUCT_DETAILS_LOADING,
+  GET_PRODUCT_DETAILS_SUCCESS,
+  GET_PRODUCT_DETAILS_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -47,7 +50,7 @@ export const getAllProductListSuccess = (data) => {
 export const getAllProductListFailure = (error) => {
   return {
     type: GET_ALL_PRODUCT_LIST_FAILURE,
-  }
+  };
 };
 
 export const bulkUploadDataLoading = () => {
@@ -66,7 +69,25 @@ export const bulkUploadDataFailure = (error) => {
     type: BULK_UPLOAD_FAILURE,
     payload: error,
   };
-}
+};
+
+export const getProductDetailsLoading = () => {
+  return {
+    type: GET_PRODUCT_DETAILS_LOADING,
+  };
+};
+export const getProductDetailsSuccess = (data) => {
+  return {
+    type: GET_PRODUCT_DETAILS_SUCCESS,
+    payload: data,
+  };
+};
+export const getProductDetailsFailure = (error) => {
+  return {
+    type: GET_PRODUCT_DETAILS_FAILURE,
+    payload: error,
+  };
+};
 
 export const getAttributeListApi = (pageNo, pageSize) => {
   const data = {
@@ -124,38 +145,58 @@ export const getAllProductListApi = (pageNo, pageSize, status) => {
 };
 
 export const bulkUploadApi = (data) => {
-    // const data = {
-    //   formData: formData,
-    //   configData: configData,
-    // };
-    console.log("hello   called", data);
-    return (dispatch) => {
-      dispatch(bulkUploadDataLoading("BULK....", "UPLOAD"));
-      uploadClient
-        .post("/api/catalogServiceNew/bulkUpload", data)
-        .then((response) => {
-          console.log("---------bulkUpload------", response);
-          // result = true;
-          // if (response.status === 200) {
-          // toast.info("User Create Successfully !!!");
-          // console.log("user ==>", response.data.result);
-          dispatch(
-            bulkUploadDataSuccess("bulkUpload Successfully", "bulkUpload ")
-          );
-          // } else throw new Error("");
-        })
-        .catch((err) => {
-          // toast.error("User Data Not Found!!!");
-          console.log(
-            "error caught in -> actions/catalogServiceNew/BulkUploadApi",
-            err
-          );
-  
-          dispatch(
-            bulkUploadDataFailure(err, "Something went wrong", "BulkUploadApi")
-          );
-        });
-    };
+  // const data = {
+  //   formData: formData,
+  //   configData: configData,
+  // };
+  console.log("hello   called", data);
+  return (dispatch) => {
+    dispatch(bulkUploadDataLoading("BULK....", "UPLOAD"));
+    uploadClient
+      .post("/api/catalogServiceNew/bulkUpload", data)
+      .then((response) => {
+        console.log("---------bulkUpload------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        dispatch(
+          bulkUploadDataSuccess("bulkUpload Successfully", "bulkUpload ")
+        ); // } else throw new Error("");
+      })
+      .catch((err) => {
+        // toast.error("User Data Not Found!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/BulkUploadApi",
+          err
+        );
+
+        dispatch(
+          bulkUploadDataFailure(err, "Something went wrong", "BulkUploadApi")
+        );
+      });
   };
-  
-  
+};
+
+export const productDetailsApi = (data) => {
+
+  console.log("hello", data);
+  return (dispatch) => {
+    dispatch(getProductDetailsLoading("PRODUCT....", "DETAILS"));
+    uploadClient
+      .post("/api/catalogServiceNew/productDetails", data)
+      .then((response) => {
+        console.log("---------PRODUCT DETAILS------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        dispatch(
+          getProductDetailsSuccess(response.data.result)
+        ); // } else throw new Error("");
+      })
+      .catch((err) => {
+        // toast.error("User Data Not Found!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/productDetailApi",
+          err
+        );
+
+        dispatch(
+          getProductDetailsFailure(err)
+        );
+      });
+  };
+};

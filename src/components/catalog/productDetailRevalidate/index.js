@@ -1,74 +1,10 @@
-import React, { useEffect, useState } from "react";
-import styles from "./productDetails.module.css";
-import edit from "../../../../assets/icons/edit.svg";
-import Image from "next/image";
-import {
-  Grid,
-  Button,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Checkbox,
-  Container,
-  LinearProgress,
-  TextField,
-} from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import CustomModal from '../../../common/customModal';
-import AddForm from './AddForm';
-import { productDetailsApi } from "../../../../redux/actions/catalogServiceNew";
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react';
+import styles from './productDetailRevalidate.module.css';
 
-const ProductDetails = () => {
-    const dispatch = useDispatch();
-    const [showModal, setShowModal] = useState(false);
-    
-  const tableData = [];
-
-  for (let i = 1; i <= 5; i++) {
-    tableData.push({
-      id: "DTE000" + i,
-      name: "Dolo 650mg",
-      category: "PHARMA",
-      formation: `${i}0%`,
-      status: "Draft",
-    });
-  }
-  //   /*-----------------Pagination------------------*/
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const recordPerPage = 5;
-  const totalRecords = tableData.length;
-  const pageRange = 5;
-  const indexOfLastRecord = currentPage * recordPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
-
-  const handlePaginationChange = (event, value) => {
-    setCurrentPage(value);
-  };
-
-  function handleEdit() {
-    router.push(`/productDetails`);
-  }
-
-
-useEffect(() => {
-    dispatch(productDetailsApi());
-},[]);
-
-  return (
-    <>
-      <Grid container>
+const ProductDetailRevalidate = () => {
+    return (
+        <>
+          <Grid container>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
@@ -352,9 +288,9 @@ useEffect(() => {
             </Card>
           </Card>
         </Grid>
-      </Grid>
-    </>
-  );
+      </Grid>  
+        </>
+    );
 };
 
-export default ProductDetails;
+export default ProductDetailRevalidate;
