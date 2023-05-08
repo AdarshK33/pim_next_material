@@ -153,10 +153,6 @@ const AllProducts = () => {
     router.push(`/productDetails`);
   }
 
-  function handleRoute() {
-    router.push(`/productDetailRevalidate`);
-  }
-
   const handlePanelClick = () => {
     console.log("Panel clicked");
   };
@@ -442,7 +438,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              onClick={() => handleRoute()}
+                              // onClick={() => handleRoute()}
                             />
                           </div>
                         </TableRow>
