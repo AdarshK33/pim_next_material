@@ -1,23 +1,11 @@
-import React, {
-  Fragment,
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-} from "react";
-import Attributes from "../../src/components/attributes";
+import BulkUpload from "../../src/components/bulkUpload";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOption } from "../../utils/session";
+
 function index(user) {
-  // useEffect(() => {
-  //   if (!user) {
-  //     window.location.reload();
-  //   }
-  // }, [user]);
   return (
     <>
-      <Attributes />
+      <BulkUpload user={user} />
     </>
   );
 }

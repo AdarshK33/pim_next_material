@@ -1,0 +1,13 @@
+.main_title {
+  font-size: 20px;
+  font-weight: bold !important;
+  color: #399996;
+  width: 20%;
+  border-bottom: 2px solid #ffcf76;
+}
+
+.bulk_pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}

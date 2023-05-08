@@ -5,9 +5,14 @@ import {
   GET_ALL_PRODUCT_LIST_LOADING,
   GET_ALL_PRODUCT_LIST_SUCCESS,
   GET_ALL_PRODUCT_LIST_FAILURE,
+  BULK_UPLOAD_LOADING,
+  BULK_UPLOAD_SUCCESS,
+  BULK_UPLOAD_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
+import { uploadClient } from "../../utils/axios";
+
 // import { toast } from "react-toastify";
 
 export const attributeListLoading = () => {
@@ -42,9 +47,26 @@ export const getAllProductListSuccess = (data) => {
 export const getAllProductListFailure = (error) => {
   return {
     type: GET_ALL_PRODUCT_LIST_FAILURE,
-    payload: error,
+  }
+};
+
+export const bulkUploadDataLoading = () => {
+  return {
+    type: BULK_UPLOAD_LOADING,
   };
 };
+export const bulkUploadDataSuccess = (data) => {
+  return {
+    type: BULK_UPLOAD_SUCCESS,
+    payload: data,
+  };
+};
+export const bulkUploadDataFailure = (error) => {
+  return {
+    type: BULK_UPLOAD_FAILURE,
+    payload: error,
+  };
+}
 
 export const getAttributeListApi = (pageNo, pageSize) => {
   const data = {
@@ -100,3 +122,40 @@ export const getAllProductListApi = (pageNo, pageSize, status) => {
       });
   };
 };
+
+export const bulkUploadApi = (data) => {
+    // const data = {
+    //   formData: formData,
+    //   configData: configData,
+    // };
+    console.log("hello   called", data);
+    return (dispatch) => {
+      dispatch(bulkUploadDataLoading("BULK....", "UPLOAD"));
+      uploadClient
+        .post("/api/catalogServiceNew/bulkUpload", data)
+        .then((response) => {
+          console.log("---------bulkUpload------", response);
+          // result = true;
+          // if (response.status === 200) {
+          // toast.info("User Create Successfully !!!");
+          // console.log("user ==>", response.data.result);
+          dispatch(
+            bulkUploadDataSuccess("bulkUpload Successfully", "bulkUpload ")
+          );
+          // } else throw new Error("");
+        })
+        .catch((err) => {
+          // toast.error("User Data Not Found!!!");
+          console.log(
+            "error caught in -> actions/catalogServiceNew/BulkUploadApi",
+            err
+          );
+  
+          dispatch(
+            bulkUploadDataFailure(err, "Something went wrong", "BulkUploadApi")
+          );
+        });
+    };
+  };
+  
+  

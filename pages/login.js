@@ -80,7 +80,7 @@ const Login = (user) => {
   }, [isLogin, user]);
 
   return (
-    <div className={styles.mainContainer}>
+    <Box className={styles.mainContainer}>
       <Grid className={styles.container}>
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 4 }} className={styles.loginCard}>
@@ -176,7 +176,7 @@ const Login = (user) => {
           </Typography>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 
