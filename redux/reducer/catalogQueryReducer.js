@@ -1,36 +1,59 @@
 import {
-  CATEGORY_DROPDOWN_LIST_LOADING,
-  CATEGORY_DROPDOWN_LIST_SUCCESS,
-  CATEGORY_DROPDOWN_LIST_FAILURE,
+  ATTRIBUTE_LIST_LOADING,
+  ATTRIBUTE_LIST_SUCCESS,
+  ATTRIBUTE_LIST_FAILURE,
+  GET_ALL_PRODUCT_LIST_LOADING,
+  GET_ALL_PRODUCT_LIST_SUCCESS,
+  GET_ALL_PRODUCT_LIST_FAILURE,
 } from "../types/types";
 
 const initialState = {
   loading: false,
 
-  categoryDropdown: [],
+  attributeGet: {},
+  allProductGet: {},
 
   // refreshToken:{}
 };
-const catalogQueryReducer = (state = initialState, action) => {
+const catalogServiceNewReducer = (state = initialState, action) => {
   // console.log("hello loginReducer called",action)
   switch (action.type) {
-    case CATEGORY_DROPDOWN_LIST_LOADING:
+    case ATTRIBUTE_LIST_LOADING:
       return {
         ...state,
         loading: true,
       };
-    case CATEGORY_DROPDOWN_LIST_SUCCESS:
+    case ATTRIBUTE_LIST_SUCCESS:
       return {
         ...state,
         loading: false,
-        categoryDropdown: action.payload,
+        attributeGet: action.payload,
         error: {},
       };
-    case CATEGORY_DROPDOWN_LIST_FAILURE:
+    case ATTRIBUTE_LIST_FAILURE:
       return {
         ...state,
         loading: false,
-        categoryDropdown: [],
+        attributeGet: [],
+        error: action,
+      };
+    case GET_ALL_PRODUCT_LIST_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_ALL_PRODUCT_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allProductGet: action.payload,
+        error: {},
+      };
+    case GET_ALL_PRODUCT_LIST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        allProductGet: [],
         error: action,
       };
 
@@ -38,5 +61,3 @@ const catalogQueryReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default catalogQueryReducer;

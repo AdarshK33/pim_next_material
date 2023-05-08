@@ -2,6 +2,9 @@ import {
   ATTRIBUTE_LIST_LOADING,
   ATTRIBUTE_LIST_SUCCESS,
   ATTRIBUTE_LIST_FAILURE,
+  GET_ALL_PRODUCT_LIST_LOADING,
+  GET_ALL_PRODUCT_LIST_SUCCESS,
+  GET_ALL_PRODUCT_LIST_FAILURE,
   BULK_UPLOAD_LOADING,
   BULK_UPLOAD_SUCCESS,
   BULK_UPLOAD_FAILURE,
@@ -30,6 +33,23 @@ export const attributeListFailure = (error) => {
   };
 };
 
+export const getAllProductListLoading = () => {
+  return {
+    type: GET_ALL_PRODUCT_LIST_LOADING,
+  };
+};
+export const getAllProductListSuccess = (data) => {
+  return {
+    type: GET_ALL_PRODUCT_LIST_SUCCESS,
+    payload: data,
+  };
+};
+export const getAllProductListFailure = (error) => {
+  return {
+    type: GET_ALL_PRODUCT_LIST_FAILURE,
+  }
+};
+
 export const bulkUploadDataLoading = () => {
   return {
     type: BULK_UPLOAD_LOADING,
@@ -46,7 +66,7 @@ export const bulkUploadDataFailure = (error) => {
     type: BULK_UPLOAD_FAILURE,
     payload: error,
   };
-};
+}
 
 export const getAttributeListApi = (pageNo, pageSize) => {
   const data = {
@@ -75,37 +95,67 @@ export const getAttributeListApi = (pageNo, pageSize) => {
   };
 };
 
-export const bulkUploadApi = (data) => {
-  // const data = {
-  //   formData: formData,
-  //   configData: configData,
-  // };
-  console.log("hello   called", data);
+export const getAllProductListApi = (pageNo, pageSize, status) => {
+  const data = {
+    pageNo: pageNo,
+    pageSize: pageSize,
+    status: status,
+  };
   return (dispatch) => {
-    dispatch(bulkUploadDataLoading("BULK....", "UPLOAD"));
-    uploadClient
-      .post("/api/catalogServiceNew/bulkUpload", data)
+    dispatch(getAllProductListLoading("ATTRIBUTE....", "ATTRIBUTE"));
+    client
+      .post("/api/catalogServiceNew/allProducts", data)
       .then((response) => {
-        console.log("---------bulkUpload------", response);
-        // result = true;
-        // if (response.status === 200) {
-        // toast.info("User Create Successfully !!!");
-        // console.log("user ==>", response.data.result);
-        dispatch(
-          bulkUploadDataSuccess("bulkUpload Successfully", "bulkUpload ")
-        );
-        // } else throw new Error("");
+        console.log(" getAttributeListApi response", response);
+
+        if (response?.data.statusCode === 200) {
+          console.log("API SUCCESS2", response.data);
+          dispatch(getAllProductListSuccess(response.data.result));
+        }
       })
       .catch((err) => {
-        // toast.error("User Data Not Found!!!");
         console.log(
-          "error caught in -> actions/catalogServiceNew/BulkUploadApi",
+          "actions/catalogServiceNew/GET ALL Product LIST =>FAILURE",
           err
         );
-
-        dispatch(
-          bulkUploadDataFailure(err, "Something went wrong", "BulkUploadApi")
-        );
+        dispatch(getAllProductListFailure(err));
       });
   };
 };
+
+export const bulkUploadApi = (data) => {
+    // const data = {
+    //   formData: formData,
+    //   configData: configData,
+    // };
+    console.log("hello   called", data);
+    return (dispatch) => {
+      dispatch(bulkUploadDataLoading("BULK....", "UPLOAD"));
+      uploadClient
+        .post("/api/catalogServiceNew/bulkUpload", data)
+        .then((response) => {
+          console.log("---------bulkUpload------", response);
+          // result = true;
+          // if (response.status === 200) {
+          // toast.info("User Create Successfully !!!");
+          // console.log("user ==>", response.data.result);
+          dispatch(
+            bulkUploadDataSuccess("bulkUpload Successfully", "bulkUpload ")
+          );
+          // } else throw new Error("");
+        })
+        .catch((err) => {
+          // toast.error("User Data Not Found!!!");
+          console.log(
+            "error caught in -> actions/catalogServiceNew/BulkUploadApi",
+            err
+          );
+  
+          dispatch(
+            bulkUploadDataFailure(err, "Something went wrong", "BulkUploadApi")
+          );
+        });
+    };
+  };
+  
+  
