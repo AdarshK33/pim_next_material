@@ -41,14 +41,25 @@ import { useDispatch, useSelector } from "react-redux";
 const AllProducts = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getAllProductListApi(0, 5, "DRAFTED"));
+  // }, []);
+
+  const { catalogServiceNewReducer } = useSelector((state) => {
+    return state;
+  });
+  console.log(
+    "catalogServiceNewReducer",
+    catalogServiceNewReducer?.getAllProducts
+  );
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
-      id: "DTE000" + i,
-      name: "Dolo 650mg",
+      itemId: "DTE000" + i,
+      itemName: "Dolo 650mg",
       category: "PHARMA",
-      formation: `${i}0%`,
-      status: "Draft",
+      formation: "20%",
+      productStatus: "Draft",
     });
   }
   //   /*-----------------Pagination------------------*/
@@ -59,7 +70,7 @@ const AllProducts = () => {
   const pageRange = 5;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
+  const currentRecords = catalogServiceNewReducer?.getAllProducts;
 
   const handlePaginationChange = (event, value) => {
     setCurrentPage(value);
@@ -68,11 +79,22 @@ const AllProducts = () => {
   /*-----------------Pagination------------------*/
 
   const [value, setValue] = useState(0);
-  const [progress, setProgress] = React.useState(10);
+  const [progress, setProgress] = React.useState(0);
 
   const handleNext = () => {
     setValue((prevValue) => prevValue + 1);
   };
+  console.log("hello adarsh", value);
+
+  useEffect(() => {
+    if (value === 0) {
+      dispatch(getAllProductListApi(0, 5, "DRAFTED"));
+    } else if (value === 1) {
+      dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW"));
+    } else if (value === 2) {
+      dispatch(getAllProductListApi(0, 5, "REVALIDATE"));
+    }
+  }, [value]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -108,7 +130,11 @@ const AllProducts = () => {
     return (
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box sx={{ width: "100%", mr: 1 }}>
-          <LinearProgress variant="determinate" {...props} style={{padding:"6px"}} />
+          <LinearProgress
+            variant="determinate"
+            {...props}
+            style={{ padding: "6px" }}
+          />
         </Box>
         <Box sx={{ minWidth: 35 }}>
           <Typography variant="body2" color="text.secondary">{`${Math.round(
@@ -127,10 +153,13 @@ const AllProducts = () => {
     router.push(`/productDetails`);
   }
 
+  function handleRoute() {
+    router.push(`/productDetailRevalidate`);
+  }
 
-  useEffect(() => {
-   dispatch(getAllProductListApi(0,5,"DRAFTED"));
-  },[]);
+  const handlePanelClick = () => {
+    console.log("Panel clicked");
+  };
 
   // useEffect(() => {
   //   const timer = setInterval(() => {
@@ -250,15 +279,15 @@ const AllProducts = () => {
                           }}
                         >
                           <TableCell component="th" scope="row">
-                            {row.id}
+                            {row.itemId}
                           </TableCell>
-                          <TableCell>{row.name}</TableCell>
+                          <TableCell>{row.itemName}</TableCell>
                           <TableCell>{row.category}</TableCell>
                           <TableCell>
                             {" "}
-                            <LinearProgressWithLabel value={progress} />
+                            <LinearProgressWithLabel value={row.formation} />
                           </TableCell>
-                          <TableCell>{row.status}</TableCell>
+                          <TableCell>{row.productStatus}</TableCell>
                           <div className="action_center">
                             <Image
                               className="px-2"
@@ -295,7 +324,12 @@ const AllProducts = () => {
                   />
                 </div>
               </TabPanel>
-              <TabPanel value={value} index={1} onNext={handleNext}>
+              <TabPanel
+                value={value}
+                index={1}
+                onNext={handleNext}
+                onClick={handlePanelClick}
+              >
                 <Table style={{ margin: "10px 0" }}>
                   <TableHead>
                     <TableRow>
@@ -319,15 +353,17 @@ const AllProducts = () => {
                           }}
                         >
                           <TableCell component="th" scope="row">
-                            {row.id}
+                            {row.itemId}
                           </TableCell>
-                          <TableCell>{row.name}</TableCell>
+                          <TableCell>{row.itemName}</TableCell>
                           <TableCell>{row.category}</TableCell>
                           <TableCell>
                             {" "}
-                            <LinearProgressWithLabel value={progress} />
+                            <LinearProgressWithLabel value={row.formation} />
                           </TableCell>
-                          <TableCell style={{color:"#f4c476"}}>Ready for review</TableCell>
+                          <TableCell style={{ color: "#f4c476" }}>
+                            {row.productStatus}
+                          </TableCell>
                           <div className="action_center">
                             <Image
                               className="px-2"
@@ -335,7 +371,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              onClick={()=>handleEdit()}
+                              onClick={() => handleEdit()}
                             />
                           </div>
                         </TableRow>
@@ -388,15 +424,17 @@ const AllProducts = () => {
                           }}
                         >
                           <TableCell component="th" scope="row">
-                            {row.id}
+                            {row.itemId}
                           </TableCell>
-                          <TableCell>{row.name}</TableCell>
+                          <TableCell>{row.itemName}</TableCell>
                           <TableCell>{row.category}</TableCell>
                           <TableCell>
                             {" "}
-                            <LinearProgressWithLabel value={progress} />
+                            <LinearProgressWithLabel value={row.formation} />
                           </TableCell>
-                          <TableCell style={{color:"red"}}>Revalidate</TableCell>
+                          <TableCell style={{ color: "red" }}>
+                            {row.productStatus}
+                          </TableCell>
                           <div className="action_center">
                             <Image
                               className="px-2"
@@ -404,7 +442,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={()=>handleEdit(item.brandId)}
+                              onClick={() => handleRoute()}
                             />
                           </div>
                         </TableRow>
