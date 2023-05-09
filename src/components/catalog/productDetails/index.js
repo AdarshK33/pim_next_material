@@ -128,7 +128,7 @@ const ProductDetails = (props) => {
     });
   };
 
-  const sectionAccordionSetUpRender = (screenType) => {
+  const sectionAccordionSetUpRender = () => {
     if (!catalogServiceNewReducer?.productPimCodeData) {
       return;
     }

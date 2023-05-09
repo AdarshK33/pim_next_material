@@ -42,7 +42,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const BulkUpload = (props) => {
   const dispatch = useDispatch();
   // console.log("ppppppppppp", props.user);
@@ -71,10 +72,10 @@ const BulkUpload = (props) => {
       )
       .then((response) => {
         console.log(response);
-        // toast.info("Bulk File uploaded Successfully !!!");
+        toast.info("Bulk File uploaded Successfully !!!");
       })
       .catch((error) => {
-        // toast.error("Bulk File uploaded Failed!!!");
+        toast.error("Bulk File uploaded Failed!!!");
         console.log(error);
       });
   };
@@ -193,6 +194,7 @@ const BulkUpload = (props) => {
           </Card>
         </Grid>
       </Grid>
+      <ToastContainer />
     </>
   );
 };
