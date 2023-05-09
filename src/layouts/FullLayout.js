@@ -40,18 +40,21 @@ const PageWrapper = experimentalStyled("div")(({ theme }) => ({
 
 const FullLayout = ({ children }) => {
   const router = useRouter();
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(true);
 
   useEffect(() => {
     if (router.route == "/" || !router.route == "/login") {
       // console.log("called use efect route", isSidebarOpen);
       setSidebarOpen(false);
       setMobileSidebarOpen(false);
+    } else {
+      setSidebarOpen(true);
+      setMobileSidebarOpen(true);
     }
   }, [router]);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
-  // console.log("called  route", isSidebarOpen);
+  // console.log("called  route", isSidebarOpen, isMobileSidebarOpen);
 
   return (
     <MainWrapper>
@@ -69,7 +72,7 @@ const FullLayout = ({ children }) => {
           <Sidebar
             isSidebarOpen={isSidebarOpen}
             isMobileSidebarOpen={isMobileSidebarOpen}
-            onSidebarClose={() => setSidebarOpen(!isSidebarOpen)}
+            onSidebarClose={() => setSidebarOpen(isSidebarOpen)}
           />
         </>
       )}

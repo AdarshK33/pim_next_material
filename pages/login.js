@@ -75,7 +75,7 @@ const Login = (user) => {
   }, [itemData]);
   useEffect(() => {
     if (isLogin === 201) {
-      Router.push("/dashboard");
+      Router.push("/userManagement");
     }
   }, [isLogin, user]);
 
@@ -192,7 +192,7 @@ export const getServerSideProps = withIronSessionSsr(
     if (user) {
       return {
         redirect: {
-          destination: "/dashboard",
+          destination: "/userManagement",
           permanent: false,
         },
       };

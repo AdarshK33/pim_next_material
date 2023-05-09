@@ -45,7 +45,7 @@ import Stack from "@mui/material/Stack";
 
 const BulkUpload = (props) => {
   const dispatch = useDispatch();
-  console.log("ppppppppppp", props.user);
+  // console.log("ppppppppppp", props.user);
   const { user: { at = "" } = {}, loggedIn } = props.user;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -83,7 +83,7 @@ const BulkUpload = (props) => {
 
   for (let i = 1; i <= 5; i++) {
     tableData.push({
-      filename: `demo${i}@gmail.com `,
+      filename: `file${i} `,
       UploadedBy: i + "/5" + "/2023",
       UpdateAt: i + "/5" + "/2023",
     });

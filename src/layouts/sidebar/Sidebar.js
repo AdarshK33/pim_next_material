@@ -34,8 +34,8 @@ import styles from "./sidebar.module.css";
 import ProfileDD from "../header/ProfileDD";
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
-  const [open, setOpen] = React.useState(false);
-  const [submenuOpen, setSubmenuOpen] = useState(false);
+  const [open, setOpen] = React.useState(true);
+  const [submenuOpen, setSubmenuOpen] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("");
 
   const [openSecondLevel, setOpenSecondLevel] = React.useState(true);
@@ -48,6 +48,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   };
 
   const handleMenuClick = (title) => {
+    console.log(title, "hello title");
     if (title === selectedMenu) {
       setSubmenuOpen(!submenuOpen);
     } else {

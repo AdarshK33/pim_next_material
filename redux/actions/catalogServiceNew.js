@@ -99,10 +99,10 @@ export const getAttributeListApi = (pageNo, pageSize) => {
     client
       .post("/api/catalogServiceNew/attributeList", data)
       .then((response) => {
-        console.log(" getAttributeListApi response", response);
+        // console.log(" getAttributeListApi response", response);
 
         if (response?.data.statusCode === 200) {
-          console.log("API SUCCESS2", response.data);
+          // console.log("API SUCCESS2", response.data);
           dispatch(attributeListSuccess(response.data.result));
         }
       })
@@ -127,10 +127,9 @@ export const getAllProductListApi = (pageNo, pageSize, status) => {
     client
       .post("/api/catalogServiceNew/allProducts", data)
       .then((response) => {
-        console.log(" getAttributeListApi response", response);
+        // console.log(" getAttributeListApi response", response);
 
         if (response?.data.statusCode === 200) {
-          console.log("API SUCCESS2", response.data);
           dispatch(getAllProductListSuccess(response.data.result));
         }
       })
@@ -174,18 +173,17 @@ export const bulkUploadApi = (data) => {
   };
 };
 
-export const productDetailsApi = (data) => {
-
-  console.log("hello", data);
+export const productDetailsApi = (PimCode) => {
+  const data = {
+    PimCode: PimCode,
+  };
   return (dispatch) => {
     dispatch(getProductDetailsLoading("PRODUCT....", "DETAILS"));
-    uploadClient
+    client
       .post("/api/catalogServiceNew/productDetails", data)
       .then((response) => {
-        console.log("---------PRODUCT DETAILS------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
-        dispatch(
-          getProductDetailsSuccess(response.data.result)
-        ); // } else throw new Error("");
+        // console.log("---------PRODUCT DETAILS------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        dispatch(getProductDetailsSuccess(response.data.result)); // } else throw new Error("");
       })
       .catch((err) => {
         // toast.error("User Data Not Found!!!");
@@ -194,9 +192,7 @@ export const productDetailsApi = (data) => {
           err
         );
 
-        dispatch(
-          getProductDetailsFailure(err)
-        );
+        dispatch(getProductDetailsFailure(err));
       });
   };
 };

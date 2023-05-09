@@ -15,7 +15,7 @@ const initialState = {
 
   // refreshToken:{}
 };
-const catalogServiceNewReducer = (state = initialState, action) => {
+const catalogQueryReducer = (state = initialState, action) => {
   // console.log("hello loginReducer called",action)
   switch (action.type) {
     case ATTRIBUTE_LIST_LOADING:
@@ -61,3 +61,5 @@ const catalogServiceNewReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default catalogQueryReducer;

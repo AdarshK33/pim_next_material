@@ -12,7 +12,7 @@ function handler(req, res) {
 
   const config = {
     method: "get",
-    url: `/catalog/getAllProduct?pageNo=${body.pageNo}&pageSize=${body.pageSize}&sortBy=updatedAt&productStatus=${body.status}`,
+    url: `/catalog/products?pageNo=${body.pageNo}&pageSize=${body.pageSize}&sortBy=updatedAt&productStatus=${body.status}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },

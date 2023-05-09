@@ -61,7 +61,7 @@ const UserManagement = () => {
 
   const handlePaginationChange = (event, value) => {
     setCurrentPage(value);
-    console.log(value, "value");
+    // console.log(value, "value");
     dispatch(getUserListApi(value - 1, 5));
   };
 
