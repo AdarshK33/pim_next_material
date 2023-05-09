@@ -19,7 +19,7 @@ const initialState = {
   attributeGet: {},
   getAllProducts: {},
   bulkUpload: {},
-  productDetails: {},
+  productPimCodeData: {},
 
   // refreshToken:{}
 };
@@ -95,14 +95,14 @@ const catalogServiceNewReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        productDetails: action.payload,
+        productPimCodeData: action.payload,
         error: {},
       };
     case GET_PRODUCT_DETAILS_FAILURE:
       return {
         ...state,
         loading: false,
-        productDetails: [],
+        productPimCodeData: [],
         error: action,
       };
 

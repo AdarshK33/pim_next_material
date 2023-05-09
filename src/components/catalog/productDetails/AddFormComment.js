@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import styles from "./productDetails.module.css";
-const AddForm = ({ classModal }) => {
+const AddFormComment = ({ classModal }) => {
   const [roleError, setRoleError] = useState(false);
   const [role, setRole] = useState("");
 
@@ -72,7 +72,7 @@ const AddForm = ({ classModal }) => {
   };
   return (
     <>
-      <div className={styles.add_title}>Add issues to revalidate</div>
+      <div className={styles.add_title}>Comment</div>
       <form>
         <Grid container>
           <Grid item xs={12}>
@@ -95,7 +95,7 @@ const AddForm = ({ classModal }) => {
               Close
             </Button>
 
-            <Button
+            {/* <Button
               variant="outlined"
               onClick={submitHandler}
               type="submit"
@@ -103,7 +103,7 @@ const AddForm = ({ classModal }) => {
               color="success"
             >
               Save Changes
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
       </form>
@@ -111,4 +111,4 @@ const AddForm = ({ classModal }) => {
   );
 };
 
-export default AddForm;
+export default AddFormComment;

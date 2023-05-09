@@ -139,10 +139,10 @@ export const userLoginApi = (data) => {
     client
       .post("/api/login/userLogin", data)
       .then((response) => {
-        console.log("hello userLoginApi", response);
+        // console.log("hello userLoginApi", response);
         // toast.info("Login Successfully !!!");
         if (response?.data?.statusCode === 201) {
-          console.log("hello Login post==>", response.data);
+          // console.log("hello Login post==>", response.data);
           dispatch(
             userLoginSuccess(
               response?.data?.statusCode,
@@ -193,10 +193,10 @@ export const getUserListApi = (pageNo, pageSize) => {
     client
       .post("/api/login/userList", data)
       .then((response) => {
-        console.log(" getUserListApi response", response);
+        // console.log(" getUserListApi response", response);
 
         if (response?.data.statusCode === 200) {
-          console.log("API SUCCESS2", response.data);
+          // console.log("API SUCCESS2", response.data);
           dispatch(getUserDataSuccess(response.data.result));
         }
       })
@@ -235,11 +235,11 @@ export const createUserApi = (data) => {
     client
       .post("/api/login/userCreate", data)
       .then((response) => {
-        console.log("---------userApi------", response.status);
+        // console.log("---------userApi------", response.status);
         // result = true;
         if (response.status === 200) {
           // toast.info("User Create Successfully !!!");
-          console.log("user ==>", response.data.result);
+          // console.log("user ==>", response.data.result);
           dispatch(
             createUserDataSuccess(
               response.data.result,

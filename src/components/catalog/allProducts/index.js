@@ -35,7 +35,10 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useRouter } from "next/router";
-import { getAllProductListApi } from "../../../../redux/actions/catalogServiceNew";
+import {
+  getAllProductListApi,
+  productDetailsApi,
+} from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
 
 const AllProducts = () => {
@@ -149,24 +152,17 @@ const AllProducts = () => {
     value: PropTypes.number.isRequired,
   };
 
-  function handleEdit() {
+  function handleEdit(PimCodeId) {
     router.push(`/productDetails`);
+    dispatch(productDetailsApi(PimCodeId));
+  }
+  function handleBulk() {
+    router.push(`/bulkUpload`);
   }
 
   const handlePanelClick = () => {
     console.log("Panel clicked");
   };
-
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((prevProgress) =>
-  //       prevProgress >= 100 ? 10 : prevProgress + 10
-  //     );
-  //   }, 800);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
 
   return (
     <>
@@ -174,13 +170,18 @@ const AllProducts = () => {
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
-            <Grid container ={2} justifyContent="space-between">
+            <Grid container={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
                 Products
               </Typography>
-              <Button variant="outlined" color="success" component="label">
+              <Button
+                variant="outlined"
+                color="success"
+                component="label"
+                onClick={() => handleBulk()}
+              >
                 Upload Products
-                <input hidden accept="image/*" multiple type="file" />
+                {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
             </Grid>
             <CardContent>
@@ -260,7 +261,7 @@ const AllProducts = () => {
                       <TableCell>CATEGORY</TableCell>
                       <TableCell>FORMATION</TableCell>
                       <TableCell>STATUS</TableCell>
-                      <TableCell>DETAILS</TableCell>
+                      {/* <TableCell>DETAILS</TableCell> */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -291,7 +292,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={()=>handleEdit(item.brandId)}
+                              onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
                         </TableRow>
@@ -367,7 +368,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              onClick={() => handleEdit()}
+                              onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
                         </TableRow>
@@ -403,7 +404,7 @@ const AllProducts = () => {
                       <TableCell>ITEM ID</TableCell>
                       <TableCell>NAME</TableCell>
                       <TableCell>CATEGORY</TableCell>
-                      <TableCell>FORMATION</TableCell>
+                      {/* <TableCell>FORMATION</TableCell> */}
                       <TableCell>STATUS</TableCell>
                       <TableCell>DETAILS</TableCell>
                     </TableRow>
@@ -424,10 +425,10 @@ const AllProducts = () => {
                           </TableCell>
                           <TableCell>{row.itemName}</TableCell>
                           <TableCell>{row.category}</TableCell>
-                          <TableCell>
+                          {/* <TableCell>
                             {" "}
-                            <LinearProgressWithLabel value={row.formation} />
-                          </TableCell>
+                            {/* <LinearProgressWithLabel value={row.formation} /> */}
+
                           <TableCell style={{ color: "red" }}>
                             {row.productStatus}
                           </TableCell>
@@ -438,7 +439,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={() => handleRoute()}
+                              onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
                         </TableRow>
