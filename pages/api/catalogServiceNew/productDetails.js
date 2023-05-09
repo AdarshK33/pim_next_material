@@ -6,7 +6,6 @@ function handler(req, res) {
 
   const { user: { at = "" } = {}, loggedIn } = req.session;
 
-
   const config = {
     method: "get",
     url: `/catalog/product/YYY00014193`,

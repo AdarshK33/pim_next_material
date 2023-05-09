@@ -83,7 +83,7 @@ const BulkUpload = (props) => {
 
   for (let i = 1; i <= 5; i++) {
     tableData.push({
-      filename: `demo${i}@gmail.com `,
+      filename: `file${i} `,
       UploadedBy: i + "/5" + "/2023",
       UpdateAt: i + "/5" + "/2023",
     });

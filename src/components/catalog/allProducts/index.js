@@ -35,7 +35,10 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useRouter } from "next/router";
-import { getAllProductListApi } from "../../../../redux/actions/catalogServiceNew";
+import {
+  getAllProductListApi,
+  productDetailsApi,
+} from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
 
 const AllProducts = () => {
@@ -151,6 +154,7 @@ const AllProducts = () => {
 
   function handleEdit() {
     router.push(`/productDetails`);
+    dispatch(productDetailsApi());
   }
 
   function handleRoute() {
