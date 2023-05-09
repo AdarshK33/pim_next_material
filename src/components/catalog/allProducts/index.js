@@ -415,7 +415,7 @@ const AllProducts = () => {
                       <TableCell>ITEM ID</TableCell>
                       <TableCell>NAME</TableCell>
                       <TableCell>CATEGORY</TableCell>
-                      <TableCell>FORMATION</TableCell>
+                      {/* <TableCell>FORMATION</TableCell> */}
                       <TableCell>STATUS</TableCell>
                       <TableCell>DETAILS</TableCell>
                     </TableRow>
@@ -436,10 +436,10 @@ const AllProducts = () => {
                           </TableCell>
                           <TableCell>{row.itemName}</TableCell>
                           <TableCell>{row.category}</TableCell>
-                          <TableCell>
+                          {/* <TableCell>
                             {" "}
-                            <LinearProgressWithLabel value={row.formation} />
-                          </TableCell>
+                            {/* <LinearProgressWithLabel value={row.formation} /> */}
+
                           <TableCell style={{ color: "red" }}>
                             {row.productStatus}
                           </TableCell>
