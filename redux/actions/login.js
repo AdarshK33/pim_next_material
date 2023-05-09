@@ -20,7 +20,7 @@ import {
 } from "../types/types";
 
 import { client } from "../../utils/axios";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 
 export const userLoginLoading = () => {
@@ -140,7 +140,7 @@ export const userLoginApi = (data) => {
       .post("/api/login/userLogin", data)
       .then((response) => {
         // console.log("hello userLoginApi", response);
-        // toast.info("Login Successfully !!!");
+        toast.info("Login Successfully !!!");
         if (response?.data?.statusCode === 201) {
           // console.log("hello Login post==>", response.data);
           dispatch(
@@ -176,7 +176,7 @@ export const userLoginApi = (data) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        // toast.error("User Not Found!!!");
+        toast.error("User Not Found!!!");
         console.log("error caught in -> actions/login", err);
         dispatch(userLoginFailure(err, "Something went wrong", "LOGIN POST"));
       });

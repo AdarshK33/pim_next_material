@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLoginApi } from "../redux/actions/login";
 import { withIronSessionSsr } from "iron-session/next";
 import Router from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { sessionOption } from "../utils/session";
 
@@ -80,103 +82,107 @@ const Login = (user) => {
   }, [isLogin, user]);
 
   return (
-    <Box className={styles.mainContainer}>
-      <Grid className={styles.container}>
-        <Grid item xs={12} lg={12}>
-          <Card sx={{ p: 4 }} className={styles.loginCard}>
-            <Typography variant="h1" className={styles.loginPara}>
-              Login
-            </Typography>
-            <Box
-              sx={{
-                "& > legend": { mt: 2 },
-              }}
-            >
-              <Stack spacing={3}>
-                {/* <TextField
+    <>
+      <Box className={styles.mainContainer}>
+        <Grid className={styles.container}>
+          <Grid item xs={12} lg={12}>
+            <Card sx={{ p: 4 }} className={styles.loginCard}>
+              <Typography variant="h1" className={styles.loginPara}>
+                Login
+              </Typography>
+              <Box
+                sx={{
+                  "& > legend": { mt: 2 },
+                }}
+              >
+                <Stack spacing={3}>
+                  {/* <TextField
                   id="email-basic"
                   label="User Name"
                   variant="outlined"
                 /> */}
-                <FormControl variant="outlined">
-                  <InputLabel htmlFor="outlined-adornment-account">
-                    User Name
-                  </InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-account"
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <AccountCircleIcon />
-                      </InputAdornment>
-                    }
-                    label="User Name"
-                    value={username}
-                    onChange={handleUsernameChange}
-                  />
-                </FormControl>
-                {/* <TextField
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-account">
+                      User Name
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-account"
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <AccountCircleIcon />
+                        </InputAdornment>
+                      }
+                      label="User Name"
+                      value={username}
+                      onChange={handleUsernameChange}
+                    />
+                  </FormControl>
+                  {/* <TextField
                   id="pass-basic"
                   label="Password"
                   type="password"
                   variant="outlined"
                 /> */}
-                <FormControl variant="outlined">
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    Password
-                  </InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-password"
-                    type={showPassword ? "text" : "password"}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? (
-                            <VisibilityOffIcon />
-                          ) : (
-                            <VisibilityIcon />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="Password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                  />
-                </FormControl>
-                <Button
-                  style={{
-                    color: "#fff",
-                    background: "#fdb834",
-                    borderRadius: "30px",
-                    padding: "10px",
-                    margin: "40px 0 10px 0",
-                  }}
-                  mt={2}
-                  onClick={() => {
-                    submitHandler();
-                  }}
-                >
-                  Get Started
-                </Button>
-              </Stack>
-            </Box>
-          </Card>
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-password"
+                      type={showPassword ? "text" : "password"}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? (
+                              <VisibilityOffIcon />
+                            ) : (
+                              <VisibilityIcon />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      value={password}
+                      onChange={handlePasswordChange}
+                    />
+                  </FormControl>
+                  <Button
+                    style={{
+                      color: "#fff",
+                      background: "#fdb834",
+                      borderRadius: "30px",
+                      padding: "10px",
+                      margin: "40px 0 10px 0",
+                    }}
+                    mt={2}
+                    onClick={() => {
+                      submitHandler();
+                    }}
+                  >
+                    Get Started
+                  </Button>
+                </Stack>
+              </Box>
+            </Card>
 
-          <Typography
-            variant="h3"
-            component="legend"
-            className={styles.paragraph}
-          >
-            PRODUCT INFORMATION MANAGEMENT
-          </Typography>
+            <Typography
+              variant="h3"
+              component="legend"
+              className={styles.paragraph}
+            >
+              PRODUCT INFORMATION MANAGEMENT
+            </Typography>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+
+      <ToastContainer />
+    </>
   );
 };
 
