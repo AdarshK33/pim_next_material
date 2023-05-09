@@ -5,10 +5,10 @@ function handler(req, res) {
   const body = req.body;
 
   const { user: { at = "" } = {}, loggedIn } = req.session;
-
+  // const PimCode = body.PimCode;
   const config = {
     method: "get",
-    url: `/catalog/product/YYY00014193`,
+    url: `/catalog/product/${body.PimCode}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },

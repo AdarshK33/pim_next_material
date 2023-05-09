@@ -35,10 +35,13 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 // import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const ProductDetails = () => {
+const ProductDetails = (props) => {
+  const { user: { role = "" } = {}, loggedIn } = props.user;
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
+
+  console.log("pimcode", catalogServiceNewReducer?.productPimCodeData);
   var result = {
     "AX MASTER": [
       {
@@ -665,8 +668,6 @@ const ProductDetails = () => {
   const [showRevalidateAddForm, setShowRevalidateAddForm] = useState(false);
   const [showCommentAddForm, setShowCommentAddForm] = useState(false);
 
-  const [role, setRole] = useState();
-
   const AccordionSetUp = (key, value) => {
     return (
       <>
@@ -680,9 +681,9 @@ const ProductDetails = () => {
           </AccordionSummary>
 
           <AccordionDetails>
-            <Box className={styles.revalidate_Btn}>
-              {role ? (
-                <>
+            {role === "ADMIN" ? (
+              <>
+                <Box className={styles.revalidate_Btn}>
                   <Button
                     variant="outlined"
                     color="danger"
@@ -692,19 +693,20 @@ const ProductDetails = () => {
                     Revalidate
                     {/* <input hidden accept="image/*" multiple type="file" /> */}
                   </Button>
-
-                  <CustomModal
-                    openModal={showRevalidateAddForm}
-                    closeModal={() => setShowRevalidateAddForm(false)}
-                    body={
-                      <AddFormRevalidate
-                        classModal={() => setShowRevalidateAddForm(false)}
-                      />
-                    }
-                  />
-                </>
-              ) : (
-                <>
+                </Box>
+                <CustomModal
+                  openModal={showRevalidateAddForm}
+                  closeModal={() => setShowRevalidateAddForm(false)}
+                  body={
+                    <AddFormRevalidate
+                      classModal={() => setShowRevalidateAddForm(false)}
+                    />
+                  }
+                />
+              </>
+            ) : (
+              <>
+                <Box className={styles.revalidate_Btn}>
                   <Button
                     variant="outlined"
                     color="success"
@@ -713,18 +715,18 @@ const ProductDetails = () => {
                   >
                     Comment
                   </Button>
-                  <CustomModal
-                    openModal={showCommentAddForm}
-                    closeModal={() => setShowCommentAddForm(false)}
-                    body={
-                      <AddFormComment
-                        classModal={() => setShowCommentAddForm(false)}
-                      />
-                    }
-                  />
-                </>
-              )}
-            </Box>
+                </Box>
+                <CustomModal
+                  openModal={showCommentAddForm}
+                  closeModal={() => setShowCommentAddForm(false)}
+                  body={
+                    <AddFormComment
+                      classModal={() => setShowCommentAddForm(false)}
+                    />
+                  }
+                />
+              </>
+            )}
 
             <CardContent>
               <Grid container>{sectionAllMasterRender(value)}</Grid>
@@ -746,13 +748,13 @@ const ProductDetails = () => {
   };
 
   const sectionAccordionSetUpRender = (screenType) => {
-    // if (!catalogServiceNewReducer?.productPimCodeData) {
-    //   return;
-    // }
-    const obj = result;
+    if (!catalogServiceNewReducer?.productPimCodeData) {
+      return;
+    }
+    const obj = catalogServiceNewReducer?.productPimCodeData;
 
     return Object.entries(obj).map(([key, value]) => {
-      console.log("hello key", key, value);
+      // console.log("hello key", key, value);
 
       if (key) {
         return AccordionSetUp(key, value);
@@ -787,16 +789,17 @@ const ProductDetails = () => {
               <Typography variant="h2" className={styles.main_title}>
                 Product Details
               </Typography>
-
-              <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                // onClick={() => setShowAttributeAddForm(true)}
-              >
-                Activate
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+              {role === "ADMIN" && (
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component="label"
+                  // onClick={() => setShowAttributeAddForm(true)}
+                >
+                  Activate
+                  {/* <input hidden accept="image/*" multiple type="file" /> */}
+                </Button>
+              )}
             </Grid>
 
             <Box sx={{ p: 1 }}>{sectionAccordionSetUpRender()}</Box>

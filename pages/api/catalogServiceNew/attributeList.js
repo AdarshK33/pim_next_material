@@ -12,7 +12,7 @@ function handler(req, res) {
   // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes_set?page_No=0&page_size=5
   const config = {
     method: "get",
-    url: `/catalog/attributes_set?page_No=${body.page_No}&page_size=${body.page_size}`,
+    url: `/catalog/attributes_set?page_no=${body.page_No}&page_size=${body.page_size}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },

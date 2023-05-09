@@ -152,9 +152,12 @@ const AllProducts = () => {
     value: PropTypes.number.isRequired,
   };
 
-  function handleEdit() {
+  function handleEdit(PimCodeId) {
     router.push(`/productDetails`);
-    dispatch(productDetailsApi());
+    dispatch(productDetailsApi(PimCodeId));
+  }
+  function handleBulk() {
+    router.push(`/bulkUpload`);
   }
 
   const handlePanelClick = () => {
@@ -178,13 +181,18 @@ const AllProducts = () => {
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
-            <Grid container ={2} justifyContent="space-between">
+            <Grid container={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
                 Products
               </Typography>
-              <Button variant="outlined" color="success" component="label">
+              <Button
+                variant="outlined"
+                color="success"
+                component="label"
+                onClick={() => handleBulk()}
+              >
                 Upload Products
-                <input hidden accept="image/*" multiple type="file" />
+                {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
             </Grid>
             <CardContent>
@@ -264,7 +272,7 @@ const AllProducts = () => {
                       <TableCell>CATEGORY</TableCell>
                       <TableCell>FORMATION</TableCell>
                       <TableCell>STATUS</TableCell>
-                      <TableCell>DETAILS</TableCell>
+                      {/* <TableCell>DETAILS</TableCell> */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -295,7 +303,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={()=>handleEdit(item.brandId)}
+                              onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
                         </TableRow>
@@ -371,7 +379,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              onClick={() => handleEdit()}
+                              onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
                         </TableRow>
@@ -442,7 +450,7 @@ const AllProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={() => handleRoute()}
+                              onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
                         </TableRow>
