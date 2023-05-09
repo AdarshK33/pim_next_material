@@ -14,6 +14,9 @@ import {
   CREATE_USER_DATA_LOADING,
   CREATE_USER_DATA_SUCCESS,
   CREATE_USER_DATA_FAILURE,
+  GET_ROLES_PRIVILEGE_LOADING,
+  GET_ROLES_PRIVILEGE_SUCCESS,
+  GET_ROLES_PRIVILEGE_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -107,6 +110,24 @@ export const createUserDataSuccess = (data) => {
 export const createUserDataFailure = (error) => {
   return {
     type: CREATE_USER_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const getRolesPrivilegeLoading = () => {
+  return {
+    type: GET_ROLES_PRIVILEGE_LOADING,
+  };
+};
+export const getRolesPrivilegeSuccess = (data) => {
+  return {
+    type: GET_ROLES_PRIVILEGE_SUCCESS,
+    payload: data,
+  };
+};
+export const getRolesPrivilegeFailure = (error) => {
+  return {
+    type: GET_ROLES_PRIVILEGE_FAILURE,
     payload: error,
   };
 };
@@ -238,5 +259,23 @@ export const createUserApi = (data) => {
       });
 
     // return result;
+  };
+};
+
+export const getRolePrivilegeApi = () => {
+  return (dispatch) => {
+    dispatch(getRolesPrivilegeLoading("ROLE....", "PRIVILEGES"));
+    client
+      .get("/api/login/rolesPrivilege")
+      .then((response) => {
+        if (response?.status === 200) {
+          console.log("getRolesPrivilegeSuccess", response);
+          dispatch(getRolesPrivilegeSuccess(response.data));
+        }
+      })
+      .catch((err) => {
+        console.log("getRolesPrivilegeFailure", err);
+        dispatch(getRolesPrivilegeFailure(err));
+      });
   };
 };
