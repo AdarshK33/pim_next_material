@@ -320,10 +320,9 @@ export const createAttributeSetApi = (info) => {
         );
 
         dispatch(createAttributeSetFailure(err));
-
       });
-    };
   };
+};
 export const addCategoryApi = (data) => {
   console.log("hello   called", data);
   return (dispatch) => {
