@@ -29,7 +29,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@mui/material/Checkbox";
-import { channelAttributeApiList } from "../../../redux/actions/channel";
+import { channelAttributeApiList, channelMappingApi } from "../../../redux/actions/channel";
 import { useDispatch, useSelector } from "react-redux";
 
 const ChannelAttributes = () => {
@@ -37,13 +37,11 @@ const ChannelAttributes = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [modifiedPimRecord, setModifiedPimRecord] = useState([]);
   const [channel, setChannel] = useState("Shopify");
-  console.log("modifiedPimRecord", modifiedPimRecord);
 
   const { channelAttribute } = useSelector((state) => {
     return state.channelReducer;
   });
 
-  console.log("channelAttribute", channelAttribute);
 
   const [age, setAge] = useState("");
 
@@ -81,9 +79,7 @@ const ChannelAttributes = () => {
     const updatedRecord = pimAttributes?.map((obj) => {
       const hasChannelAttribute =
         obj.channelAttributes && Object.keys(obj.channelAttributes).length;
-      console.log("obj.chaannelAttributes", obj.channelAttributes);
       const hasSelectedChannelAttr = obj.channelAttributes === null;
-      console.log("hasSelectedChannelAttr", hasSelectedChannelAttr);
       return {
         ...obj,
         isChecked: hasChannelAttribute,
@@ -97,7 +93,6 @@ const ChannelAttributes = () => {
 
   const handlePageChange = (value) => {
     setCurrentPage(value);
-    console.log("1st api called");
     dispatch(channelAttributeApiList("Shopify", value - 1, 5));
     // dispatch(getChannelAttributes(pageNumber));
   };
@@ -108,7 +103,6 @@ const ChannelAttributes = () => {
 
   const handleFilterChange = () => {
     setCurrentPage(0);
-    console.log("api called in filter");
     dispatch(channelAttributeApiList(channel, 0, 5));
   };
 
@@ -125,19 +119,19 @@ const ChannelAttributes = () => {
   };
 
   const onSelectdropdown = (value, item) => {
+    const channelAttributes = channelAttribute?.content?.channelAttributes;
+    const attributes = channelAttributes?.[channel]?.attributes;
     const selectedChannelAttributes = attributes.filter(
       (arr) => arr.id === value
-    )[0];
-    console.log("selectedChannelAttributes", selectedChannelAttributes);
+    );
     const pimAttribute = modifiedPimRecord.map((arr) => {
       if (arr.id === item.id) {
         return {
           ...arr,
-          selectedChannelAttributes,
+          selectedChannelAttributes: selectedChannelAttributes[0],
         };
       } else return arr;
     });
-    console.log("pimAttribute", pimAttribute);
     setModifiedPimRecord(pimAttribute);
   };
 
@@ -150,7 +144,6 @@ const ChannelAttributes = () => {
         };
       } else return arr;
     });
-    console.log("selectedData", selectedData);
   };
 
   const onSubmit = () => {
@@ -165,7 +158,7 @@ const ChannelAttributes = () => {
       })
       .filter((arr) => arr);
     let unMappedAttributes = {};
-    modifiedPimRecord.forEach((arr) => {
+    modifiedPimRecord.forEach((arr, i) => {
       const hasChannelAttributeMapped = arr?.channelAttributes?.id;
       const hasChannelAttributeUpdated =
         arr?.selectedChannelAttributes?.id !== arr?.channelAttributes?.id;
@@ -175,6 +168,7 @@ const ChannelAttributes = () => {
           unMappedAttributes = {
             ...unMappedAttributes,
             [arr?.id]: arr?.channelAttributes?.id,
+            // [`additionalProp1${i}`]: arr?.channelAttributes?.id,
           };
         }
       }
@@ -184,17 +178,21 @@ const ChannelAttributes = () => {
       mappedAttributes,
       unMappedAttributes,
     };
-    console.log("unmapped data", data);
-    // dispatch(channelMappingApi(data));
+    dispatch(channelMappingApi('Shopify', data));
   };
 
   const setDefaultOption = (item) => {
     const { selectedChannelAttributes: attr } = item;
-    if (attr && Object.keys(attr).length)
+    if (attr && Object.keys(attr).length) {
       return {
         value: attr.id,
         label: attr.aliasKeyName,
       };
+    }
+    return {
+      value: '',
+      label: 'Select an attribute',
+    }
   };
 
   const getChannelAttributesOptions = () => {
@@ -219,7 +217,7 @@ const ChannelAttributes = () => {
               <Typography variant="h2" className={styles.main_title}>
                 Channel Attribute Mapping
               </Typography>
-              <FormControl style={{ width: "200px" }}>
+              {/* <FormControl style={{ width: "200px" }}>
                 <InputLabel id="demo-simple-select-label">Shopify</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -232,13 +230,27 @@ const ChannelAttributes = () => {
                   <MenuItem value={20}>Amazon</MenuItem>
                   <MenuItem value={30}>Myntra</MenuItem>
                 </Select>
-              </FormControl>
+              </FormControl> */}
 
-              <Button variant="outlined" color="success" component="label">
+              <Button variant="outlined" color="success" component="label" onClick={() => onSubmit()}>
                 Submit
                 {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
             </Grid>
+            <FormControl style={{ width: "200px", marginTop: '2rem' }}>
+              <InputLabel id="demo-simple-select-label">Shopify</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                label="Shopify"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>Shopify</MenuItem>
+                <MenuItem value={20}>Amazon</MenuItem>
+                <MenuItem value={30}>Myntra</MenuItem>
+              </Select>
+            </FormControl>
             <CardContent>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -266,17 +278,17 @@ const ChannelAttributes = () => {
                               {item?.aliasKeyName}
                             </TableCell>
                             <TableCell align="right">
-                              <FormControl style={{ width: "200px" }}>
+                              <FormControl style={{ width: "200px" }} disabled={item.isChecked ? true : false}>
                                 <InputLabel id="demo-simple-select-label">
                                   Select an Attribute
                                 </InputLabel>
                                 <Select
-                                  labelId="demo-simple-select-label"
+                                  labelId={"demo-simple-select-label"}
                                   id="demo-simple-select"
                                   label="Select an Attribute"
-                                  onChange={(e) => onSelectdropdown(e, item)}
-                                  value={setDefaultOption(item)}
-                                  // disabled={item?.isChecked}
+                                  onChange={(e) => onSelectdropdown(e.target.value, item)}
+                                  value={setDefaultOption(item).value}
+                                // disabled={item?.isChecked}
                                 >
                                   {options?.map((option) => (
                                     <MenuItem value={option?.value}>
