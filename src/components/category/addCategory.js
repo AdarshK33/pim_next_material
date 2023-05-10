@@ -23,7 +23,7 @@ export default function addCategory() {
   const [slug, setSlug] = useState("");
   // const [addCatData, setAddCatData] = useState();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log("name", name, "description", description, "slug", slug);
     if (name === "" || description === "" || slug === "") {
