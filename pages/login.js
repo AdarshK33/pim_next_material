@@ -29,9 +29,14 @@ import { sessionOption } from "../utils/session";
 
 const Login = (user) => {
   const dispatch = useDispatch();
-  const { isLogin } = useSelector((state) => {
+  const { loginReducer } = useSelector((state) => {
     return state.loginReducer;
   });
+
+  const { isLogin, userRole } = useSelector((state) => {
+    return state.loginReducer;
+  });
+
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
   const [username, setUsername] = useState("");
@@ -75,11 +80,14 @@ const Login = (user) => {
       dispatch(userLoginApi(itemData));
     }
   }, [itemData]);
+
   useEffect(() => {
-    if (isLogin === 201) {
+    if (isLogin === 201 && userRole !== "ADMIN") {
+      Router.push("/allProducts");
+    } else if (isLogin === 201 && userRole === "ADMIN") {
       Router.push("/userManagement");
     }
-  }, [isLogin, user]);
+  }, [isLogin, userRole, user]);
 
   return (
     <>
