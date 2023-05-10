@@ -28,8 +28,18 @@ import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
 
 const Category = () => {
+  const dispatch = useDispatch();
+
+  const { catagories } = useSelector((state) => state.catalogQueryReducer);
+
+  useEffect(() => {
+    dispatch(getCategoriesApi());
+  }, []);
+
   const data = [
     {
       id: "root-1",
@@ -74,11 +84,18 @@ const Category = () => {
   ];
   const renderTree = (nodes) => (
     <>
-      {nodes.map((node) => (
-        <TreeItem key={node.id} nodeId={node.id} label={node.name}>
-          {Array.isArray(node.children) ? renderTree(node.children) : null}
-        </TreeItem>
-      ))}
+      {nodes.length > 0 &&
+        nodes.map((node) => (
+          <TreeItem
+            key={node.id}
+            nodeId={node.id}
+            label={node.name}
+            style={{ margin: 10 }}
+          >
+            <ChevronRightIcon />
+            {Array.isArray(node.children) ? renderTree(node.children) : null}
+          </TreeItem>
+        ))}
     </>
   );
   return (
@@ -119,7 +136,7 @@ const Category = () => {
               overflowY: "auto",
             }}
           >
-            {renderTree(data)}
+            {renderTree(catagories)}
           </TreeView>
         </Grid>
 

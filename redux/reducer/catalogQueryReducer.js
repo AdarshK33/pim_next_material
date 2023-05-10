@@ -5,11 +5,14 @@ import {
   GET_ALL_PRODUCT_LIST_LOADING,
   GET_ALL_PRODUCT_LIST_SUCCESS,
   GET_ALL_PRODUCT_LIST_FAILURE,
+  GET_CATEGORIES_DATA_LOADING,
+  GET_CATEGORIES_DATA_SUCCESS,
+  GET_CATEGORIES_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
   loading: false,
-
+  catagories: {},
   attributeGet: {},
   allProductGet: {},
 
@@ -55,6 +58,24 @@ const catalogQueryReducer = (state = initialState, action) => {
         loading: false,
         allProductGet: [],
         error: action,
+      };
+    case GET_CATEGORIES_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_CATEGORIES_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        catagories: action.payload,
+        error: {},
+      };
+    case GET_CATEGORIES_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.err,
       };
 
     default:

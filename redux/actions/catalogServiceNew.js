@@ -11,10 +11,17 @@ import {
   GET_PRODUCT_DETAILS_LOADING,
   GET_PRODUCT_DETAILS_SUCCESS,
   GET_PRODUCT_DETAILS_FAILURE,
+  GET_CATEGORIES_DATA_LOADING,
+  GET_CATEGORIES_DATA_SUCCESS,
+  GET_CATEGORIES_DATA_FAILURE,
+  ADD_CATEGORY_LOADING,
+  ADD_CATEGORY_SUCCESS,
+  ADD_CATEGORY_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
 import { uploadClient } from "../../utils/axios";
+import { toast } from "react-toastify";
 
 // import { toast } from "react-toastify";
 
@@ -85,6 +92,42 @@ export const getProductDetailsSuccess = (data) => {
 export const getProductDetailsFailure = (error) => {
   return {
     type: GET_PRODUCT_DETAILS_FAILURE,
+    payload: error,
+  };
+};
+
+export const getCategoriesLoading = () => {
+  return {
+    type: GET_CATEGORIES_DATA_LOADING,
+  };
+};
+export const getCategoriesSuccess = (data) => {
+  return {
+    type: GET_CATEGORIES_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getCategoriesFailure = (error) => {
+  return {
+    type: GET_CATEGORIES_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const addCategoryLoading = () => {
+  return {
+    type: ADD_CATEGORY_LOADING,
+  };
+};
+export const addCategorySuccess = (data) => {
+  return {
+    type: ADD_CATEGORY_SUCCESS,
+    payload: data,
+  };
+};
+export const addCategoryFailure = (error) => {
+  return {
+    type: ADD_CATEGORY_FAILURE,
     payload: error,
   };
 };
@@ -193,6 +236,42 @@ export const productDetailsApi = (PimCode) => {
         );
 
         dispatch(getProductDetailsFailure(err));
+      });
+  };
+};
+
+export const getCategoriesApi = () => {
+  return (dispatch) => {
+    dispatch(getCategoriesLoading("Categories....", "Loading!"));
+    client
+      .get("/api/catalogQuery/allCategories")
+      .then((response) => {
+        console.log(" categories response=>", response);
+        dispatch(getCategoriesSuccess(response.data));
+      })
+      .catch((err) => {
+        // toast.error("User Data Not Found!!!");
+        console.log("error caught in -> api/v1/catalog/category", err);
+        dispatch(getCategoriesFailure(err));
+      });
+  };
+};
+
+export const addCategoryApi = (data) => {
+  console.log("hello   called", data);
+  return (dispatch) => {
+    dispatch(addCategoryLoading("Categories....", "Loading!"));
+    client
+      .post("/api/catalogServiceNew/addcategory", data)
+      .then((response) => {
+        console.log(" csdxfsdf", response);
+        toast.info("Category Added Successfully !!!");
+        dispatch(addCategorySuccess(response.data));
+      })
+      .catch((err) => {
+        toast.error("User Data Not Found!!!");
+        console.log("error caught in -> api/v1/catalog/category", err);
+        dispatch(addCategoryFailure(err));
       });
   };
 };
