@@ -278,9 +278,9 @@ export const addCategoryApi = (data) => {
     dispatch(addCategoryLoading("Categories....", "Loading!"));
     client
       .post("/api/catalogServiceNew/addcategory", data)
+
       .then((response) => {
         console.log(" csdxfsdf", response);
-
         dispatch(addCategorySuccess(response.data));
         toast.info("Category Added Successfully !!!");
       })

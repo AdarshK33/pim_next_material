@@ -31,9 +31,9 @@ export default function addCategory() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("name", name, "description", description, "slug", slug);
-    if (name === "" || description === "" || slug === "") {
+    if (name === "") {
       //add alert from @mui
-      console.log("Please fill all the fields");
+      toast.error("Please enter name");
     } else {
       let formData = {
         name: name,
