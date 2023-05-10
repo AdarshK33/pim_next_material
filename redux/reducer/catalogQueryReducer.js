@@ -8,6 +8,9 @@ import {
   GET_CATEGORIES_DATA_LOADING,
   GET_CATEGORIES_DATA_SUCCESS,
   GET_CATEGORIES_DATA_FAILURE,
+  REVALIDATE_DATA_LOADING,
+  REVALIDATE_DATA_SUCCESS,
+  REVALIDATE_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -15,7 +18,7 @@ const initialState = {
   catagories: {},
   attributeGet: {},
   allProductGet: {},
-
+  createComment: {},
   // refreshToken:{}
 };
 const catalogQueryReducer = (state = initialState, action) => {
@@ -75,8 +78,26 @@ const catalogQueryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        attributeGet: [],
         error: action.err,
+      };
+    case REVALIDATE_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case REVALIDATE_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        createComment: action.payload,
+        error: {},
+      };
+    case REVALIDATE_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        createComment: [],
+        error: action,
       };
     default:
       return state;

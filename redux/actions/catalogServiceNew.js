@@ -17,12 +17,17 @@ import {
   CREATE_ATTRIBUTE_SET_LOADING,
   CREATE_ATTRIBUTE_SET_SUCCESS,
   CREATE_ATTRIBUTE_SET_FAILURE,
+  ADD_CATEGORY_LOADING,
+  ADD_CATEGORY_SUCCESS,
+  ADD_CATEGORY_FAILURE,
+  REVALIDATE_DATA_LOADING,
+  REVALIDATE_DATA_SUCCESS,
+  REVALIDATE_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
 import { uploadClient } from "../../utils/axios";
-
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const attributeListLoading = () => {
   return {
@@ -127,10 +132,43 @@ export const createAttributeSetSuccess = (data) => {
 export const createAttributeSetFailure = (error) => {
   return {
     type: CREATE_ATTRIBUTE_SET_FAILURE,
+  };
+};
+export const addCategoryLoading = () => {
+  return {
+    type: ADD_CATEGORY_LOADING,
+  };
+};
+export const addCategorySuccess = (data) => {
+  return {
+    type: ADD_CATEGORY_SUCCESS,
+    payload: data,
+  };
+};
+export const addCategoryFailure = (error) => {
+  return {
+    type: ADD_CATEGORY_FAILURE,
     payload: error,
   };
 };
 
+export const revalidateDataLoading = () => {
+  return {
+    type: REVALIDATE_DATA_LOADING,
+  };
+};
+export const revalidateDataSuccess = (data) => {
+  return {
+    type: REVALIDATE_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const revalidateDataFailure = (error) => {
+  return {
+    type: REVALIDATE_DATA_FAILURE,
+    payload: error,
+  };
+};
 export const getAttributeListApi = (pageNo, pageSize) => {
   const data = {
     page_No: pageNo,
@@ -282,6 +320,66 @@ export const createAttributeSetApi = (info) => {
         );
 
         dispatch(createAttributeSetFailure(err));
+
+      });
+    };
+  };
+export const addCategoryApi = (data) => {
+  console.log("hello   called", data);
+  return (dispatch) => {
+    dispatch(addCategoryLoading("Categories....", "Loading!"));
+    client
+      .post("/api/catalogServiceNew/addcategory", data)
+
+      .then((response) => {
+        console.log(" csdxfsdf", response);
+        dispatch(addCategorySuccess(response.data));
+        toast.info("Category Added Successfully !!!");
+      })
+      .catch((err) => {
+        toast.error("Category Not Added!!!");
+
+        dispatch(addCategoryFailure(err));
+      });
+  };
+};
+
+export const revalidateApis = (info) => {
+  console.log("hello  revalidateApis info", info);
+  const data = {
+    modelCode: info?.PimCodeId,
+    attributeSetId: info.attributeSetId,
+    comments: info.comment,
+  };
+  // console.log("hello  revalidateApis data", data);
+
+  return (dispatch) => {
+    dispatch(revalidateDataLoading("BRAND....", "BRAND"));
+    client
+      .post("/api/catalogServiceNew/revalidate", data)
+      .then((response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          // toast.info("Comment Updated Successfully !!!");
+
+          dispatch(
+            revalidateDataSuccess(
+              response.data,
+              " Comment Successfully",
+              "Comment UPDATE"
+            )
+          );
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        // toast.error("Comment update Failed!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/revalidateApis",
+          err
+        );
+        dispatch(
+          revalidateDataFailure(err, "Something went wrong", "Comment UPDATE")
+        );
       });
   };
 };

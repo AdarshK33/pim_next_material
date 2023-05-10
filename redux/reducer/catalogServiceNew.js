@@ -14,16 +14,18 @@ import {
   CREATE_ATTRIBUTE_SET_LOADING,
   CREATE_ATTRIBUTE_SET_SUCCESS,
   CREATE_ATTRIBUTE_SET_FAILURE,
+  ADD_CATEGORY_LOADING,
+  ADD_CATEGORY_SUCCESS,
+  ADD_CATEGORY_FAILURE,
 } from "../types/types";
 
 const initialState = {
   loading: false,
-
   attributeGet: {},
   getAllProducts: {},
   bulkUpload: {},
   productPimCodeData: {},
-  createAttributeSet:{},
+  createAttributeSet: {},
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
@@ -108,8 +110,26 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         productPimCodeData: [],
         error: action,
       };
+    case ADD_CATEGORY_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        catagories: action.payload,
+        error: {},
+      };
+    case ADD_CATEGORY_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.err,
+      };
 
-      case CREATE_ATTRIBUTE_SET_LOADING:
+    case CREATE_ATTRIBUTE_SET_LOADING:
       return {
         ...state,
         loading: true,

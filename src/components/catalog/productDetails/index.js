@@ -34,12 +34,18 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 // import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 const ProductDetails = (props) => {
   const { user: { role = "" } = {}, loggedIn } = props.user;
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
+
+  const router = useRouter();
+  // console.log("rrrrrrrrrrrrrrrr", router.query);
 
   // console.log("pimcode", catalogServiceNewReducer?.productPimCodeData);
 
@@ -81,6 +87,7 @@ const ProductDetails = (props) => {
                   body={
                     <AddFormRevalidate
                       classModal={() => setShowRevalidateAddForm(false)}
+                      allData={value}
                     />
                   }
                 />
@@ -187,6 +194,7 @@ const ProductDetails = (props) => {
           </Card>
         </Grid>
       </Grid>
+      <ToastContainer />
     </>
   );
 };
