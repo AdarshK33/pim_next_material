@@ -9,6 +9,8 @@ import {
   InputLabel,
   Stack,
   Alert,
+  Snackbar,
+  CircularProgress,
 } from "@mui/material";
 import styles from "./addCategory.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +18,8 @@ import { addCategoryApi } from "../../../redux/actions/catalogServiceNew";
 
 export default function addCategory() {
   const dispatch = useDispatch();
+  // get loader fron useSelector
+  const { loading } = useSelector((state) => state.catalogServiceNewReducer);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
@@ -176,7 +180,7 @@ export default function addCategory() {
             handleSubmit(e);
           }}
         >
-          Submit
+          {loading ? <CircularProgress size={24} /> : "Submit"}
         </Button>
       </Box>
     </div>

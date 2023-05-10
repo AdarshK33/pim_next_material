@@ -265,11 +265,16 @@ export const addCategoryApi = (data) => {
       .post("/api/catalogServiceNew/addcategory", data)
       .then((response) => {
         console.log(" csdxfsdf", response);
-        toast.info("Category Added Successfully !!!");
+
         dispatch(addCategorySuccess(response.data));
+        toast.success("Category added successfully!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
       .catch((err) => {
-        toast.error("User Data Not Found!!!");
+        toast.error("Category not found", {
+          position: toast.POSITION.TOP_CENTER,
+        });
         console.log("error caught in -> api/v1/catalog/category", err);
         dispatch(addCategoryFailure(err));
       });

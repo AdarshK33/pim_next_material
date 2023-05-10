@@ -18,7 +18,6 @@ import {
 
 const initialState = {
   loading: false,
-
   attributeGet: {},
   getAllProducts: {},
   bulkUpload: {},
