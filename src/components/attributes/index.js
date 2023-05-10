@@ -31,8 +31,7 @@ import AddForm from "./AddForm.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getAttributeListApi } from "../../../redux/actions/catalogServiceNew";
 import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
-import { getCategoryDropdown } from "../../../redux/actions/onboardQueryServer";
-
+  import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
 const Attributes = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
@@ -44,7 +43,7 @@ const Attributes = () => {
   useEffect(() => {
     dispatch(getAttributeListApi(currentPage - 1, 5));
     dispatch(getRoleApi());
-    dispatch(getCategoryDropdown());
+    dispatch(getCategoriesApi());
   }, []);
 
   //   /*-----------------Pagination------------------*/
