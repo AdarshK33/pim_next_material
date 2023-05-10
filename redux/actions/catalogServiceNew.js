@@ -11,6 +11,9 @@ import {
   GET_PRODUCT_DETAILS_LOADING,
   GET_PRODUCT_DETAILS_SUCCESS,
   GET_PRODUCT_DETAILS_FAILURE,
+  GET_CATEGORIES_DATA_LOADING,
+  GET_CATEGORIES_DATA_SUCCESS,
+  GET_CATEGORIES_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -85,6 +88,24 @@ export const getProductDetailsSuccess = (data) => {
 export const getProductDetailsFailure = (error) => {
   return {
     type: GET_PRODUCT_DETAILS_FAILURE,
+    payload: error,
+  };
+};
+
+export const getCategoriesLoading = () => {
+  return {
+    type: GET_CATEGORIES_DATA_LOADING,
+  };
+};
+export const getCategoriesSuccess = (data) => {
+  return {
+    type: GET_CATEGORIES_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getCategoriesFailure = (error) => {
+  return {
+    type: GET_CATEGORIES_DATA_FAILURE,
     payload: error,
   };
 };
@@ -193,6 +214,23 @@ export const productDetailsApi = (PimCode) => {
         );
 
         dispatch(getProductDetailsFailure(err));
+      });
+  };
+};
+
+export const getCategoriesApi = () => {
+  return (dispatch) => {
+    dispatch(getCategoriesLoading("Categories....", "Loading!"));
+    client
+      .get("/api/catalogQuery/allCategories")
+      .then((response) => {
+        console.log(" categories response=>", response);
+        dispatch(getCategoriesSuccess(response.data));
+      })
+      .catch((err) => {
+        // toast.error("User Data Not Found!!!");
+        console.log("error caught in -> api/v1/catalog/category", err);
+        dispatch(getCategoriesFailure(err));
       });
   };
 };
