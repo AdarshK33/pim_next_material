@@ -107,7 +107,7 @@ const ProfileDD = () => {
           {/* <Divider /> */}
           <Box p={2}>
             <Link to="/">
-              <Button fullWidth variant="contained" color="primary">
+              <Button fullWidth variant="contained" color="primary" href="/api/login/logOut">
                 Logout
               </Button>
             </Link>
