@@ -101,11 +101,11 @@ const Category = () => {
     );
   };
   return (
-    <>
-      <Grid container>
-        {/* ------------------------- row 1 ------------------------- */}
-        <Grid item xs={12} lg={12}>
-          {/* <Grid item md={4}>
+    <div className={styles.catogory_container}>
+      {/* <Grid container> */}
+      {/* ------------------------- row 1 ------------------------- */}
+      {/* <Grid item xs={12} lg={12}> */}
+      {/* <Grid item md={4}>
             <button
               onClick={() => setShowBrandCreationForm(true)}
               className={`btn btn-sm ${styles.add_button_text}`}
@@ -113,37 +113,37 @@ const Category = () => {
           + Add New
             </button>
           </Grid> */}
-          <Card sx={{ p: 5 }}>
-            <Grid spacing={2} justifyContent="space-between">
-              <Typography variant="h7" className={styles.main_title}>
-                Category
-              </Typography>
-              {/* <Button variant="outlined" color="success" component="label">
+      {/* <Card sx={{}}> */}
+      <Grid spacing={2} justifyContent="space-between">
+        <Typography variant="h7" className={styles.main_title}>
+          Category
+        </Typography>
+        {/* <Button variant="outlined" color="success" component="label">
                 + Add New
 
               </Button> */}
-            </Grid>
+      </Grid>
 
-            <Grid spacing={2} className={styles.category_menu}>
-              <Grid md={3}>
-                <TreeView
-                  aria-label="rich object"
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpanded={["root-1", "root-2"]}
-                  defaultExpandIcon={<ChevronRightIcon />}
-                  sx={{
-                    height: 400,
-                    flexGrow: 1,
-                    maxWidth: 400,
-                    overflowY: "auto",
-                  }}
-                >
-                  {renderTree(catagories)}
-                </TreeView>
-              </Grid>
+      <Grid spacing={2} className={styles.category_menu}>
+        <Grid md={3}>
+          <TreeView
+            aria-label="rich object"
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpanded={["root-1", "root-2"]}
+            defaultExpandIcon={<ChevronRightIcon />}
+            sx={{
+              height: 400,
+              flexGrow: 1,
+              maxWidth: 400,
+              overflowY: "auto",
+            }}
+          >
+            {renderTree(catagories)}
+          </TreeView>
+        </Grid>
 
-              {/* <Grid spacing={3} md={7} className={styles.category_form}> */}
-              {/* <form>
+        {/* <Grid spacing={3} md={7} className={styles.category_form}> */}
+        {/* <form>
                   <Grid spacing={3}>
                     <Grid item xs={4} className={styles.category_input}>
                       <TextField
@@ -208,7 +208,7 @@ const Category = () => {
                         fullWidth
                       />
                     </Grid> */}
-              {/* <Grid item xs={12} md={12}>
+        {/* <Grid item xs={12} md={12}>
                       <TextField
                         fullWidth
                         id="outlined-name"
@@ -232,7 +232,7 @@ const Category = () => {
                       >
                         CANCEL
                       </Button> */}
-              {/* <Button
+        {/* <Button
                         variant="outlined"
                         // onClick={submitHandler}
                         type="submit"
@@ -243,14 +243,14 @@ const Category = () => {
                       </Button>
                     </Grid>
                     </div> */}
-              {/* </Grid> */}
-              {/* </form> */}
-              {/* </Grid> */}
-            </Grid>
-          </Card>
-        </Grid>
+        {/* </Grid> */}
+        {/* </form> */}
+        {/* </Grid> */}
       </Grid>
-    </>
+      {/* </Card> */}
+      {/* </Grid> */}
+      {/* </Grid> */}
+    </div>
   );
 };
 
