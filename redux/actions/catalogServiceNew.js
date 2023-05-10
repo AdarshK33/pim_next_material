@@ -14,6 +14,9 @@ import {
   GET_CATEGORIES_DATA_LOADING,
   GET_CATEGORIES_DATA_SUCCESS,
   GET_CATEGORIES_DATA_FAILURE,
+  CREATE_ATTRIBUTE_SET_LOADING,
+  CREATE_ATTRIBUTE_SET_SUCCESS,
+  CREATE_ATTRIBUTE_SET_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -106,6 +109,24 @@ export const getCategoriesSuccess = (data) => {
 export const getCategoriesFailure = (error) => {
   return {
     type: GET_CATEGORIES_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const createAttributeSetLoading = () => {
+  return {
+    type: CREATE_ATTRIBUTE_SET_LOADING,
+  };
+};
+export const createAttributeSetSuccess = (data) => {
+  return {
+    type: CREATE_ATTRIBUTE_SET_SUCCESS,
+    payload: data,
+  };
+};
+export const createAttributeSetFailure = (error) => {
+  return {
+    type: CREATE_ATTRIBUTE_SET_FAILURE,
     payload: error,
   };
 };
@@ -231,6 +252,36 @@ export const getCategoriesApi = () => {
         // toast.error("User Data Not Found!!!");
         console.log("error caught in -> api/v1/catalog/category", err);
         dispatch(getCategoriesFailure(err));
+      });
+  };
+};
+
+export const createAttributeSetApi = (info) => {
+  // console.log("create attribute body", data);
+  const data = {
+    name: info.name,
+    role: info.role,
+    description: info.description,
+    precedence: info.precedence,
+    active: info.active,
+    category: info.category,
+  };
+  return (dispatch) => {
+    dispatch(createAttributeSetLoading("CREATE....", "ATTRIBUTE"));
+    client
+      .post("/api/catalogServiceNew/createAttribute", data)
+      .then((response) => {
+        console.log("---------create attribute------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        dispatch(createAttributeSetSuccess(response.data.result)); // } else throw new Error("");
+      })
+      .catch((err) => {
+        // toast.error("User Data Not Found!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/create Attribute",
+          err
+        );
+
+        dispatch(createAttributeSetFailure(err));
       });
   };
 };
