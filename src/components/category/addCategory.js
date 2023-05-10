@@ -24,6 +24,7 @@ export default function addCategory() {
   const [addCatData, setAddCatData] = useState();
 
   const handleSubmit = () => {
+    e.preventDefault();
     console.log("name", name, "description", description, "slug", slug);
     if (name === "" || description === "" || slug === "") {
       //add alert from @mui
