@@ -21,9 +21,10 @@ export default function addCategory() {
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [subCategoryId, setSubCategoryId] = useState("");
   const [slug, setSlug] = useState("");
-  const [addCatData, setAddCatData] = useState();
+  // const [addCatData, setAddCatData] = useState();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log("name", name, "description", description, "slug", slug);
     if (name === "" || description === "" || slug === "") {
       //add alert from @mui
@@ -36,7 +37,7 @@ export default function addCategory() {
         precedence: 0,
       };
       console.log("formData", formData);
-      setAddCatData(formData);
+      // setAddCatData(formData);
       dispatch(addCategoryApi(formData));
     }
   };
@@ -163,7 +164,7 @@ export default function addCategory() {
             variant="outlined"
             sx={{ borderRadius: "300px" }}
             value={slug}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setSlug(e.target.value)}
           />
         </Box>
 
@@ -171,8 +172,8 @@ export default function addCategory() {
           style={{ width: "30%", marginTop: "10px", borderRadius: "20px" }}
           variant="contained"
           type="submit"
-          onClick={() => {
-            handleSubmit();
+          onClick={(e) => {
+            handleSubmit(e);
           }}
         >
           Submit

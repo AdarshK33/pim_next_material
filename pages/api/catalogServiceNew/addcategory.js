@@ -5,7 +5,7 @@ function handler(req, res) {
   const { user: { at = "" } = {}, loggedIn } = req.session;
   const config = {
     method: "post",
-    url: "/catalog/categories",
+    url: "/catalog/category",
     headers: {
       Authorization: `Bearer ${at}`,
     },
