@@ -14,12 +14,15 @@ import {
   GET_CATEGORIES_DATA_LOADING,
   GET_CATEGORIES_DATA_SUCCESS,
   GET_CATEGORIES_DATA_FAILURE,
+  REVALIDATE_DATA_LOADING,
+  REVALIDATE_DATA_SUCCESS,
+  REVALIDATE_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
 import { uploadClient } from "../../utils/axios";
 
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const attributeListLoading = () => {
   return {
@@ -110,6 +113,23 @@ export const getCategoriesFailure = (error) => {
   };
 };
 
+export const revalidateDataLoading = () => {
+  return {
+    type: REVALIDATE_DATA_LOADING,
+  };
+};
+export const revalidateDataSuccess = (data) => {
+  return {
+    type: REVALIDATE_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const revalidateDataFailure = (error) => {
+  return {
+    type: REVALIDATE_DATA_FAILURE,
+    payload: error,
+  };
+};
 export const getAttributeListApi = (pageNo, pageSize) => {
   const data = {
     page_No: pageNo,
@@ -231,6 +251,46 @@ export const getCategoriesApi = () => {
         // toast.error("User Data Not Found!!!");
         console.log("error caught in -> api/v1/catalog/category", err);
         dispatch(getCategoriesFailure(err));
+      });
+  };
+};
+
+export const revalidateApis = (info) => {
+  console.log("hello  revalidateApis info", info);
+  const data = {
+    modelCode: info?.PimCodeId,
+    attributeSetId: info.attributeSetId,
+    comments: info.comment,
+  };
+  // console.log("hello  revalidateApis data", data);
+
+  return (dispatch) => {
+    dispatch(revalidateDataLoading("BRAND....", "BRAND"));
+    client
+      .post("/api/catalogServiceNew/revalidate", data)
+      .then((response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          // toast.info("Comment Updated Successfully !!!");
+
+          dispatch(
+            revalidateDataSuccess(
+              response.data,
+              " Comment Successfully",
+              "Comment UPDATE"
+            )
+          );
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        // toast.error("Comment update Failed!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/revalidateApis",
+          err
+        );
+        dispatch(
+          revalidateDataFailure(err, "Something went wrong", "Comment UPDATE")
+        );
       });
   };
 };

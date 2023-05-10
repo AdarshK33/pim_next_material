@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Grid,
   FormControl,
@@ -12,63 +14,39 @@ import {
   Typography,
 } from "@mui/material";
 import styles from "./productDetails.module.css";
+
+import { useDispatch, useSelector } from "react-redux";
+import { revalidateApis } from "../../../../redux/actions/catalogServiceNew";
+import { useRouter } from "next/router";
+
 const AddFormRevalidate = ({ classModal }) => {
-  const [roleError, setRoleError] = useState(false);
-  const [role, setRole] = useState("");
+  const dispatch = useDispatch();
 
-  const [categoryError, setCategoryError] = useState(false);
-  const [category, setCategory] = useState("");
+  const router = useRouter();
+  // console.log("rrrrrrrrrrrrrrrr", router.query.PimCodeId);
 
-  const roleValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (role !== "" && role !== null && role !== undefined) {
-      setRoleError(false);
+  const [addComment, setAddComment] = useState(["hello"]);
 
-      return true;
-    } else {
-      setRoleError(true);
-      return false;
-    }
-  };
-  const categoryValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (role !== "" && role !== null && role !== undefined) {
-      setRoleError(false);
+  useEffect(() => {
+    let infoData = {
+      PimCodeId: router.query.PimCodeId,
+      attributeSetId: 1,
+      comments: ["hello"],
+      status: "REVALIDATE",
+    };
 
-      return true;
-    } else {
-      setRoleError(true);
-      return false;
-    }
-  };
-  const checkValidations = () => {
-    // console.log("isChecked");
-    if ((categoryValidations() == true) & (roleValidations() == true)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-  const roleHandler = (e) => {
-    setRole(e.target.value);
-  };
-  const categoryHandler = (e) => {
-    setCategory(e.target.value);
-  };
-
+    dispatch(revalidateApis(infoData));
+  }, []);
   const submitHandler = (e) => {
     e.preventDefault();
-    const value = checkValidations();
 
-    if (value === true) {
-      let infoData = {
-        email: emailName,
-        roleId: role,
-      };
-      console.log("hello ADD infoData");
+    // let infoData = {
+    //   attributeSetId: 1,
+    //   comments: [addComment],
+    //   status: "REVALIDATE",
+    // };
 
-      // dispatch(createUserApi(infoData));
-    }
+    // dispatch(revalidateApis(infoData));
   };
   return (
     <>
@@ -84,6 +62,7 @@ const AddFormRevalidate = ({ classModal }) => {
               variant="standard"
               multiline
               rows={3}
+              onChange={(event) => setAddComment(event.target.value)}
             />
           </Grid>
           <Grid
@@ -107,6 +86,7 @@ const AddFormRevalidate = ({ classModal }) => {
           </Grid>
         </Grid>
       </form>
+      <ToastContainer />
     </>
   );
 };
