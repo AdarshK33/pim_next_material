@@ -49,6 +49,488 @@ const ProductDetails = (props) => {
 
   // console.log("pimcode", catalogServiceNewReducer?.productPimCodeData);
 
+  // const result = [
+  //   {
+  //     attributeSet: "AX MASTER",
+  //     attributes: [
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 3,
+  //         keyName: "ITEM NAME",
+  //         displayName: "ITEM NAME",
+  //         inputType: "string",
+  //         value: "AB PRESS EYE DROPS",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 4,
+  //         keyName: "ITEM CATEGORY ID",
+  //         displayName: "ITEM CATEGORY ID",
+  //         inputType: "string",
+  //         value: "P",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 5,
+  //         keyName: "ITEM CATEGORY NAME",
+  //         displayName: "ITEM CATEGORY NAME",
+  //         inputType: "string",
+  //         value: "PHARMA",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 7,
+  //         keyName: "ITEM SUB CLASSIFICATION",
+  //         displayName: "ITEM SUB CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //     ],
+  //     comments: [],
+  //   },
+  //   {
+  //     attributeSet: "RX MASTER",
+  //     attributes: [
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 2,
+  //         keyName: "ITEM ID",
+  //         displayName: "ITEM ID",
+  //         inputType: "string",
+  //         value: "Tea0002",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 3,
+  //         keyName: "ITEM NAME",
+  //         displayName: "ITEM NAME",
+  //         inputType: "string",
+  //         value: "AB PRESS EYE DROPS",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 4,
+  //         keyName: "ITEM CATEGORY ID",
+  //         displayName: "ITEM CATEGORY ID",
+  //         inputType: "string",
+  //         value: "P",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: false,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 5,
+  //         keyName: "ITEM CATEGORY NAME",
+  //         displayName: "ITEM CATEGORY NAME",
+  //         inputType: "string",
+  //         value: "PHARMA",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 6,
+  //         keyName: "ITEM CLASSIFICATION",
+  //         displayName: "ITEM CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //       {
+  //         attributeSetId: 1,
+  //         attributeId: 7,
+  //         keyName: "ITEM SUB CLASSIFICATION",
+  //         displayName: "ITEM SUB CLASSIFICATION",
+  //         inputType: "string",
+  //         value: "",
+  //         structureType: "ARRAY",
+  //         active: true,
+  //         readOnly: true,
+  //         mandatory: true,
+  //         accessRole: "ADMIN",
+  //       },
+  //     ],
+  //     comments: [],
+  //   },
+  // ];
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
@@ -56,6 +538,7 @@ const ProductDetails = (props) => {
   const [showCommentAddForm, setShowCommentAddForm] = useState(false);
 
   const AccordionSetUp = (key, value) => {
+    console.log("AccordionSetUp", value);
     return (
       <>
         <Accordion>
@@ -64,7 +547,7 @@ const ProductDetails = (props) => {
             aria-controls="panel2a-content"
             id="panel2a-header"
           >
-            <Typography>{key}</Typography>
+            <Typography>{value.attributeSet}</Typography>
           </AccordionSummary>
 
           <AccordionDetails>
@@ -87,7 +570,7 @@ const ProductDetails = (props) => {
                   body={
                     <AddFormRevalidate
                       classModal={() => setShowRevalidateAddForm(false)}
-                      allData={value}
+                      // allData={value}
                     />
                   }
                 />
@@ -117,7 +600,7 @@ const ProductDetails = (props) => {
             )}
 
             <CardContent>
-              <Grid container>{sectionAllMasterRender(value)}</Grid>
+              <Grid container>{sectionAllMasterRender(value.attributes)}</Grid>
             </CardContent>
           </AccordionDetails>
         </Accordion>
@@ -129,7 +612,7 @@ const ProductDetails = (props) => {
     if (!value) {
       return;
     }
-
+    console.log("item 2", value);
     return value.map((val, index) => {
       return inputAllMasterRender(val, index);
     });
@@ -140,14 +623,16 @@ const ProductDetails = (props) => {
       return;
     }
     const obj = catalogServiceNewReducer?.productPimCodeData;
-
     return Object.entries(obj).map(([key, value]) => {
       // console.log("hello key", key, value);
-
       if (key) {
         return AccordionSetUp(key, value);
       }
     });
+    // result.map((item, index) => {
+    //   console.log("item", item);
+    //   return AccordionSetUp(item, index);
+    // });
   };
 
   const inputAllMasterRender = (sectionItem, index) => {
@@ -191,6 +676,37 @@ const ProductDetails = (props) => {
             </Grid>
 
             <Box sx={{ p: 1 }}>{sectionAccordionSetUpRender()}</Box>
+
+            {/* <div>
+              {result.map((item, index) => (
+                <Accordion key={index}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography variant="h5">{item.attributeSet}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div>
+                      {item.attributes.map((attribute, attrIndex) => (
+                        <div key={attrIndex}>
+                          <Grid
+                            md={4}
+                            key={index}
+                            className={styles.AdrshText_Field}
+                          >
+                            <TextField
+                              id="outlined-basic"
+                              label={attribute.displayName}
+                              variant="outlined"
+                              value={attribute.value}
+                              // inputProps={{ readOnly: sectionItem.readOnly }}
+                            />
+                          </Grid>
+                        </div>
+                      ))}
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </div> */}
           </Card>
         </Grid>
       </Grid>
