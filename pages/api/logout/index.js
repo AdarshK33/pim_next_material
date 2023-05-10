@@ -2,6 +2,7 @@
 import withSession from "../../../utils/session";
 // const logger = require("pino")();
 
+
 function handler(req, res) {
   const body = req.body;
   req.session.destroy();

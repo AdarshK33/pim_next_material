@@ -7,14 +7,15 @@ import {
   Menu,
   Typography,
   Link,
-  ListItemButton,
-  List,
-  ListItemText,
   Button,
-  Divider,
 } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { logoutApi } from "../../../redux/actions/logout";
+
 const ProfileDD = () => {
   const [anchorEl4, setAnchorEl4] = React.useState(null);
+
+  const dispatch = useDispatch()
 
   const handleClick4 = (event) => {
     setAnchorEl4(event.currentTarget);
@@ -106,8 +107,8 @@ const ProfileDD = () => {
           </Box> */}
           {/* <Divider /> */}
           <Box p={2}>
-            <Link to="/">
-              <Button fullWidth variant="contained" color="primary" href="/api/login/logOut">
+            <Link to="/" onClick={() => dispatch(logoutApi())}>
+              <Button fullWidth variant="contained" color="primary">
                 Logout
               </Button>
             </Link>
