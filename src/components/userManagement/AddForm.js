@@ -36,7 +36,9 @@ function AddForm({ classModal }) {
 
   const [emailName, setEmailName] = useState("");
   const [roleError, setRoleError] = useState(false);
+  const [statusError, setStatusError] = useState(false);
   const [role, setRole] = useState("");
+  const [status, setStatus] = useState("");
   const [emailNameError, setEmailNameError] = useState(false);
 
   const submitHandler = (e) => {
@@ -48,10 +50,12 @@ function AddForm({ classModal }) {
       let infoData = {
         email: emailName,
         roleId: role,
+        status: status,
       };
       // console.log("hello infoData", infoData);
 
       dispatch(createUserApi(infoData));
+      classModal();
     }
   };
 
@@ -81,11 +85,23 @@ function AddForm({ classModal }) {
     }
   };
 
+  const statusValidations = () => {
+    if (status !== "" && status !== null && status !== undefined) {
+      setStatusError(false);
+
+      return true;
+    } else {
+      setStatusError(true);
+      return false;
+    }
+  };
+
   const checkValidations = () => {
     // console.log("isChecked");
     if (
       (emailValidations() == true) &
-      (roleValidations() == true)
+      (roleValidations() == true) &
+      (statusValidations() == true)
 
       //  &
       // (marketValidations() == true)
@@ -97,6 +113,9 @@ function AddForm({ classModal }) {
   };
   const roleHandler = (e) => {
     setRole(e.target.value);
+  };
+  const statusHandler = (e) => {
+    setStatus(e.target.value);
   };
   return (
     <>
@@ -141,6 +160,29 @@ function AddForm({ classModal }) {
             </FormControl>
             {roleError ? (
               <p style={{ color: "red" }}>** Please choose role</p>
+            ) : (
+              <p></p>
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl fullWidth variant="standard">
+              <InputLabel id="demo-simple-select-standard-label">
+                Status
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                label="Role"
+                value={status}
+                onChange={statusHandler}
+              >
+                <MenuItem value=""></MenuItem>
+                <MenuItem value={"active"}>Active</MenuItem>
+                <MenuItem value={"in-active"}>In-Active</MenuItem>
+              </Select>
+            </FormControl>
+            {statusError ? (
+              <p style={{ color: "red" }}>** Please choose status</p>
             ) : (
               <p></p>
             )}
