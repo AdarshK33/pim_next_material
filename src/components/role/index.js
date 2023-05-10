@@ -3,14 +3,10 @@ import styles from "./role.module.css";
 import {
   Grid,
   Button,
-  Box,
   Card,
   CardContent,
   Typography,
-  Select,
-  FormControl,
-  InputLabel,
-  MenuItem,
+  FormControl
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -23,10 +19,13 @@ import { styled } from "@mui/material/styles";
 
 import { getRolePrivilegeApi } from "../../../redux/actions/login";
 import { useDispatch, useSelector } from "react-redux";
+import AddForm from "./AddForm";
+import CustomModal from "../../common/customModal";
 const Role = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [focusedIndex, setFocusedIndex] = useState(null);
+  const [showUserAddForm, setShowUserAddForm] = useState(false)
 
   useEffect(() => {
     dispatch(getRolePrivilegeApi());
@@ -66,7 +65,6 @@ const Role = () => {
     return state;
   });
 
-  console.log("loginReducer", loginReducer.rolePrivilege);
 
   const tableData = [];
 
@@ -82,28 +80,15 @@ const Role = () => {
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = tableData;
-  console.log("currentRecords", currentRecords);
 
   const handlePaginationChange = (event, value) => {
     setCurrentPage(value);
-    console.log(value, "value");
   };
   const [age, setAge] = useState("");
-
-  useEffect(() => {
-    console.log("loginReducer in useEffect", loginReducer);
-  }, [loginReducer]);
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-
-  const person = {
-    address: {
-      street: "1",
-    },
-  };
-  console.log("stats ", person["address"]["street"]);
 
   return (
     <>
@@ -124,6 +109,11 @@ const Role = () => {
                 Add New
                 {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
+              <CustomModal
+                openModal={showUserAddForm}
+                closeModal={() => setShowUserAddForm(!showUserAddForm)}
+                body={<AddForm classModal={() => setShowUserAddForm(!showUserAddForm)} />}
+              />
             </Grid>
             <CardContent>
               <TableContainer component={Paper}>
@@ -181,11 +171,6 @@ const Role = () => {
                         //     "&:last-child td, &:last-child th": { border: 0 },
                         //   }}
                         >
-                          {console.log("row", row)}
-                          {console.log(
-                            "object keys",
-                            loginReducer.rolePrivilege[row]
-                          )}
                           <TableCell align="right">{row}</TableCell>
                           <TableCell>
                             <FormControl
