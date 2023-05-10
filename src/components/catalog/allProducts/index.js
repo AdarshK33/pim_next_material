@@ -44,6 +44,10 @@ import { useDispatch, useSelector } from "react-redux";
 const AllProducts = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [value, setValue] = useState(0);
+  const [progress, setProgress] = React.useState(0);
+
   // useEffect(() => {
   //   dispatch(getAllProductListApi(0, 5, "DRAFTED"));
   // }, []);
@@ -51,10 +55,10 @@ const AllProducts = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  // console.log(
-  //   "catalogServiceNewReducer",
-  //   catalogServiceNewReducer?.getAllProducts
-  // );
+  console.log(
+    "catalogServiceNewReducer",
+    catalogServiceNewReducer?.getAllProducts
+  );
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
@@ -66,23 +70,27 @@ const AllProducts = () => {
     });
   }
   //   /*-----------------Pagination------------------*/
-  const [currentPage, setCurrentPage] = useState(1);
 
   const recordPerPage = 5;
-  const totalRecords = tableData.length;
+  const totalRecords = catalogServiceNewReducer?.getAllProducts.totalElements;
   const pageRange = 5;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = catalogServiceNewReducer?.getAllProducts;
+  const currentRecords = catalogServiceNewReducer?.getAllProducts.content;
 
-  const handlePaginationChange = (event, value) => {
-    setCurrentPage(value);
+  const handlePaginationChange = (event, val) => {
+    setCurrentPage(val);
+
+    if (value === 0) {
+      dispatch(getAllProductListApi(val - 1, 5, "DRAFTED"));
+    } else if (value === 1) {
+      dispatch(getAllProductListApi(val - 1, 5, "READY_FOR_REVIEW"));
+    } else if (value === 2) {
+      dispatch(getAllProductListApi(val - 1, 5, "REVALIDATE"));
+    }
   };
 
   /*-----------------Pagination------------------*/
-
-  const [value, setValue] = useState(0);
-  const [progress, setProgress] = React.useState(0);
 
   const handleNext = () => {
     setValue((prevValue) => prevValue + 1);
@@ -91,11 +99,11 @@ const AllProducts = () => {
 
   useEffect(() => {
     if (value === 0) {
-      dispatch(getAllProductListApi(0, 500, "DRAFTED"));
+      dispatch(getAllProductListApi(0, 5, "DRAFTED"));
     } else if (value === 1) {
-      dispatch(getAllProductListApi(0, 500, "READY_FOR_REVIEW"));
+      dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW"));
     } else if (value === 2) {
-      dispatch(getAllProductListApi(0, 500, "REVALIDATE"));
+      dispatch(getAllProductListApi(0, 5, "REVALIDATE"));
     }
   }, [value]);
 
