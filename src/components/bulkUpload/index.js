@@ -60,7 +60,7 @@ const BulkUpload = (props) => {
 
     axios
       .post(
-        `http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/bulk`,
+        `https://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/bulk`,
         formData,
         {
           headers: {
