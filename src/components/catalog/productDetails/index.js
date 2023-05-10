@@ -45,7 +45,7 @@ const ProductDetails = (props) => {
   });
 
   const router = useRouter();
-  // console.log("rrrrrrrrrrrrrrrr", router.query);
+  // console.log("rrrrrrrrrrrrrrrr", router.query.tab);
 
   // console.log("pimcode", catalogServiceNewReducer?.productPimCodeData);
 
@@ -551,7 +551,7 @@ const ProductDetails = (props) => {
           </AccordionSummary>
 
           <AccordionDetails>
-            {role === "ADMIN" ? (
+            {role === "ADMIN" && router.query.tab == "Ready-for-review" ? (
               <>
                 <Box className={styles.revalidate_Btn}>
                   <Button
@@ -575,7 +575,7 @@ const ProductDetails = (props) => {
                   }
                 />
               </>
-            ) : (
+            ) : role && router.query.tab == "Revalidate" ? (
               <>
                 <Box className={styles.revalidate_Btn}>
                   <Button
@@ -597,6 +597,8 @@ const ProductDetails = (props) => {
                   }
                 />
               </>
+            ) : (
+              <></>
             )}
 
             <CardContent>
@@ -662,7 +664,7 @@ const ProductDetails = (props) => {
               <Typography variant="h2" className={styles.main_title}>
                 Product Details
               </Typography>
-              {role === "ADMIN" && (
+              {role === "ADMIN" && router.query.tab == "Ready-for-review" ? (
                 <Button
                   variant="outlined"
                   color="success"
@@ -672,41 +674,24 @@ const ProductDetails = (props) => {
                   Activate
                   {/* <input hidden accept="image/*" multiple type="file" /> */}
                 </Button>
+              ) : role && router.query.tab == "Revalidate" ? (
+                <>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    // onClick={() => setShowAttributeAddForm(true)}
+                  >
+                    Update
+                    {/* <input hidden accept="image/*" multiple type="file" /> */}
+                  </Button>
+                </>
+              ) : (
+                <></>
               )}
             </Grid>
 
             <Box sx={{ p: 1 }}>{sectionAccordionSetUpRender()}</Box>
-
-            {/* <div>
-              {result.map((item, index) => (
-                <Accordion key={index}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography variant="h5">{item.attributeSet}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div>
-                      {item.attributes.map((attribute, attrIndex) => (
-                        <div key={attrIndex}>
-                          <Grid
-                            md={4}
-                            key={index}
-                            className={styles.AdrshText_Field}
-                          >
-                            <TextField
-                              id="outlined-basic"
-                              label={attribute.displayName}
-                              variant="outlined"
-                              value={attribute.value}
-                              // inputProps={{ readOnly: sectionItem.readOnly }}
-                            />
-                          </Grid>
-                        </div>
-                      ))}
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-              ))}
-            </div> */}
           </Card>
         </Grid>
       </Grid>

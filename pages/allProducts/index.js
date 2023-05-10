@@ -19,7 +19,7 @@ function index(user) {
   }, [user]);
   return (
     <>
-      <AllProducts />
+      <AllProducts user={user} />
     </>
   );
 }
