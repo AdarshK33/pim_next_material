@@ -82,22 +82,24 @@ const Category = () => {
       ],
     },
   ];
-  const renderTree = (nodes) => (
-    <>
-      {nodes.length > 0 &&
-        nodes.map((node) => (
-          <TreeItem
-            key={node.id}
-            nodeId={node.id}
-            label={node.name}
-            style={{ margin: 10 }}
-          >
-            <ChevronRightIcon />
-            {Array.isArray(node.children) ? renderTree(node.children) : null}
-          </TreeItem>
-        ))}
-    </>
-  );
+  const renderTree = (nodes) => {
+    return (
+      <>
+        {nodes?.length > 0 &&
+          nodes.map((node) => (
+            <TreeItem
+              key={node.id}
+              nodeId={node.id}
+              label={node.name}
+              style={{ margin: 10 }}
+            >
+              <ChevronRightIcon />
+              {Array.isArray(node.children) ? renderTree(node.children) : null}
+            </TreeItem>
+          ))}
+      </>
+    );
+  };
   return (
     <div className={styles.catogory_container}>
       {/* <Grid container> */}

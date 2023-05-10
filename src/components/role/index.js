@@ -19,15 +19,48 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
+
 import { getRolePrivilegeApi } from "../../../redux/actions/login";
 import { useDispatch, useSelector } from "react-redux";
 const Role = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const [focusedIndex, setFocusedIndex] = useState(null);
 
   useEffect(() => {
     dispatch(getRolePrivilegeApi());
   }, []);
+
+  const StyledTableHead = styled(TableHead)({
+    "& th": {
+      textAlign: "left !important",
+    },
+    "& td": {
+      textAlign: "left !important",
+    },
+  });
+  const StyledTableBody = styled(TableBody)({
+    "& th": {
+      textAlign: "left !important",
+    },
+    "& td": {
+      textAlign: "left !important",
+    },
+  });
+
+  const AllPrivileges = styled("div")(({ focused }) => ({
+    padding: "8px",
+    margin: "7px",
+    border: "1px solid #ccc",
+    cursor: "pointer",
+    borderRadius: "5px",
+    ...(focused && { borderColor: "#419794" }),
+  }));
+
+  const handlePrivileges = (index) => {
+    setFocusedIndex(index);
+  };
 
   const { loginReducer } = useSelector((state) => {
     return state;
@@ -95,12 +128,12 @@ const Role = () => {
             <CardContent>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
+                  <StyledTableHead>
                     <TableRow>
-                      <TableCell align="right">NAME OF ROLE</TableCell>
-                      <TableCell align="right">PRIVILEGES</TableCell>
+                      <TableCell>NAME OF ROLE</TableCell>
+                      <TableCell sx={{ paddingLeft: 3 }}>PRIVILEGES</TableCell>
                     </TableRow>
-                  </TableHead>
+                  </StyledTableHead>
                   {/* <TableBody>
                     {currentRecords &&
                     currentRecords !== null &&
@@ -139,7 +172,7 @@ const Role = () => {
                     )}
                   </TableBody> */}
 
-                  <TableBody>
+                  <StyledTableBody>
                     {Object.keys(loginReducer.rolePrivilege).length > 0 ? (
                       Object.keys(loginReducer.rolePrivilege).map((row, i) => (
                         <TableRow
@@ -155,26 +188,32 @@ const Role = () => {
                           )}
                           <TableCell align="right">{row}</TableCell>
                           <TableCell>
-                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                              <InputLabel id="demo-simple-select-readonly-label">
+                            <FormControl
+                              sx={{
+                                m: 1,
+                                minWidth: 120,
+                                display: "flex",
+                                flexDirection: "row",
+                                flexWrap: "wrap",
+                              }}
+                            >
+                              {/* <InputLabel id="demo-simple-select-readonly-label">
                                 Privileges
-                              </InputLabel>
-                              <Select
-                                labelId="demo-simple-select-readonly-label"
-                                id="demo-simple-select-readonly"
-                                value={age}
-                                label="Privileges"
-                                onChange={handleChange}
-                              >
-                                {Object.keys(
-                                  loginReducer.rolePrivilege[row]
-                                ).map((child) => (
-                                  <MenuItem disabled>
-                                    {child}_
-                                    {loginReducer.rolePrivilege[row][child]}
-                                  </MenuItem>
-                                ))}
-                              </Select>
+                              </InputLabel> */}
+                              {Object.keys(loginReducer.rolePrivilege[row]).map(
+                                (item, index) => (
+                                  <AllPrivileges
+                                    key={index}
+                                    focused={index === focusedIndex}
+                                    onClick={() => handlePrivileges(index)}
+                                    onFocus={() => handlePrivileges(index)}
+                                    onBlur={() => setFocusedIndex(null)}
+                                    tabIndex="0"
+                                  >
+                                    {item}
+                                  </AllPrivileges>
+                                )
+                              )}
                             </FormControl>
                           </TableCell>
                         </TableRow>
@@ -184,7 +223,7 @@ const Role = () => {
                         <TableCell colSpan={12}>No Record Found</TableCell>
                       </TableRow>
                     )}
-                  </TableBody>
+                  </StyledTableBody>
                 </Table>
               </TableContainer>
               {/* <Stack spacing={2}>

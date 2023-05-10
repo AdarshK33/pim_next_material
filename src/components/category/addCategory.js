@@ -15,7 +15,8 @@ import {
 import styles from "./addCategory.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addCategoryApi } from "../../../redux/actions/catalogServiceNew";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function addCategory() {
   const dispatch = useDispatch();
   // get loader fron useSelector
@@ -45,12 +46,6 @@ export default function addCategory() {
       dispatch(addCategoryApi(formData));
     }
   };
-
-  // useEffect(() => {
-  //   if (addCatData) {
-  //     dispatch(addCategoryApi(addCatData));
-  //   }
-  // }, [addCatData]);
 
   return (
     <div className={styles.catogory_container}>
@@ -126,8 +121,10 @@ export default function addCategory() {
                 labelId="parent-category-label"
                 id="parent-category"
                 value={parentCategoryId}
-                sx={{ height: "40px" }}
-                label="Parent Category"
+                sx={{
+                  height: "40px",
+                }}
+                variant="outlined"
                 onChange={(e) => setParentCategoryId(e.target.value)}
               >
                 <MenuItem value="category1">Category 1</MenuItem>
@@ -146,7 +143,6 @@ export default function addCategory() {
                 id="sub-category"
                 value={subCategoryId}
                 variant="outlined"
-                label="Sub Category"
                 sx={{ height: "40px" }}
                 onChange={(e) => setSubCategoryId(e.target.value)}
               >
@@ -183,6 +179,7 @@ export default function addCategory() {
           {loading ? <CircularProgress size={24} /> : "Submit"}
         </Button>
       </Box>
+      <ToastContainer />
     </div>
   );
 }

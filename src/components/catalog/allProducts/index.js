@@ -51,10 +51,10 @@ const AllProducts = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  console.log(
-    "catalogServiceNewReducer",
-    catalogServiceNewReducer?.getAllProducts
-  );
+  // console.log(
+  //   "catalogServiceNewReducer",
+  //   catalogServiceNewReducer?.getAllProducts
+  // );
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
@@ -87,15 +87,15 @@ const AllProducts = () => {
   const handleNext = () => {
     setValue((prevValue) => prevValue + 1);
   };
-  console.log("hello adarsh", value);
+  // console.log("hello adarsh", value);
 
   useEffect(() => {
     if (value === 0) {
-      dispatch(getAllProductListApi(0, 5, "DRAFTED"));
+      dispatch(getAllProductListApi(0, 500, "DRAFTED"));
     } else if (value === 1) {
-      dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW"));
+      dispatch(getAllProductListApi(0, 500, "READY_FOR_REVIEW"));
     } else if (value === 2) {
-      dispatch(getAllProductListApi(0, 5, "REVALIDATE"));
+      dispatch(getAllProductListApi(0, 500, "REVALIDATE"));
     }
   }, [value]);
 
@@ -153,7 +153,11 @@ const AllProducts = () => {
   };
 
   function handleEdit(PimCodeId) {
-    router.push(`/productDetails`);
+    router.push({
+      pathname: "/productDetails",
+      query: { PimCodeId: PimCodeId },
+    });
+
     dispatch(productDetailsApi(PimCodeId));
   }
   function handleBulk() {

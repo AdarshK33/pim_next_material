@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(../assets//images/backgrounds/Pim_wallpaper.jpg);
-  background-size: 100%;
+  /* background-image: url(../assets//images/backgrounds/Pim_wallpaper.jpg);
+  background-size: 100%; */
 }
 
 .container {
