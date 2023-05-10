@@ -46,6 +46,15 @@ export default function addCategory() {
       dispatch(addCategoryApi(formData));
     }
   };
+  useEffect(() => {
+    if (loading === false) {
+      setName("");
+      setDescription("");
+      setSlug("");
+      setParentCategoryId("");
+      setSubCategoryId("");
+    }
+  }, [loading]);
 
   return (
     <div className={styles.catogory_container}>

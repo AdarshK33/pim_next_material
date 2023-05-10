@@ -286,7 +286,7 @@ export const addCategoryApi = (data) => {
       })
       .catch((err) => {
         toast.error("Category Not Added!!!");
-        console.log("error caught in -> api/v1/catalog/category", err);
+
         dispatch(addCategoryFailure(err));
       });
   };
