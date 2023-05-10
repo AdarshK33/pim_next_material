@@ -11,11 +11,13 @@ import {
   GET_PRODUCT_DETAILS_LOADING,
   GET_PRODUCT_DETAILS_SUCCESS,
   GET_PRODUCT_DETAILS_FAILURE,
+  ADD_CATEGORY_LOADING,
+  ADD_CATEGORY_SUCCESS,
+  ADD_CATEGORY_FAILURE,
 } from "../types/types";
 
 const initialState = {
   loading: false,
-
   attributeGet: {},
   getAllProducts: {},
   bulkUpload: {},
@@ -104,6 +106,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         loading: false,
         productPimCodeData: [],
         error: action,
+      };
+    case ADD_CATEGORY_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        catagories: action.payload,
+        error: {},
+      };
+    case ADD_CATEGORY_FAILURE:
+      return {
+        ...state,
+        loading: false,
+
+        error: action.err,
       };
 
     default:

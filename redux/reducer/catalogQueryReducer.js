@@ -78,7 +78,6 @@ const catalogQueryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        attributeGet: [],
         error: action.err,
       };
     case REVALIDATE_DATA_LOADING:

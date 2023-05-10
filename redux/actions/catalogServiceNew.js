@@ -14,14 +14,13 @@ import {
   GET_CATEGORIES_DATA_LOADING,
   GET_CATEGORIES_DATA_SUCCESS,
   GET_CATEGORIES_DATA_FAILURE,
-  REVALIDATE_DATA_LOADING,
-  REVALIDATE_DATA_SUCCESS,
-  REVALIDATE_DATA_FAILURE,
+  ADD_CATEGORY_LOADING,
+  ADD_CATEGORY_SUCCESS,
+  ADD_CATEGORY_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
 import { uploadClient } from "../../utils/axios";
-
 import { toast } from "react-toastify";
 
 export const attributeListLoading = () => {
@@ -109,6 +108,24 @@ export const getCategoriesSuccess = (data) => {
 export const getCategoriesFailure = (error) => {
   return {
     type: GET_CATEGORIES_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const addCategoryLoading = () => {
+  return {
+    type: ADD_CATEGORY_LOADING,
+  };
+};
+export const addCategorySuccess = (data) => {
+  return {
+    type: ADD_CATEGORY_SUCCESS,
+    payload: data,
+  };
+};
+export const addCategoryFailure = (error) => {
+  return {
+    type: ADD_CATEGORY_FAILURE,
     payload: error,
   };
 };
@@ -251,6 +268,26 @@ export const getCategoriesApi = () => {
         // toast.error("User Data Not Found!!!");
         console.log("error caught in -> api/v1/catalog/category", err);
         dispatch(getCategoriesFailure(err));
+      });
+  };
+};
+
+export const addCategoryApi = (data) => {
+  console.log("hello   called", data);
+  return (dispatch) => {
+    dispatch(addCategoryLoading("Categories....", "Loading!"));
+    client
+      .post("/api/catalogServiceNew/addcategory", data)
+
+      .then((response) => {
+        console.log(" csdxfsdf", response);
+        dispatch(addCategorySuccess(response.data));
+        toast.info("Category Added Successfully !!!");
+      })
+      .catch((err) => {
+        toast.error("Category Not Added!!!");
+
+        dispatch(addCategoryFailure(err));
       });
   };
 };
