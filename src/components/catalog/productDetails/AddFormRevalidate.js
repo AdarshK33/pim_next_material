@@ -16,7 +16,10 @@ import {
 import styles from "./productDetails.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { revalidateApis } from "../../../../redux/actions/catalogServiceNew";
+import {
+  revalidateApis,
+  statusChangedApis,
+} from "../../../../redux/actions/catalogServiceNew";
 import { useRouter } from "next/router";
 
 const AddFormRevalidate = ({ classModal, attributeSetIdData }) => {

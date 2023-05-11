@@ -672,15 +672,11 @@ const ProductDetails = (props) => {
     );
   };
   const activateHandler = () => {
-    if (catalogQueryReducer.createComment.statusCode === 201) {
-      toast.error("Product is not ready !!!");
-    } else {
-      let infoData = {
-        pimModelCode: router.query.PimCodeId,
-        status: "ACTIVATED",
-      };
-      dispatch(statusChangedApis(infoData));
-    }
+    let infoData = {
+      pimModelCode: router.query.PimCodeId,
+      status: "ACTIVATED",
+    };
+    dispatch(statusChangedApis(infoData));
   };
 
   return (
