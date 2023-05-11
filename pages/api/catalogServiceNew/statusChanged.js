@@ -7,18 +7,17 @@ function handler(req, res) {
 
   const body = req.body;
 
-  let id = body.modelCode;
+  let id = body.pimModelCode;
 
   const arrData = [
     {
-      attributeSetId: body.attributeSetId,
-      comments: body.comments,
+      pimModelCode: body.pimModelCode,
       status: body.status,
     },
   ];
   const config = {
     method: "patch",
-    url: `/catalog/comments/${id}`,
+    url: `/catalog/status`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
@@ -32,7 +31,10 @@ function handler(req, res) {
       }
     })
     .catch((err) => {
-      console.log("error caught in -> api/catalogServiceNew/revalidte", err);
+      console.log(
+        "error caught in -> api/catalogServiceNew/statusChanged",
+        err
+      );
       // console.log(err.response);
       if (err?.response?.data) {
         const { status = {} } = err?.response;

@@ -41,7 +41,9 @@ import {
 } from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
 
-const AllProducts = () => {
+const AllProducts = (props) => {
+  const { user: { role = "" } = {}, loggedIn } = props.user;
+
   const router = useRouter();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
@@ -161,11 +163,22 @@ const AllProducts = () => {
   };
 
   function handleEdit(PimCodeId) {
-    router.push({
-      pathname: "/productDetails",
-      query: { PimCodeId: PimCodeId },
-    });
-
+    if (value === 1) {
+      router.push({
+        pathname: "/productDetails",
+        query: { PimCodeId: PimCodeId, tab: "Ready-for-review" },
+      });
+    } else if (value === 2) {
+      router.push({
+        pathname: "/productDetails",
+        query: { PimCodeId: PimCodeId, tab: "Revalidate" },
+      });
+    } else {
+      router.push({
+        pathname: "/productDetails",
+        query: { PimCodeId: PimCodeId, tab: "Draft" },
+      });
+    }
     dispatch(productDetailsApi(PimCodeId));
   }
   function handleBulk() {
@@ -259,7 +272,10 @@ const AllProducts = () => {
                 {/* <Container maxWidth="xl"> */}
                 <Tabs value={value} onChange={handleChange}>
                   <Tab label={tabLabels[0]} className={styles.tab} />
+                  {/* {role === "ADMIN" && ( */}
                   <Tab label={tabLabels[1]} className={styles.tab} />
+                  {/* )} */}
+
                   <Tab label={tabLabels[2]} className={styles.tab} />
                 </Tabs>
                 {/* </Container> */}

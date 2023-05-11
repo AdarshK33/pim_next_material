@@ -12,50 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 import styles from "./productDetails.module.css";
-const AddFormComment = ({ classModal }) => {
-  const [roleError, setRoleError] = useState(false);
-  const [role, setRole] = useState("");
-
-  const [categoryError, setCategoryError] = useState(false);
-  const [category, setCategory] = useState("");
-
-  const roleValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (role !== "" && role !== null && role !== undefined) {
-      setRoleError(false);
-
-      return true;
-    } else {
-      setRoleError(true);
-      return false;
-    }
-  };
-  const categoryValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (role !== "" && role !== null && role !== undefined) {
-      setRoleError(false);
-
-      return true;
-    } else {
-      setRoleError(true);
-      return false;
-    }
-  };
-  const checkValidations = () => {
-    // console.log("isChecked");
-    if ((categoryValidations() == true) & (roleValidations() == true)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-  const roleHandler = (e) => {
-    setRole(e.target.value);
-  };
-  const categoryHandler = (e) => {
-    setCategory(e.target.value);
-  };
-
+const AddFormComment = ({ classModal, valueData }) => {
+  // console.log(valueData, "cccccccccccccccccccccccc");
   const submitHandler = (e) => {
     e.preventDefault();
     const value = checkValidations();
@@ -79,10 +37,14 @@ const AddFormComment = ({ classModal }) => {
             <TextField
               fullWidth
               id="outlined-name"
-              label="Text input box here"
+              label="COMMENTS"
               type="text"
               variant="standard"
               multiline
+              value={valueData || "**NO COMMENTS"}
+              InputProps={{
+                readOnly: true,
+              }}
               rows={3}
             />
           </Grid>
