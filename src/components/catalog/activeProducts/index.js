@@ -36,7 +36,7 @@ const ActiveProducts = () => {
     });
   }
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [showUserAddForm, setShowUserAddForm] = useState(false);
   const recordPerPage = 5;
   const totalRecords = tableData.length;
   const pageRange = 5;
