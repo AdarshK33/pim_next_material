@@ -30,6 +30,7 @@ import AddFormComment from "./AddFormComment";
 import {
   productDetailsApi,
   statusChangedApis,
+  productUpdateApis,
 } from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
 import Accordion from "@mui/material/Accordion";
@@ -539,6 +540,7 @@ const ProductDetails = (props) => {
   //     comments: [],
   //   },
   // ];
+
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
@@ -546,17 +548,96 @@ const ProductDetails = (props) => {
   const [showCommentAddForm, setShowCommentAddForm] = useState(false);
   const [commentAddForm, setCommentAddForm] = useState(false);
   const [attributeSetIdForm, setAttributeSetId] = useState(false);
+  const [objectId, setObjectId] = useState("");
 
   const [stateInput, setStateInput] = useState();
+  const [checkUpdate, setcheckUpdate] = useState(false);
+  const [updateApiCall, setCallApi] = useState(false);
 
   const inputChangeHandler = (e) => {
-    console.log("iiiiiiii", e.target.vlaue);
+    // console.log("iiiiiiii", e.target.vlaue);
     setStateInput({
       ...stateInput,
       [e.target.name]: e.target.value,
     });
-    // setcheckUpdate(true);
+    setcheckUpdate(true);
   };
+
+  useEffect(() => {
+    if (role === "ADMIN" && updateApiCall) {
+      let info = {
+        payload: {
+          "AX MASTER": {
+            stateInput,
+          },
+        },
+        modelCode: router.query.PimCodeId,
+      };
+      dispatch(productUpdateApis(info));
+      setCallApi(false);
+    }
+    if (role === "ONLINEMASTER" && updateApiCall) {
+      let info = {
+        payload: {
+          ONLINEMASTER: {
+            stateInput,
+          },
+        },
+        modelCode: router.query.PimCodeId,
+      };
+      dispatch(productUpdateApis(info));
+      setCallApi(false);
+    }
+    if (role === "HIPAR" && updateApiCall) {
+      let info = {
+        payload: {
+          HIPAR: {
+            stateInput,
+          },
+        },
+        modelCode: router.query.PimCodeId,
+      };
+      dispatch(productUpdateApis(info));
+      setCallApi(false);
+    }
+    if (role === "R_DRUGS" && updateApiCall) {
+      let info = {
+        payload: {
+          R_DRUGS: {
+            stateInput,
+          },
+        },
+        modelCode: router.query.PimCodeId,
+      };
+      dispatch(productUpdateApis(info));
+      setCallApi(false);
+    }
+
+    if (role === "KEYMEDMASTER" && updateApiCall) {
+      let info = {
+        payload: {
+          KEYMEDMASTER: {
+            stateInput,
+          },
+        },
+        modelCode: router.query.PimCodeId,
+      };
+      dispatch(productUpdateApis(info));
+      setCallApi(false);
+    }
+  }, [role, updateApiCall]);
+
+  // useEffect(() => {
+  //   let info = {
+  //     payload: {
+  //       "AX MASTER": {
+  //         "ITEM ID": "ABP0007",
+  //       },
+  //     },
+  //     modelCode: router.query.PimCodeId,
+  //   };
+  //   dispatch(productUpdateApis(info));
+  // }, []);
 
   useEffect(() => {
     if (!catalogServiceNewReducer?.productPimCodeData) {
@@ -575,7 +656,7 @@ const ProductDetails = (props) => {
 
     setStateInput(inputState);
   }, [catalogServiceNewReducer?.productPimCodeData]);
-  console.log("hello stateInput", stateInput);
+  console.log("hello objectId", stateInput);
   const getInputValue = (keyName) => {
     try {
       return stateInput[keyName];
@@ -594,7 +675,13 @@ const ProductDetails = (props) => {
             aria-controls="panel2a-content"
             id="panel2a-header"
           >
-            <Typography>{value.attributeSet}</Typography>
+            <Typography
+              onChange={() => {
+                setObjectId(value.attributeSet);
+              }}
+            >
+              {value.attributeSet}
+            </Typography>
           </AccordionSummary>
 
           <AccordionDetails>
@@ -696,6 +783,7 @@ const ProductDetails = (props) => {
     const obj = catalogServiceNewReducer?.productPimCodeData;
     return Object.entries(obj).map(([key, value]) => {
       console.log("hello key", key, value);
+
       if (key) {
         return AccordionSetUp(key, value);
       }
@@ -710,7 +798,7 @@ const ProductDetails = (props) => {
     // console.log("hello sectionItem", sectionItem);
     return (
       <>
-        <Grid md={4} key={index} className={styles.AdrshText_Field}>
+        <Grid md={4} key={index} className={styles.role_based_Text_Field}>
           <TextField
             id="outlined-basic"
             label={sectionItem.displayName}
@@ -720,7 +808,7 @@ const ProductDetails = (props) => {
             name={sectionItem.keyName}
             value={getInputValue(sectionItem.keyName)}
             onChange={inputChangeHandler}
-            // disabled={sectionItem.accessRole == role ? "false" : "true"}
+            disabled={sectionItem.accessRole !== role ? true : false}
           />
         </Grid>
       </>
@@ -732,6 +820,9 @@ const ProductDetails = (props) => {
       status: "ACTIVATED",
     };
     dispatch(statusChangedApis(infoData));
+  };
+  const updateHandler = () => {
+    setCallApi(true);
   };
 
   return (
@@ -754,13 +845,13 @@ const ProductDetails = (props) => {
                   Activate
                   {/* <input hidden accept="image/*" multiple type="file" /> */}
                 </Button>
-              ) : role && router.query.tab == "Revalidate" ? (
+              ) : role && router.query.tab == "Revalidate" && checkUpdate ? (
                 <>
                   <Button
                     variant="outlined"
                     color="success"
                     component="label"
-                    // onClick={() => setShowAttributeAddForm(true)}
+                    onClick={updateHandler}
                   >
                     Update
                     {/* <input hidden accept="image/*" multiple type="file" /> */}
