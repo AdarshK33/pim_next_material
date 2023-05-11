@@ -544,6 +544,9 @@ const ProductDetails = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [showRevalidateAddForm, setShowRevalidateAddForm] = useState(false);
   const [showCommentAddForm, setShowCommentAddForm] = useState(false);
+  const [commentAddForm, setCommentAddForm] = useState(false);
+  const [attributeSetIdForm, setAttributeSetId] = useState(false);
+
   const [stateInput, setStateInput] = useState();
 
   const inputChangeHandler = (e) => {
@@ -582,7 +585,7 @@ const ProductDetails = (props) => {
   };
 
   const AccordionSetUp = (key, value) => {
-    // console.log("AccordionSetUp", value.comments);
+    console.log("AccordkeyionSetUp", key, value.comments);
     return (
       <>
         <Accordion>
@@ -602,7 +605,11 @@ const ProductDetails = (props) => {
                     variant="outlined"
                     color="danger"
                     component="label"
-                    onClick={() => setShowRevalidateAddForm(true)}
+                    onClick={() => {
+                      setShowRevalidateAddForm(true);
+
+                      setAttributeSetId(value.attributeSetId);
+                    }}
                   >
                     Revalidate
                     {/* <input hidden accept="image/*" multiple type="file" /> */}
@@ -614,7 +621,7 @@ const ProductDetails = (props) => {
                   body={
                     <AddFormRevalidate
                       classModal={() => setShowRevalidateAddForm(false)}
-                      attributeSetIdData={value.attributeSetId}
+                      attributeSetIdData={attributeSetIdForm}
                     />
                   }
                 />
@@ -626,22 +633,23 @@ const ProductDetails = (props) => {
                     variant="outlined"
                     color="success"
                     component="label"
-                    onClick={(e) => setShowCommentAddForm(true)}
+                    onClick={(e) => {
+                      setShowCommentAddForm(true);
+                      setCommentAddForm(value?.comments.join(", "));
+                    }}
                   >
                     Comment
                   </Button>
                 </Box>
                 <CustomModal
+                  id={`${key}-customModal`}
                   openModal={showCommentAddForm}
                   closeModal={(e) => setShowCommentAddForm(false)}
                   body={
                     <AddFormComment
+                      id={`${key}-addfromcomment`}
                       classModal={(e) => setShowCommentAddForm(false)}
-                      valueData={
-                        value?.comments.length > 0
-                          ? value?.comments.join(", ")
-                          : ""
-                      }
+                      valueData={commentAddForm}
                     />
                   }
                 />
@@ -687,7 +695,7 @@ const ProductDetails = (props) => {
     }
     const obj = catalogServiceNewReducer?.productPimCodeData;
     return Object.entries(obj).map(([key, value]) => {
-      // console.log("hello key", key, value);
+      console.log("hello key", key, value);
       if (key) {
         return AccordionSetUp(key, value);
       }
