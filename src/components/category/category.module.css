@@ -1,5 +1,6 @@
 .catogory_container{
   width: 30%;
+  padding-Right: 10%;
 }
 .category_pagination {
   display: flex;

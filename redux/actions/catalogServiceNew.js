@@ -309,7 +309,7 @@ export const createAttributeSetApi = (info) => {
     client
       .post("/api/catalogServiceNew/createAttribute", data)
       .then((response) => {
-        console.log("---------create attribute------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        console.log("---------create attribute------", response);
         dispatch(createAttributeSetSuccess(response.data.result)); // } else throw new Error("");
       })
       .catch((err) => {
