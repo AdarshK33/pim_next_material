@@ -10,6 +10,8 @@ import {
   Stack,
   Alert,
   Snackbar,
+  Card,
+  CardContent,
   CircularProgress,
 } from "@mui/material";
 import styles from "./addCategory.module.css";
@@ -58,51 +60,53 @@ export default function addCategory() {
 
   return (
     <div className={styles.catogory_container}>
-      <div className={styles.add_title}> Add Category</div>
-      <Box
-        component="form"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          // width: "70%",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <Box style={{ width: "50%" }}>
-            <InputLabel style={{ bottom: 5 }} htmlFor="name">
-              Name
-            </InputLabel>
-            <TextField
-              size="small"
-              style={{ width: "90%" }}
-              id="name"
-              variant="outlined"
-              sx={{ borderRadius: "300px" }}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </Box>
-          <Box style={{ width: "50%" }}>
-            <InputLabel style={{ bottom: 5 }} htmlFor="description">
-              Description
-            </InputLabel>
-            <TextField
-              size="small"
-              style={{
-                width: "90%",
-                borderRadius: "20px",
-                display: "flex",
-              }}
-              id="description"
-              variant="outlined"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              sx={{ borderRadius: 4, height: 40 }}
-            />
-            {/* <TextField
+      <Card sx={{ p: 5 }}>
+        <CardContent>
+          <div className={styles.add_title}> Add Category</div>
+          <Box
+            component="form"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              // width: "70%",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Box style={{ width: "50%" }}>
+                <InputLabel style={{ bottom: 5 }} htmlFor="name">
+                  Name
+                </InputLabel>
+                <TextField
+                  size="small"
+                  style={{ width: "90%" }}
+                  id="name"
+                  variant="outlined"
+                  sx={{ borderRadius: "300px" }}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </Box>
+              <Box style={{ width: "50%" }}>
+                <InputLabel style={{ bottom: 5 }} htmlFor="description">
+                  Description
+                </InputLabel>
+                <TextField
+                  size="small"
+                  style={{
+                    width: "90%",
+                    borderRadius: "20px",
+                    display: "flex",
+                  }}
+                  id="description"
+                  variant="outlined"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                  sx={{ borderRadius: 4, height: 40 }}
+                />
+                {/* <TextField
                 size="small"
                 style={{
                   width: "90%",
@@ -112,82 +116,84 @@ export default function addCategory() {
                 id="description"
                 variant="outlined"
               /> */}
-          </Box>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box style={{ width: "50%" }}>
-            <InputLabel style={{ bottom: 5 }} htmlFor="parentCategory">
-              Parent Category
-            </InputLabel>
-            <FormControl style={{ width: "90%" }} variant="outlined">
-              <Select
-                labelId="parent-category-label"
-                id="parent-category"
-                value={parentCategoryId}
-                sx={{
-                  height: "40px",
-                }}
+              </Box>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box style={{ width: "50%" }}>
+                <InputLabel style={{ bottom: 5 }} htmlFor="parentCategory">
+                  Parent Category
+                </InputLabel>
+                <FormControl style={{ width: "90%" }} variant="outlined">
+                  <Select
+                    labelId="parent-category-label"
+                    id="parent-category"
+                    value={parentCategoryId}
+                    sx={{
+                      height: "40px",
+                    }}
+                    variant="outlined"
+                    onChange={(e) => setParentCategoryId(e.target.value)}
+                  >
+                    <MenuItem value="category1">Category 1</MenuItem>
+                    <MenuItem value="category2">Category 2</MenuItem>
+                    <MenuItem value="category3">Category 3</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box style={{ width: "50%" }}>
+                <InputLabel style={{ bottom: 5 }} htmlFor="subCategory">
+                  Sub Category
+                </InputLabel>
+                <FormControl style={{ width: "90%" }} variant="outlined">
+                  <Select
+                    labelId="sub-category-label"
+                    id="sub-category"
+                    value={subCategoryId}
+                    variant="outlined"
+                    sx={{ height: "40px" }}
+                    onChange={(e) => setSubCategoryId(e.target.value)}
+                  >
+                    <MenuItem value="subcategory1">Subcategory 1</MenuItem>
+                    <MenuItem value="subcategory2">Subcategory 2</MenuItem>
+                    <MenuItem value="subcategory3">Subcategory 3</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </div>
+            <Box style={{ width: "50%", borderRadius: "20px" }}>
+              <InputLabel style={{ bottom: 5 }} htmlFor="slug">
+                Slug
+              </InputLabel>
+              <TextField
+                size="small"
+                style={{ width: "90%" }}
+                id="slug"
                 variant="outlined"
-                onChange={(e) => setParentCategoryId(e.target.value)}
-              >
-                <MenuItem value="category1">Category 1</MenuItem>
-                <MenuItem value="category2">Category 2</MenuItem>
-                <MenuItem value="category3">Category 3</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          <Box style={{ width: "50%" }}>
-            <InputLabel style={{ bottom: 5 }} htmlFor="subCategory">
-              Sub Category
-            </InputLabel>
-            <FormControl style={{ width: "90%" }} variant="outlined">
-              <Select
-                labelId="sub-category-label"
-                id="sub-category"
-                value={subCategoryId}
-                variant="outlined"
-                sx={{ height: "40px" }}
-                onChange={(e) => setSubCategoryId(e.target.value)}
-              >
-                <MenuItem value="subcategory1">Subcategory 1</MenuItem>
-                <MenuItem value="subcategory2">Subcategory 2</MenuItem>
-                <MenuItem value="subcategory3">Subcategory 3</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </div>
-        <Box style={{ width: "50%", borderRadius: "20px" }}>
-          <InputLabel style={{ bottom: 5 }} htmlFor="slug">
-            Slug
-          </InputLabel>
-          <TextField
-            size="small"
-            style={{ width: "90%" }}
-            id="slug"
-            variant="outlined"
-            sx={{ borderRadius: "300px" }}
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
-          />
-        </Box>
+                sx={{ borderRadius: "300px" }}
+                value={slug}
+                onChange={(e) => setSlug(e.target.value)}
+              />
+            </Box>
 
-        <Button
-          style={{ width: "30%", marginTop: "10px", borderRadius: "20px" }}
-          variant="contained"
-          type="submit"
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-        >
-          {loading ? <CircularProgress size={24} /> : "Submit"}
-        </Button>
-      </Box>
+            <Button
+              style={{ width: "30%", marginTop: "10px", borderRadius: "20px" }}
+              variant="contained"
+              type="submit"
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              {loading ? <CircularProgress size={24} /> : "Submit"}
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
       <ToastContainer />
     </div>
   );
