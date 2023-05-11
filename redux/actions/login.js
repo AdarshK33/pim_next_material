@@ -171,6 +171,10 @@ export const userLoginApi = (data) => {
               "LOGIN DETAILS"
             )
           );
+          console.log(
+            "response?.data?.result?.role",
+            response?.data?.result?.role
+          );
 
           // navigate('/dashboard/dashboard');
         } else throw new Error("");

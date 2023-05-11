@@ -31,13 +31,15 @@ import AddForm from "./AddForm.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getAttributeListApi } from "../../../redux/actions/catalogServiceNew";
 import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
-  import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
+import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
 const Attributes = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
+  const { loading } = useSelector((state) => state.catalogServiceNewReducer);
   const dispatch = useDispatch();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
+  const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -92,7 +94,9 @@ const Attributes = () => {
 
               <CustomModal
                 openModal={showAttributeAddForm}
-                closeModal={() => setShowAttributeAddForm(false)}
+                closeModal={() =>
+                  setShowAttributeAddForm(!showAttributeAddForm)
+                }
                 body={
                   <AddForm classModal={() => setShowAttributeAddForm(false)} />
                 }
