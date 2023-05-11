@@ -480,7 +480,7 @@ export const productUpdateApis = (data) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
-          // toast.info("Status changed Successfully !!!");
+          toast.info("Product Update Successfully !!!");
 
           dispatch(
             productUpdateDataSuccess(
@@ -492,7 +492,7 @@ export const productUpdateApis = (data) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        toast.error("Product update Failed!!!");
+        toast.error("Product Update Failed!!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/productUpdate",
           err

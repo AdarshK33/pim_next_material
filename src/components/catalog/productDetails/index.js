@@ -568,7 +568,7 @@ const ProductDetails = (props) => {
       let info = {
         payload: {
           "AX MASTER": {
-            stateInput,
+            ...stateInput,
           },
         },
         modelCode: router.query.PimCodeId,
@@ -576,11 +576,11 @@ const ProductDetails = (props) => {
       dispatch(productUpdateApis(info));
       setCallApi(false);
     }
-    if (role === "ONLINEMASTER" && updateApiCall) {
+    if (role === "ONLINE_MASTER" && updateApiCall) {
       let info = {
         payload: {
           ONLINEMASTER: {
-            stateInput,
+            ...stateInput,
           },
         },
         modelCode: router.query.PimCodeId,
@@ -592,7 +592,7 @@ const ProductDetails = (props) => {
       let info = {
         payload: {
           HIPAR: {
-            stateInput,
+            ...stateInput,
           },
         },
         modelCode: router.query.PimCodeId,
@@ -604,7 +604,7 @@ const ProductDetails = (props) => {
       let info = {
         payload: {
           R_DRUGS: {
-            stateInput,
+            ...stateInput,
           },
         },
         modelCode: router.query.PimCodeId,
@@ -613,11 +613,11 @@ const ProductDetails = (props) => {
       setCallApi(false);
     }
 
-    if (role === "KEYMEDMASTER" && updateApiCall) {
+    if (role === "KEYMED_MANAGER" && updateApiCall) {
       let info = {
         payload: {
           KEYMEDMASTER: {
-            stateInput,
+            ...stateInput,
           },
         },
         modelCode: router.query.PimCodeId,
