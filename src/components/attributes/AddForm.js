@@ -18,17 +18,23 @@ import {
   TextField,
   Button,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import styles from "./attribute.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createAttributeSetApi } from "../../../redux/actions/catalogServiceNew";
+import { ToastContainer } from "react-toastify";
 
 function AddForm({ classModal }) {
+  console.log("classModal", classModal);
   const dispatch = useDispatch();
 
-  const { loginReducer, catalogQueryReducer } = useSelector((state) => {
-    return state;
-  });
+  const { loginReducer, catalogQueryReducer, loading } = useSelector(
+    (state) => {
+      return state;
+    }
+  );
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log("catalogQueryReducer", catalogQueryReducer);
 
@@ -38,7 +44,7 @@ function AddForm({ classModal }) {
   }));
 
   console.log("cccccccccccccccc", dropdownOptions);
-  
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [role, setRole] = useState("");
@@ -72,9 +78,9 @@ function AddForm({ classModal }) {
     setActive(e.target.value);
   };
 
-const categoryHandler = (e) => {
-  setCategory(e.target.value)
-}
+  const categoryHandler = (e) => {
+    setCategory(e.target.value);
+  };
 
   const categoryValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -169,6 +175,7 @@ const categoryHandler = (e) => {
   };
 
   const submitHandler = (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const value = checkValidations();
 
@@ -179,11 +186,13 @@ const categoryHandler = (e) => {
         description: description,
         precedence: precedence,
         active: active,
-        category:category
+        category: category,
       };
       console.log("hello ADD infoData", data);
 
       dispatch(createAttributeSetApi(data));
+      setIsLoading(false);
+      classModal();
     }
   };
   return (
@@ -264,7 +273,7 @@ const categoryHandler = (e) => {
           <Grid item xs={6}>
             <FormControl fullWidth variant="standard">
               <InputLabel id="demo-simple-select-standard-label">
-              Priority Sequence
+                Priority Sequence
               </InputLabel>
               <Select
                 labelId="demo-simple-select-standard-label"
@@ -284,7 +293,6 @@ const categoryHandler = (e) => {
                 <MenuItem value={7}>Seven</MenuItem>
                 <MenuItem value={8}>Eight</MenuItem>
                 <MenuItem value={9}>Nine</MenuItem>
-
               </Select>
             </FormControl>
           </Grid>
@@ -333,12 +341,14 @@ const categoryHandler = (e) => {
               onClick={submitHandler}
               type="submit"
               // variant="contained"
+              disabled={isLoading}
               color="success"
             >
-              SUBMIT
+              {isLoading ? <CircularProgress size={12} /> : "Submit"}
             </Button>
           </Grid>
         </Grid>
+        <ToastContainer />
       </form>
     </>
   );

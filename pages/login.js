@@ -77,6 +77,7 @@ const Login = (user) => {
 
   useEffect(() => {
     if (itemData) {
+      console.log("itemData", itemData);
       dispatch(userLoginApi(itemData));
     }
   }, [itemData]);
