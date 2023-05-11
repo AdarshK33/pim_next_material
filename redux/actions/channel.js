@@ -212,9 +212,9 @@ export const updateChannelApi = (info) => {
   };
 };
 
-export const getChannelListApi = (pageNumber, pageSize) => {
+export const getChannelListApi = (pageNo, pageSize) => {
   const data = {
-    pageNumber: pageNumber,
+    pageNo: pageNo,
     pageSize: pageSize,
   };
 
@@ -223,7 +223,7 @@ export const getChannelListApi = (pageNumber, pageSize) => {
     dispatch(getChannelDataLoading("Channel....", "Channel"));
 
     client
-      .post("/api/onboardQuery/getChannelsList", data)
+      .post("/api/catalogServiceNew/getChannels", data)
       .then((response) => {
         // console.log("api response", response);
         if (response?.status === 200) {
