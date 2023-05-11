@@ -23,6 +23,11 @@ function MyApp(props) {
     // user,
   } = props;
 
+  // useeffect and dispatch called -init
+  // client to server call - use : api/userApi
+  // get the response in client side
+  // store the response in redux - loginReducer
+
   // console.log("hello user", user);
   return (
     <CacheProvider value={emotionCache}>

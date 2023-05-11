@@ -62,6 +62,19 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   let curl = useRouter();
   const location = curl.pathname;
 
+  // the below role has to be dynamic
+  const ROLE = "ADMIN";
+
+  const filteredMenuItems =
+    ROLE !== "ADMIN"
+      ? Menuitems.filter(
+          (item) =>
+            !["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(
+              item.title.toUpperCase()
+            )
+        )
+      : Menuitems;
+
   const SidebarContent = (
     <Box p={2} height="100%" className={styles.bg_color}>
       <LogoIcon />
@@ -72,7 +85,8 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
       <Box mt={2}>
         <div className={styles.roots}>
           <List>
-            {Menuitems.map((menuitem, index) => {
+            {filteredMenuItems.map((menuitem, index) => {
+              console.log("menuIiem", menuitem);
               return (
                 <div key={index}>
                   <List component="li" disablePadding>
