@@ -24,8 +24,23 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { getAllProductListApi } from "../../../../redux/actions/catalogServiceNew";
+import { useDispatch, useSelector } from "react-redux";
 
 const ActiveProducts = () => {
+  const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { catalogServiceNewReducer } = useSelector((state) => {
+    return state;
+  });
+
+  const recordPerPage = 5;
+  const totalRecords = catalogServiceNewReducer?.getAllProducts?.totalElements;
+  const pageRange = 5;
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = catalogServiceNewReducer?.getAllProducts.content;
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
@@ -35,17 +50,14 @@ const ActiveProducts = () => {
       productStatus: "Ready for publish/Active",
     });
   }
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const recordPerPage = 5;
-  const totalRecords = tableData.length;
-  const pageRange = 5;
-  const indexOfLastRecord = currentPage * recordPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
+  useEffect(() => {
+    dispatch(getAllProductListApi(0, 5, "ACTIVATED"));
+  }, []);
 
   const handlePaginationChange = (event, value) => {
     setCurrentPage(value);
+    dispatch(getAllProductListApi(value - 1, 5, "ACTIVATED"));
   };
 
   const [age, setAge] = useState("");

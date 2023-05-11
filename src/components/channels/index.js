@@ -21,8 +21,13 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
 import { getChannelListApi } from "../../../redux/actions/channel";
+import CustomModal from "../../common/customModal";
+import AddForm from "./AddForm";;
+
 const Channels = () => {
   const dispatch = useDispatch();
+  const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
+  const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -70,10 +75,24 @@ const Channels = () => {
               <Typography variant="h2" className={styles.main_title}>
                 Channels
               </Typography>
-              <Button variant="outlined" color="success" component="label">
+              <Button
+                variant="outlined"
+                color="success"
+                component="label"
+                onClick={() => setShowAttributeAddForm(true)}
+              >
                 Add New
                 {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
+              <CustomModal
+                openModal={showAttributeAddForm}
+                closeModal={() =>
+                  setShowAttributeAddForm(!showAttributeAddForm)
+                }
+                body={
+                  <AddForm classModal={() => setShowAttributeAddForm(false)} />
+                }
+              />
             </Grid>
             <CardContent>
               <TableContainer component={Paper}>
