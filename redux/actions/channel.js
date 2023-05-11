@@ -23,8 +23,8 @@ export const getChannelAttributes = (page, data) => {
     type: GET_CHANNEL_ATTRIBUTE,
     payload: {
       page,
-      data
-    }
+      data,
+    },
   };
 };
 
@@ -118,7 +118,6 @@ export const channelMappingFailure = (error) => {
   };
 };
 
-
 export const createChannelApi = (data) => {
   // let result = false;
   // console.log("hello  ChannelPageApi called", data);
@@ -189,7 +188,6 @@ export const updateChannelApi = (info) => {
     client
       .post("/api/channel/updateChannel", data)
       .then((response) => {
-
         if (response.status === 200) {
           dispatch(
             updateChannelDataSuccess(
@@ -253,7 +251,6 @@ export const channelAttributeApiList = (
     client
       .post("/api/channel/channelAttribute", data)
       .then((response) => {
-
         if (response?.status === 200) {
           dispatch(getChannelAttributeSuccess(response.data.result));
         }
