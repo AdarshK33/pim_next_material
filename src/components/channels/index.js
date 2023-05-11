@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./channels.module.css";
 import Image from "next/image";
 import edit from "../../../assets/icons/edit.svg";
@@ -19,9 +19,21 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getChannelListApi } from "../../../redux/actions/channel";
 const Channels = () => {
+  const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    dispatch(getChannelListApi(currentPage - 1, 5));
+  }, []);
+
+  const { channelReducer } = useSelector((state) => {
+    return state;
+  });
+
+  // console.log("catalogServiceNewReducer", channelReducer?.channelGet);
 
   const tableData = [];
 
@@ -37,14 +49,15 @@ const Channels = () => {
   }
 
   const recordPerPage = 5;
-  const totalRecords = tableData.length;
+  const totalRecords = channelReducer?.channelGet?.totalElements;
   const pageRange = 5;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
+  const currentRecords = channelReducer?.channelGet?.content;
 
   const handlePaginationChange = (event, value) => {
     setCurrentPage(value);
+    dispatch(getChannelListApi(value - 1, 5));
   };
 
   return (
@@ -70,52 +83,62 @@ const Channels = () => {
                       <TableCell>#</TableCell>
                       <TableCell align="right">NAME</TableCell>
                       <TableCell align="right">DESCRIPTION</TableCell>
-                      <TableCell align="right">LAST UPLOADED</TableCell>
-                      <TableCell align="right">TOTAL PRODUCT ACTIVE</TableCell>
-                      <TableCell align="right">
+                      {/* <TableCell align="right">LAST UPLOADED</TableCell> */}
+                      {/* <TableCell align="right">TOTAL PRODUCT ACTIVE</TableCell> */}
+                      {/* <TableCell align="right">
                         TOTAL PRODUCT INACTIVE
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ACTION</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {tableData.map((row, i) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {i + 1 + indexOfFirstRecord}
-                        </TableCell>
-                        <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.desc}</TableCell>
-                        <TableCell align="right">{row.last}</TableCell>
-                        <TableCell align="right">{row.tpa}</TableCell>
-                        <TableCell align="right">{row.tpia}</TableCell>
-                        <TableCell align="right">{row.status}</TableCell>
-                        <div className="action_center">
-                          <Image
-                            className="px-2 "
-                            src={edit}
-                            alt="edit"
-                            width={35}
-                            height={30}
-                            // onClick={()=>handleEdit(item.brandId)}
-                          />
-                        </div>
+                    {currentRecords &&
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
+                      currentRecords.map((row, i) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {i + 1 + indexOfFirstRecord}
+                            {/* {row.channelId} */}
+                          </TableCell>
+                          <TableCell align="right">{row.channelName}</TableCell>
+                          <TableCell align="right">{row.description}</TableCell>
+                          <TableCell align="right">
+                            {row.status === true ? "Active" : "In-Active"}
+                          </TableCell>
+                          <div className="action_center">
+                            <Image
+                              className="px-2 "
+                              src={edit}
+                              alt="edit"
+                              width={35}
+                              height={30}
+                              // onClick={()=>handleEdit(item.brandId)}
+                            />
+                          </div>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={12}>No Record Found</TableCell>
                       </TableRow>
-                    ))}
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
               <Stack spacing={2}>
                 <div className={styles.category_pagination}>
                   <Pagination
-                    count={10}
+                    count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
+                    showFirstButton
+                    showLastButton
                     onChange={handlePaginationChange}
                   />
                 </div>
