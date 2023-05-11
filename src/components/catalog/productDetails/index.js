@@ -52,7 +52,10 @@ const ProductDetails = (props) => {
   const router = useRouter();
   // console.log("rrrrrrrrrrrrrrrr", router.query.tab);
 
-  console.log("createComment", catalogQueryReducer.createComment.statusCode);
+  console.log(
+    " catalogServiceNewReducer?.productPimCodeData",
+    catalogServiceNewReducer?.productPimCodeData
+  );
 
   // const result = [
   //   {
@@ -541,6 +544,42 @@ const ProductDetails = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [showRevalidateAddForm, setShowRevalidateAddForm] = useState(false);
   const [showCommentAddForm, setShowCommentAddForm] = useState(false);
+  const [stateInput, setStateInput] = useState();
+
+  const inputChangeHandler = (e) => {
+    console.log("iiiiiiii", e.target.vlaue);
+    setStateInput({
+      ...stateInput,
+      [e.target.name]: e.target.value,
+    });
+    // setcheckUpdate(true);
+  };
+
+  useEffect(() => {
+    if (!catalogServiceNewReducer?.productPimCodeData) {
+      return;
+    }
+    // mapping the master.modelAttributes for input field
+    const obj = catalogServiceNewReducer?.productPimCodeData;
+    const inputState = new Object();
+    Object.entries(obj).map(([key, value]) => {
+      value?.attributes.forEach((val) => {
+        // console.log("hello vvvvvvvvvvv", val.keyName);
+
+        inputState[val.keyName] = val.value;
+      });
+    });
+
+    setStateInput(inputState);
+  }, [catalogServiceNewReducer?.productPimCodeData]);
+  console.log("hello stateInput", stateInput);
+  const getInputValue = (keyName) => {
+    try {
+      return stateInput[keyName];
+    } catch (error) {
+      return "";
+    }
+  };
 
   const AccordionSetUp = (key, value) => {
     // console.log("AccordionSetUp", value.comments);
@@ -587,18 +626,22 @@ const ProductDetails = (props) => {
                     variant="outlined"
                     color="success"
                     component="label"
-                    onClick={() => setShowCommentAddForm(true)}
+                    onClick={(e) => setShowCommentAddForm(true)}
                   >
                     Comment
                   </Button>
                 </Box>
                 <CustomModal
                   openModal={showCommentAddForm}
-                  closeModal={() => setShowCommentAddForm(false)}
+                  closeModal={(e) => setShowCommentAddForm(false)}
                   body={
                     <AddFormComment
-                      classModal={() => setShowCommentAddForm(false)}
-                      valueData={value?.comments.join(", ")}
+                      classModal={(e) => setShowCommentAddForm(false)}
+                      valueData={
+                        value?.comments.length > 0
+                          ? value?.comments.join(", ")
+                          : ""
+                      }
                     />
                   }
                 />
@@ -664,8 +707,12 @@ const ProductDetails = (props) => {
             id="outlined-basic"
             label={sectionItem.displayName}
             variant="outlined"
-            value={sectionItem.value}
-            // inputProps={{ readOnly: sectionItem.readOnly }}
+            // value={sectionItem.value}
+            // // inputProps={{ readOnly: sectionItem.readOnly }}
+            name={sectionItem.keyName}
+            value={getInputValue(sectionItem.keyName)}
+            onChange={inputChangeHandler}
+            // disabled={sectionItem.accessRole == role ? "false" : "true"}
           />
         </Grid>
       </>
