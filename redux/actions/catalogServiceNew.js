@@ -23,6 +23,9 @@ import {
   REVALIDATE_DATA_LOADING,
   REVALIDATE_DATA_SUCCESS,
   REVALIDATE_DATA_FAILURE,
+  STATUS_DATA_LOADING,
+  STATUS_DATA_SUCCESS,
+  STATUS_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -166,6 +169,24 @@ export const revalidateDataSuccess = (data) => {
 export const revalidateDataFailure = (error) => {
   return {
     type: REVALIDATE_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const statusDataLoading = () => {
+  return {
+    type: STATUS_DATA_LOADING,
+  };
+};
+export const statusDataSuccess = (data) => {
+  return {
+    type: STATUS_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const statusDataFailure = (error) => {
+  return {
+    type: STATUS_DATA_FAILURE,
     payload: error,
   };
 };
@@ -344,11 +365,12 @@ export const addCategoryApi = (data) => {
 };
 
 export const revalidateApis = (info) => {
-  console.log("hello  revalidateApis info", info);
+  // console.log("hello  revalidateApis info", info);
   const data = {
     modelCode: info?.PimCodeId,
     attributeSetId: info.attributeSetId,
-    comments: info.comment,
+    comments: info.comments,
+    status: info.status,
   };
   // console.log("hello  revalidateApis data", data);
 
@@ -359,7 +381,7 @@ export const revalidateApis = (info) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
-          // toast.info("Comment Updated Successfully !!!");
+          toast.info("Comment Added Successfully !!!");
 
           dispatch(
             revalidateDataSuccess(
@@ -371,13 +393,52 @@ export const revalidateApis = (info) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        // toast.error("Comment update Failed!!!");
+        toast.error("Comment Added Failed!!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/revalidateApis",
           err
         );
         dispatch(
           revalidateDataFailure(err, "Something went wrong", "Comment UPDATE")
+        );
+      });
+  };
+};
+
+export const statusChangedApis = (info) => {
+  // console.log("hello  revalidateApis info", info);
+  const data = {
+    pimModelCode: info.pimModelCode,
+    status: info.status,
+  };
+  // console.log("hello  revalidateApis data", data);
+
+  return (dispatch) => {
+    dispatch(statusDataLoading("STATUS....", "STATUS"));
+    client
+      .post("/api/catalogServiceNew/statusChanged", data)
+      .then((response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          toast.info("Status changed Successfully !!!");
+
+          dispatch(
+            statusDataSuccess(
+              response.data,
+              " status Successfully",
+              "status UPDATE"
+            )
+          );
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        toast.error("Status Failed!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/revalidateApis",
+          err
+        );
+        dispatch(
+          statusDataFailure(err, "Something went wrong", "STATUS UPDATE")
         );
       });
   };

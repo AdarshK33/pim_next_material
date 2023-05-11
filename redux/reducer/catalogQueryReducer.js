@@ -11,6 +11,9 @@ import {
   REVALIDATE_DATA_LOADING,
   REVALIDATE_DATA_SUCCESS,
   REVALIDATE_DATA_FAILURE,
+  STATUS_DATA_LOADING,
+  STATUS_DATA_SUCCESS,
+  STATUS_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -19,10 +22,11 @@ const initialState = {
   attributeGet: {},
   allProductGet: {},
   createComment: {},
+  statusChanged: {},
   // refreshToken:{}
 };
 const catalogQueryReducer = (state = initialState, action) => {
-  // console.log("hello loginReducer called",action)
+  // console.log("hello createComment called", action);
   switch (action.type) {
     case ATTRIBUTE_LIST_LOADING:
       return {
@@ -97,6 +101,25 @@ const catalogQueryReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         createComment: [],
+        error: action,
+      };
+    case STATUS_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case STATUS_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        statusChanged: action.payload,
+        error: {},
+      };
+    case STATUS_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        statusChanged: [],
         error: action,
       };
     default:

@@ -19,34 +19,63 @@ import { useDispatch, useSelector } from "react-redux";
 import { revalidateApis } from "../../../../redux/actions/catalogServiceNew";
 import { useRouter } from "next/router";
 
-const AddFormRevalidate = ({ classModal }) => {
+const AddFormRevalidate = ({ classModal, attributeSetIdData }) => {
   const dispatch = useDispatch();
 
   const router = useRouter();
   // console.log("rrrrrrrrrrrrrrrr", router.query.PimCodeId);
 
-  const [addComment, setAddComment] = useState(["hello"]);
+  const [addComment, setAddComment] = useState();
+  const [addCommentError, setAddCommentError] = useState(false);
 
-  useEffect(() => {
-    let infoData = {
-      PimCodeId: router.query.PimCodeId,
-      attributeSetId: 1,
-      comments: ["hello"],
-      status: "REVALIDATE",
-    };
+  // useEffect(() => {
+  //   let infoData = {
+  //     PimCodeId: router.query.PimCodeId,
+  //     attributeSetId: 1,
+  //     comments: ["hello"],
+  //     status: "REVALIDATE",
+  //   };
 
-    dispatch(revalidateApis(infoData));
-  }, []);
+  //   dispatch(revalidateApis(infoData));
+  // }, []);
+
+  const commentValidations = () => {
+    if (addComment !== "" && addComment !== null && addComment !== undefined) {
+      setAddCommentError(false);
+
+      return true;
+    } else {
+      setAddCommentError(true);
+      return false;
+    }
+  };
+  const checkValidations = () => {
+    // console.log("isChecked");
+    if (commentValidations() == true) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const commentHandler = (e) => {
+    setAddComment(e.target.value);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // let infoData = {
-    //   attributeSetId: 1,
-    //   comments: [addComment],
-    //   status: "REVALIDATE",
-    // };
+    const value = checkValidations();
 
-    // dispatch(revalidateApis(infoData));
+    if (value === true) {
+      console.log("onSubmit", addComment);
+      let infoData = {
+        PimCodeId: router.query.PimCodeId,
+        attributeSetId: attributeSetIdData,
+        comments: [addComment],
+        status: "REVALIDATE",
+      };
+      dispatch(revalidateApis(infoData));
+    }
   };
   return (
     <>
@@ -62,9 +91,18 @@ const AddFormRevalidate = ({ classModal }) => {
               variant="standard"
               multiline
               rows={3}
-              onChange={(event) => setAddComment(event.target.value)}
+              onChange={commentHandler}
+              // onChange={(event) => setAddComment(event.target.value)}
             />
+            {addCommentError ? (
+              <p style={{ color: "red" }}> ** Please enter comments </p>
+            ) : addComment && addComment.length === 100 ? (
+              <p style={{ color: "red" }}> Max 100 Characters</p>
+            ) : (
+              <p></p>
+            )}
           </Grid>
+
           <Grid
             container
             justifyContent="space-around"

@@ -27,7 +27,10 @@ import CustomModal from "../../../common/customModal";
 import AddFormRevalidate from "./AddFormRevalidate";
 import AddFormComment from "./AddFormComment";
 
-import { productDetailsApi } from "../../../../redux/actions/catalogServiceNew";
+import {
+  productDetailsApi,
+  statusChangedApis,
+} from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -40,14 +43,16 @@ import { useRouter } from "next/router";
 
 const ProductDetails = (props) => {
   const { user: { role = "" } = {}, loggedIn } = props.user;
-  const { catalogServiceNewReducer } = useSelector((state) => {
-    return state;
-  });
+  const { catalogServiceNewReducer, catalogQueryReducer } = useSelector(
+    (state) => {
+      return state;
+    }
+  );
 
   const router = useRouter();
   // console.log("rrrrrrrrrrrrrrrr", router.query.tab);
 
-  // console.log("pimcode", catalogServiceNewReducer?.productPimCodeData);
+  console.log("createComment", catalogQueryReducer.createComment.statusCode);
 
   // const result = [
   //   {
@@ -538,7 +543,7 @@ const ProductDetails = (props) => {
   const [showCommentAddForm, setShowCommentAddForm] = useState(false);
 
   const AccordionSetUp = (key, value) => {
-    console.log("AccordionSetUp", value);
+    // console.log("AccordionSetUp", value.comments);
     return (
       <>
         <Accordion>
@@ -570,7 +575,7 @@ const ProductDetails = (props) => {
                   body={
                     <AddFormRevalidate
                       classModal={() => setShowRevalidateAddForm(false)}
-                      // allData={value}
+                      attributeSetIdData={value.attributeSetId}
                     />
                   }
                 />
@@ -593,6 +598,7 @@ const ProductDetails = (props) => {
                   body={
                     <AddFormComment
                       classModal={() => setShowCommentAddForm(false)}
+                      valueData={value?.comments.join(", ")}
                     />
                   }
                 />
@@ -603,6 +609,18 @@ const ProductDetails = (props) => {
 
             <CardContent>
               <Grid container>{sectionAllMasterRender(value.attributes)}</Grid>
+              {/* <div>
+                <TextField
+                  variant="outlined"
+                  label="COMMENTS"
+                  multiline
+                  rows={3}
+                  value={value?.comments.join(", ")}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </div> */}
             </CardContent>
           </AccordionDetails>
         </Accordion>
@@ -614,7 +632,7 @@ const ProductDetails = (props) => {
     if (!value) {
       return;
     }
-    console.log("item 2", value);
+    // console.log("item 2", value);
     return value.map((val, index) => {
       return inputAllMasterRender(val, index);
     });
@@ -653,6 +671,17 @@ const ProductDetails = (props) => {
       </>
     );
   };
+  const activateHandler = () => {
+    if (catalogQueryReducer.createComment.statusCode === 201) {
+      toast.error("Product is not ready !!!");
+    } else {
+      let infoData = {
+        pimModelCode: router.query.PimCodeId,
+        status: "ACTIVATED",
+      };
+      dispatch(statusChangedApis(infoData));
+    }
+  };
 
   return (
     <>
@@ -669,7 +698,7 @@ const ProductDetails = (props) => {
                   variant="outlined"
                   color="success"
                   component="label"
-                  // onClick={() => setShowAttributeAddForm(true)}
+                  onClick={activateHandler}
                 >
                   Activate
                   {/* <input hidden accept="image/*" multiple type="file" /> */}
