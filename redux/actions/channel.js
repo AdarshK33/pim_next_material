@@ -23,8 +23,8 @@ export const getChannelAttributes = (page, data) => {
     type: GET_CHANNEL_ATTRIBUTE,
     payload: {
       page,
-      data
-    }
+      data,
+    },
   };
 };
 
@@ -118,38 +118,21 @@ export const channelMappingFailure = (error) => {
   };
 };
 
-
 export const createChannelApi = (data) => {
-  // let result = false;
-  // console.log("hello  ChannelPageApi called", data);
   return (dispatch) => {
     dispatch(createChannelDataLoading("Channel....", "Channel"));
     client
-      .post("/api/channel/createChannel", data)
+      .post("/api/catalogServiceNew/createChannels", data)
       .then((response) => {
         // result = true;
         if (response.status === 201) {
-          dispatch(
-            createChannelDataSuccess(
-              response.data.result,
-              "Channel Create Successfully",
-              "Channel CREATE"
-            )
-          );
+          dispatch(createChannelDataSuccess(response.data.result));
         } else throw new Error("");
       })
       .catch((err) => {
-        //result = false;
-        dispatch(
-          createChannelDataFailure(
-            err,
-            "Something went wrong",
-            "Channel CREATE"
-          )
-        );
+        dispatch(createChannelDataFailure(err));
       });
 
-    // return result;
   };
 };
 
@@ -189,7 +172,6 @@ export const updateChannelApi = (info) => {
     client
       .post("/api/channel/updateChannel", data)
       .then((response) => {
-
         if (response.status === 200) {
           dispatch(
             updateChannelDataSuccess(
@@ -212,9 +194,9 @@ export const updateChannelApi = (info) => {
   };
 };
 
-export const getChannelListApi = (pageNumber, pageSize) => {
+export const getChannelListApi = (pageNo, pageSize) => {
   const data = {
-    pageNumber: pageNumber,
+    pageNo: pageNo,
     pageSize: pageSize,
   };
 
@@ -223,7 +205,7 @@ export const getChannelListApi = (pageNumber, pageSize) => {
     dispatch(getChannelDataLoading("Channel....", "Channel"));
 
     client
-      .post("/api/onboardQuery/getChannelsList", data)
+      .post("/api/catalogServiceNew/getChannels", data)
       .then((response) => {
         // console.log("api response", response);
         if (response?.status === 200) {
@@ -253,7 +235,6 @@ export const channelAttributeApiList = (
     client
       .post("/api/channel/channelAttribute", data)
       .then((response) => {
-
         if (response?.status === 200) {
           dispatch(getChannelAttributeSuccess(response.data.result));
         }
