@@ -26,6 +26,9 @@ import {
   STATUS_DATA_LOADING,
   STATUS_DATA_SUCCESS,
   STATUS_DATA_FAILURE,
+  PRODUCT_UPDATE_DATA_LOADING,
+  PRODUCT_UPDATE_DATA_SUCCESS,
+  PRODUCT_UPDATE_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -190,6 +193,24 @@ export const statusDataFailure = (error) => {
     payload: error,
   };
 };
+export const productUpdateDataLoading = () => {
+  return {
+    type: PRODUCT_UPDATE_DATA_LOADING,
+  };
+};
+export const productUpdateDataSuccess = (data) => {
+  return {
+    type: PRODUCT_UPDATE_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const productUpdateDataFailure = (error) => {
+  return {
+    type: PRODUCT_UPDATE_DATA_FAILURE,
+    payload: error,
+  };
+};
+
 export const getAttributeListApi = (pageNo, pageSize) => {
   const data = {
     page_No: pageNo,
@@ -439,6 +460,49 @@ export const statusChangedApis = (info) => {
         );
         dispatch(
           statusDataFailure(err, "Something went wrong", "STATUS UPDATE")
+        );
+      });
+  };
+};
+
+export const productUpdateApis = (data) => {
+  // console.log("hello  revalidateApis info", info);
+  // const data = {
+  //   pimModelCode: info.pimModelCode,
+  //   status: info.status,
+  // };
+  // console.log("hello  revalidateApis data", data);
+
+  return (dispatch) => {
+    dispatch(productUpdateDataLoading("STATUS....", "STATUS"));
+    client
+      .post("/api/catalogServiceNew/productUpdate", data)
+      .then((response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          toast.info("Product Update Successfully !!!");
+
+          dispatch(
+            productUpdateDataSuccess(
+              response.data,
+              " status Successfully",
+              "status UPDATE"
+            )
+          );
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        toast.error("Product Update Failed!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/productUpdate",
+          err
+        );
+        dispatch(
+          productUpdateDataFailure(
+            err,
+            "Something went wrong",
+            "product UPDATE"
+          )
         );
       });
   };
