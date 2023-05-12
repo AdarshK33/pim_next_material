@@ -119,36 +119,20 @@ export const channelMappingFailure = (error) => {
 };
 
 export const createChannelApi = (data) => {
-  // let result = false;
-  // console.log("hello  ChannelPageApi called", data);
   return (dispatch) => {
     dispatch(createChannelDataLoading("Channel....", "Channel"));
     client
-      .post("/api/channel/createChannel", data)
+      .post("/api/catalogServiceNew/createChannels", data)
       .then((response) => {
         // result = true;
         if (response.status === 201) {
-          dispatch(
-            createChannelDataSuccess(
-              response.data.result,
-              "Channel Create Successfully",
-              "Channel CREATE"
-            )
-          );
+          dispatch(createChannelDataSuccess(response.data.result));
         } else throw new Error("");
       })
       .catch((err) => {
-        //result = false;
-        dispatch(
-          createChannelDataFailure(
-            err,
-            "Something went wrong",
-            "Channel CREATE"
-          )
-        );
+        dispatch(createChannelDataFailure(err));
       });
 
-    // return result;
   };
 };
 
