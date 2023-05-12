@@ -17,6 +17,9 @@ import {
   ADD_CATEGORY_LOADING,
   ADD_CATEGORY_SUCCESS,
   ADD_CATEGORY_FAILURE,
+  PUBLISH_CATALOG_REQUEST,
+  PUBLISH_CATALOG_SUCCESS,
+  PUBLISH_CATALOG_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -25,6 +28,7 @@ const initialState = {
   getAllProducts: {},
   bulkUpload: {},
   productPimCodeData: {},
+  publishProduct: [],
   createAttributeSet: {},
   // refreshToken:{}
 };
@@ -146,6 +150,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         createAttributeSet: [],
+        error: action,
+      };
+    case PUBLISH_CATALOG_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case PUBLISH_CATALOG_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        publishProduct: action.payload,
+        error: {},
+      };
+    case PUBLISH_CATALOG_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        publishProduct: [],
         error: action,
       };
 

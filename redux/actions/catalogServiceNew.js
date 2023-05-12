@@ -26,11 +26,15 @@ import {
   STATUS_DATA_LOADING,
   STATUS_DATA_SUCCESS,
   STATUS_DATA_FAILURE,
+  PUBLISH_CATALOG_REQUEST,
+  PUBLISH_CATALOG_SUCCESS,
+  PUBLISH_CATALOG_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
 import { uploadClient } from "../../utils/axios";
 import { toast } from "react-toastify";
+import { CSVLink } from "react-csv";
 
 export const attributeListLoading = () => {
   return {
@@ -190,6 +194,25 @@ export const statusDataFailure = (error) => {
     payload: error,
   };
 };
+
+export const publishCatalogLoading = () => {
+  return {
+    type: PUBLISH_CATALOG_REQUEST,
+  };
+};
+export const publishCatalogSuccess = (data) => {
+  return {
+    type: PUBLISH_CATALOG_SUCCESS,
+    payload: data,
+  };
+};
+export const publishCatalogFailure = (error) => {
+  return {
+    type: PUBLISH_CATALOG_FAILURE,
+    payload: error,
+  };
+};
+
 export const getAttributeListApi = (pageNo, pageSize) => {
   const data = {
     page_No: pageNo,
@@ -440,6 +463,27 @@ export const statusChangedApis = (info) => {
         dispatch(
           statusDataFailure(err, "Something went wrong", "STATUS UPDATE")
         );
+      });
+  };
+};
+
+export const getCatalogPublishApi = () => {
+  const data = ["DTE00015", "ABP0002", "Test0002"];
+  return (dispatch) => {
+    dispatch(publishCatalogLoading("PUBLISH....", "PUBLISH"));
+    client
+      .post("/api/catalogServiceNew/publishCatalog", data)
+      .then((response) => {
+        dispatch(publishCatalogSuccess(response.data, "PUBLISH SUCCESS"));
+        console.log("responsefrom", response);
+      })
+      .catch((err) => {
+        console.log(
+          "error caught in -> actions/catalogServiceNew/getCatalogPublish",
+          err
+        );
+        dispatch({ type: PUBLISH_CATALOG_FAILURE, payload: err.message });
+        dispatch(publishCatalogFailure(err, "Something went wrong", "PUBLISH"));
       });
   };
 };

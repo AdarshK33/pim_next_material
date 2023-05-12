@@ -15,6 +15,7 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -24,17 +25,26 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { getAllProductListApi } from "../../../../redux/actions/catalogServiceNew";
+import {
+  getAllProductListApi,
+  getCatalogPublishApi,
+} from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
+import { CSVLink } from "react-csv";
 
 const ActiveProducts = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const [showUserAddForm, setShowUserAddForm] = useState(false);
 
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-
+  const { publishProduct } = useSelector((state) => {
+    return catalogServiceNewReducer;
+  });
+  console.log("publishProduct", publishProduct);
+  const data = `["DTE00015", "ABP0002"]`;
   const recordPerPage = 5;
   const totalRecords = catalogServiceNewReducer?.getAllProducts?.totalElements;
   const pageRange = 5;
@@ -69,22 +79,22 @@ const ActiveProducts = () => {
   return (
     <>
       <Grid container spacing={0}>
-        {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h7" className={styles.main_title}>
                 Active Products
               </Typography>
-              <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                onClick={() => setShowUserAddForm(true)}
-              >
-                Publish
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+              <CSVLink data={publishProduct} filename={"catalog.csv"}>
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component="label"
+                  onClick={() => dispatch(getCatalogPublishApi())}
+                >
+                  Publish
+                </Button>
+              </CSVLink>
             </Grid>
             <Box style={{ paddingTop: "20px" }}>
               <FormControl style={{ width: "30%" }}>
