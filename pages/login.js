@@ -36,6 +36,7 @@ const Login = (user) => {
   const { isLogin, userRole } = useSelector((state) => {
     return state.loginReducer;
   });
+  console.log('testing isLogin', isLogin, userRole)
 
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
