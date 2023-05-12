@@ -45,7 +45,7 @@ const ChannelAttributes = () => {
     return state.channelReducer;
   });
 
-  console.log('channelAttribute', channelAttribute)
+  console.log('channelAttribute', channelAttribute, updatedPimAttributes)
 
 
   const [age, setAge] = useState("");
@@ -125,8 +125,9 @@ const ChannelAttributes = () => {
     setModifiedPimRecord(updatedRecord);
   }, [pimAttributes]);
 
-  const handlePageChange = (value) => {
-    setCurrentPage(value);
+  const handlePageChange = (event, value) => {
+    console.log('value', event.target.value, value)
+    setCurrentPage(event.target.value);
     dispatch(channelAttributeApiList("Shopify", value - 1, 5));
     // dispatch(getChannelAttributes(pageNumber));
   };
@@ -370,15 +371,15 @@ const ChannelAttributes = () => {
                             <InputLabel id="demo-simple-select-label">
                               Select an Attribute
                             </InputLabel>
+                            {console.log('pim?.channel', pim?.channel.attributeId)}
                             <Select
                               labelId={"demo-simple-select-label"}
                               id="demo-simple-select"
                               label="Select an Attribute"
                               onChange={(e) => onSelectdropdown(e, pim.attributeId)}
-                              defaultValue={pim?.channel ? pim.channel.attributeId : ''}
+                              value={pim?.channel ? pim.channel.attributeId : ''}
                             >
-                              {console.log('mappedAttributes[pim.attributeId.toString().includes(channelAttributes)]', channelAttributes.map(item => item.attributeId === mappedAttributes[pim.attributeId] ? item.displayName : ''), pim.attributeId)}
-                              {channelAttributes.map(channel => (
+                              {channelAttributes?.map(channel => (
                                 <MenuItem value={channel?.attributeId} key={channel?.attributeId}>
                                   {channel?.displayName}
                                 </MenuItem>
