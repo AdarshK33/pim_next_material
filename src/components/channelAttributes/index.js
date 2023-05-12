@@ -376,9 +376,6 @@ const ChannelAttributes = () => {
                               label="Select an Attribute"
                               onChange={(e) => onSelectdropdown(e, pim.attributeId)}
                               defaultValue={pim?.channel ? pim.channel.attributeId : ''}
-                            // value={mappedAttributes[pim.attributeId.toString().includes(channelAttributes)] ? console.log('mappedAttributes[pim.attributeId]?.displayName', mappedAttributes[pim.attributeId]?.displayName) : ''}
-                            // value={setDefaultOption(item).value}
-                            // value={channelAttributes.includes(item => { item.attributeId === mappedAttributes[pim.attributeId] ? item.displayName : '' })}
                             >
                               {console.log('mappedAttributes[pim.attributeId.toString().includes(channelAttributes)]', channelAttributes.map(item => item.attributeId === mappedAttributes[pim.attributeId] ? item.displayName : ''), pim.attributeId)}
                               {channelAttributes.map(channel => (
