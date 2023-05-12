@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
 import { ThemeProvider } from "@mui/material/styles";
@@ -11,11 +12,15 @@ import "../styles/style.css";
 import withRedux from "next-redux-wrapper";
 import { mainStore } from "../redux/store";
 import { withIronSessionSsr } from "iron-session/next";
+import { client } from "../utils/axios";
+import { userRole } from "../redux/actions/login";
+import { useDispatch } from "react-redux";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 function MyApp(props) {
+  let dispatch = useDispatch()
   const {
     Component,
     emotionCache = clientSideEmotionCache,
@@ -23,6 +28,21 @@ function MyApp(props) {
     // user,
   } = props;
 
+  useEffect(() => {
+    client.post('api/userApi')
+      .then(response => {
+        console.log('testing response', response?.data?.role)
+        dispatch(
+          userRole(
+            response?.data?.role,
+            "Login role saved Successfully",
+            "LOGIN DETAILS"
+          )
+        );
+      }).catch(err => {
+        console.log('err in catch', err)
+      })
+  }, [])
   // useeffect and dispatch called -init
   // client to server call - use : api/userApi
   // get the response in client side

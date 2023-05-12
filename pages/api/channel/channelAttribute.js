@@ -1,23 +1,24 @@
 import { catalogQueryServer, catalogServiceNew } from '../../../utils/axios';
+import withSession from '../../../utils/session'
 
 function handler(req, res) {
     const body = req.body;
     const channelFilter = body.channelFilter
     const pageNo = body.pageNo
     const pageSize = body.pageSize
-    // const {user: {at =""} ={}, loggedIn} = req.session;
+    const { user: { at = "" } = {}, loggedIn } = req.session;
     const config = {
         method: "get",
         // url:`/ct/channel/mapping/${channelFilter}?pageNo=${pageNo}&pageSize=${pageSize}`,
         url: `/catalog/channel/mapping/${channelFilter}?pageNo=${pageNo}&pageSize=${pageSize}`,
-        // headers:{
-        //     // Authorization:`Bearer ${at}`,
-        //     "Content-Type":"application/json",
-        // }
+        headers: {
+            Authorization: `Bearer ${at}`,
+        }
     };
     catalogServiceNew(config)
         .then((response) => {
             if (response.status === 200) {
+                console.log('response inside if', response.data.result.content)
                 res.status(200).json(response.data);
             }
         })
@@ -30,4 +31,4 @@ function handler(req, res) {
         });
 }
 
-export default (handler);
+export default withSession(handler);
