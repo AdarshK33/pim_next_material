@@ -75,7 +75,7 @@ const BulkUpload = (props) => {
         toast.info("Bulk File uploaded Successfully !!!");
       })
       .catch((error) => {
-        toast.error("Bulk File uploaded Failed!!!");
+        toast.error("Bulk File upload Failed !!!");
         console.log(error);
       });
   };
