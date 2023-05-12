@@ -15,6 +15,7 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -24,17 +25,26 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { getAllProductListApi } from "../../../../redux/actions/catalogServiceNew";
+import {
+  getAllProductListApi,
+  getCatalogPublishApi,
+} from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
+import { CSVLink } from "react-csv";
 
 const ActiveProducts = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedItemIds, setSelectedItemIds] = useState([]);
+  console.log("selectedItemIds", selectedItemIds);
 
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-
+  const { publishProduct } = useSelector((state) => {
+    return catalogServiceNewReducer;
+  });
+  console.log("publishProduct", publishProduct);
   const recordPerPage = 5;
   const totalRecords = catalogServiceNewReducer?.getAllProducts?.totalElements;
   const pageRange = 5;
@@ -69,22 +79,43 @@ const ActiveProducts = () => {
   return (
     <>
       <Grid container spacing={0}>
-        {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h7" className={styles.main_title}>
                 Active Products
               </Typography>
-              <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                onClick={() => setShowUserAddForm(true)}
-              >
-                Publish
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+              {selectedItemIds.length > 0 ? (
+                <CSVLink
+                  data={publishProduct}
+                  filename={"catalog.csv"}
+                  disabled={selectedItemIds.length === 0}
+                >
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    onClick={() =>
+                      dispatch(getCatalogPublishApi(selectedItemIds))
+                    }
+                    disabled={selectedItemIds.length === 0}
+                  >
+                    Publish
+                  </Button>
+                </CSVLink>
+              ) : (
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component="label"
+                  onClick={() =>
+                    dispatch(getCatalogPublishApi(selectedItemIds))
+                  }
+                  disabled={selectedItemIds.length === 0}
+                >
+                  Publish
+                </Button>
+              )}
             </Grid>
             <Box style={{ paddingTop: "20px" }}>
               <FormControl style={{ width: "30%" }}>
@@ -99,8 +130,8 @@ const ActiveProducts = () => {
                   onChange={handleChange}
                 >
                   <MenuItem value={10}>Shopify</MenuItem>
-                  <MenuItem value={20}>Amazon</MenuItem>
-                  <MenuItem value={30}>Myntra</MenuItem>
+                  {/* <MenuItem value={20}>Amazon</MenuItem>
+                  <MenuItem value={30}>Myntra</MenuItem> */}
                 </Select>
               </FormControl>
             </Box>
@@ -109,10 +140,7 @@ const ActiveProducts = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>
-                        {" "}
-                        <Checkbox />
-                      </TableCell>
+                      <TableCell> </TableCell>
                       <TableCell align="right">ITEM ID</TableCell>
                       <TableCell align="right">NAME</TableCell>
                       <TableCell align="right">CATEGORY</TableCell>
@@ -132,7 +160,27 @@ const ActiveProducts = () => {
                           }}
                         >
                           <TableCell>
-                            <Checkbox />
+                            <Checkbox
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedItemIds([
+                                    ...selectedItemIds,
+                                    row.itemId,
+                                  ]);
+                                } else {
+                                  setSelectedItemIds(
+                                    selectedItemIds.filter(
+                                      (id) => id !== row.itemId
+                                    )
+                                  );
+                                }
+                              }}
+                              checked={
+                                selectedItemIds.includes(row.itemId)
+                                  ? true
+                                  : false
+                              }
+                            />
                           </TableCell>
                           <TableCell align="right">{row.itemId}</TableCell>
                           <TableCell align="right">{row.itemName}</TableCell>

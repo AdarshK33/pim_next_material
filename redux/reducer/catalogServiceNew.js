@@ -17,6 +17,9 @@ import {
   ADD_CATEGORY_LOADING,
   ADD_CATEGORY_SUCCESS,
   ADD_CATEGORY_FAILURE,
+  PUBLISH_CATALOG_REQUEST,
+  PUBLISH_CATALOG_SUCCESS,
+  PUBLISH_CATALOG_FAILURE,
   PRODUCT_UPDATE_DATA_LOADING,
   PRODUCT_UPDATE_DATA_SUCCESS,
   PRODUCT_UPDATE_DATA_FAILURE,
@@ -28,6 +31,7 @@ const initialState = {
   getAllProducts: {},
   bulkUpload: {},
   productPimCodeData: {},
+  publishProduct: [],
   createAttributeSet: {},
   productUpdate: {},
   // refreshToken:{}
@@ -152,11 +156,31 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         createAttributeSet: [],
         error: action,
       };
+    case PUBLISH_CATALOG_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
     case PRODUCT_UPDATE_DATA_LOADING:
       return {
         ...state,
         loading: true,
       };
+    case PUBLISH_CATALOG_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        publishProduct: action.payload,
+        error: {},
+      };
+    case PUBLISH_CATALOG_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        publishProduct: [],
+        error: action,
+      };
+
     case PRODUCT_UPDATE_DATA_SUCCESS:
       return {
         ...state,

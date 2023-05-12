@@ -102,154 +102,34 @@ const Category = () => {
   };
   return (
     <div className={styles.catogory_container}>
-      {/* <Grid container> */}
-      {/* ------------------------- row 1 ------------------------- */}
-      {/* <Grid item xs={12} lg={12}> */}
-      {/* <Grid item md={4}>
-            <button
-              onClick={() => setShowBrandCreationForm(true)}
-              className={`btn btn-sm ${styles.add_button_text}`}
-            >
-          + Add New
-            </button>
-          </Grid> */}
-      {/* <Card sx={{}}> */}
-      <Grid spacing={2} justifyContent="space-between">
-        <Typography variant="h7" className={styles.main_title}>
-          Category
-        </Typography>
-        {/* <Button variant="outlined" color="success" component="label">
-                + Add New
+      <Card sx={{ p: 5 }}>
+        <CardContent>
+          <Grid spacing={1} justifyContent="space-between">
+            <Typography variant="h8" className={styles.main_title}>
+              Category
+            </Typography>
+          </Grid>
 
-              </Button> */}
-      </Grid>
-
-      <Grid spacing={2} className={styles.category_menu}>
-        <Grid md={3}>
-          <TreeView
-            aria-label="rich object"
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpanded={["root-1", "root-2"]}
-            defaultExpandIcon={<ChevronRightIcon />}
-            sx={{
-              height: 400,
-              flexGrow: 1,
-              maxWidth: 400,
-              overflowY: "auto",
-            }}
-          >
-            {renderTree(catagories)}
-          </TreeView>
-        </Grid>
-
-        {/* <Grid spacing={3} md={7} className={styles.category_form}> */}
-        {/* <form>
-                  <Grid spacing={3}>
-                    <Grid item xs={4} className={styles.category_input}>
-                      <TextField
-                        id="outlined-name"
-                        label="Name"
-                        type="text"
-                        variant="standard"
-                        fullWidth
-                      />
-                    </Grid>
-
-                    <Grid item xs={4} className={styles.category_input}>
-                      <FormControl fullWidth variant="standard">
-                        <InputLabel
-                          id="demo-simple-select-standard-label"
-                          variant="standard"
-                        >
-                          Parent Category
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-helper-label"
-                          id="demo-simple-select-helper"
-                          value=""
-                          label="Category"
-                          // onChange={handleChange}
-                        >
-                          <MenuItem value=""></MenuItem>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={4} className={styles.category_input}>
-                      <FormControl fullWidth variant="standard">
-                        <InputLabel
-                          id="demo-simple-select-standard-label"
-                          variant="standard"
-                        >
-                          Sub Category
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-helper-label"
-                          id="demo-simple-select-helper"
-                          value=""
-                          label="Category"
-                          // onChange={handleChange}
-                        >
-                          <MenuItem value=""></MenuItem>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    {/* <Grid item xs={6} className={styles.category_input}>
-                      <TextField
-                        id="outlined-description"
-                        label="Slug"
-                        type="text"
-                        variant="standard"
-                        fullWidth
-                      />
-                    </Grid> */}
-        {/* <Grid item xs={12} md={12}>
-                      <TextField
-                        fullWidth
-                        id="outlined-name"
-                        label="Description"
-                        type="text"
-                        variant="standard"
-                        multiline
-                        rows={4}
-                      />
-                    </Grid>
-                    <Grid
-                      
-                      spacing={2}
-                      justifyContent="flex-end"
-                      className={styles.addButton}
-                    >
-                      {/* <Button
-                        // onClick={classModal}
-                        variant="outlined"
-                        color="secondary"
-                      >
-                        CANCEL
-                      </Button> */}
-        {/* <Button
-                        variant="outlined"
-                        // onClick={submitHandler}
-                        type="submit"
-                        // variant="contained"
-                        color="success"
-                      >
-                        SUBMIT
-                      </Button>
-                    </Grid>
-                    </div> */}
-        {/* </Grid> */}
-        {/* </form> */}
-        {/* </Grid> */}
-      </Grid>
-      {/* </Card> */}
-      {/* </Grid> */}
-      {/* </Grid> */}
+          <Grid spacing={2} className={styles.category_menu}>
+            <Grid md={3}>
+              <TreeView
+                aria-label="rich object"
+                defaultCollapseIcon={<ExpandMoreIcon />}
+                defaultExpanded={["root-1", "root-2"]}
+                defaultExpandIcon={<ChevronRightIcon />}
+                sx={{
+                  height: 400,
+                  flexGrow: 1,
+                  maxWidth: 400,
+                  overflowY: "auto",
+                }}
+              >
+                {renderTree(catagories)}
+              </TreeView>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
     </div>
   );
 };
