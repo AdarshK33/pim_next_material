@@ -6,7 +6,7 @@ import {
   Card,
   CardContent,
   Typography,
-  FormControl
+  FormControl,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -25,7 +25,7 @@ const Role = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [focusedIndex, setFocusedIndex] = useState(null);
-  const [showUserAddForm, setShowUserAddForm] = useState(false)
+  const [showUserAddForm, setShowUserAddForm] = useState(false);
 
   useEffect(() => {
     dispatch(getRolePrivilegeApi());
@@ -64,7 +64,6 @@ const Role = () => {
   const { loginReducer } = useSelector((state) => {
     return state;
   });
-
 
   const tableData = [];
 
@@ -112,7 +111,11 @@ const Role = () => {
               <CustomModal
                 openModal={showUserAddForm}
                 closeModal={() => setShowUserAddForm(!showUserAddForm)}
-                body={<AddForm classModal={() => setShowUserAddForm(!showUserAddForm)} />}
+                body={
+                  <AddForm
+                    classModal={() => setShowUserAddForm(!showUserAddForm)}
+                  />
+                }
               />
             </Grid>
             <CardContent>
@@ -185,20 +188,20 @@ const Role = () => {
                               {/* <InputLabel id="demo-simple-select-readonly-label">
                                 Privileges
                               </InputLabel> */}
-                              {Object.keys(loginReducer.rolePrivilege[row]).map(
-                                (item, index) => (
-                                  <AllPrivileges
-                                    key={index}
-                                    focused={index === focusedIndex}
-                                    onClick={() => handlePrivileges(index)}
-                                    onFocus={() => handlePrivileges(index)}
-                                    onBlur={() => setFocusedIndex(null)}
-                                    tabIndex="0"
-                                  >
-                                    {item}
-                                  </AllPrivileges>
-                                )
-                              )}
+                              {Object.values(
+                                loginReducer.rolePrivilege[row]
+                              ).map((item, index) => (
+                                <AllPrivileges
+                                  key={index}
+                                  focused={index === focusedIndex}
+                                  onClick={() => handlePrivileges(index)}
+                                  onFocus={() => handlePrivileges(index)}
+                                  onBlur={() => setFocusedIndex(null)}
+                                  tabIndex="0"
+                                >
+                                  {item}
+                                </AllPrivileges>
+                              ))}
                             </FormControl>
                           </TableCell>
                         </TableRow>
