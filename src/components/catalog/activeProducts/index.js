@@ -113,7 +113,7 @@ const ActiveProducts = () => {
                   }
                   disabled={selectedItemIds.length === 0}
                 >
-                  publish
+                  Publish
                 </Button>
               )}
             </Grid>
