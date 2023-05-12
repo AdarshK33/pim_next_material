@@ -35,7 +35,8 @@ import { CSVLink } from "react-csv";
 const ActiveProducts = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
-  const [showUserAddForm, setShowUserAddForm] = useState(false);
+  const [selectedItemIds, setSelectedItemIds] = useState([]);
+  console.log("selectedItemIds", selectedItemIds);
 
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
@@ -44,7 +45,6 @@ const ActiveProducts = () => {
     return catalogServiceNewReducer;
   });
   console.log("publishProduct", publishProduct);
-  const data = `["DTE00015", "ABP0002"]`;
   const recordPerPage = 5;
   const totalRecords = catalogServiceNewReducer?.getAllProducts?.totalElements;
   const pageRange = 5;
@@ -85,16 +85,37 @@ const ActiveProducts = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Active Products
               </Typography>
-              <CSVLink data={publishProduct} filename={"catalog.csv"}>
+              {selectedItemIds.length > 0 ? (
+                <CSVLink
+                  data={publishProduct}
+                  filename={"catalog.csv"}
+                  disabled={selectedItemIds.length === 0}
+                >
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    onClick={() =>
+                      dispatch(getCatalogPublishApi(selectedItemIds))
+                    }
+                    disabled={selectedItemIds.length === 0}
+                  >
+                    Publish
+                  </Button>
+                </CSVLink>
+              ) : (
                 <Button
                   variant="outlined"
                   color="success"
                   component="label"
-                  onClick={() => dispatch(getCatalogPublishApi())}
+                  onClick={() =>
+                    dispatch(getCatalogPublishApi(selectedItemIds))
+                  }
+                  disabled={selectedItemIds.length === 0}
                 >
-                  Publish
+                  publish
                 </Button>
-              </CSVLink>
+              )}
             </Grid>
             <Box style={{ paddingTop: "20px" }}>
               <FormControl style={{ width: "30%" }}>
@@ -109,8 +130,8 @@ const ActiveProducts = () => {
                   onChange={handleChange}
                 >
                   <MenuItem value={10}>Shopify</MenuItem>
-                  <MenuItem value={20}>Amazon</MenuItem>
-                  <MenuItem value={30}>Myntra</MenuItem>
+                  {/* <MenuItem value={20}>Amazon</MenuItem>
+                  <MenuItem value={30}>Myntra</MenuItem> */}
                 </Select>
               </FormControl>
             </Box>
@@ -119,10 +140,7 @@ const ActiveProducts = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>
-                        {" "}
-                        <Checkbox />
-                      </TableCell>
+                      <TableCell> </TableCell>
                       <TableCell align="right">ITEM ID</TableCell>
                       <TableCell align="right">NAME</TableCell>
                       <TableCell align="right">CATEGORY</TableCell>
@@ -142,7 +160,27 @@ const ActiveProducts = () => {
                           }}
                         >
                           <TableCell>
-                            <Checkbox />
+                            <Checkbox
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedItemIds([
+                                    ...selectedItemIds,
+                                    row.itemId,
+                                  ]);
+                                } else {
+                                  setSelectedItemIds(
+                                    selectedItemIds.filter(
+                                      (id) => id !== row.itemId
+                                    )
+                                  );
+                                }
+                              }}
+                              checked={
+                                selectedItemIds.includes(row.itemId)
+                                  ? true
+                                  : false
+                              }
+                            />
                           </TableCell>
                           <TableCell align="right">{row.itemId}</TableCell>
                           <TableCell align="right">{row.itemName}</TableCell>

@@ -467,8 +467,8 @@ export const statusChangedApis = (info) => {
   };
 };
 
-export const getCatalogPublishApi = () => {
-  const data = ["DTE00015", "ABP0002", "Test0002"];
+export const getCatalogPublishApi = (selectedItemIds) => {
+  const data = selectedItemIds;
   return (dispatch) => {
     dispatch(publishCatalogLoading("PUBLISH....", "PUBLISH"));
     client
