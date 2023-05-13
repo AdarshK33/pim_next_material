@@ -111,7 +111,7 @@ const Channels = () => {
                         TOTAL PRODUCT INACTIVE
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ACTION</TableCell>
+                      <TableCell align="right">ATTRIBUTE</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -141,7 +141,7 @@ const Channels = () => {
                             <div>
                               <Image
                                 className="px-2 "
-                                src={add}
+                                src={edit}
                                 alt="add"
                                 width={25}
                                 height={25}
@@ -150,7 +150,7 @@ const Channels = () => {
                                 }
                               />
                             </div>
-                            <div>
+                            {/* <div>
                               <Image
                                 className="px-2 "
                                 src={edit}
@@ -159,7 +159,7 @@ const Channels = () => {
                                 height={25}
                                 // onClick={()=>handleEdit(item.brandId)}
                               />
-                            </div>
+                            </div> */}
                           </div>
                         </TableRow>
                       ))
