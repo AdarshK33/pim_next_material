@@ -188,8 +188,10 @@ ul .pagination {
   border: 1px solid rgb(198, 197, 202);
 }
 
-.MuiBackdrop-root
+.MuiDialog-root
+  .MuiModal-root
+  .css-zw3mfo-MuiModal-root-MuiDialog-root.MuiBackdrop-root
   .MuiModal-backdrop
   .css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
-  background-color: rgba(0, 0, 0, 0.12) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
