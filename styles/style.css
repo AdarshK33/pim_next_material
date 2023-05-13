@@ -193,5 +193,9 @@ ul .pagination {
   .css-zw3mfo-MuiModal-root-MuiDialog-root.MuiBackdrop-root
   .MuiModal-backdrop
   .css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
-  background-color: rgba(0, 0, 0, 0.1) !important;
+  background-color: rgba(0, 0, 0, 0.01) !important;
+}
+
+.MuiBackdrop-root {
+  background-color: rgba(0, 0, 0, 0.01) !important;
 }
