@@ -111,7 +111,7 @@ const Channels = () => {
                         TOTAL PRODUCT INACTIVE
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ATTRIBUTE</TableCell>
+                      <TableCell align="right">ATTRIBUTES</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -136,30 +136,18 @@ const Channels = () => {
                           </TableCell>
 
                           <div
-                            className={`action_center ${styles.channel_module}`}
+                            className={`action_center ${styles.icon_center}`}
                           >
-                            <div>
-                              <Image
-                                className="px-2 "
-                                src={edit}
-                                alt="add"
-                                width={25}
-                                height={25}
-                                onClick={() =>
-                                  handleAdd(row.channelId, row.channelName)
-                                }
-                              />
-                            </div>
-                            {/* <div>
-                              <Image
-                                className="px-2 "
-                                src={edit}
-                                alt="edit"
-                                width={25}
-                                height={25}
-                                // onClick={()=>handleEdit(item.brandId)}
-                              />
-                            </div> */}
+                            <Image
+                              className="px-2"
+                              src={edit}
+                              alt="add"
+                              width={30}
+                              height={25}
+                              onClick={() =>
+                                handleAdd(row.channelId, row.channelName)
+                              }
+                            />
                           </div>
                         </TableRow>
                       ))
