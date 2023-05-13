@@ -548,6 +548,8 @@ const ProductDetails = (props) => {
   const [showCommentAddForm, setShowCommentAddForm] = useState(false);
   const [commentAddForm, setCommentAddForm] = useState(false);
   const [attributeSetIdForm, setAttributeSetId] = useState(false);
+  const [commentAPICalled, setCommentAPICalled] = useState(false);
+
   const [objectId, setObjectId] = useState("");
 
   const [stateInput, setStateInput] = useState();
@@ -709,6 +711,7 @@ const ProductDetails = (props) => {
                     <AddFormRevalidate
                       classModal={() => setShowRevalidateAddForm(false)}
                       attributeSetIdData={attributeSetIdForm}
+                      revalidateCalled={() => setCommentAPICalled(true)}
                     />
                   }
                 />
@@ -841,17 +844,19 @@ const ProductDetails = (props) => {
                   color="success"
                   component="label"
                   onClick={activateHandler}
+                  disabled={commentAPICalled}
                 >
                   Activate
                   {/* <input hidden accept="image/*" multiple type="file" /> */}
                 </Button>
-              ) : role && router.query.tab == "Revalidate" && checkUpdate ? (
+              ) : role && router.query.tab == "Revalidate" ? (
                 <>
                   <Button
                     variant="outlined"
                     color="success"
                     component="label"
                     onClick={updateHandler}
+                    disabled={!checkUpdate}
                   >
                     Update
                     {/* <input hidden accept="image/*" multiple type="file" /> */}
