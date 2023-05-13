@@ -135,7 +135,9 @@ const Channels = () => {
                             {row.status === true ? "Active" : "In-Active"}
                           </TableCell>
 
-                          <div className="action_center">
+                          <div
+                            className={`action_center ${styles.icon_center}`}
+                          >
                             <Image
                               className="px-2"
                               src={edit}
