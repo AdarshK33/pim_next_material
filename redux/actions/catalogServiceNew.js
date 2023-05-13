@@ -395,12 +395,12 @@ export const addCategoryApi = (data) => {
       .post("/api/catalogServiceNew/addcategory", data)
 
       .then((response) => {
-        console.log(" csdxfsdf", response);
+        // console.log(" csdxfsdf", response);
         dispatch(addCategorySuccess(response.data));
         toast.info("Category Added Successfully !!!");
       })
       .catch((err) => {
-        toast.error("Category Not Added!!!");
+        toast.error("Category  failed!!!");
 
         dispatch(addCategoryFailure(err));
       });
