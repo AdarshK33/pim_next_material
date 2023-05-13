@@ -14,7 +14,7 @@ const ProfileDD = () => {
   const { loginReducer } = useSelector((state) => {
     return state;
   });
-  console.log("loginReducer", loginReducer);
+  // console.log("loginReducer", loginReducer);
 
   const handleClick4 = (event) => {
     setAnchorEl4(event.currentTarget);
