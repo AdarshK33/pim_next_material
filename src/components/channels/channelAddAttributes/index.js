@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styles from "./channels.module.css";
-import Image from "next/image";
-import edit from "../../../assets/icons/edit.svg";
-import add from "../../../assets/icons/plus.svg";
+import styles from "./channelAddAttributes.module.css";
+
+import { useRouter } from "next/router";
 
 import {
   Grid,
@@ -21,52 +20,76 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { useDispatch, useSelector } from "react-redux";
+import Checkbox from "@mui/material/Checkbox";
+import CustomModal from "../../../common/customModal";
+import AddForm from "./AddForm";
+
 import {
   getChannelListApi,
   channelAttributeApiList,
-} from "../../../redux/actions/channel";
-import CustomModal from "../../common/customModal";
-import AddForm from "./AddForm";
-import { useRouter } from "next/router";
+} from "../../../../redux/actions/channel";
+import { useDispatch, useSelector } from "react-redux";
 
-const Channels = () => {
-  const dispatch = useDispatch();
+const ChannelAddAttributes = () => {
   const router = useRouter();
-  const { channelReducer } = useSelector((state) => {
-    return state;
+  const dispatch = useDispatch();
+
+  const { channelAttribute } = useSelector((state) => {
+    return state.channelReducer;
   });
-  const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
-  const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
+  const channelName = router.query.channelName;
+  const channelId = router.query.channelId;
+
+  // console.log(channelId, "channelId");
+
   const [currentPage, setCurrentPage] = useState(1);
+  const [channelAttr, setChannelAttr] = useState();
+  const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
+  const [attributeAddFormId, setAttributeAddFormId] = useState();
 
   useEffect(() => {
-    dispatch(getChannelListApi(currentPage - 1, 5));
-  }, []);
+    if (!channelAttribute?.content?.channelAttributes) {
+      return;
+    }
 
-  // console.log("catalogServiceNewReducer", channelReducer?.channelGet);
+    const obj = channelAttribute?.content?.channelAttributes;
+    const channelAttributes = new Object();
+    Object.entries(obj).map(([key, value]) => {
+      return Object.entries(value).map(([key, val]) => {
+        console.log("hello 1", key, val);
+        if (key === "attributes") {
+          channelAttributes = val;
+        }
+      });
+    });
+    setChannelAttr(channelAttributes);
+    // console.log(channelAttributes, "channelAttributes");
+  }, [channelAttribute]);
 
-  // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  const recordPerPage = 5;
-  const totalRecords = channelReducer?.channelGet?.totalElements;
-  const pageRange = 5;
+  console.log(channelAttr, "channelAttr");
+
+  //   const tableData = [];
+
+  //   for (let i = 1; i <= 5; i++) {
+  //     tableData.push({
+  //       attributes: "AirEnabled" + i,
+  //     });
+  //   }
+
+  const recordPerPage = 100;
+  //   const totalRecords = 100;
+  //   const pageRange = 5;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = channelReducer?.channelGet?.content;
+  const currentRecords = channelAttr;
 
-  const handlePaginationChange = (event, value) => {
-    setCurrentPage(value);
-    dispatch(getChannelListApi(value - 1, 5));
-  };
-  // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  //   const handlePaginationChange = (event, value) => {
+  //     setCurrentPage(value);
+  //     dispatch(channelAttributeApiList(router.query.channelName, value - 1, 5));
+  //   };
 
-  const handleAdd = (channelId, channelName) => {
-    console.log("channelId", channelId);
-    router.push({
-      pathname: "/channelAddAttribute",
-      query: { channelId: channelId, channelName: channelName },
-    });
-    dispatch(channelAttributeApiList(channelName, 0, 5));
+  const onChangeOfCheckBox = (e, pim) => {
+    console.log(pim, e);
   };
   return (
     <>
@@ -76,7 +99,7 @@ const Channels = () => {
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
-                Channels
+                Channel Attributes
               </Typography>
               <Button
                 variant="outlined"
@@ -89,11 +112,15 @@ const Channels = () => {
               </Button>
               <CustomModal
                 openModal={showAttributeAddForm}
-                closeModal={() =>
-                  setShowAttributeAddForm(!showAttributeAddForm)
-                }
+                closeModal={() => {
+                  setShowAttributeAddForm(!showAttributeAddForm);
+                  // setAttributeAddFormId(router.query.channelId);
+                }}
                 body={
-                  <AddForm classModal={() => setShowAttributeAddForm(false)} />
+                  <AddForm
+                    classModal={() => setShowAttributeAddForm(false)}
+                    dataID={router.query.channelId}
+                  />
                 }
               />
             </Grid>
@@ -103,15 +130,15 @@ const Channels = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>#</TableCell>
-                      <TableCell align="right">NAME</TableCell>
-                      <TableCell align="right">DESCRIPTION</TableCell>
+                      <TableCell align="right">ATTRIBUTE ID</TableCell>
+                      {/* <TableCell align="right">DESCRIPTION</TableCell> */}
                       {/* <TableCell align="right">LAST UPLOADED</TableCell> */}
                       {/* <TableCell align="right">TOTAL PRODUCT ACTIVE</TableCell> */}
                       {/* <TableCell align="right">
                         TOTAL PRODUCT INACTIVE
                       </TableCell> */}
-                      <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ACTION</TableCell>
+                      {/* <TableCell align="right">STATUS</TableCell> */}
+                      <TableCell align="right">ATTRIBUTE NAME </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -129,38 +156,10 @@ const Channels = () => {
                             {i + 1 + indexOfFirstRecord}
                             {/* {row.channelId} */}
                           </TableCell>
-                          <TableCell align="right">{row.channelName}</TableCell>
-                          <TableCell align="right">{row.description}</TableCell>
-                          <TableCell align="right">
-                            {row.status === true ? "Active" : "In-Active"}
-                          </TableCell>
+                          <TableCell align="right">{row.attributeId}</TableCell>
+                          <TableCell align="right">{row.displayName}</TableCell>
 
-                          <div
-                            className={`action_center ${styles.channel_module}`}
-                          >
-                            <div>
-                              <Image
-                                className="px-2 "
-                                src={add}
-                                alt="add"
-                                width={35}
-                                height={30}
-                                onClick={() =>
-                                  handleAdd(row.channelId, row.channelName)
-                                }
-                              />
-                            </div>
-                            <div>
-                              <Image
-                                className="px-2 "
-                                src={edit}
-                                alt="edit"
-                                width={35}
-                                height={30}
-                                // onClick={()=>handleEdit(item.brandId)}
-                              />
-                            </div>
-                          </div>
+                          <TableCell align="right"></TableCell>
                         </TableRow>
                       ))
                     ) : (
@@ -171,7 +170,7 @@ const Channels = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Stack spacing={2}>
+              {/* <Stack spacing={2}>
                 <div className={styles.category_pagination}>
                   <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
@@ -180,8 +179,8 @@ const Channels = () => {
                     showLastButton
                     onChange={handlePaginationChange}
                   />
-                </div>
-              </Stack>
+                </div> */}
+              {/* </Stack> */}
             </CardContent>
           </Card>
         </Grid>
@@ -190,4 +189,4 @@ const Channels = () => {
   );
 };
 
-export default Channels;
+export default ChannelAddAttributes;

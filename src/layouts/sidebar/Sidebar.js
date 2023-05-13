@@ -86,7 +86,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
         <div className={styles.roots}>
           <List>
             {filteredMenuItems.map((menuitem, index) => {
-              console.log("menuIiem", menuitem);
+              // console.log("menuIiem", menuitem);
               return (
                 <div key={index}>
                   <List component="li" disablePadding>

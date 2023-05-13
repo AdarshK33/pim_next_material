@@ -22,7 +22,11 @@ import {
 } from "../../../../redux/actions/catalogServiceNew";
 import { useRouter } from "next/router";
 
-const AddFormRevalidate = ({ classModal, attributeSetIdData }) => {
+const AddFormRevalidate = ({
+  classModal,
+  attributeSetIdData,
+  revalidateCalled,
+}) => {
   const dispatch = useDispatch();
 
   const router = useRouter();
@@ -78,6 +82,8 @@ const AddFormRevalidate = ({ classModal, attributeSetIdData }) => {
         status: "REVALIDATE",
       };
       dispatch(revalidateApis(infoData));
+      classModal();
+      revalidateCalled();
     }
   };
   return (
