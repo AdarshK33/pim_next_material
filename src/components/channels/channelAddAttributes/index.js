@@ -24,6 +24,9 @@ import Checkbox from "@mui/material/Checkbox";
 import CustomModal from "../../../common/customModal";
 import AddForm from "./AddForm";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   getChannelListApi,
   channelAttributeApiList,
@@ -99,7 +102,7 @@ const ChannelAddAttributes = () => {
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
-                Channel Attributes
+                {router.query.channelName} Attributes
               </Typography>
               <Button
                 variant="outlined"
@@ -185,6 +188,7 @@ const ChannelAddAttributes = () => {
           </Card>
         </Grid>
       </Grid>
+      <ToastContainer />
     </>
   );
 };

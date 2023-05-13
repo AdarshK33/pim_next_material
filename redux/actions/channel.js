@@ -20,6 +20,7 @@ import {
   CREATE_CHANNEL_ATTRIBUTE_DATA_FAILURE,
 } from "../types/types";
 import { client } from "../../utils/axios";
+import { toast } from "react-toastify";
 
 export const getChannelAttributes = (page, data) => {
   return {
@@ -299,10 +300,12 @@ export const createChannelAttributesApi = (info) => {
       .then((response) => {
         // result = true;
         if (response) {
+          toast.info("Attribute Created Successfully!!!");
           dispatch(createChannelAttributesDataSuccess(response.data.result));
         } else throw new Error("");
       })
       .catch((err) => {
+        toast.error("Attribute  Failed!!!");
         dispatch(createChannelAttributesDataFailure(err));
       });
   };
