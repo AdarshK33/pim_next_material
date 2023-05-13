@@ -143,8 +143,8 @@ const Channels = () => {
                                 className="px-2 "
                                 src={add}
                                 alt="add"
-                                width={35}
-                                height={30}
+                                width={25}
+                                height={25}
                                 onClick={() =>
                                   handleAdd(row.channelId, row.channelName)
                                 }
@@ -155,8 +155,8 @@ const Channels = () => {
                                 className="px-2 "
                                 src={edit}
                                 alt="edit"
-                                width={35}
-                                height={30}
+                                width={25}
+                                height={25}
                                 // onClick={()=>handleEdit(item.brandId)}
                               />
                             </div>
