@@ -111,7 +111,7 @@ const Channels = () => {
                         TOTAL PRODUCT INACTIVE
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ATTRIBUTE</TableCell>
+                      <TableCell align="right">ATTRIBUTES</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -135,31 +135,17 @@ const Channels = () => {
                             {row.status === true ? "Active" : "In-Active"}
                           </TableCell>
 
-                          <div
-                            className={`action_center ${styles.channel_module}`}
-                          >
-                            <div>
-                              <Image
-                                className="px-2 "
-                                src={edit}
-                                alt="add"
-                                width={25}
-                                height={25}
-                                onClick={() =>
-                                  handleAdd(row.channelId, row.channelName)
-                                }
-                              />
-                            </div>
-                            {/* <div>
-                              <Image
-                                className="px-2 "
-                                src={edit}
-                                alt="edit"
-                                width={25}
-                                height={25}
-                                // onClick={()=>handleEdit(item.brandId)}
-                              />
-                            </div> */}
+                          <div className="action_center">
+                            <Image
+                              className="px-2"
+                              src={edit}
+                              alt="add"
+                              width={30}
+                              height={25}
+                              onClick={() =>
+                                handleAdd(row.channelId, row.channelName)
+                              }
+                            />
                           </div>
                         </TableRow>
                       ))
