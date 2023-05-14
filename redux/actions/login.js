@@ -17,6 +17,9 @@ import {
   GET_ROLES_PRIVILEGE_LOADING,
   GET_ROLES_PRIVILEGE_SUCCESS,
   GET_ROLES_PRIVILEGE_FAILURE,
+  MY_PROFILE_DATA_LOADING,
+  MY_PROFILE_DATA_SUCCESS,
+  MY_PROFILE_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -128,6 +131,24 @@ export const getRolesPrivilegeSuccess = (data) => {
 export const getRolesPrivilegeFailure = (error) => {
   return {
     type: GET_ROLES_PRIVILEGE_FAILURE,
+    payload: error,
+  };
+};
+
+export const getUserDetailDataLoading = () => {
+  return {
+    type: MY_PROFILE_DATA_LOADING,
+  };
+};
+export const getUserDetailDataSuccess = (data) => {
+  return {
+    type: MY_PROFILE_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getUserDetailDataFailure = (error) => {
+  return {
+    type: MY_PROFILE_DATA_FAILURE,
     payload: error,
   };
 };
@@ -278,8 +299,52 @@ export const getRolePrivilegeApi = () => {
         }
       })
       .catch((err) => {
-        console.log("getRolesPrivilegeFailure", err);
+        console.log(
+          "error caught in -> actions/login/getRolePrivilegeApi",
+          err
+        );
+
         dispatch(getRolesPrivilegeFailure(err));
+      });
+  };
+};
+
+export const myProfileAPi = () => {
+  return (dispatch) => {
+    dispatch(getUserDetailDataLoading("MY PROFILE....", "PROFILE"));
+    client
+      .get("/api/userApi")
+      .then((response) => {
+        console.log(
+          "<<<<<<<<<<<<<<<<<<My Profile>>>>>>>>>>>>>>>>>>>>>>>",
+          response
+        );
+        dispatch(
+          getUserDetailDataSuccess(
+            response?.data?.statusCode,
+            "Login Post Successfully",
+            "LOGIN POST"
+          )
+        );
+        dispatch(
+          userRole(
+            response?.data?.role,
+            "User role saved Successfully",
+            "User DETAILS"
+          )
+        );
+
+        dispatch(
+          userEmail(
+            response?.data?.email,
+            "User email saved Successfully",
+            "User DETAILS"
+          )
+        );
+      })
+      .catch((err) => {
+        console.log("error caught in -> actions/login/myProfileAPi", err);
+        dispatch(getUserDetailDataFailure(err));
       });
   };
 };

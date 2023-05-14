@@ -6,7 +6,7 @@ export default withIronSessionApiRoute(userRoute, sessionOption);
 
 async function userRoute(req, res) {
   if (req.session.user) {
-    console.log('inside if', req.session.user)
+    // console.log("inside if", req.session.user);
     // console.log("hello api user",req.session.user)
     // in a real world application you might read the user id from the session and then do a database request
     // to get more information on the user if needed
@@ -16,8 +16,9 @@ async function userRoute(req, res) {
       // ...req.session.user.role,
       isLoggedIn: true,
     });
+    z;
   } else {
-    console.log('inside else', req.session.user)
+    // console.log("inside else", req.session.user);
     res.json({
       isLoggedIn: false,
     });
