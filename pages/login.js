@@ -26,6 +26,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { sessionOption } from "../utils/session";
+import logo_loginpage from "../assets/icons/logo_2_2022.svg";
+import Image from "next/image";
 
 const Login = (user) => {
   const dispatch = useDispatch();
@@ -93,6 +95,17 @@ const Login = (user) => {
 
   return (
     <>
+      <Box className={styles.mainBGContainer}>
+        <Box className={styles.logo_Image}>
+          <Image
+            // className="px-2 "
+            src={logo_loginpage}
+            alt="edit"
+            width={150}
+            height={150}
+          />
+        </Box>
+      </Box>
       <Box className={styles.mainContainer}>
         <Grid className={styles.container}>
           <Grid item xs={12} lg={12}>

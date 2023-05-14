@@ -1,9 +1,20 @@
+.mainBGContainer {
+  display: flex;
+  min-height: 100vh !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: url(../assets//images/loginBackground.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 .mainContainer {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
-  /* background-image: url(../assets//images/backgrounds/Pim_wallpaper.jpg);
-  background-size: 100%; */
 }
 
 .container {
@@ -22,4 +33,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.mainBGContainer .logo_Image {
+  position: absolute;
+  top: 0px;
+  left: 10px;
 }
