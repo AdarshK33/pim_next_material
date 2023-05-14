@@ -26,6 +26,7 @@ import AddForm from "./AddForm";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { myProfileAPi } from "../../../../redux/actions/login";
 
 import {
   getChannelListApi,
@@ -49,7 +50,9 @@ const ChannelAddAttributes = () => {
   const [channelAttr, setChannelAttr] = useState();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [attributeAddFormId, setAttributeAddFormId] = useState();
-
+  // useEffect(() => {
+  // dispatch(myProfileAPi());
+  // }, []);
   useEffect(() => {
     if (!channelAttribute?.content?.channelAttributes) {
       return;
@@ -59,7 +62,7 @@ const ChannelAddAttributes = () => {
     const channelAttributes = new Object();
     Object.entries(obj).map(([key, value]) => {
       return Object.entries(value).map(([key, val]) => {
-        console.log("hello 1", key, val);
+        // console.log("hello 1", key, val);
         if (key === "attributes") {
           channelAttributes = val;
         }

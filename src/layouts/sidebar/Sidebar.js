@@ -17,10 +17,12 @@ import {
   Button,
   Typography,
   ListItem,
-  Collapse,
-  ListItemIcon,
   ListItemText,
   Divider,
+  Collapse,
+  ListItemIcon,
+  // ExpandLess,
+  // ExpandMore,
 } from "@mui/material";
 import FeatherIcon from "feather-icons-react";
 import LogoIcon from "../logo/LogoIcon";
@@ -32,11 +34,15 @@ import Image from "next/image";
 import styles from "./sidebar.module.css";
 
 import ProfileDD from "../header/ProfileDD";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const [open, setOpen] = React.useState(true);
   const [submenuOpen, setSubmenuOpen] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("");
+  const [selectedSubMenu, setSelectedSubMenu] = useState(null);
 
   const [openSecondLevel, setOpenSecondLevel] = React.useState(true);
   const handleClick = () => {
@@ -48,12 +54,22 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   };
 
   const handleMenuClick = (title) => {
-    console.log(title, "hello title");
+    console.log(title, "hello menu title");
+
     if (title === selectedMenu) {
       setSubmenuOpen(!submenuOpen);
     } else {
       setSelectedMenu(title);
       setSubmenuOpen(true);
+    }
+  };
+  const handleSubMenuClick = (submenuTitle) => {
+    console.log(submenuTitle, "hello submenuTitle title");
+
+    if (selectedSubMenu === submenuTitle) {
+      setSelectedSubMenu(null);
+    } else {
+      setSelectedSubMenu(submenuTitle);
     }
   };
 
@@ -99,6 +115,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                         selected={location === menuitem.href}
                         sx={{
                           mb: 1,
+                          pl: 0,
                           ...(location === menuitem.href && {
                             color: "#419794",
                             // backgroundColor: (theme) =>
@@ -121,7 +138,19 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                           primary={menuitem.title}
                           className={styles.text_menu}
                         />
-                        {menuitem.list && submenuOpen ? "" : ""}
+                        {submenuOpen &&
+                        menuitem.title === selectedMenu &&
+                        menuitem.list ? (
+                          <>
+                            <KeyboardArrowUpIcon />
+                          </>
+                        ) : menuitem.list ? (
+                          <>
+                            <KeyboardArrowDownIcon />
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </ListItem>
                     </NextLink>
                   </List>
@@ -147,7 +176,14 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                                     //   `${theme.palette.primary.main}!important`,
                                   }),
                                 }}
+                                onClick={() =>
+                                  handleSubMenuClick(submenu.title)
+                                }
                               >
+                                <ListItemIcon>
+                                  <ChevronRightIcon />
+                                  {/* Change the icon based on the state */}
+                                </ListItemIcon>
                                 <ListItemText
                                   primary={submenu.title}
                                   className={styles.text_sub_menu}

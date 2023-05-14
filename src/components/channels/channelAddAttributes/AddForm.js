@@ -30,7 +30,7 @@ function AddForm({ classModal, dataID }) {
     return state;
   });
 
-  // console.log("dataID", dataID);
+  // console.log("loginReducer", loginReducer);
 
   const dispatch = useDispatch();
 

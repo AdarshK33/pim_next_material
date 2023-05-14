@@ -19,6 +19,9 @@ import {
   GET_ROLES_PRIVILEGE_LOADING,
   GET_ROLES_PRIVILEGE_SUCCESS,
   GET_ROLES_PRIVILEGE_FAILURE,
+  MY_PROFILE_DATA_LOADING,
+  MY_PROFILE_DATA_SUCCESS,
+  MY_PROFILE_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -33,6 +36,7 @@ const initialState = {
   roleGet: {},
   newUser: {},
   rolePrivilege: {},
+  myProfile: {},
   // accessToken:{},
   // refreshToken:{}
 };
@@ -170,6 +174,25 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         rolePrivilege: [],
+        error: action,
+      };
+    case MY_PROFILE_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case MY_PROFILE_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        myProfile: action.payload,
+        error: {},
+      };
+    case MY_PROFILE_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        myProfile: [],
         error: action,
       };
     default:
