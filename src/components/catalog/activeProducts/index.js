@@ -31,8 +31,12 @@ import {
 } from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
 import { CSVLink } from "react-csv";
+import { productDetailsApi } from "../../../../redux/actions/catalogServiceNew";
+import { useRouter } from "next/router";
 
 const ActiveProducts = () => {
+  const router = useRouter();
+
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItemIds, setSelectedItemIds] = useState([]);
@@ -76,6 +80,14 @@ const ActiveProducts = () => {
     setAge(event.target.value);
   };
 
+  function handleEdit(PimCodeId) {
+    router.push({
+      pathname: "/productDetails",
+      query: { PimCodeId: PimCodeId, ActiveProduct: "Active%Products" },
+    });
+
+    dispatch(productDetailsApi(PimCodeId));
+  }
   return (
     <>
       <Grid container spacing={0}>
@@ -195,8 +207,8 @@ const ActiveProducts = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={()=>handleEdit(item.brandId)}
-                              onClick={() => setShowUserUpdateForm(true)}
+                              onClick={() => handleEdit(row.itemId)}
+                              // onClick={() => setShowUserUpdateForm(true)}
                             />
                           </div>
                         </TableRow>
