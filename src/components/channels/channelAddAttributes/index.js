@@ -72,7 +72,7 @@ const ChannelAddAttributes = () => {
     // console.log(channelAttributes, "channelAttributes");
   }, [channelAttribute]);
 
-  console.log(channelAttr, "channelAttr");
+  // console.log(channelAttr, "channelAttr");
 
   //   const tableData = [];
 

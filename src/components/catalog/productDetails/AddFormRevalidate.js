@@ -74,7 +74,7 @@ const AddFormRevalidate = ({
     const value = checkValidations();
 
     if (value === true) {
-      console.log("onSubmit", addComment);
+      // console.log("onSubmit", addComment);
       let infoData = {
         PimCodeId: router.query.PimCodeId,
         attributeSetId: attributeSetIdData,

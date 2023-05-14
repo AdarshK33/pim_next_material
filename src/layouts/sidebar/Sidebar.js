@@ -54,7 +54,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   };
 
   const handleMenuClick = (title) => {
-    console.log(title, "hello menu title");
+    // console.log(title, "hello menu title");
 
     if (title === selectedMenu) {
       setSubmenuOpen(!submenuOpen);
@@ -64,7 +64,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
     }
   };
   const handleSubMenuClick = (submenuTitle) => {
-    console.log(submenuTitle, "hello submenuTitle title");
+    // console.log(submenuTitle, "hello submenuTitle title");
 
     if (selectedSubMenu === submenuTitle) {
       setSelectedSubMenu(null);

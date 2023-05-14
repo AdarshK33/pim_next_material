@@ -463,7 +463,7 @@ export const statusChangedApis = (info) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
-          toast.info("Status changed Successfully !!!");
+          toast.info("Product Activated Successfully !!!");
 
           dispatch(
             statusDataSuccess(

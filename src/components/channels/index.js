@@ -61,7 +61,7 @@ const Channels = () => {
   // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   const handleAdd = (channelId, channelName) => {
-    console.log("channelId", channelId);
+    // console.log("channelId", channelId);
     router.push({
       pathname: "/channelAddAttribute",
       query: { channelId: channelId, channelName: channelName },

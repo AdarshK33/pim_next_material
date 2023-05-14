@@ -23,7 +23,7 @@ const AddFormComment = ({ classModal, valueData }) => {
         email: emailName,
         roleId: role,
       };
-      console.log("hello ADD infoData");
+      // console.log("hello ADD infoData");
 
       // dispatch(createUserApi(infoData));
     }

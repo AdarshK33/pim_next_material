@@ -85,13 +85,13 @@ const ChannelAttributes = () => {
     channelAttribute?.content?.channelAttributes?.Shopify?.attributes;
   const mappedAttributes =
     channelAttribute?.content?.channelAttributes?.Shopify?.mappedAttributes;
-  console.log(
-    "primAttributes,channelAttributes",
-    pimAttributes,
-    channelAttributes,
-    mappedAttributes,
-    updatedPimAttributes
-  );
+  // console.log(
+  //   "primAttributes,channelAttributes",
+  //   pimAttributes,
+  //   channelAttributes,
+  //   mappedAttributes,
+  //   updatedPimAttributes
+  // );
   // const attributes = channelAttributes?.[channel]?.attributes;
 
   // const handlePaginationChange = (event, value) => {
@@ -100,10 +100,10 @@ const ChannelAttributes = () => {
 
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log("event.target.value", event.target.value);
+    // console.log("event.target.value", event.target.value);
     // dispatch(channelAttributeApiList(event.target.value, 0, 5));
   };
-  console.log("age", age);
+  // console.log("age", age);
 
   useEffect(() => {
     dispatch(channelAttributeApiList("Shopify", 0, 10));
@@ -111,12 +111,12 @@ const ChannelAttributes = () => {
 
   useEffect(() => {
     if (pimAttributes?.length) {
-      console.log(
-        "pimAttributes",
-        pimAttributes,
-        mappedAttributes,
-        channelAttributes
-      );
+      // console.log(
+      //   "pimAttributes",
+      //   pimAttributes,
+      //   mappedAttributes,
+      //   channelAttributes
+      // );
       const array = [];
 
       pimAttributes.map((item) => {
@@ -165,7 +165,7 @@ const ChannelAttributes = () => {
   };
 
   const onChangeOfCheckBox = (e, pim) => {
-    console.log("e,pim", e.target.checked, pim);
+    // console.log("e,pim", e.target.checked, pim);
     let array = [...checkedData];
     let pims = [...updatedPimAttributes];
     if (e.target.checked) {
@@ -174,12 +174,12 @@ const ChannelAttributes = () => {
           ? { ...item, isChecked: e.target.checked }
           : item
       );
-      console.log("checkedPim", checkedPim);
+      // console.log("checkedPim", checkedPim);
       setUpdatedPimAttributes(checkedPim);
       const checkedAttributes = checkbox.filter(
         (item) => item.pimAttributesId === pim
       );
-      console.log("checkedAttributes", checkedAttributes);
+      // console.log("checkedAttributes", checkedAttributes);
       const checked = { checkedAttributes, isChecked: e.target.checked };
       array.push({ checkedAttributes, isChecked: e.target.checked });
       setCheckedData([
@@ -192,7 +192,7 @@ const ChannelAttributes = () => {
           ? { ...item, isChecked: e.target.checked }
           : item
       );
-      console.log("checkedPim", checkedPim);
+      // console.log("checkedPim", checkedPim);
       setUpdatedPimAttributes(checkedPim);
       const findIndex = checkbox.findIndex(
         (item) => item.pimAttributesId === pim
@@ -201,10 +201,10 @@ const ChannelAttributes = () => {
         (item) => item.pimAttributesId === pim
       );
       const unChecked = { checkedAttributes, isChecked: e.target.checked };
-      console.log("findIndex", findIndex, unChecked);
+      // console.log("findIndex", findIndex, unChecked);
       if (findIndex !== -1) {
         const updatedCheckboxData = [...array];
-        console.log("updatedCheckboxData", updatedCheckboxData);
+        // console.log("updatedCheckboxData", updatedCheckboxData);
         updatedCheckboxData[findIndex] = unChecked;
         setCheckedData(updatedCheckboxData);
       }
@@ -220,7 +220,7 @@ const ChannelAttributes = () => {
     // setModifiedPimRecord(data);
   };
 
-  console.log("checkedData", checkedData);
+  // console.log("checkedData", checkedData);
 
   const onSelectdropdown = (e, pim) => {
     const array = {
@@ -231,7 +231,7 @@ const ChannelAttributes = () => {
     const findIndex = checkbox.findIndex(
       (item) => item.pimAttributesId === pim
     );
-    console.log("findIndex", findIndex);
+    // console.log("findIndex", findIndex);
     if (findIndex !== -1) {
       const updatedCheckboxData = [...checkbox];
       updatedCheckboxData[findIndex] = array;
@@ -257,7 +257,7 @@ const ChannelAttributes = () => {
     // setModifiedPimRecord(pimAttribute);
   };
 
-  console.log("checkbox", checkbox);
+  // console.log("checkbox", checkbox);
 
   const onSelectedData = (item) => {
     const selectedData = modifiedPimRecord.filter((arr) => {
@@ -305,9 +305,9 @@ const ChannelAttributes = () => {
     const array = [];
     const result = checkedData?.map((item) => {
       if (item.isChecked) {
-        console.log("item", item.checkedAttributes);
+        // console.log("item", item.checkedAttributes);
         array = [...array, item.checkedAttributes.map((item) => item)];
-        console.log("array", array.flat());
+        // console.log("array", array.flat());
         dispatch(channelMappingApi("Shopify", array.flat()));
       }
     });

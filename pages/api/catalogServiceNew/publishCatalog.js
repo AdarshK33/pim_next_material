@@ -11,7 +11,7 @@ function handler(req, res) {
     },
     data: req.body,
   };
-  console.log("resss", at);
+  // console.log("resss", at);
   catalogServiceNew(config)
     .then((response) => {
       if (response.status === 200) {
@@ -24,7 +24,7 @@ function handler(req, res) {
         // tempLink.setAttribute("download", "catalog.csv");
         // tempLink.click();
         res.status(200).json(response.data);
-        console.log("response.data.result", response.data);
+        // console.log("response.data.result", response.data);
         Promise.resolve();
       }
     })

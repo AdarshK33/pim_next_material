@@ -32,7 +32,7 @@ export default function addCategory() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("name", name, "description", description, "slug", slug);
+    // console.log("name", name, "description", description, "slug", slug);
     if (name === "") {
       //add alert from @mui
       toast.error("Please enter name");
@@ -43,7 +43,7 @@ export default function addCategory() {
         slug: slug,
         precedence: 0,
       };
-      console.log("formData", formData);
+      //console.log("formData", formData);
       // setAddCatData(formData);
       dispatch(addCategoryApi(formData));
     }
