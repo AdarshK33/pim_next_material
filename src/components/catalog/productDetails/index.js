@@ -658,7 +658,7 @@ const ProductDetails = (props) => {
 
     setStateInput(inputState);
   }, [catalogServiceNewReducer?.productPimCodeData]);
-  console.log("hello objectId", stateInput);
+  // console.log("hello objectId", stateInput);
   const getInputValue = (keyName) => {
     try {
       return stateInput[keyName];
@@ -668,7 +668,7 @@ const ProductDetails = (props) => {
   };
 
   const AccordionSetUp = (key, value) => {
-    console.log("AccordkeyionSetUp", key, value.comments);
+    //console.log("AccordkeyionSetUp", key, value.comments);
     return (
       <>
         <Accordion>
