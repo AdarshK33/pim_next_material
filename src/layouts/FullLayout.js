@@ -72,7 +72,7 @@ const FullLayout = ({ children }) => {
           <Sidebar
             isSidebarOpen={isSidebarOpen}
             isMobileSidebarOpen={isMobileSidebarOpen}
-            onSidebarClose={() => setSidebarOpen(isSidebarOpen)}
+            onSidebarClose={() => setSidebarOpen(!isSidebarOpen)}
           />
         </>
       )}
