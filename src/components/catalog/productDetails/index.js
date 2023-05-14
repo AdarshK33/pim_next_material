@@ -836,7 +836,7 @@ const ProductDetails = (props) => {
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
-                Product Details
+                Product Details - {router.query.PimCodeId}
               </Typography>
               {role === "ADMIN" && router.query.tab == "Ready-for-review" ? (
                 <Button

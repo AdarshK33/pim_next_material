@@ -16,7 +16,6 @@ async function userRoute(req, res) {
       // ...req.session.user.role,
       isLoggedIn: true,
     });
-    z;
   } else {
     // console.log("inside else", req.session.user);
     res.json({
