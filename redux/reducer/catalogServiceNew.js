@@ -23,6 +23,9 @@ import {
   PRODUCT_UPDATE_DATA_LOADING,
   PRODUCT_UPDATE_DATA_SUCCESS,
   PRODUCT_UPDATE_DATA_FAILURE,
+  ATTRIBUTE_SET_DETAILS_DATA_LOADING,
+  ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
+  ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -34,6 +37,7 @@ const initialState = {
   publishProduct: [],
   createAttributeSet: {},
   productUpdate: {},
+  attributeSetData: {},
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
@@ -193,6 +197,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         productUpdate: [],
+        error: action,
+      };
+    case ATTRIBUTE_SET_DETAILS_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ATTRIBUTE_SET_DETAILS_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        attributeSetData: action.payload,
+        error: {},
+      };
+    case ATTRIBUTE_SET_DETAILS_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        attributeSetData: [],
         error: action,
       };
 
