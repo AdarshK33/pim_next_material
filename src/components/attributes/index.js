@@ -112,7 +112,7 @@ const Attributes = () => {
                       <TableCell>ROLE</TableCell>
                       <TableCell align="right">DESCRIPTION</TableCell>
                       <TableCell align="right">PRECEDENCE</TableCell>
-                      <TableCell align="right">STATUS</TableCell>
+                      {/* <TableCell align="right">STATUS</TableCell> */}
                       <TableCell align="right">ACTION</TableCell>
                     </TableRow>
                   </TableHead>
@@ -134,9 +134,9 @@ const Attributes = () => {
                           <TableCell align="right">{row.role}</TableCell>
                           <TableCell align="right">{row.description}</TableCell>
                           <TableCell align="right">{row.precedence}</TableCell>
-                          <TableCell align="right">
+                          {/* <TableCell align="right">
                             {row?.active === true ? "Active" : "In-Active"}
-                          </TableCell>
+                          </TableCell> */}
                           <div className="action_center">
                             <Image
                               className="px-2 "
