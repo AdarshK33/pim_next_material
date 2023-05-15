@@ -48,10 +48,8 @@ const Login = (user) => {
   const [itemData, setItemData] = useState();
   // console.log("username", username, password);
   // const { userGet,roleGet } = useSelector(state => {
-
   //   return state.loginReducer;
   // });
-
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
