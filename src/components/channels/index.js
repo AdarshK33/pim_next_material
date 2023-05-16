@@ -19,8 +19,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getChannelListApi,
@@ -29,6 +29,7 @@ import {
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm";
 import { useRouter } from "next/router";
+import Pagination from "react-js-pagination";
 
 const Channels = () => {
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Channels = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = channelReducer?.channelGet?.content;
 
-  const handlePaginationChange = (event, value) => {
+  const handlePaginationChange = (value) => {
     setCurrentPage(value);
     dispatch(getChannelListApi(value - 1, 5));
   };
@@ -159,17 +160,28 @@ const Channels = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Stack spacing={2}>
-                <div className={styles.category_pagination}>
-                  <Pagination
+              {/* <Stack spacing={2}> */}
+              <div className={styles.category_pagination}>
+                {/* <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
                     showFirstButton
                     showLastButton
                     onChange={handlePaginationChange}
-                  />
-                </div>
-              </Stack>
+                  /> */}
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={currentPage}
+                  itemsCountPerPage={recordPerPage}
+                  totalItemsCount={totalRecords}
+                  pageRangeDisplayed={pageRange}
+                  firstPageText="First"
+                  lastPageText="Last"
+                  onChange={handlePaginationChange}
+                />
+              </div>
+              {/* </Stack> */}
             </CardContent>
           </Card>
         </Grid>

@@ -508,17 +508,22 @@ export const statusChangedApis = (info) => {
   };
 };
 
-export const getCatalogPublishApi = (selectedItemIds) => {
-  const data = selectedItemIds;
+export const getCatalogPublishApi = (selectedItemIds, channelId) => {
+  const data = {
+    selectedItemIds,
+    channelId,
+  };
   return (dispatch) => {
     dispatch(publishCatalogLoading("PUBLISH....", "PUBLISH"));
     client
       .post("/api/catalogServiceNew/publishCatalog", data)
       .then((response) => {
+        toast.info("Publish Successfully !!!");
         dispatch(publishCatalogSuccess(response.data, "PUBLISH SUCCESS"));
         console.log("responsefrom", response);
       })
       .catch((err) => {
+        toast.error("Publish Failed !!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/getCatalogPublish",
           err

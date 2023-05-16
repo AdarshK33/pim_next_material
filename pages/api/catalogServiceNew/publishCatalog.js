@@ -2,16 +2,19 @@ import { catalogServiceNew } from "../../../utils/axios";
 import withSession from "../../../utils/session";
 
 function handler(req, res) {
+  const body = req.body;
   const { user: { at = "" } = {}, loggedIn } = req.session;
+
   const config = {
     method: "post",
-    url: "/catalog/publish/8",
+    url: `/catalog/publish/${body.channelId}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
-    data: req.body,
+    data: body.selectedItemIds,
   };
-  // console.log("resss", at);
+
+  // console.log("resss", config);
   catalogServiceNew(config)
     .then((response) => {
       if (response.status === 200) {
