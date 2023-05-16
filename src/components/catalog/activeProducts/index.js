@@ -42,6 +42,8 @@ const ActiveProducts = () => {
   const [selectedItemIds, setSelectedItemIds] = useState([]);
   console.log("selectedItemIds", selectedItemIds);
 
+  const [viewDoc, setViewDoc] = useState(false);
+
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
@@ -88,6 +90,37 @@ const ActiveProducts = () => {
 
     dispatch(productDetailsApi(PimCodeId));
   }
+  const download = function (data) {
+    const blob = new Blob([data], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "catalog.csv");
+    a.click();
+  };
+
+  const csvmaker = function (data) {
+    let csvRows = [];
+    // const headers = Object.keys(data);
+    // csvRows.push(headers.join(","));
+    const values = Object.values(data).join("");
+    csvRows.push(values);
+    return csvRows.join("\n");
+  };
+
+  useEffect(() => {
+    if (
+      publishProduct &&
+      publishProduct !== null &&
+      publishProduct !== undefined &&
+      viewDoc
+    ) {
+      const csvdata = csvmaker(publishProduct);
+      download(csvdata);
+      // console.log("publishProduct", publishProduct);
+      setViewDoc(false);
+    }
+  }, [publishProduct]);
   return (
     <>
       <Grid container spacing={0}>
@@ -98,23 +131,24 @@ const ActiveProducts = () => {
                 Active Products
               </Typography>
               {selectedItemIds.length > 0 ? (
-                <CSVLink
-                  data={publishProduct}
-                  filename={"catalog.csv"}
+                // <CSVLink
+                //   data={publishProduct}
+                //   filename={"catalog.csv"}
+                //   disabled={selectedItemIds.length === 0}
+                // >
+                // </CSVLink>
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component="label"
+                  onClick={() => {
+                    setViewDoc(true);
+                    dispatch(getCatalogPublishApi(selectedItemIds));
+                  }}
                   disabled={selectedItemIds.length === 0}
                 >
-                  <Button
-                    variant="outlined"
-                    color="success"
-                    component="label"
-                    onClick={() =>
-                      dispatch(getCatalogPublishApi(selectedItemIds))
-                    }
-                    disabled={selectedItemIds.length === 0}
-                  >
-                    Publish
-                  </Button>
-                </CSVLink>
+                  Publish
+                </Button>
               ) : (
                 <Button
                   variant="outlined"
