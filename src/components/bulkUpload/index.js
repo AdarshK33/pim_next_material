@@ -40,10 +40,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Pagination from "react-js-pagination";
 const BulkUpload = (props) => {
   const dispatch = useDispatch();
   // console.log("ppppppppppp", props.user);
@@ -99,7 +100,7 @@ const BulkUpload = (props) => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = tableData;
 
-  const handlePaginationChange = (event, value) => {
+  const handlePaginationChange = (value) => {
     setCurrentPage(value);
     dispatch(getAttributeListApi(value - 1, 5));
   };
@@ -179,17 +180,28 @@ const BulkUpload = (props) => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Stack spacing={2}>
-                <div className={styles.bulk_pagination}>
-                  <Pagination
+              {/* <Stack spacing={2}> */}
+              <div className={styles.bulk_pagination}>
+                {/* <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
                     showFirstButton
                     showLastButton
                     onChange={handlePaginationChange}
-                  />
-                </div>
-              </Stack>
+                  /> */}
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={currentPage}
+                  itemsCountPerPage={recordPerPage}
+                  totalItemsCount={totalRecords}
+                  pageRangeDisplayed={pageRange}
+                  firstPageText="First"
+                  lastPageText="Last"
+                  onChange={handlePaginationChange}
+                />
+              </div>
+              {/* </Stack> */}
             </Box>
           </Card>
         </Grid>

@@ -35,6 +35,7 @@ td {
   white-space: nowrap !important;
   max-width: 200px !important;
   position: relative !important;
+  padding: 10px !important;
 }
 th {
   color: #419794 !important;
@@ -48,6 +49,14 @@ th {
   max-width: 200px !important;
   position: relative !important;
   padding: 10px;
+  cursor: pointer;
+}
+
+.product_Detials_Actions {
+  padding-top: 15px !important;
+}
+.Active_Product_Detials_Actions {
+  padding-top: 25px !important;
 }
 
 .calender_blk {

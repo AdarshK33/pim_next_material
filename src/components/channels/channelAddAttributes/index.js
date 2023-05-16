@@ -18,8 +18,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
 import Checkbox from "@mui/material/Checkbox";
 import CustomModal from "../../../common/customModal";
 import AddForm from "./AddForm";
@@ -27,6 +27,7 @@ import AddForm from "./AddForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { myProfileAPi } from "../../../../redux/actions/login";
+import Pagination from "react-js-pagination";
 
 import {
   getChannelListApi,

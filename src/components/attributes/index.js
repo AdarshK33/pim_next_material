@@ -21,11 +21,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
 import styles from "./attribute.module.css";
 import Image from "next/image";
-import edit from "../../../assets/icons/edit.svg";
+// import edit from "../../../assets/icons/edit.svg";
+import lens from "../../../assets/icons/lens.svg";
+
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,6 +38,7 @@ import {
 import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
 import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
 import { useRouter } from "next/router";
+import Pagination from "react-js-pagination";
 
 const Attributes = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
@@ -57,14 +60,14 @@ const Attributes = () => {
 
   //   /*-----------------Pagination------------------*/
 
-  const recordPerPage = 5;
+  const recordPerPage = 10;
   const totalRecords = catalogServiceNewReducer?.attributeGet?.totalElements;
-  const pageRange = 5;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = catalogServiceNewReducer?.attributeGet?.content;
 
-  const handlePaginationChange = (event, value) => {
+  const handlePaginationChange = (value) => {
     setCurrentPage(value);
     dispatch(getAttributeListApi(value - 1, 5));
   };
@@ -155,10 +158,10 @@ const Attributes = () => {
                           <div className="action_center">
                             <Image
                               className="px-2 "
-                              src={edit}
-                              alt="edit"
-                              width={30}
-                              height={25}
+                              src={lens}
+                              alt="lens"
+                              width={20}
+                              height={20}
                               onClick={() => handleEdit(row.id)}
                             />
                           </div>
@@ -172,17 +175,29 @@ const Attributes = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Stack spacing={2}>
-                <div className={styles.attribute_pagination}>
-                  <Pagination
+              {/* <Stack spacing={2}> */}
+              <div className={styles.attribute_pagination}>
+                {/* <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
                     showFirstButton
                     showLastButton
                     onChange={handlePaginationChange}
-                  />
-                </div>
-              </Stack>
+                  /> */}
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={currentPage}
+                  itemsCountPerPage={recordPerPage}
+                  totalItemsCount={totalRecords}
+                  pageRangeDisplayed={pageRange}
+                  firstPageText="First"
+                  lastPageText="Last"
+                  onChange={handlePaginationChange}
+                />
+              </div>
+
+              {/* </Stack> */}
             </CardContent>
           </Card>
         </Grid>

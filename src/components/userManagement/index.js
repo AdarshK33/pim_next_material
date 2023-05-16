@@ -17,8 +17,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
+
+import Pagination from "react-js-pagination";
 
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
@@ -59,7 +61,7 @@ const UserManagement = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = userGet?.content;
 
-  const handlePaginationChange = (event, value) => {
+  const handlePaginationChange = (value) => {
     setCurrentPage(value);
     // console.log(value, "value");
     dispatch(getUserListApi(value - 1, 5));
@@ -150,17 +152,28 @@ const UserManagement = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Stack spacing={2}>
-                <div className={styles.category_pagination}>
-                  <Pagination
+              {/* <Stack spacing={2}> */}
+              <div className={styles.category_pagination}>
+                {/* <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
                     showFirstButton
                     showLastButton
                     onChange={handlePaginationChange}
-                  />
-                </div>
-              </Stack>
+                  /> */}
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={currentPage}
+                  itemsCountPerPage={recordPerPage}
+                  totalItemsCount={totalRecords}
+                  pageRangeDisplayed={pageRange}
+                  firstPageText="First"
+                  lastPageText="Last"
+                  onChange={handlePaginationChange}
+                />
+              </div>
+              {/* </Stack> */}
             </CardContent>
           </Card>
         </Grid>

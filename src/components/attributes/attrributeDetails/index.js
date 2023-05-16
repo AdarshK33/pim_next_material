@@ -78,7 +78,7 @@ const AttributeSetDetails = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = catalogServiceNewReducer?.attributeSetData;
 
-  const handlePaginationChange = (event, value) => {
+  const handlePaginationChange = (value) => {
     setCurrentPage(value);
     // dispatch(
     //   getAttributeSetDetailsListApi(router.query.attributeSet, value - 1, 10)

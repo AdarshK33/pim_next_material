@@ -7,7 +7,10 @@ import React, {
   useRef,
 } from "react";
 
-import edit from "../../../../assets/icons/edit.svg";
+// import edit from "../../../../assets/icons/edit.svg";
+// import edit from "../../../../assets/icons/big-search-lens.svg";
+
+import lens from "../../../../assets/icons/lens.svg";
 
 import Image from "next/image";
 
@@ -32,8 +35,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
+import Pagination from "react-js-pagination";
+
 import { useRouter } from "next/router";
 import {
   getAllProductListApi,
@@ -80,7 +85,7 @@ const AllProducts = (props) => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = catalogServiceNewReducer?.getAllProducts.content;
 
-  const handlePaginationChange = (event, val) => {
+  const handlePaginationChange = (val) => {
     setCurrentPage(val);
 
     if (value === 0) {
@@ -289,7 +294,7 @@ const AllProducts = (props) => {
                       <TableCell>CATEGORY</TableCell>
                       <TableCell>FORMATION</TableCell>
                       <TableCell>STATUS</TableCell>
-                      {/* <TableCell>DETAILS</TableCell> */}
+                      <TableCell>DETAILS</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -313,13 +318,13 @@ const AllProducts = (props) => {
                             <LinearProgressWithLabel value={row.formation} />
                           </TableCell>
                           <TableCell>{row.productStatus}</TableCell>
-                          <div className="action_center">
+                          <div className="action_center product_Detials_Actions">
                             <Image
                               className="px-2"
-                              src={edit}
-                              alt="edit"
-                              width={30}
-                              height={25}
+                              src={lens}
+                              alt="lens"
+                              width={20}
+                              height={20}
                               onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
@@ -341,10 +346,14 @@ const AllProducts = (props) => {
                 </Button> */}
                 <div className={styles.category_pagination}>
                   <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    firstPageText="First"
+                    lastPageText="Last"
                     onChange={handlePaginationChange}
                   />
                 </div>
@@ -389,13 +398,13 @@ const AllProducts = (props) => {
                           <TableCell style={{ color: "#f4c476" }}>
                             {row.productStatus}
                           </TableCell>
-                          <div className="action_center">
+                          <div className="action_center product_Detials_Actions">
                             <Image
                               className="px-2"
-                              src={edit}
-                              alt="edit"
-                              width={30}
-                              height={25}
+                              src={lens}
+                              alt="lens"
+                              width={20}
+                              height={20}
                               onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
@@ -417,10 +426,14 @@ const AllProducts = (props) => {
                 </Button> */}
                 <div className={styles.category_pagination}>
                   <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    firstPageText="First"
+                    lastPageText="Last"
                     onChange={handlePaginationChange}
                   />
                 </div>
@@ -460,13 +473,13 @@ const AllProducts = (props) => {
                           <TableCell style={{ color: "red" }}>
                             {row.productStatus}
                           </TableCell>
-                          <div className="action_center">
+                          <div className="action_center product_Detials_Actions">
                             <Image
                               className="px-2"
-                              src={edit}
-                              alt="edit"
-                              width={30}
-                              height={25}
+                              src={lens}
+                              alt="lens"
+                              width={20}
+                              height={20}
                               onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
@@ -488,10 +501,14 @@ const AllProducts = (props) => {
                 </Button> */}
                 <div className={styles.category_pagination}>
                   <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    firstPageText="First"
+                    lastPageText="Last"
                     onChange={handlePaginationChange}
                   />
                 </div>
