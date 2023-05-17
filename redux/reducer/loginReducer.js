@@ -28,6 +28,9 @@ import {
   GET_USER_BY_ID_LOADING,
   GET_USER_BY_ID_SUCCESS,
   GET_USER_BY_ID_FAILURE,
+  FILTER_USER_LOADING,
+  FILTER_USER_SUCCESS,
+  FILTER_USER_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -46,6 +49,7 @@ const initialState = {
   updateUser: {},
   getByIdUser: {},
   getIdUser: {},
+  filterUser:{},
   // accessToken:{},
   // refreshToken:{}
 };
@@ -241,6 +245,26 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         getIdUser: [],
+        error: action,
+      };
+
+      case FILTER_USER_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FILTER_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        filterUser: action.payload,
+        error: {},
+      };
+    case FILTER_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        filterUser: [],
         error: action,
       };
 

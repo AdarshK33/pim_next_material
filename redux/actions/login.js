@@ -26,6 +26,9 @@ import {
   GET_USER_BY_ID_LOADING,
   GET_USER_BY_ID_SUCCESS,
   GET_USER_BY_ID_FAILURE,
+  FILTER_USER_LOADING,
+  FILTER_USER_SUCCESS,
+  FILTER_USER_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -195,6 +198,24 @@ export const getUserByIdSuccess = (data) => {
 export const getUserByIdFailure = (error) => {
   return {
     type: GET_USER_BY_ID_FAILURE,
+    payload: error,
+  };
+};
+
+export const filterUserLoading = () => {
+  return {
+    type: FILTER_USER_LOADING,
+  };
+};
+export const filterUserSuccess = (data) => {
+  return {
+    type: FILTER_USER_SUCCESS,
+    payload: data,
+  };
+};
+export const filterUserFailure = (error) => {
+  return {
+    type: FILTER_USER_FAILURE,
     payload: error,
   };
 };
@@ -446,6 +467,31 @@ export const updateUserApi = (updateData) => {
         dispatch(
           updateUserDataFailure(err)
         );
+      });
+  };
+};
+
+export const filterUserApi = (pageNo, pageSize, role) => {
+  const data = {
+    pageNo: pageNo,
+    pageSize: pageSize,
+    role:role,
+  };
+  return (dispatch) => {
+    dispatch(getUserDataLoading("USER....", "USER"));
+    client
+      .post("/api/login/filterRole", data)
+      .then((response) => {
+        // console.log(" getUserListApi response", response);
+
+        if (response?.data.statusCode === 200) {
+          // console.log("API SUCCESS2", response.data);
+          dispatch(getUserDataSuccess(response.data.result));
+        }
+      })
+      .catch((err) => {
+        console.log("actions/login/filterUser.js =>FAILURE", err);
+        dispatch(getUserDataFailure(err));
       });
   };
 };
