@@ -31,7 +31,12 @@ import AddForm from "./AddForm.js";
 import UpdateForm from "./UpdateForm.js";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getRoleApi, getUserListApi, getUserByIdApi, filterUserApi } from "../../../redux/actions/login";
+import {
+  getRoleApi,
+  getUserListApi,
+  getUserByIdApi,
+  filterUserApi,
+} from "../../../redux/actions/login";
 
 const UserManagement = () => {
   const { userGet, roleGet, loading } = useSelector((state) => {
@@ -76,10 +81,10 @@ const UserManagement = () => {
     dispatch(getUserListApi(value - 1, 5));
   };
 
-  const handleEdit = (userId)=> {
-    setShowUserUpdateForm(true)
-    dispatch( getUserByIdApi(userId));
-}
+  const handleEdit = (userId) => {
+    setShowUserUpdateForm(true);
+    dispatch(getUserByIdApi(userId));
+  };
 
   return (
     <>
@@ -91,28 +96,34 @@ const UserManagement = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Users
               </Typography>
-              <Grid item xs={4} container spacing={2} justifyContent="space-between">
-              <FormControl fullWidth variant="standard">
-                <InputLabel id="demo-simple-select-standard-label">
-                  Select Role
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-standard-label"
-                  id="demo-simple-select-standard"
-                  label="Role"
-                  value={role}
-                  onChange={(e) => roleHandler(e)}
-                >
-                  <MenuItem value=""></MenuItem>
-                  {roleGet &&
-                    roleGet?.map((item, i) => {
-                      return (
-                        <MenuItem value={item.name}>{item.name}</MenuItem>
-                      );
-                    })}
-                </Select>
-              </FormControl>
-            </Grid>
+              <Grid
+                item
+                xs={4}
+                container
+                spacing={2}
+                justifyContent="space-between"
+              >
+                <FormControl fullWidth variant="standard">
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Select Role
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    label="Role"
+                    value={role || ""}
+                    onChange={(e) => roleHandler(e)}
+                  >
+                    <MenuItem value=""></MenuItem>
+                    {roleGet &&
+                      roleGet?.map((item, i) => {
+                        return (
+                          <MenuItem value={item.name}>{item.name}</MenuItem>
+                        );
+                      })}
+                  </Select>
+                </FormControl>
+              </Grid>
               <Button
                 variant="outlined"
                 color="success"
