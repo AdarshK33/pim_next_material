@@ -6,12 +6,20 @@ import React, {
   useCallback,
   useRef,
 } from "react";
+
 import {
   Grid,
-  Button,
+  FormControl,
+  FormLabel,
+  InputLabel,
+  Input,
+  Select,
   Box,
   Card,
   CardContent,
+  MenuItem,
+  TextField,
+  Button,
   Typography,
 } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -39,21 +47,30 @@ import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
 import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Attributes = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  const { loading } = useSelector((state) => state.catalogServiceNewReducer);
+
+  const { catagories, loading } = useSelector(
+    (state) => state.catalogQueryReducer
+  );
+
   const router = useRouter();
+
+  // console.log("catalogQueryReducer =>>>>>>>>>>>>>catagories", catagories[0].id);
 
   const dispatch = useDispatch();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
+  const [categoryId, setCategoryId] = useState();
+
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(getAttributeListApi(currentPage - 1, 5));
+    dispatch(getAttributeListApi(1, currentPage - 1, 5));
     dispatch(getRoleApi());
     dispatch(getCategoriesApi());
   }, []);
@@ -69,7 +86,7 @@ const Attributes = () => {
 
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
-    dispatch(getAttributeListApi(value - 1, 5));
+    dispatch(getAttributeListApi(categoryId, value - 1, 5));
   };
 
   /*-----------------Pagination------------------*/
@@ -80,8 +97,14 @@ const Attributes = () => {
       query: { attributeSet: id },
     });
 
-    dispatch(getAttributeSetDetailsListApi(id));
+    dispatch(getAttributeSetDetailsListApi(id, 0, 10));
   }
+  const categoryHandler = (e) => {
+    console.log("hello called", e.target.value);
+    setCategoryId(e.target.value);
+    dispatch(getAttributeListApi(e.target.value, currentPage - 1, 5));
+  };
+
   return (
     <>
       <Grid container>
@@ -100,15 +123,45 @@ const Attributes = () => {
               <Typography variant="h2" className={styles.main_title}>
                 Attribute set
               </Typography>
-              <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                onClick={() => setShowAttributeAddForm(true)}
-              >
-                ADD NEW
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+
+              <Box className={styles.category_btn_add_btn}>
+                <Box className={styles.category_btn_add_btn}>
+                  <FormControl fullWidth variant="standard">
+                    <InputLabel id="demo-simple-select-standard-label">
+                      Categories
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      id="demo-simple-select-standard"
+                      label="Category"
+                      className={styles.selectCategory_dropdown_Att}
+                      value={categoryId || ""}
+                      onChange={categoryHandler}
+                    >
+                      {catagories &&
+                        catagories !== null &&
+                        catagories !== undefined &&
+                        Object.keys(catagories).length &&
+                        catagories?.map((item, i) => {
+                          return (
+                            <MenuItem value={item.id}>{item.name}</MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box className={styles.add_dropDownBtn}>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    onClick={() => setShowAttributeAddForm(true)}
+                  >
+                    ADD NEW
+                    {/* <input hidden accept="image/*" multiple type="file" /> */}
+                  </Button>
+                </Box>
+              </Box>
 
               <CustomModal
                 openModal={showAttributeAddForm}
@@ -120,85 +173,103 @@ const Attributes = () => {
                 }
               />
             </Grid>
-            <CardContent>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>#</TableCell>
-                      <TableCell>NAME</TableCell>
-                      <TableCell>ROLE</TableCell>
-                      <TableCell align="right">DESCRIPTION</TableCell>
-                      <TableCell align="right">PRIORITY SEQUENCE</TableCell>
-                      {/* <TableCell align="right">STATUS</TableCell> */}
-                      <TableCell align="right">ACTION</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
-                      currentRecords.map((row, i) => (
-                        <TableRow
-                          key={row.name}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {i + 1 + indexOfFirstRecord}
-                          </TableCell>
-                          <TableCell align="right">{row.name}</TableCell>
-                          <TableCell align="right">{row.role}</TableCell>
-                          <TableCell align="right">{row.description}</TableCell>
-                          <TableCell align="right">{row.precedence}</TableCell>
-                          {/* <TableCell align="right">
+            {loading === true ? (
+              <div
+                className="loader-box loader"
+                style={{ width: "100% !important" }}
+              >
+                <div className="loader">
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                </div>
+              </div>
+            ) : (
+              <CardContent>
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>#</TableCell>
+                        <TableCell>NAME</TableCell>
+                        <TableCell>ROLE</TableCell>
+                        <TableCell align="right">DESCRIPTION</TableCell>
+                        <TableCell align="right">PRIORITY SEQUENCE</TableCell>
+                        {/* <TableCell align="right">STATUS</TableCell> */}
+                        <TableCell align="right">ACTION</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {currentRecords &&
+                      currentRecords !== null &&
+                      currentRecords.length > 0 ? (
+                        currentRecords.map((row, i) => (
+                          <TableRow
+                            key={row.name}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {i + 1 + indexOfFirstRecord}
+                            </TableCell>
+                            <TableCell align="right">{row.name}</TableCell>
+                            <TableCell align="right">{row.role}</TableCell>
+                            <TableCell align="right">
+                              {row.description}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.precedence}
+                            </TableCell>
+                            {/* <TableCell align="right">
                             {row?.active === true ? "Active" : "In-Active"}
                           </TableCell> */}
-                          <div className="action_center">
-                            <Image
-                              className="px-2 "
-                              src={lens}
-                              alt="lens"
-                              width={20}
-                              height={20}
-                              onClick={() => handleEdit(row.id)}
-                            />
-                          </div>
+                            <div className="action_center">
+                              <Image
+                                className="px-2 "
+                                src={lens}
+                                alt="lens"
+                                width={20}
+                                height={20}
+                                onClick={() => handleEdit(row.id)}
+                              />
+                            </div>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={12}>No Record Found</TableCell>
                         </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={12}>No Record Found</TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              {/* <Stack spacing={2}> */}
-              <div className={styles.attribute_pagination}>
-                {/* <Pagination
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                {/* <Stack spacing={2}> */}
+                <div className={styles.attribute_pagination}>
+                  {/* <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
                     showFirstButton
                     showLastButton
                     onChange={handlePaginationChange}
                   /> */}
-                <Pagination
-                  itemClass="page-item"
-                  linkClass="page-link"
-                  activePage={currentPage}
-                  itemsCountPerPage={recordPerPage}
-                  totalItemsCount={totalRecords}
-                  pageRangeDisplayed={pageRange}
-                  firstPageText="First"
-                  lastPageText="Last"
-                  onChange={handlePaginationChange}
-                />
-              </div>
+                  <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    firstPageText="First"
+                    lastPageText="Last"
+                    onChange={handlePaginationChange}
+                  />
+                </div>
 
-              {/* </Stack> */}
-            </CardContent>
+                {/* </Stack> */}
+              </CardContent>
+            )}
           </Card>
         </Grid>
       </Grid>

@@ -42,14 +42,14 @@ const initialState = {
   userRole: [],
   userBrand: [],
   userGet: {},
-  roleGet: {},
+  roleGet: [],
   newUser: {},
   rolePrivilege: {},
   myProfile: {},
   updateUser: {},
   getByIdUser: {},
   getIdUser: {},
-  filterUser:{},
+  filterUser: {},
   // accessToken:{},
   // refreshToken:{}
 };
@@ -248,7 +248,7 @@ const loginReducer = (state = initialState, action) => {
         error: action,
       };
 
-      case FILTER_USER_LOADING:
+    case FILTER_USER_LOADING:
       return {
         ...state,
         loading: true,

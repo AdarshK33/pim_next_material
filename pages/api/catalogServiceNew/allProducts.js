@@ -11,12 +11,12 @@ function handler(req, res) {
   // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/getAllProduct?pageNo=0&pageSize=10&sortBy=updatedAt&productStatus=DRAFTED
 
   const config = {
-    method: "get",
+    method: "post",
     url: `/catalog/products?pageNo=${body.pageNo}&pageSize=${body.pageSize}&sortBy=updatedAt&productStatus=${body.status}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
-    // data: body,
+    data: body,
   };
   catalogServiceNew(config)
     .then((response) => {

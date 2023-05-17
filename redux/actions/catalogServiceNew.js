@@ -35,6 +35,9 @@ import {
   ATTRIBUTE_SET_DETAILS_DATA_LOADING,
   ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
   ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
+  BULK_LIST_DATA_LOADING,
+  BULK_LIST_DATA_SUCCESS,
+  BULK_LIST_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -254,9 +257,28 @@ export const attributeSetDetailListFailure = (error) => {
   };
 };
 
-export const getAttributeListApi = (pageNo, pageSize) => {
+export const bulkDetailListLoading = () => {
+  return {
+    type: BULK_LIST_DATA_LOADING,
+  };
+};
+export const bulkDetailListSuccess = (data) => {
+  return {
+    type: BULK_LIST_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const bulkDetailListFailure = (error) => {
+  return {
+    type: BULK_LIST_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const getAttributeListApi = (id, pageNo, pageSize) => {
   const data = {
-    page_No: pageNo,
+    id: id,
+    page_no: pageNo,
     page_size: pageSize,
   };
   return (dispatch) => {
@@ -579,7 +601,7 @@ export const productUpdateApis = (data) => {
 
 export const getAttributeSetDetailsListApi = (Id, pageNo, pageSize) => {
   const data = {
-    Id: Id,
+    id: Id,
     pageNo: pageNo,
     pageSize: pageSize,
   };
@@ -601,6 +623,33 @@ export const getAttributeSetDetailsListApi = (Id, pageNo, pageSize) => {
           err
         );
         dispatch(attributeSetDetailListFailure(err));
+      });
+  };
+};
+
+export const getBuilkDetailsListApi = (pageNo, pageSize) => {
+  const data = {
+    pageNo: pageNo,
+    pageSize: pageSize,
+  };
+  return (dispatch) => {
+    dispatch(bulkDetailListLoading("ATTRIBUTE....", "ATTRIBUTE"));
+    client
+      .post("/api/catalogServiceNew/getBulkUpload", data)
+      .then((response) => {
+        console.log(" bulkDetailListLoading response", response);
+
+        if (response?.status === 200) {
+          console.log("hello API SUCCESS2", response.data);
+          dispatch(bulkDetailListSuccess(response.data));
+        }
+      })
+      .catch((err) => {
+        console.log(
+          "actions/catalogServiceNew/GET getBuilkDetailsListApi LIST =>FAILURE",
+          err
+        );
+        dispatch(bulkDetailListFailure(err));
       });
   };
 };
