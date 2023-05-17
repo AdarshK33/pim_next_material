@@ -99,16 +99,15 @@ const Role = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Roles
               </Typography>
-              <Button
+              {/* <Button
                 variant="outlined"
                 color="success"
                 component="label"
                 onClick={() => setShowUserAddForm(true)}
               >
                 Add New
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
-              <CustomModal
+              </Button> */}
+              {/* <CustomModal
                 openModal={showUserAddForm}
                 closeModal={() => setShowUserAddForm(!showUserAddForm)}
                 body={
@@ -116,7 +115,7 @@ const Role = () => {
                     classModal={() => setShowUserAddForm(!showUserAddForm)}
                   />
                 }
-              />
+              /> */}
             </Grid>
             <CardContent>
               <TableContainer component={Paper}>

@@ -37,12 +37,18 @@ import ProfileDD from "../header/ProfileDD";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const [open, setOpen] = React.useState(true);
   const [submenuOpen, setSubmenuOpen] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("");
   const [selectedSubMenu, setSelectedSubMenu] = useState(null);
+
+  const { loginReducer } = useSelector((state) => {
+    return state;
+  });
+  console.log("loginReducer", loginReducer.userRole);
 
   const [openSecondLevel, setOpenSecondLevel] = React.useState(true);
   const handleClick = () => {
@@ -79,17 +85,28 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const location = curl.pathname;
 
   // the below role has to be dynamic
-  const ROLE = "ADMIN";
+  // const ROLE = ["ADMIN", "R_DRUGS", "KEYMED_MANAGER", "HIPAR", "ONLINE_MASTER"];
+
+  // const filteredMenuItems = Menuitems.filter((item) => {
+  //   const uppercaseTitles = item.title.toUpperCase();
+  //   return ROLES.some(
+  //     (role) =>
+  //       ["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(uppercaseTitles) &&
+  //       role === uppercaseTitles
+  //   );
+  // });
+
+  const menuProtected = Menuitems.filter(
+    (item) =>
+      !["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(
+        item.title.toUpperCase()
+      )
+  );
+  // console.log(menuProtected, "menuProtected");
+  // console.log(Menuitems, "Menuitems");
 
   const filteredMenuItems =
-    ROLE !== "ADMIN"
-      ? Menuitems.filter(
-          (item) =>
-            !["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(
-              item.title.toUpperCase()
-            )
-        )
-      : Menuitems;
+    loginReducer?.userRole === "ADMIN" ? Menuitems : menuProtected;
 
   const SidebarContent = (
     <Box p={2} height="100%" className={styles.bg_color}>

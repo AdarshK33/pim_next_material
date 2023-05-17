@@ -32,6 +32,9 @@ import {
   PRODUCT_UPDATE_DATA_LOADING,
   PRODUCT_UPDATE_DATA_SUCCESS,
   PRODUCT_UPDATE_DATA_FAILURE,
+  ATTRIBUTE_SET_DETAILS_DATA_LOADING,
+  ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
+  ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -229,6 +232,24 @@ export const productUpdateDataSuccess = (data) => {
 export const productUpdateDataFailure = (error) => {
   return {
     type: PRODUCT_UPDATE_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const attributeSetDetailListLoading = () => {
+  return {
+    type: ATTRIBUTE_SET_DETAILS_DATA_LOADING,
+  };
+};
+export const attributeSetDetailListSuccess = (data) => {
+  return {
+    type: ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const attributeSetDetailListFailure = (error) => {
+  return {
+    type: ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
     payload: error,
   };
 };
@@ -487,17 +508,22 @@ export const statusChangedApis = (info) => {
   };
 };
 
-export const getCatalogPublishApi = (selectedItemIds) => {
-  const data = selectedItemIds;
+export const getCatalogPublishApi = (selectedItemIds, channelId) => {
+  const data = {
+    selectedItemIds,
+    channelId,
+  };
   return (dispatch) => {
     dispatch(publishCatalogLoading("PUBLISH....", "PUBLISH"));
     client
       .post("/api/catalogServiceNew/publishCatalog", data)
       .then((response) => {
+        toast.info("Publish Successfully !!!");
         dispatch(publishCatalogSuccess(response.data, "PUBLISH SUCCESS"));
         console.log("responsefrom", response);
       })
       .catch((err) => {
+        toast.error("Publish Failed !!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/getCatalogPublish",
           err
@@ -547,6 +573,34 @@ export const productUpdateApis = (data) => {
             "product UPDATE"
           )
         );
+      });
+  };
+};
+
+export const getAttributeSetDetailsListApi = (Id, pageNo, pageSize) => {
+  const data = {
+    Id: Id,
+    pageNo: pageNo,
+    pageSize: pageSize,
+  };
+  return (dispatch) => {
+    dispatch(attributeSetDetailListLoading("ATTRIBUTE....", "ATTRIBUTE"));
+    client
+      .post("/api/catalogServiceNew/attributeSetList", data)
+      .then((response) => {
+        // console.log(" getAttributeListApi response", response);
+
+        if (response?.data.statusCode === 200) {
+          // console.log("API SUCCESS2", response.data);
+          dispatch(attributeSetDetailListSuccess(response.data.result));
+        }
+      })
+      .catch((err) => {
+        console.log(
+          "actions/catalogServiceNew/GET ATTRIBUTE LIST =>FAILURE",
+          err
+        );
+        dispatch(attributeSetDetailListFailure(err));
       });
   };
 };
