@@ -9,6 +9,10 @@ import {
   Card,
   CardContent,
   Typography,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -27,22 +31,27 @@ import AddForm from "./AddForm.js";
 import UpdateForm from "./UpdateForm.js";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
+import { getRoleApi, getUserListApi, getUserByIdApi, filterUserApi } from "../../../redux/actions/login";
 
 const UserManagement = () => {
-  const { userGet, roleGet } = useSelector((state) => {
+  const { userGet, roleGet, loading } = useSelector((state) => {
     return state.loginReducer;
   });
   const dispatch = useDispatch();
   const [showUserAddForm, setShowUserAddForm] = useState(false);
   const [showUserUpdateForm, setShowUserUpdateForm] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     dispatch(getUserListApi(currentPage - 1, 5));
     dispatch(getRoleApi());
   }, []);
+
+  const roleHandler = (e) => {
+    setRole(e.target.value);
+    dispatch(filterUserApi(currentPage - 1, 5, role));
+  };
 
   const tableData = [];
 
@@ -67,6 +76,11 @@ const UserManagement = () => {
     dispatch(getUserListApi(value - 1, 5));
   };
 
+  const handleEdit = (userId)=> {
+    setShowUserUpdateForm(true)
+    dispatch( getUserByIdApi(userId));
+}
+
   return (
     <>
       <Grid container spacing={0}>
@@ -77,6 +91,28 @@ const UserManagement = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Users
               </Typography>
+              <Grid item xs={4} container spacing={2} justifyContent="space-between">
+              <FormControl fullWidth variant="standard">
+                <InputLabel id="demo-simple-select-standard-label">
+                  Select Role
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  label="Role"
+                  value={role}
+                  onChange={(e) => roleHandler(e)}
+                >
+                  <MenuItem value=""></MenuItem>
+                  {roleGet &&
+                    roleGet?.map((item, i) => {
+                      return (
+                        <MenuItem value={item.name}>{item.name}</MenuItem>
+                      );
+                    })}
+                </Select>
+              </FormControl>
+            </Grid>
               <Button
                 variant="outlined"
                 color="success"
@@ -120,7 +156,7 @@ const UserManagement = () => {
                             {i + 1 + indexOfFirstRecord}
                           </TableCell>
                           <TableCell align="right">{row.email}</TableCell>
-                          <TableCell align="right">{row.role}</TableCell>
+                          <TableCell align="right">{row.roleName}</TableCell>
                           <TableCell align="right">{row.status}</TableCell>
                           <div className="action_center">
                             <Image
@@ -129,8 +165,7 @@ const UserManagement = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={()=>handleEdit(item.brandId)}
-                              onClick={() => setShowUserUpdateForm(true)}
+                              onClick={() => handleEdit(row.userId)}
                             />
                           </div>
                           <CustomModal
