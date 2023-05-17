@@ -21,7 +21,7 @@ import {
 
 const initialState = {
   loading: false,
-  catagories: {},
+  catagories: [],
   attributeGet: {},
   allProductGet: {},
   createComment: {},

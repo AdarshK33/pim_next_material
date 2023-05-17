@@ -12,15 +12,16 @@ function handler(req, res) {
   // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes_set?page_No=0&page_size=5
   const config = {
     method: "get",
-    url: `/catalog/attributes_set?page_no=${body.page_No}&page_size=${body.page_size}`,
+    url: `/catalog/attributes_set/${body.id}?page_no=${body.page_no}&page_size=10`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
     // data: body,
   };
+
   catalogServiceNew(config)
     .then((response) => {
-      // console.log("res1", response);
+      console.log("res1", response);
       if (response.status === 200) {
         res.status(200).json(response.data);
         Promise.resolve();

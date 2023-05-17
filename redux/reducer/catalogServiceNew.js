@@ -26,6 +26,9 @@ import {
   ATTRIBUTE_SET_DETAILS_DATA_LOADING,
   ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
   ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
+  BULK_LIST_DATA_LOADING,
+  BULK_LIST_DATA_SUCCESS,
+  BULK_LIST_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -38,10 +41,11 @@ const initialState = {
   createAttributeSet: {},
   productUpdate: {},
   attributeSetData: {},
+  bulkData: {},
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
-  // console.log("hello loginReducer called",action)
+  console.log("hello builk called", action.payload);
   switch (action.type) {
     case ATTRIBUTE_LIST_LOADING:
       return {
@@ -216,6 +220,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         attributeSetData: [],
+        error: action,
+      };
+    case BULK_LIST_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case BULK_LIST_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bulkData: action.payload,
+        error: {},
+      };
+    case BULK_LIST_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        bulkData: [],
         error: action,
       };
 
