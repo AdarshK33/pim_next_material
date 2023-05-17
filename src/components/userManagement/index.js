@@ -25,7 +25,7 @@ import AddForm from "./AddForm.js";
 import UpdateForm from "./UpdateForm.js";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
+import { getRoleApi, getUserListApi, getUserByIdApi } from "../../../redux/actions/login";
 
 const UserManagement = () => {
   const { userGet, roleGet } = useSelector((state) => {
@@ -64,6 +64,11 @@ const UserManagement = () => {
     // console.log(value, "value");
     dispatch(getUserListApi(value - 1, 5));
   };
+
+  const handleEdit = (userId)=> {
+    setShowUserUpdateForm(true)
+    dispatch( getUserByIdApi(userId));
+}
 
   return (
     <>
@@ -118,7 +123,7 @@ const UserManagement = () => {
                             {i + 1 + indexOfFirstRecord}
                           </TableCell>
                           <TableCell align="right">{row.email}</TableCell>
-                          <TableCell align="right">{row.role}</TableCell>
+                          <TableCell align="right">{row.roleName}</TableCell>
                           <TableCell align="right">{row.status}</TableCell>
                           <div className="action_center">
                             <Image
@@ -127,8 +132,7 @@ const UserManagement = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={()=>handleEdit(item.brandId)}
-                              onClick={() => setShowUserUpdateForm(true)}
+                              onClick={() => handleEdit(row.userId)}
                             />
                           </div>
                           <CustomModal

@@ -22,6 +22,12 @@ import {
   MY_PROFILE_DATA_LOADING,
   MY_PROFILE_DATA_SUCCESS,
   MY_PROFILE_DATA_FAILURE,
+  UPDATE_USER_DATA_LOADING,
+  UPDATE_USER_DATA_SUCCESS,
+  UPDATE_USER_DATA_FAILURE,
+  GET_USER_BY_ID_LOADING,
+  GET_USER_BY_ID_SUCCESS,
+  GET_USER_BY_ID_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -37,6 +43,9 @@ const initialState = {
   newUser: {},
   rolePrivilege: {},
   myProfile: {},
+  updateUser: {},
+  getByIdUser: {},
+  getIdUser: {},
   // accessToken:{},
   // refreshToken:{}
 };
@@ -195,6 +204,46 @@ const loginReducer = (state = initialState, action) => {
         myProfile: [],
         error: action,
       };
+    case UPDATE_USER_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updateUser: action.payload,
+        error: {},
+      };
+    case UPDATE_USER_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        updateUser: [],
+        error: action,
+      };
+
+    case GET_USER_BY_ID_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_USER_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        getIdUser: action.payload,
+        error: {},
+      };
+    case GET_USER_BY_ID_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        getIdUser: [],
+        error: action,
+      };
+
     default:
       return state;
   }

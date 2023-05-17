@@ -20,6 +20,12 @@ import {
   MY_PROFILE_DATA_LOADING,
   MY_PROFILE_DATA_SUCCESS,
   MY_PROFILE_DATA_FAILURE,
+  UPDATE_USER_DATA_LOADING,
+  UPDATE_USER_DATA_SUCCESS,
+  UPDATE_USER_DATA_FAILURE,
+  GET_USER_BY_ID_LOADING,
+  GET_USER_BY_ID_SUCCESS,
+  GET_USER_BY_ID_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -149,6 +155,46 @@ export const getUserDetailDataSuccess = (data) => {
 export const getUserDetailDataFailure = (error) => {
   return {
     type: MY_PROFILE_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const updateUserDataLoading = () => {
+  return {
+    type: UPDATE_USER_DATA_LOADING,
+  };
+};
+
+export const updateUserDataSuccess = (data) => {
+  return {
+    type: UPDATE_USER_DATA_SUCCESS,
+    payload: data,
+  };
+};
+
+export const updateUserDataFailure = (error) => {
+  return {
+    type: UPDATE_USER_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const getUserByIdLoading = () => {
+  return {
+    type: GET_USER_BY_ID_LOADING,
+  };
+};
+
+export const getUserByIdSuccess = (data) => {
+  return {
+    type: GET_USER_BY_ID_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getUserByIdFailure = (error) => {
+  return {
+    type: GET_USER_BY_ID_FAILURE,
     payload: error,
   };
 };
@@ -345,6 +391,61 @@ export const myProfileAPi = () => {
       .catch((err) => {
         console.log("error caught in -> actions/login/myProfileAPi", err);
         dispatch(getUserDetailDataFailure(err));
+      });
+  };
+};
+
+export const getUserByIdApi = (userId) => {
+  const data = {
+    userId: userId
+  }
+
+  return (dispatch) => {
+    dispatch(getUserByIdLoading("USERS BY ID....", "USERS BY ID"));
+    client
+      .post("/api/login/getUserById", data)
+      .then((response) => {
+        // console.log("api response",response)
+        if (response?.status === 200) {
+          // console.log("API SUCCESS2", response.data.result);
+          dispatch(getUserByIdSuccess(response.data.result));
+        }
+      })
+      .catch((err) => {
+        console.log("actions/onboardQuery/ GET USERS BY ID =>FAILURE", err);
+        dispatch(getUserByIdFailure(err));
+      });
+  };
+};
+
+export const updateUserApi = (updateData) => {
+  //console.log("hello  brandupdateApi info",info)
+  const data = {
+        userId: updateData?.userId,
+        roleId: updateData?.roleId,
+        Status: updateData?.Status,
+  }
+
+  //  console.log("hello  brandupdateApi data",data)
+
+  return (dispatch) => {
+    dispatch(updateUserDataLoading("UPDATE....", "USER"));
+    client
+      .post("/api/login/updateUser", data)
+      .then((response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          // toast.info("Brand Updated Successfully !!!");
+          // console.log("BrandGreat==>", response.data);
+          dispatch(updateUserDataSuccess(response.data));
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        // toast.error("Brand update Failed!!!");
+        console.log("error caught in -> actions/user/update", err);
+        dispatch(
+          updateUserDataFailure(err)
+        );
       });
   };
 };
