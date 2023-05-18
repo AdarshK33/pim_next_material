@@ -74,3 +74,15 @@
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;
 }
+
+.user_btn_add_btn {
+  display: flex;
+  align-items: baseline;
+}
+.add_dropDownBtn {
+  margin-left: 10px;
+}
+.selectUser_dropdown_Att {
+  min-width: 120px !important;
+  padding: 1px 19px 0px 0px;
+}
