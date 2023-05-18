@@ -109,80 +109,18 @@ const Notification = () => {
           {Object.keys(arrayData).length &&
             arrayData[0].map((alert, index) => (
               <React.Fragment key={index}>
-                {userRole === "ADMIN" &&
-                alert.getAttributeSet == "AX MASTER" ? (
-                  <Box>
-                    <List
-                      component="nav"
-                      aria-label="secondary mailbox folder"
-                      onClick={handleClose4}
-                    >
-                      <>
-                        <Alert severity="warning">
-                          ** Please check {alert.getAttributeSet}. Product Item{" "}
-                          {alert.getPimModelCode}
-                        </Alert>
-                      </>
-                    </List>
-                  </Box>
-                ) : userRole === "KEYMED_MANAGER" &&
-                  alert.getAttributeSet == "KEYMEDMASTER" ? (
-                  <Box>
-                    <List
-                      component="nav"
-                      aria-label="secondary mailbox folder"
-                      onClick={handleClose4}
-                    >
-                      <>
-                        <Alert severity="warning">
-                          ** Please check {alert.getAttributeSet}. Product Item{" "}
-                          {alert.getPimModelCode}
-                        </Alert>
-                      </>
-                    </List>
-                  </Box>
-                ) : userRole === "R_DRUGS" &&
-                  alert.getAttributeSet == "R_DRUGS" ? (
-                  <Box>
-                    <List
-                      component="nav"
-                      aria-label="secondary mailbox folder"
-                      onClick={handleClose4}
-                    >
-                      <>
-                        <Alert severity="warning">
-                          ** Please check {alert.getAttributeSet}. Product Item{" "}
-                          {alert.getPimModelCode}
-                        </Alert>
-                      </>
-                    </List>
-                  </Box>
-                ) : userRole === "HIPAR" && alert.getAttributeSet == "HIPAR" ? (
-                  <Box>
-                    <List
-                      component="nav"
-                      aria-label="secondary mailbox folder"
-                      onClick={handleClose4}
-                    >
-                      <>
-                        <Alert severity="warning">
-                          ** Please check {alert.getAttributeSet}. Product Item{" "}
-                          {alert.getPimModelCode}
-                        </Alert>
-                      </>
-                    </List>
-                  </Box>
-                ) : userRole === "ONLINE_MASTER" &&
-                  alert.getAttributeSet == "ONLINEMASTER" ? (
-                  <>
+                <Box>
+                  <List
+                    component="nav"
+                    aria-label="secondary mailbox folder"
+                    onClick={handleClose4}
+                  >
                     <Alert severity="warning">
                       ** Please check {alert.getAttributeSet}. Product Item{" "}
                       {alert.getPimModelCode}
                     </Alert>
-                  </>
-                ) : (
-                  <></>
-                )}
+                  </List>
+                </Box>
               </React.Fragment>
             ))}
         </Menu>
