@@ -34,7 +34,7 @@ import {
 const initialState = {
   loading: false,
   attributeGet: {},
-  getAllProducts: {},
+  getAllProducts: [],
   bulkUpload: {},
   productPimCodeData: {},
   publishProduct: [],
