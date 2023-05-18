@@ -76,12 +76,9 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
       : Menuitems;
 
   const SidebarContent = (
-    <Box p={2} height="100%" className={styles.bg_color}>
-      <LogoIcon />
-      <Divider />
-
+    <Box p={5} height="100%" className={styles.bg_color}>
       <div>{/* <ProfileDD /> */}</div>
-      <Divider />
+
       <Box mt={2}>
         <div className={styles.roots}>
           <List>
