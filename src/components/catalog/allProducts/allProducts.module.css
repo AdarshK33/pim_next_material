@@ -16,6 +16,21 @@
   height: 50px;
 }
 
+.product_Bar {
+  display: flex !important;
+}
+.Autocomplete_allProducts {
+  margin-right: 10px;
+  min-width: 150px;
+  padding: 1px 0px 0px 0px !important;
+}
+/* .product_Search input {
+  padding: 8px 14px;
+} */
+
+.input_search_product input {
+  padding: 0px 4px 1px 4px !important;
+}
 @media (max-width: 600px) {
   .tab {
     width: 100%;

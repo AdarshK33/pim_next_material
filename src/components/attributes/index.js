@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useRef,
 } from "react";
+import { Edit2, Eye, Search, Download } from "react-feather";
 
 import {
   Grid,
@@ -226,12 +227,20 @@ const Attributes = () => {
                             {row?.active === true ? "Active" : "In-Active"}
                           </TableCell> */}
                             <div className="action_center">
-                              <Image
+                              {/* <Image
                                 className="px-2 "
                                 src={lens}
                                 alt="lens"
                                 width={20}
                                 height={20}
+                                onClick={() => handleEdit(row.id)}
+                              /> */}
+                              <Eye
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "#419794",
+                                }}
                                 onClick={() => handleEdit(row.id)}
                               />
                             </div>
