@@ -55,7 +55,8 @@ const UserManagement = () => {
 
   const roleHandler = (e) => {
     setRole(e.target.value);
-    dispatch(filterUserApi(currentPage - 1, 5, role));
+    // setCurrentPage(0);
+    // dispatch(filterUserApi(currentPage-1, 5, e.target.value));
   };
 
   const tableData = [];
@@ -78,8 +79,20 @@ const UserManagement = () => {
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
     // console.log(value, "value");
-    dispatch(getUserListApi(value - 1, 5));
+    if (role) {
+      console.log("pagination called");
+      dispatch(filterUserApi(currentPage - 1, 5, role));
+    } else {
+      dispatch(getUserListApi(value - 1, 5));
+    }
   };
+
+  useEffect(() => {
+    if (role) {
+    setCurrentPage(1);
+      dispatch(filterUserApi(0, 5, role));
+    } 
+  },[role])
 
   const handleEdit = (userId) => {
     setShowUserUpdateForm(true);
@@ -96,43 +109,50 @@ const UserManagement = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Users
               </Typography>
-              <Grid
+              {/* <Grid
                 item
                 xs={4}
                 container
                 spacing={2}
                 justifyContent="space-between"
-              >
-                <FormControl fullWidth variant="standard">
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Select Role
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    label="Role"
-                    value={role || ""}
-                    onChange={(e) => roleHandler(e)}
+              > */}
+              <Box className={styles.user_btn_add_btn}>
+                <Box className={styles.user_btn_add_btn}>
+                  <FormControl fullWidth variant="standard">
+                    <InputLabel id="demo-simple-select-standard-label">
+                      Select Role
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      id="demo-simple-select-standard"
+                      label="Role"
+                      className={styles.selectUser_dropdown_Att}
+                      value={role || ""}
+                      onChange={(e) => roleHandler(e)}
+                    >
+                      <MenuItem value=""></MenuItem>
+                      {roleGet &&
+                        roleGet?.map((item, i) => {
+                          return (
+                            <MenuItem value={item.name}>{item.name}</MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </Box>
+                {/* </Grid> */}
+                <Box className={styles.add_dropDownBtn}>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    onClick={() => setShowUserAddForm(true)}
                   >
-                    <MenuItem value=""></MenuItem>
-                    {roleGet &&
-                      roleGet?.map((item, i) => {
-                        return (
-                          <MenuItem value={item.name}>{item.name}</MenuItem>
-                        );
-                      })}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                onClick={() => setShowUserAddForm(true)}
-              >
-                Add New
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+                    Add New
+                    {/* <input hidden accept="image/*" multiple type="file" /> */}
+                  </Button>
+                </Box>
+              </Box>
               <CustomModal
                 openModal={showUserAddForm}
                 closeModal={() => setShowUserAddForm(false)}
