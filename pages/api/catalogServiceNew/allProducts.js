@@ -13,7 +13,7 @@ function handler(req, res) {
   const config = {
     method: "post",
 
-    url: `/catalog/products_filter?pageNo=${body.pageNo}&pageSize=${body.pageSize}&productStaus=${body.productStaus}&sortBy=updatedAt`,
+    url: `/catalog/products_filter?pageNo=${body.pageNo}&pageSize=10&productStaus=${body.productStaus}&sortBy=updatedAt`,
 
     // url: `/catalog/products_filter?pageNo=${body.pageNo}&pageSize=${body.pageSize}&productStaus=${body.productStaus}&sortBy=updatedAt`,
     headers: {
