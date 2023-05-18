@@ -24,7 +24,7 @@ function handler(req, res) {
 
   catalogServiceNew(config)
     .then((response) => {
-      console.log("res1", response);
+      // console.log("res1", response);
       if (response.status === 200) {
         res.status(200).json(response.data);
         Promise.resolve();

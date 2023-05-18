@@ -1,20 +1,21 @@
 import React from "react";
-import FeatherIcon from "feather-icons-react";
+
+import { ChevronDown } from "react-feather";
+
 import Image from "next/image";
 import userimg from "../../../assets/images/users/user2.jpg";
 import { Box, Menu, Typography, Link, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutApi } from "../../../redux/actions/logout";
-
 const ProfileDD = () => {
   const [anchorEl4, setAnchorEl4] = React.useState(null);
 
   const dispatch = useDispatch();
 
-  const { loginReducer } = useSelector((state) => {
-    return state;
+  const { userRole } = useSelector((state) => {
+    return state.loginReducer;
   });
-  // console.log("loginReducer", loginReducer);
+  // console.log("loginReducer", userRole);
 
   const handleClick4 = (event) => {
     setAnchorEl4(event.currentTarget);
@@ -64,10 +65,10 @@ const ProfileDD = () => {
                 ml: 1,
               }}
             >
-              {loginReducer?.userRole ? loginReducer?.userRole : "My Profile"}
+              {userRole ? userRole : "My Profile"}
             </Typography>
 
-            <FeatherIcon icon="chevron-down" width="20" height="20" />
+            <ChevronDown icon="chevron-down" width="20" height="20" />
           </Box>
         </Box>
       </Button>

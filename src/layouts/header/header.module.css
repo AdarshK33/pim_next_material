@@ -1,0 +1,7 @@
+.notify_number {
+  background-color: red;
+  color: white;
+  border-radius: 100%;
+  font-size: 12px;
+  width: 100%;
+}

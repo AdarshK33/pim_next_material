@@ -2,33 +2,24 @@ import { catalogServiceNew } from "../../../utils/axios";
 import withSession from "../../../utils/session";
 
 function handler(req, res) {
-  const body = req.body;
-
   const { user: { at = "" } = {}, loggedIn } = req.session;
-
   const config = {
-    method: "post",
-    url: `/catalog/channelAttributes`,
+    method: "get",
+    url: "/catalog/notification",
     headers: {
       Authorization: `Bearer ${at}`,
     },
-    data: [body],
   };
-
-  // console.log("helo config", config);
   catalogServiceNew(config)
     .then((response) => {
-      // console.log("res1", response);
-      if (response) {
-        res.status(200).json(response.data);
+      if (response.status === 200) {
+        // console.log(response.data.result);
+        res.status(200).json(response.data.result);
         Promise.resolve();
       }
     })
     .catch((err) => {
-      console.log(
-        "error caught in -> pages/api/catalogServiceNew/addChannelAttributes.js",
-        err
-      );
+      console.log("error caught in -> pages/api/login/notification.js.js", err);
       if (err?.response?.data) {
         const { status = {} } = err?.response;
         res.status(status).json(err.response.data.error + " " + status);

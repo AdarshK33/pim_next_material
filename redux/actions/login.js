@@ -29,6 +29,9 @@ import {
   FILTER_USER_LOADING,
   FILTER_USER_SUCCESS,
   FILTER_USER_FAILURE,
+  NOTIFICATION_DATA_LOADING,
+  NOTIFICATION_DATA_SUCCESS,
+  NOTIFICATION_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -216,6 +219,24 @@ export const filterUserSuccess = (data) => {
 export const filterUserFailure = (error) => {
   return {
     type: FILTER_USER_FAILURE,
+    payload: error,
+  };
+};
+
+export const getNoificationDataLoading = () => {
+  return {
+    type: NOTIFICATION_DATA_LOADING,
+  };
+};
+export const getNoificationDataSuccess = (data) => {
+  return {
+    type: NOTIFICATION_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getNoificationDataFailure = (error) => {
+  return {
+    type: NOTIFICATION_DATA_FAILURE,
     payload: error,
   };
 };
@@ -418,8 +439,8 @@ export const myProfileAPi = () => {
 
 export const getUserByIdApi = (userId) => {
   const data = {
-    userId: userId
-  }
+    userId: userId,
+  };
 
   return (dispatch) => {
     dispatch(getUserByIdLoading("USERS BY ID....", "USERS BY ID"));
@@ -442,10 +463,10 @@ export const getUserByIdApi = (userId) => {
 export const updateUserApi = (updateData) => {
   //console.log("hello  brandupdateApi info",info)
   const data = {
-        userId: updateData?.userId,
-        roleId: updateData?.roleId,
-        Status: updateData?.Status,
-  }
+    userId: updateData?.userId,
+    roleId: updateData?.roleId,
+    Status: updateData?.Status,
+  };
 
   //  console.log("hello  brandupdateApi data",data)
 
@@ -464,9 +485,7 @@ export const updateUserApi = (updateData) => {
       .catch((err) => {
         // toast.error("Brand update Failed!!!");
         console.log("error caught in -> actions/user/update", err);
-        dispatch(
-          updateUserDataFailure(err)
-        );
+        dispatch(updateUserDataFailure(err));
       });
   };
 };
@@ -475,7 +494,7 @@ export const filterUserApi = (pageNo, pageSize, role) => {
   const data = {
     pageNo: pageNo,
     pageSize: pageSize,
-    role:role,
+    role: role,
   };
   return (dispatch) => {
     dispatch(getUserDataLoading("USER....", "USER"));
@@ -492,6 +511,25 @@ export const filterUserApi = (pageNo, pageSize, role) => {
       .catch((err) => {
         console.log("actions/login/filterUser.js =>FAILURE", err);
         dispatch(getUserDataFailure(err));
+      });
+  };
+};
+
+export const getNotificationApi = () => {
+  return (dispatch) => {
+    dispatch(getNoificationDataLoading("ROLE....", "PRIVILEGES"));
+    client
+      .get("/api/login/notification")
+      .then((response) => {
+        console.log("getNoificationDataSuccess", response);
+        if (response?.status === 200) {
+          dispatch(getNoificationDataSuccess(response.data));
+        }
+      })
+      .catch((err) => {
+        console.log("error caught in -> actions/login/getNoificationApi", err);
+
+        dispatch(getNoificationDataFailure(err));
       });
   };
 };

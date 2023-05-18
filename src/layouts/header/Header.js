@@ -1,10 +1,13 @@
 import React from "react";
-import FeatherIcon from "feather-icons-react";
+import { Menu } from "react-feather";
+
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import PropTypes from "prop-types";
 // Dropdown Component
 import SearchDD from "./SearchDD";
 import ProfileDD from "./ProfileDD";
+import Notification from "./notification";
+
 import {
   Grid,
   Button,
@@ -36,7 +39,7 @@ const Header = ({
             },
           }}
         >
-          <FeatherIcon icon="menu" width="20" height="20" />
+          <Menu width="20" height="20" />
         </IconButton>
 
         {/* <Typography variant="h2">{moduleName}</Typography> */}
@@ -48,7 +51,7 @@ const Header = ({
         {/* ------------ End Menu icon ------------- */}
 
         <Box flexGrow={1} />
-
+        <Notification />
         <ProfileDD />
         {/* ------------------------------------------- */}
         {/* Profile Dropdown */}
