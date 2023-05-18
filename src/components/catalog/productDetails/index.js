@@ -548,6 +548,8 @@ const ProductDetails = (props) => {
   const [showCommentAddForm, setShowCommentAddForm] = useState(false);
   const [commentAddForm, setCommentAddForm] = useState(false);
   const [attributeSetIdForm, setAttributeSetId] = useState(false);
+  const [commentAPICalled, setCommentAPICalled] = useState(false);
+
   const [objectId, setObjectId] = useState("");
 
   const [stateInput, setStateInput] = useState();
@@ -656,7 +658,7 @@ const ProductDetails = (props) => {
 
     setStateInput(inputState);
   }, [catalogServiceNewReducer?.productPimCodeData]);
-  console.log("hello objectId", stateInput);
+  // console.log("hello objectId", stateInput);
   const getInputValue = (keyName) => {
     try {
       return stateInput[keyName];
@@ -666,7 +668,7 @@ const ProductDetails = (props) => {
   };
 
   const AccordionSetUp = (key, value) => {
-    console.log("AccordkeyionSetUp", key, value.comments);
+    //console.log("AccordkeyionSetUp", key, value.comments);
     return (
       <>
         <Accordion>
@@ -709,6 +711,7 @@ const ProductDetails = (props) => {
                     <AddFormRevalidate
                       classModal={() => setShowRevalidateAddForm(false)}
                       attributeSetIdData={attributeSetIdForm}
+                      revalidateCalled={() => setCommentAPICalled(true)}
                     />
                   }
                 />
@@ -833,7 +836,9 @@ const ProductDetails = (props) => {
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
-                Product Details
+                {router.query.ActiveProduct?.length > 0
+                  ? `Active Products - ${router.query.PimCodeId}`
+                  : `Product Details - ${router.query.PimCodeId}`}
               </Typography>
               {role === "ADMIN" && router.query.tab == "Ready-for-review" ? (
                 <Button
@@ -841,17 +846,19 @@ const ProductDetails = (props) => {
                   color="success"
                   component="label"
                   onClick={activateHandler}
+                  disabled={commentAPICalled}
                 >
                   Activate
                   {/* <input hidden accept="image/*" multiple type="file" /> */}
                 </Button>
-              ) : role && router.query.tab == "Revalidate" && checkUpdate ? (
+              ) : role && router.query.tab == "Revalidate" ? (
                 <>
                   <Button
                     variant="outlined"
                     color="success"
                     component="label"
                     onClick={updateHandler}
+                    disabled={!checkUpdate}
                   >
                     Update
                     {/* <input hidden accept="image/*" multiple type="file" /> */}

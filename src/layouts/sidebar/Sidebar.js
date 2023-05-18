@@ -17,26 +17,38 @@ import {
   Button,
   Typography,
   ListItem,
-  Collapse,
-  ListItemIcon,
   ListItemText,
   Divider,
+  Collapse,
+  ListItemIcon,
+  // ExpandLess,
+  // ExpandMore,
 } from "@mui/material";
 import FeatherIcon from "feather-icons-react";
 import LogoIcon from "../logo/LogoIcon";
 import Menuitems from "./MenuItems";
-import Buynow from "./Buynow";
+
 import { useRouter } from "next/router";
 import SideBarContent from "./siderBarContent";
 import Image from "next/image";
 import styles from "./sidebar.module.css";
 
 import ProfileDD from "../header/ProfileDD";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const [open, setOpen] = React.useState(true);
   const [submenuOpen, setSubmenuOpen] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("");
+  const [selectedSubMenu, setSelectedSubMenu] = useState(null);
+
+  const { loginReducer } = useSelector((state) => {
+    return state;
+  });
+  console.log("loginReducer", loginReducer.userRole);
 
   const [openSecondLevel, setOpenSecondLevel] = React.useState(true);
   const handleClick = () => {
@@ -48,12 +60,22 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   };
 
   const handleMenuClick = (title) => {
-    console.log(title, "hello title");
+    // console.log(title, "hello menu title");
+
     if (title === selectedMenu) {
       setSubmenuOpen(!submenuOpen);
     } else {
       setSelectedMenu(title);
       setSubmenuOpen(true);
+    }
+  };
+  const handleSubMenuClick = (submenuTitle) => {
+    // console.log(submenuTitle, "hello submenuTitle title");
+
+    if (selectedSubMenu === submenuTitle) {
+      setSelectedSubMenu(null);
+    } else {
+      setSelectedSubMenu(submenuTitle);
     }
   };
 
@@ -63,17 +85,28 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const location = curl.pathname;
 
   // the below role has to be dynamic
-  const ROLE = "ADMIN";
+  // const ROLE = ["ADMIN", "R_DRUGS", "KEYMED_MANAGER", "HIPAR", "ONLINE_MASTER"];
+
+  // const filteredMenuItems = Menuitems.filter((item) => {
+  //   const uppercaseTitles = item.title.toUpperCase();
+  //   return ROLES.some(
+  //     (role) =>
+  //       ["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(uppercaseTitles) &&
+  //       role === uppercaseTitles
+  //   );
+  // });
+
+  const menuProtected = Menuitems.filter(
+    (item) =>
+      !["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(
+        item.title.toUpperCase()
+      )
+  );
+  // console.log(menuProtected, "menuProtected");
+  // console.log(Menuitems, "Menuitems");
 
   const filteredMenuItems =
-    ROLE !== "ADMIN"
-      ? Menuitems.filter(
-          (item) =>
-            !["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(
-              item.title.toUpperCase()
-            )
-        )
-      : Menuitems;
+    loginReducer?.userRole === "ADMIN" ? Menuitems : menuProtected;
 
   const SidebarContent = (
     <Box p={5} height="100%" className={styles.bg_color}>
@@ -83,7 +116,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
         <div className={styles.roots}>
           <List>
             {filteredMenuItems.map((menuitem, index) => {
-              console.log("menuIiem", menuitem);
+              // console.log("menuIiem", menuitem);
               return (
                 <div key={index}>
                   <List component="li" disablePadding>
@@ -96,6 +129,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                         selected={location === menuitem.href}
                         sx={{
                           mb: 1,
+                          pl: 0,
                           ...(location === menuitem.href && {
                             color: "#419794",
                             // backgroundColor: (theme) =>
@@ -118,7 +152,19 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                           primary={menuitem.title}
                           className={styles.text_menu}
                         />
-                        {menuitem.list && submenuOpen ? "" : ""}
+                        {submenuOpen &&
+                        menuitem.title === selectedMenu &&
+                        menuitem.list ? (
+                          <>
+                            <KeyboardArrowUpIcon />
+                          </>
+                        ) : menuitem.list ? (
+                          <>
+                            <KeyboardArrowDownIcon />
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </ListItem>
                     </NextLink>
                   </List>
@@ -144,7 +190,14 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                                     //   `${theme.palette.primary.main}!important`,
                                   }),
                                 }}
+                                onClick={() =>
+                                  handleSubMenuClick(submenu.title)
+                                }
                               >
+                                <ListItemIcon>
+                                  <ChevronRightIcon />
+                                  {/* Change the icon based on the state */}
+                                </ListItemIcon>
                                 <ListItemText
                                   primary={submenu.title}
                                   className={styles.text_sub_menu}
@@ -162,8 +215,6 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
           </List>
         </div>
       </Box>
-
-      {/* <Buynow /> */}
     </Box>
   );
   if (lgUp) {

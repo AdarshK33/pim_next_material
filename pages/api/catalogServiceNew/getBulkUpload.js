@@ -2,17 +2,13 @@ import { catalogServiceNew } from "../../../utils/axios";
 import withSession from "../../../utils/session";
 
 function handler(req, res) {
+  // return new Promise((resolve, reject) => {
   const body = req.body;
-  // const sku = body.pageNumber
-  // const sku2 = body.pageSize
 
   const { user: { at = "" } = {}, loggedIn } = req.session;
-
-  //   http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes_set?page_No=0&page_size=10
-  // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes_set?page_No=0&page_size=5
   const config = {
     method: "get",
-    url: `/catalog/attributes_set/${body.id}?page_no=${body.page_no}&page_size=10`,
+    url: `/catalog/bulk/${body.pageNo}/10`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
@@ -21,23 +17,23 @@ function handler(req, res) {
 
   catalogServiceNew(config)
     .then((response) => {
-      console.log("res1", response);
+      // console.log(response,"hello syncCommandServer")
       if (response.status === 200) {
-        res.status(200).json(response.data);
+        res.status(200).json(response.data.result);
         Promise.resolve();
       }
     })
     .catch((err) => {
-      console.log(
-        "error caught in -> pages/api/catalogServiceNew/attributeList.js",
-        err
-      );
+      console.log("error caught in -> api/catalogServiceNew/bulkListing", err);
+      // console.log(err.response);
       if (err?.response?.data) {
         const { status = {} } = err?.response;
         res.status(status).json(err.response.data.error + " " + status);
       } else res.status(500).json({ message: "something went wrong" });
       Promise.reject(err);
     });
+  // }
+  // )
 }
 
 export default withSession(handler);

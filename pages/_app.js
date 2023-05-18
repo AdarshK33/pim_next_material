@@ -11,16 +11,17 @@ import FullLayout from "../src/layouts/FullLayout";
 import "../styles/style.css";
 import withRedux from "next-redux-wrapper";
 import { mainStore } from "../redux/store";
-import { withIronSessionSsr } from "iron-session/next";
+// import { withIronSessionSsr } from "iron-session/next";
 import { client } from "../utils/axios";
 import { userRole } from "../redux/actions/login";
 import { useDispatch } from "react-redux";
+import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 function MyApp(props) {
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
   const {
     Component,
     emotionCache = clientSideEmotionCache,
@@ -29,9 +30,10 @@ function MyApp(props) {
   } = props;
 
   useEffect(() => {
-    client.post('api/userApi')
-      .then(response => {
-        console.log('testing response', response?.data?.role)
+    client
+      .post("api/userApi")
+      .then((response) => {
+        console.log("testing response", response?.data?.role);
         dispatch(
           userRole(
             response?.data?.role,
@@ -39,10 +41,15 @@ function MyApp(props) {
             "LOGIN DETAILS"
           )
         );
-      }).catch(err => {
-        console.log('err in catch', err)
       })
-  }, [])
+      .catch((err) => {
+        console.log("err in catch", err);
+      });
+  }, []);
+
+  useEffect(() => {
+    dispatch(getCategoriesApi());
+  }, []);
   // useeffect and dispatch called -init
   // client to server call - use : api/userApi
   // get the response in client side
@@ -65,40 +72,40 @@ function MyApp(props) {
   );
 }
 
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
-    try {
-      const user = req?.session?.user || null;
-      console.log("hello app", user);
-      if (!user) {
-        return {
-          redirect: {
-            destination: "/login",
-            permanent: false,
-          },
-        };
-      }
+// export const getServerSideProps = withIronSessionSsr(
+//   async function getServerSideProps({ req }) {
+//     try {
+//       const user = req?.session?.user || null;
+//       console.log("hello app", user);
+//       if (!user) {
+//         return {
+//           redirect: {
+//             destination: "/login",
+//             permanent: false,
+//           },
+//         };
+//       }
 
-      return {
-        props: {
-          user: req?.session?.user || null,
-        },
-      };
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  },
-  {
-    cookieName: "PIMSESSION",
-    password: "760848aa-c385-4321-ba49-75201fa0de80",
-    cookieOptions: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      maxAge: 60 * 2,
-    },
-  }
-);
+//       return {
+//         props: {
+//           user: req?.session?.user || null,
+//         },
+//       };
+//     } catch (error) {
+//       console.error(error);
+//       throw error;
+//     }
+//   },
+//   {
+//     cookieName: "PIMSESSION",
+//     password: "760848aa-c385-4321-ba49-75201fa0de80",
+//     cookieOptions: {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV === "production" ? true : false,
+//       maxAge: 60 * 2,
+//     },
+//   }
+// );
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,

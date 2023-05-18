@@ -9,6 +9,10 @@ import {
   Card,
   CardContent,
   Typography,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,30 +21,42 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
+
+import Pagination from "react-js-pagination";
 
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
 import UpdateForm from "./UpdateForm.js";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
+import {
+  getRoleApi,
+  getUserListApi,
+  getUserByIdApi,
+  filterUserApi,
+} from "../../../redux/actions/login";
 
 const UserManagement = () => {
-  const { userGet, roleGet } = useSelector((state) => {
+  const { userGet, roleGet, loading } = useSelector((state) => {
     return state.loginReducer;
   });
   const dispatch = useDispatch();
   const [showUserAddForm, setShowUserAddForm] = useState(false);
   const [showUserUpdateForm, setShowUserUpdateForm] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     dispatch(getUserListApi(currentPage - 1, 5));
     dispatch(getRoleApi());
   }, []);
+
+  const roleHandler = (e) => {
+    setRole(e.target.value);
+    dispatch(filterUserApi(currentPage - 1, 5, role));
+  };
 
   const tableData = [];
 
@@ -59,10 +75,15 @@ const UserManagement = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = userGet?.content;
 
-  const handlePaginationChange = (event, value) => {
+  const handlePaginationChange = (value) => {
     setCurrentPage(value);
     // console.log(value, "value");
     dispatch(getUserListApi(value - 1, 5));
+  };
+
+  const handleEdit = (userId) => {
+    setShowUserUpdateForm(true);
+    dispatch(getUserByIdApi(userId));
   };
 
   return (
@@ -75,6 +96,34 @@ const UserManagement = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Users
               </Typography>
+              <Grid
+                item
+                xs={4}
+                container
+                spacing={2}
+                justifyContent="space-between"
+              >
+                <FormControl fullWidth variant="standard">
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Select Role
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    label="Role"
+                    value={role || ""}
+                    onChange={(e) => roleHandler(e)}
+                  >
+                    <MenuItem value=""></MenuItem>
+                    {roleGet &&
+                      roleGet?.map((item, i) => {
+                        return (
+                          <MenuItem value={item.name}>{item.name}</MenuItem>
+                        );
+                      })}
+                  </Select>
+                </FormControl>
+              </Grid>
               <Button
                 variant="outlined"
                 color="success"
@@ -118,7 +167,7 @@ const UserManagement = () => {
                             {i + 1 + indexOfFirstRecord}
                           </TableCell>
                           <TableCell align="right">{row.email}</TableCell>
-                          <TableCell align="right">{row.role}</TableCell>
+                          <TableCell align="right">{row.roleName}</TableCell>
                           <TableCell align="right">{row.status}</TableCell>
                           <div className="action_center">
                             <Image
@@ -127,8 +176,7 @@ const UserManagement = () => {
                               alt="edit"
                               width={30}
                               height={25}
-                              // onClick={()=>handleEdit(item.brandId)}
-                              onClick={() => setShowUserUpdateForm(true)}
+                              onClick={() => handleEdit(row.userId)}
                             />
                           </div>
                           <CustomModal
@@ -150,17 +198,28 @@ const UserManagement = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Stack spacing={2}>
-                <div className={styles.category_pagination}>
-                  <Pagination
+              {/* <Stack spacing={2}> */}
+              <div className={styles.category_pagination}>
+                {/* <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
                     showFirstButton
                     showLastButton
                     onChange={handlePaginationChange}
-                  />
-                </div>
-              </Stack>
+                  /> */}
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={currentPage}
+                  itemsCountPerPage={recordPerPage}
+                  totalItemsCount={totalRecords}
+                  pageRangeDisplayed={pageRange}
+                  firstPageText="First"
+                  lastPageText="Last"
+                  onChange={handlePaginationChange}
+                />
+              </div>
+              {/* </Stack> */}
             </CardContent>
           </Card>
         </Grid>

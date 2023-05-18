@@ -32,6 +32,12 @@ import {
   PRODUCT_UPDATE_DATA_LOADING,
   PRODUCT_UPDATE_DATA_SUCCESS,
   PRODUCT_UPDATE_DATA_FAILURE,
+  ATTRIBUTE_SET_DETAILS_DATA_LOADING,
+  ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
+  ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
+  BULK_LIST_DATA_LOADING,
+  BULK_LIST_DATA_SUCCESS,
+  BULK_LIST_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -233,9 +239,46 @@ export const productUpdateDataFailure = (error) => {
   };
 };
 
-export const getAttributeListApi = (pageNo, pageSize) => {
+export const attributeSetDetailListLoading = () => {
+  return {
+    type: ATTRIBUTE_SET_DETAILS_DATA_LOADING,
+  };
+};
+export const attributeSetDetailListSuccess = (data) => {
+  return {
+    type: ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const attributeSetDetailListFailure = (error) => {
+  return {
+    type: ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const bulkDetailListLoading = () => {
+  return {
+    type: BULK_LIST_DATA_LOADING,
+  };
+};
+export const bulkDetailListSuccess = (data) => {
+  return {
+    type: BULK_LIST_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const bulkDetailListFailure = (error) => {
+  return {
+    type: BULK_LIST_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const getAttributeListApi = (id, pageNo, pageSize) => {
   const data = {
-    page_No: pageNo,
+    id: id,
+    page_no: pageNo,
     page_size: pageSize,
   };
   return (dispatch) => {
@@ -395,12 +438,12 @@ export const addCategoryApi = (data) => {
       .post("/api/catalogServiceNew/addcategory", data)
 
       .then((response) => {
-        console.log(" csdxfsdf", response);
+        // console.log(" csdxfsdf", response);
         dispatch(addCategorySuccess(response.data));
         toast.info("Category Added Successfully !!!");
       })
       .catch((err) => {
-        toast.error("Category Not Added!!!");
+        toast.error("Category  failed!!!");
 
         dispatch(addCategoryFailure(err));
       });
@@ -463,7 +506,7 @@ export const statusChangedApis = (info) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
-          toast.info("Status changed Successfully !!!");
+          toast.info("Product Activated Successfully !!!");
 
           dispatch(
             statusDataSuccess(
@@ -487,17 +530,22 @@ export const statusChangedApis = (info) => {
   };
 };
 
-export const getCatalogPublishApi = (selectedItemIds) => {
-  const data = selectedItemIds;
+export const getCatalogPublishApi = (selectedItemIds, channelId) => {
+  const data = {
+    selectedItemIds,
+    channelId,
+  };
   return (dispatch) => {
     dispatch(publishCatalogLoading("PUBLISH....", "PUBLISH"));
     client
       .post("/api/catalogServiceNew/publishCatalog", data)
       .then((response) => {
+        toast.info("Publish Successfully !!!");
         dispatch(publishCatalogSuccess(response.data, "PUBLISH SUCCESS"));
         console.log("responsefrom", response);
       })
       .catch((err) => {
+        toast.error("Publish Failed !!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/getCatalogPublish",
           err
@@ -547,6 +595,61 @@ export const productUpdateApis = (data) => {
             "product UPDATE"
           )
         );
+      });
+  };
+};
+
+export const getAttributeSetDetailsListApi = (Id, pageNo, pageSize) => {
+  const data = {
+    id: Id,
+    pageNo: pageNo,
+    pageSize: pageSize,
+  };
+  return (dispatch) => {
+    dispatch(attributeSetDetailListLoading("ATTRIBUTE....", "ATTRIBUTE"));
+    client
+      .post("/api/catalogServiceNew/attributeSetList", data)
+      .then((response) => {
+        // console.log(" getAttributeListApi response", response);
+
+        if (response?.data.statusCode === 200) {
+          // console.log("API SUCCESS2", response.data);
+          dispatch(attributeSetDetailListSuccess(response.data.result));
+        }
+      })
+      .catch((err) => {
+        console.log(
+          "actions/catalogServiceNew/GET ATTRIBUTE LIST =>FAILURE",
+          err
+        );
+        dispatch(attributeSetDetailListFailure(err));
+      });
+  };
+};
+
+export const getBuilkDetailsListApi = (pageNo, pageSize) => {
+  const data = {
+    pageNo: pageNo,
+    pageSize: pageSize,
+  };
+  return (dispatch) => {
+    dispatch(bulkDetailListLoading("ATTRIBUTE....", "ATTRIBUTE"));
+    client
+      .post("/api/catalogServiceNew/getBulkUpload", data)
+      .then((response) => {
+        console.log(" bulkDetailListLoading response", response);
+
+        if (response?.status === 200) {
+          console.log("hello API SUCCESS2", response.data);
+          dispatch(bulkDetailListSuccess(response.data));
+        }
+      })
+      .catch((err) => {
+        console.log(
+          "actions/catalogServiceNew/GET getBuilkDetailsListApi LIST =>FAILURE",
+          err
+        );
+        dispatch(bulkDetailListFailure(err));
       });
   };
 };

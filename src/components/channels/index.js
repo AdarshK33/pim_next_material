@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./channels.module.css";
 import Image from "next/image";
 import edit from "../../../assets/icons/edit.svg";
+import add from "../../../assets/icons/plus.svg";
+
 import {
   Grid,
   Button,
@@ -17,15 +19,24 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
-import { getChannelListApi } from "../../../redux/actions/channel";
+import {
+  getChannelListApi,
+  channelAttributeApiList,
+} from "../../../redux/actions/channel";
 import CustomModal from "../../common/customModal";
-import AddForm from "./AddForm";;
+import AddForm from "./AddForm";
+import { useRouter } from "next/router";
+import Pagination from "react-js-pagination";
 
 const Channels = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { channelReducer } = useSelector((state) => {
+    return state;
+  });
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,25 +45,9 @@ const Channels = () => {
     dispatch(getChannelListApi(currentPage - 1, 5));
   }, []);
 
-  const { channelReducer } = useSelector((state) => {
-    return state;
-  });
-
   // console.log("catalogServiceNewReducer", channelReducer?.channelGet);
 
-  const tableData = [];
-
-  for (let i = 1; i <= 5; i++) {
-    tableData.push({
-      name: "amazon" + i,
-      desc: "cloths" + i,
-      last: "NA" + i,
-      tpa: "0" + i,
-      tpia: "0" + i,
-      status: "Active",
-    });
-  }
-
+  // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   const recordPerPage = 5;
   const totalRecords = channelReducer?.channelGet?.totalElements;
   const pageRange = 5;
@@ -60,11 +55,20 @@ const Channels = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = channelReducer?.channelGet?.content;
 
-  const handlePaginationChange = (event, value) => {
+  const handlePaginationChange = (value) => {
     setCurrentPage(value);
     dispatch(getChannelListApi(value - 1, 5));
   };
+  // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+  const handleAdd = (channelId, channelName) => {
+    // console.log("channelId", channelId);
+    router.push({
+      pathname: "/channelAddAttribute",
+      query: { channelId: channelId, channelName: channelName },
+    });
+    dispatch(channelAttributeApiList(channelName, 0, 5));
+  };
   return (
     <>
       <Grid container spacing={0}>
@@ -108,7 +112,7 @@ const Channels = () => {
                         TOTAL PRODUCT INACTIVE
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ACTION</TableCell>
+                      <TableCell align="right">ATTRIBUTES</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -131,14 +135,19 @@ const Channels = () => {
                           <TableCell align="right">
                             {row.status === true ? "Active" : "In-Active"}
                           </TableCell>
-                          <div className="action_center">
+
+                          <div
+                            className={`action_center ${styles.icon_center}`}
+                          >
                             <Image
-                              className="px-2 "
+                              className="px-2"
                               src={edit}
-                              alt="edit"
-                              width={35}
-                              height={30}
-                              // onClick={()=>handleEdit(item.brandId)}
+                              alt="add"
+                              width={30}
+                              height={25}
+                              onClick={() =>
+                                handleAdd(row.channelId, row.channelName)
+                              }
                             />
                           </div>
                         </TableRow>
@@ -151,17 +160,28 @@ const Channels = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Stack spacing={2}>
-                <div className={styles.category_pagination}>
-                  <Pagination
+              {/* <Stack spacing={2}> */}
+              <div className={styles.category_pagination}>
+                {/* <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
                     showFirstButton
                     showLastButton
                     onChange={handlePaginationChange}
-                  />
-                </div>
-              </Stack>
+                  /> */}
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={currentPage}
+                  itemsCountPerPage={recordPerPage}
+                  totalItemsCount={totalRecords}
+                  pageRangeDisplayed={pageRange}
+                  firstPageText="First"
+                  lastPageText="Last"
+                  onChange={handlePaginationChange}
+                />
+              </div>
+              {/* </Stack> */}
             </CardContent>
           </Card>
         </Grid>

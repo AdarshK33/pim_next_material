@@ -19,6 +19,18 @@ import {
   GET_ROLES_PRIVILEGE_LOADING,
   GET_ROLES_PRIVILEGE_SUCCESS,
   GET_ROLES_PRIVILEGE_FAILURE,
+  MY_PROFILE_DATA_LOADING,
+  MY_PROFILE_DATA_SUCCESS,
+  MY_PROFILE_DATA_FAILURE,
+  UPDATE_USER_DATA_LOADING,
+  UPDATE_USER_DATA_SUCCESS,
+  UPDATE_USER_DATA_FAILURE,
+  GET_USER_BY_ID_LOADING,
+  GET_USER_BY_ID_SUCCESS,
+  GET_USER_BY_ID_FAILURE,
+  FILTER_USER_LOADING,
+  FILTER_USER_SUCCESS,
+  FILTER_USER_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -30,9 +42,14 @@ const initialState = {
   userRole: [],
   userBrand: [],
   userGet: {},
-  roleGet: {},
+  roleGet: [],
   newUser: {},
   rolePrivilege: {},
+  myProfile: {},
+  updateUser: {},
+  getByIdUser: {},
+  getIdUser: {},
+  filterUser: {},
   // accessToken:{},
   // refreshToken:{}
 };
@@ -172,6 +189,85 @@ const loginReducer = (state = initialState, action) => {
         rolePrivilege: [],
         error: action,
       };
+    case MY_PROFILE_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case MY_PROFILE_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        myProfile: action.payload,
+        error: {},
+      };
+    case MY_PROFILE_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        myProfile: [],
+        error: action,
+      };
+    case UPDATE_USER_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updateUser: action.payload,
+        error: {},
+      };
+    case UPDATE_USER_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        updateUser: [],
+        error: action,
+      };
+
+    case GET_USER_BY_ID_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_USER_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        getIdUser: action.payload,
+        error: {},
+      };
+    case GET_USER_BY_ID_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        getIdUser: [],
+        error: action,
+      };
+
+    case FILTER_USER_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FILTER_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        filterUser: action.payload,
+        error: {},
+      };
+    case FILTER_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        filterUser: [],
+        error: action,
+      };
+
     default:
       return state;
   }

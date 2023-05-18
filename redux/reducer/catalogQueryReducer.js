@@ -14,11 +14,14 @@ import {
   STATUS_DATA_LOADING,
   STATUS_DATA_SUCCESS,
   STATUS_DATA_FAILURE,
+  ATTRIBUTE_SET_DETAILS_DATA_LOADING,
+  ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
+  ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
   loading: false,
-  catagories: {},
+  catagories: [],
   attributeGet: {},
   allProductGet: {},
   createComment: {},

@@ -15,8 +15,12 @@ import {
   CHANNEL_MAPPING_SUCCESS,
   CHANNEL_MAPPING_FAILURE,
   GET_CHANNEL_ATTRIBUTE,
+  CREATE_CHANNEL_ATTRIBUT_DATA_LOADING,
+  CREATE_CHANNEL_ATTRIBUT_DATA_SUCCESS,
+  CREATE_CHANNEL_ATTRIBUTE_DATA_FAILURE,
 } from "../types/types";
 import { client } from "../../utils/axios";
+import { toast } from "react-toastify";
 
 export const getChannelAttributes = (page, data) => {
   return {
@@ -118,6 +122,24 @@ export const channelMappingFailure = (error) => {
   };
 };
 
+export const createChannelAttributesDataLoading = () => {
+  return {
+    type: CREATE_CHANNEL_ATTRIBUT_DATA_LOADING,
+  };
+};
+export const createChannelAttributesDataSuccess = (data) => {
+  return {
+    type: CREATE_CHANNEL_ATTRIBUT_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const createChannelAttributesDataFailure = (error) => {
+  return {
+    type: CREATE_CHANNEL_ATTRIBUTE_DATA_FAILURE,
+    payload: error,
+  };
+};
+
 export const createChannelApi = (data) => {
   return (dispatch) => {
     dispatch(createChannelDataLoading("Channel....", "Channel"));
@@ -132,7 +154,6 @@ export const createChannelApi = (data) => {
       .catch((err) => {
         dispatch(createChannelDataFailure(err));
       });
-
   };
 };
 
@@ -258,6 +279,34 @@ export const channelMappingApi = (channel, data) => {
       })
       .catch((err) => {
         dispatch(channelMappingFailure(err));
+      });
+  };
+};
+
+export const createChannelAttributesApi = (info) => {
+  const data = {
+    keyName: info.keyName,
+    channelId: info.channelId,
+    inputType: "text",
+    mandatory: true,
+    readOnly: true,
+    aliasKeyName: info.keyName,
+    structureType: "ARRAY",
+  };
+  return (dispatch) => {
+    dispatch(createChannelAttributesDataLoading("....Channel", "Attributes"));
+    client
+      .post("/api/catalogServiceNew/addChannelAttributes", data)
+      .then((response) => {
+        // result = true;
+        if (response) {
+          toast.info("Attribute Created Successfully!!!");
+          dispatch(createChannelAttributesDataSuccess(response.data.result));
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        toast.error("Attribute  Failed!!!");
+        dispatch(createChannelAttributesDataFailure(err));
       });
   };
 };

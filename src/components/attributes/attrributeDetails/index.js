@@ -6,20 +6,12 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-
 import {
   Grid,
-  FormControl,
-  FormLabel,
-  InputLabel,
-  Input,
-  Select,
+  Button,
   Box,
   Card,
   CardContent,
-  MenuItem,
-  TextField,
-  Button,
   Typography,
 } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -31,79 +23,74 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 // import Pagination from "@mui/material/Pagination";
 // import Stack from "@mui/material/Stack";
-import styles from "./attribute.module.css";
-import Image from "next/image";
-// import edit from "../../../assets/icons/edit.svg";
-import lens from "../../../assets/icons/lens.svg";
+// import styles from "./attribute.module.css";
+import styles from "../attribute.module.css";
 
-import CustomModal from "../../common/customModal";
-import AddForm from "./AddForm.js";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getAttributeListApi,
-  getAttributeSetDetailsListApi,
-} from "../../../redux/actions/catalogServiceNew";
-import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
-import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
-import CircularProgress from "@mui/material/CircularProgress";
 
-const Attributes = () => {
+// import edit from "../../../assets/icons/edit.svg";
+// import CustomModal from "../../common/customModal";
+// import AddForm from "./AddForm.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getAttributeSetDetailsListApi } from "../../../../redux/actions/catalogServiceNew";
+import { getRoleApi, getUserListApi } from "../../../../redux/actions/login";
+
+const AttributeSetDetails = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
+  const { loading } = useSelector((state) => state.catalogServiceNewReducer);
 
-  const { catagories, loading } = useSelector(
-    (state) => state.catalogQueryReducer
-  );
-
-  const router = useRouter();
-
-  // console.log("catalogQueryReducer =>>>>>>>>>>>>>catagories", catagories[0].id);
-
-  const dispatch = useDispatch();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
-  const [categoryId, setCategoryId] = useState();
-
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    dispatch(getAttributeListApi(1, currentPage - 1, 5));
-    dispatch(getRoleApi());
-    dispatch(getCategoriesApi());
-  }, []);
+  //   useEffect(() => {
+  //     dispatch(getAttributeListApi(currentPage - 1, 5));
+  //     dispatch(getRoleApi());
+  //     dispatch(getCategoriesApi());
+  //   }, []);
+
+  console.log(
+    "catalogServiceNewReducer",
+    catalogServiceNewReducer?.attributeSetData
+  );
+  const tableData = [];
+  for (let i = 1; i <= 5; i++) {
+    tableData.push({
+      itemId: "DTE000" + i,
+      itemName: "Dolo 650mg",
+      category: "PHARMA",
+      formation: "20%",
+      productStatus: "Draft",
+    });
+  }
 
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
-  const totalRecords = catalogServiceNewReducer?.attributeGet?.totalElements;
+  const totalRecords = catalogServiceNewReducer?.attributeSetData?.length;
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = catalogServiceNewReducer?.attributeGet?.content;
+  const currentRecords = catalogServiceNewReducer?.attributeSetData?.content;
 
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
-    dispatch(getAttributeListApi(categoryId, value - 1, 5));
+    // dispatch(
+    //   getAttributeSetDetailsListApi(router.query.attributeSet, value - 1, 10)
+    // );
+  };
+  const ShowBack = () => {
+    console.log("called back");
+    router.push("/attributes");
   };
 
   /*-----------------Pagination------------------*/
-
-  function handleEdit(id) {
-    router.push({
-      pathname: "/attributeSet",
-      query: { attributeSet: id },
-    });
-
-    dispatch(getAttributeSetDetailsListApi(id, 0, 10));
-  }
-  const categoryHandler = (e) => {
-    console.log("hello called", e.target.value);
-    setCategoryId(e.target.value);
-    dispatch(getAttributeListApi(e.target.value, currentPage - 1, 5));
-  };
 
   return (
     <>
@@ -111,58 +98,27 @@ const Attributes = () => {
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           {/* <Grid item md={4}>
-            <button
-              onClick={() => setShowBrandCreationForm(true)}
-              className={`btn btn-sm ${styles.add_button_text}`}
-            >
-          + Add New
-            </button>
-          </Grid> */}
+              <button
+                onClick={() => setShowBrandCreationForm(true)}
+                className={`btn btn-sm ${styles.add_button_text}`}
+              >
+            + Add New
+              </button>
+            </Grid> */}
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
-                Attribute set
+                Attributes
               </Typography>
-
-              <Box className={styles.category_btn_add_btn}>
-                <Box className={styles.category_btn_add_btn}>
-                  <FormControl fullWidth variant="standard">
-                    <InputLabel id="demo-simple-select-standard-label">
-                      Categories
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-standard-label"
-                      id="demo-simple-select-standard"
-                      label="Category"
-                      className={styles.selectCategory_dropdown_Att}
-                      value={categoryId || ""}
-                      onChange={categoryHandler}
-                    >
-                      {catagories &&
-                        catagories !== null &&
-                        catagories !== undefined &&
-                        Object.keys(catagories).length &&
-                        catagories?.map((item, i) => {
-                          return (
-                            <MenuItem value={item.id}>{item.name}</MenuItem>
-                          );
-                        })}
-                    </Select>
-                  </FormControl>
-                </Box>
-                <Box className={styles.add_dropDownBtn}>
-                  <Button
-                    variant="outlined"
-                    color="success"
-                    component="label"
-                    onClick={() => setShowAttributeAddForm(true)}
-                  >
-                    ADD NEW
-                    {/* <input hidden accept="image/*" multiple type="file" /> */}
-                  </Button>
-                </Box>
-              </Box>
-
+              <Button
+                variant="outlined"
+                color="success"
+                component="label"
+                onClick={ShowBack}
+              >
+                Back
+              </Button>
+              {/*
               <CustomModal
                 openModal={showAttributeAddForm}
                 closeModal={() =>
@@ -171,7 +127,7 @@ const Attributes = () => {
                 body={
                   <AddForm classModal={() => setShowAttributeAddForm(false)} />
                 }
-              />
+              /> */}
             </Grid>
             {loading === true ? (
               <div
@@ -192,12 +148,14 @@ const Attributes = () => {
                     <TableHead>
                       <TableRow>
                         <TableCell>#</TableCell>
-                        <TableCell>NAME</TableCell>
-                        <TableCell>ROLE</TableCell>
+
+                        <TableCell>DISPLAY NAME</TableCell>
                         <TableCell align="right">DESCRIPTION</TableCell>
-                        <TableCell align="right">PRIORITY SEQUENCE</TableCell>
-                        {/* <TableCell align="right">STATUS</TableCell> */}
-                        <TableCell align="right">ACTION</TableCell>
+                        <TableCell align="right">MANDATORY</TableCell>
+
+                        <TableCell align="right">STATUS</TableCell>
+
+                        {/* <TableCell align="right">ACTION</TableCell> */}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -214,27 +172,28 @@ const Attributes = () => {
                             <TableCell component="th" scope="row">
                               {i + 1 + indexOfFirstRecord}
                             </TableCell>
-                            <TableCell align="right">{row.name}</TableCell>
-                            <TableCell align="right">{row.role}</TableCell>
+                            <TableCell align="right">{row.keyName}</TableCell>
                             <TableCell align="right">
                               {row.description}
                             </TableCell>
+
                             <TableCell align="right">
-                              {row.precedence}
+                              {row.mandatory}
+                              {row?.mandatory === true ? "Yes" : "No"}
                             </TableCell>
-                            {/* <TableCell align="right">
-                            {row?.active === true ? "Active" : "In-Active"}
-                          </TableCell> */}
-                            <div className="action_center">
-                              <Image
-                                className="px-2 "
-                                src={lens}
-                                alt="lens"
-                                width={20}
-                                height={20}
-                                onClick={() => handleEdit(row.id)}
-                              />
-                            </div>
+                            <TableCell align="right">
+                              {row?.active === true ? "Active" : "In-Active"}
+                            </TableCell>
+                            {/* <div className="action_center">
+                            <Image
+                              className="px-2 "
+                              src={edit}
+                              alt="edit"
+                              width={30}
+                              height={25}
+                              onClick={() => handleEdit(row.id)}
+                            />
+                          </div> */}
                           </TableRow>
                         ))
                       ) : (
@@ -266,7 +225,6 @@ const Attributes = () => {
                     onChange={handlePaginationChange}
                   />
                 </div>
-
                 {/* </Stack> */}
               </CardContent>
             )}
@@ -277,4 +235,4 @@ const Attributes = () => {
   );
 };
 
-export default Attributes;
+export default AttributeSetDetails;

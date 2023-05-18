@@ -23,3 +23,15 @@
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;
 }
+
+.category_btn_add_btn {
+  display: flex;
+  align-items: baseline;
+}
+.add_dropDownBtn {
+  margin-left: 10px;
+}
+.selectCategory_dropdown_Att {
+  min-width: 120px !important;
+  padding: 1px 19px 0px 0px;
+}

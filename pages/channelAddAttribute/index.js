@@ -1,16 +1,17 @@
-import React from "react";
-import ActiveProducts from "../../src/components/catalog/activeProducts";
+import ChannelAddAttributes from "../../src/components/channels/channelAddAttributes";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOption } from "../../utils/session";
-const index = () => {
+
+function index() {
   return (
-    <div>
-      <ActiveProducts />
-    </div>
+    <>
+      <ChannelAddAttributes />
+    </>
   );
-};
+}
 
 export default index;
+
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
     try {
