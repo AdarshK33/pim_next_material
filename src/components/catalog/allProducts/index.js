@@ -207,7 +207,7 @@ const AllProducts = (props) => {
   };
 
   const searchHandler = (e, value) => {
-    console.log(value, "hello e.target.value");
+    // console.log(value, "hello e.target.value");
     setSearchValue(value);
   };
 
