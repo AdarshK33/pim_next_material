@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./productDetails.module.css";
 import edit from "../../../../assets/icons/edit.svg";
+
+import { AlertTriangle } from "react-feather";
+
 import Image from "next/image";
 import {
   Grid,
@@ -41,7 +44,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
+import { styled } from "@mui/material/styles";
 
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 const ProductDetails = (props) => {
   const { user: { role = "" } = {}, loggedIn } = props.user;
   const { catalogServiceNewReducer, catalogQueryReducer } = useSelector(
@@ -58,6 +63,13 @@ const ProductDetails = (props) => {
     catalogServiceNewReducer?.productPimCodeData
   );
 
+  const CustomWidthTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 500,
+    },
+  });
   // const result = [
   //   {
   //     attributeSet: "AX MASTER",
@@ -683,6 +695,38 @@ const ProductDetails = (props) => {
               }}
             >
               {value.attributeSet}
+
+              {value.notification && (
+                <CustomWidthTooltip
+                  title={
+                    value.notification ? (
+                      <>
+                        <Box>This attribute set has pending validation</Box>
+                      </>
+                    ) : (
+                      ""
+                    )
+                  }
+                >
+                  <Button
+                    sx={{ m: 1 }}
+                    style={{
+                      margin: "0px",
+                      padding: "0px",
+                      paddingBottom: "3px",
+                    }}
+                  >
+                    <AlertTriangle
+                      style={{
+                        // textAlign: "right",
+                        fontSize: "xx-small",
+                        color: "red",
+                        padding: "3px",
+                      }}
+                    />
+                  </Button>
+                </CustomWidthTooltip>
+              )}
             </Typography>
           </AccordionSummary>
 
@@ -719,19 +763,43 @@ const ProductDetails = (props) => {
             ) : role && router.query.tab == "Revalidate" ? (
               <>
                 <Box className={styles.revalidate_Btn}>
-                  <Button
+                  {/* <Button
                     variant="outlined"
                     color="success"
                     component="label"
                     onClick={(e) => {
                       setShowCommentAddForm(true);
-                      setCommentAddForm(value?.comments.join(", "));
+                      setCommentAddForm(value.notification);
                     }}
                   >
                     Comment
-                  </Button>
+                  </Button> */}
+
+                  {/* {value.notification && (
+                    <CustomWidthTooltip
+                      title={
+                        value.notification ? (
+                          <>
+                            <Box>This attribute set has pending validation</Box>
+                          </>
+                        ) : (
+                          ""
+                        )
+                      }
+                    >
+                      <Button sx={{ m: 1 }}>
+                        <AlertTriangle
+                          style={{
+                            // textAlign: "right",
+                            fontSize: "xx-small",
+                            color: "red",
+                          }}
+                        />
+                      </Button>
+                    </CustomWidthTooltip>
+                  )} */}
                 </Box>
-                <CustomModal
+                {/* <CustomModal
                   id={`${key}-customModal`}
                   openModal={showCommentAddForm}
                   closeModal={(e) => setShowCommentAddForm(false)}
@@ -742,7 +810,7 @@ const ProductDetails = (props) => {
                       valueData={commentAddForm}
                     />
                   }
-                />
+                /> */}
               </>
             ) : (
               <></>

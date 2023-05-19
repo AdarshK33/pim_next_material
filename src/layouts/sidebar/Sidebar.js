@@ -24,7 +24,7 @@ import {
   // ExpandLess,
   // ExpandMore,
 } from "@mui/material";
-import FeatherIcon from "feather-icons-react";
+
 import LogoIcon from "../logo/LogoIcon";
 import Menuitems from "./MenuItems";
 
@@ -109,19 +109,16 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
     loginReducer?.userRole === "ADMIN" ? Menuitems : menuProtected;
 
   const SidebarContent = (
-    <Box p={2} height="100%" className={styles.bg_color}>
-      <LogoIcon />
-      <Divider />
-
+    <Box p={5} height="100%" className={styles.bg_color}>
       <div>{/* <ProfileDD /> */}</div>
-      <Divider />
+
       <Box mt={2}>
         <div className={styles.roots}>
           <List>
             {filteredMenuItems.map((menuitem, index) => {
               // console.log("menuIiem", menuitem);
               return (
-                <div key={index}>
+                <div style={{ marginTop: 10 }} key={index}>
                   <List component="li" disablePadding>
                     <NextLink href={menuitem.href}>
                       <ListItem
@@ -231,6 +228,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
             width: "265px",
             border: "0 !important",
             boxShadow: "0px 7px 30px 0px rgb(113 122 131 / 11%)",
+            zIndex: 1,
           },
         }}
       >

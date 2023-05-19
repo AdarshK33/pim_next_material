@@ -7,12 +7,12 @@ function handler(req, res) {
 
   const body = req.body;
 
-  let id = body.modelCode;
+  let id = body.model_Code;
 
   const arrData = [
     {
       attributeSetId: body.attributeSetId,
-      comments: body.comments,
+      // comments: body.comments,
       status: body.status,
     },
   ];

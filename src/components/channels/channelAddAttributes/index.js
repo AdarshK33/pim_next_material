@@ -137,7 +137,7 @@ const ChannelAddAttributes = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>#</TableCell>
-                      <TableCell align="right">ATTRIBUTE ID</TableCell>
+                      {/* <TableCell align="right">ATTRIBUTE ID</TableCell> */}
                       {/* <TableCell align="right">DESCRIPTION</TableCell> */}
                       {/* <TableCell align="right">LAST UPLOADED</TableCell> */}
                       {/* <TableCell align="right">TOTAL PRODUCT ACTIVE</TableCell> */}
@@ -163,7 +163,7 @@ const ChannelAddAttributes = () => {
                             {i + 1 + indexOfFirstRecord}
                             {/* {row.channelId} */}
                           </TableCell>
-                          <TableCell align="right">{row.attributeId}</TableCell>
+                          {/* <TableCell align="right">{row.attributeId}</TableCell> */}
                           <TableCell align="right">{row.displayName}</TableCell>
 
                           <TableCell align="right"></TableCell>

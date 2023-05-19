@@ -16,6 +16,7 @@ import { client } from "../utils/axios";
 import { userRole } from "../redux/actions/login";
 import { useDispatch } from "react-redux";
 import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
+import { getNotificationApi } from "../redux/actions/login";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -49,6 +50,7 @@ function MyApp(props) {
 
   useEffect(() => {
     dispatch(getCategoriesApi());
+    dispatch(getNotificationApi());
   }, []);
   // useeffect and dispatch called -init
   // client to server call - use : api/userApi

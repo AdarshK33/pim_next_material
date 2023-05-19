@@ -31,6 +31,9 @@ import {
   FILTER_USER_LOADING,
   FILTER_USER_SUCCESS,
   FILTER_USER_FAILURE,
+  NOTIFICATION_DATA_LOADING,
+  NOTIFICATION_DATA_SUCCESS,
+  NOTIFICATION_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -50,6 +53,7 @@ const initialState = {
   getByIdUser: {},
   getIdUser: {},
   filterUser: {},
+  notifyData: {}, //notification data
   // accessToken:{},
   // refreshToken:{}
 };
@@ -265,6 +269,25 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         filterUser: [],
+        error: action,
+      };
+    case NOTIFICATION_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case NOTIFICATION_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        notifyData: action.payload,
+        error: {},
+      };
+    case NOTIFICATION_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        notifyData: [],
         error: action,
       };
 

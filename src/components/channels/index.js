@@ -3,6 +3,7 @@ import styles from "./channels.module.css";
 import Image from "next/image";
 import edit from "../../../assets/icons/edit.svg";
 import add from "../../../assets/icons/plus.svg";
+import { Edit2, Eye, Search, Download } from "react-feather";
 
 import {
   Grid,
@@ -139,12 +140,22 @@ const Channels = () => {
                           <div
                             className={`action_center ${styles.icon_center}`}
                           >
-                            <Image
+                            {/* <Image
                               className="px-2"
                               src={edit}
                               alt="add"
                               width={30}
                               height={25}
+                              onClick={() =>
+                                handleAdd(row.channelId, row.channelName)
+                              }
+                            /> */}
+                            <Eye
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "#419794",
+                              }}
                               onClick={() =>
                                 handleAdd(row.channelId, row.channelName)
                               }

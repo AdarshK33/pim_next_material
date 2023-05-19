@@ -82,6 +82,8 @@ const FullLayout = ({ children }) => {
           sx={{
             paddingTop: "20px",
             paddingLeft: isSidebarOpen && lgUp ? "280px!important" : "",
+            transform: isSidebarOpen && lgUp ? "265px" : "0",
+            transition: "all 0.6s ease-in-out",
           }}
         >
           <Box sx={{ minHeight: "calc(100vh - 170px)" }}>{children}</Box>

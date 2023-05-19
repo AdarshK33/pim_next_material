@@ -1,20 +1,21 @@
 import React from "react";
-import FeatherIcon from "feather-icons-react";
+
+import { ChevronDown } from "react-feather";
+
 import Image from "next/image";
 import userimg from "../../../assets/images/users/user2.jpg";
 import { Box, Menu, Typography, Link, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutApi } from "../../../redux/actions/logout";
-
 const ProfileDD = () => {
   const [anchorEl4, setAnchorEl4] = React.useState(null);
 
   const dispatch = useDispatch();
 
-  const { loginReducer } = useSelector((state) => {
-    return state;
+  const { userRole } = useSelector((state) => {
+    return state.loginReducer;
   });
-  // console.log("loginReducer", loginReducer);
+  // console.log("loginReducer", userRole);
 
   const handleClick4 = (event) => {
     setAnchorEl4(event.currentTarget);
@@ -32,14 +33,35 @@ const ProfileDD = () => {
         aria-haspopup="true"
         onClick={handleClick4}
       >
-        <Box display="flex" alignItems="center">
-          <Image
-            src={userimg}
-            alt={userimg}
-            width="30"
-            height="30"
-            className="roundedCircle"
-          />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            marginRight: "20px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              border: "2px solid orange",
+            }}
+          >
+            <Image
+              src={userimg}
+              alt={userimg}
+              width={40}
+              height={40}
+              className="roundedCircle"
+            />
+          </div>
+
           <Box
             sx={{
               display: {
@@ -49,27 +71,19 @@ const ProfileDD = () => {
               alignItems: "center",
             }}
           >
-            <Typography
-              color="textSecondary"
-              variant="h5"
-              fontWeight="400"
-              sx={{ ml: 1 }}
-            >
-              Hi,
-            </Typography>
-            <Typography
+            <h4
+              className="text-primary"
               variant="h5"
               fontWeight="700"
               sx={{
                 ml: 1,
               }}
             >
-              {loginReducer?.userRole ? loginReducer?.userRole : "My Profile"}
-            </Typography>
-
-            <FeatherIcon icon="chevron-down" width="20" height="20" />
+              {userRole ? userRole : "My Profile"}
+              <ChevronDown icon="chevron-down" width="25" height="15" />
+            </h4>
           </Box>
-        </Box>
+        </div>
       </Button>
       <Menu
         id="profile-menu"
@@ -80,34 +94,30 @@ const ProfileDD = () => {
         sx={{
           "& .MuiMenu-paper": {
             width: "385px",
+            right: "10px !important",
+            left: "auto !important",
+            top: "50px !important",
+            borderRadius: "8px",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
           },
         }}
       >
         <Box>
-          {/* <Box p={2} pt={0}>
-            <List
-              component="nav"
-              aria-label="secondary mailbox folder"
-              onClick={handleClose4}
-            >
-              <ListItemButton>
-                <ListItemText primary="Edit Profile" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary="Account" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary="Change Password" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary="My Settings" />
-              </ListItemButton>
-            </List>
-          </Box> */}
-          {/* <Divider /> */}
           <Box p={2}>
             <Link to="/" onClick={() => dispatch(logoutApi())}>
-              <Button fullWidth variant="contained" color="primary">
+              <Button
+                sx={{
+                  borderRadius: "8px",
+                  transition: "all 0.2s",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+                  },
+                }}
+                fullWidth
+                variant="contained"
+                color="primary"
+              >
                 Logout
               </Button>
             </Link>
