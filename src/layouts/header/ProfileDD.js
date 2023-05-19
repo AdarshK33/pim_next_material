@@ -79,8 +79,6 @@ const ProfileDD = () => {
                 ml: 1,
               }}
             >
-              {/* {userRole ? userRole : "My Profile"} */}
-
               {userRole ? userRole : "My Profile"}
               <ChevronDown icon="chevron-down" width="20" height="20" />
             </h4>
