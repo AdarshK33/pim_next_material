@@ -118,7 +118,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
             {filteredMenuItems.map((menuitem, index) => {
               // console.log("menuIiem", menuitem);
               return (
-                <div key={index}>
+                <div style={{ marginTop: 10 }} key={index}>
                   <List component="li" disablePadding>
                     <NextLink href={menuitem.href}>
                       <ListItem
@@ -228,6 +228,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
             width: "265px",
             border: "0 !important",
             boxShadow: "0px 7px 30px 0px rgb(113 122 131 / 11%)",
+            zIndex: 1,
           },
         }}
       >
