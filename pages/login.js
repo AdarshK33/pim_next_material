@@ -19,7 +19,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import styles from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { userLoginApi } from "../redux/actions/login";
+import { userLoginApi, getNotificationApi } from "../redux/actions/login";
 import { withIronSessionSsr } from "iron-session/next";
 import Router from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -84,6 +84,7 @@ const Login = (user) => {
   }, [itemData]);
 
   useEffect(() => {
+    dispatch(getNotificationApi());
     if (isLogin === 201 && userRole !== "ADMIN") {
       Router.push("/allProducts");
     } else if (isLogin === 201 && userRole === "ADMIN") {

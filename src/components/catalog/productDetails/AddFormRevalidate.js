@@ -12,6 +12,7 @@ import {
   TextField,
   Button,
   Typography,
+  Alert,
 } from "@mui/material";
 import styles from "./productDetails.module.css";
 
@@ -38,11 +39,11 @@ const AddFormRevalidate = ({
   // useEffect(() => {
   //   let infoData = {
   //     PimCodeId: router.query.PimCodeId,
-  //     attributeSetId: 1,
-  //     comments: ["hello"],
+  //     attributeSetId: attributeSetIdData,
+  //     // comments: [addComment],
   //     status: "REVALIDATE",
   //   };
-
+  //   console.log("hello info", infoData);
   //   dispatch(revalidateApis(infoData));
   // }, []);
 
@@ -71,26 +72,29 @@ const AddFormRevalidate = ({
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const value = checkValidations();
+    // const value = checkValidations();
 
-    if (value === true) {
-      // console.log("onSubmit", addComment);
-      let infoData = {
-        PimCodeId: router.query.PimCodeId,
-        attributeSetId: attributeSetIdData,
-        comments: [addComment],
-        status: "REVALIDATE",
-      };
-      dispatch(revalidateApis(infoData));
-      classModal();
-      revalidateCalled();
-    }
+    // if (value === true) {
+    // console.log("onSubmit", addComment);
+    let infoData = {
+      PimCodeId: router.query.PimCodeId,
+      attributeSetId: attributeSetIdData,
+      // comments: [addComment],
+      status: "REVALIDATE",
+    };
+    dispatch(revalidateApis(infoData));
+    classModal();
+    revalidateCalled();
+    // }
   };
   return (
     <>
-      <div className={styles.add_title}>Add issues to revalidate</div>
-      <form>
-        <Grid container>
+      <Alert severity="info">
+        Do you want the attribute set to be Revalidate?
+      </Alert>
+      {/* <div className={styles.add_title}></div> */}
+      {/* <form> */}
+      {/* <Grid container>
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -131,8 +135,28 @@ const AddFormRevalidate = ({
               Save Changes
             </Button>
           </Grid>
-        </Grid>
-      </form>
+        </Grid> */}
+      {/* </form> */}
+
+      <Grid
+        container
+        justifyContent="space-evenly"
+        className={styles.addButton}
+      >
+        <Button onClick={classModal} variant="outlined" color="secondary">
+          No
+        </Button>
+
+        <Button
+          variant="outlined"
+          onClick={submitHandler}
+          type="submit"
+          // variant="contained"
+          color="success"
+        >
+          Yes
+        </Button>
+      </Grid>
       <ToastContainer />
     </>
   );

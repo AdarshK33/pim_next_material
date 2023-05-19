@@ -232,51 +232,12 @@ const AllProducts = (props) => {
                 Products
               </Typography>
               <Box className={styles.product_Bar}>
-                <Box className={styles.Autocomplete_allProducts}>
-                  {/* <TextField
-                    className="form-control searchButton"
-                    type="text"
-                    value={searchValue}
-                    placeholder="Search.."
-                    onChange={(e) => searchHandler(e)}
-                  />
-                  <Search
-                    className="search-icon"
-                    style={{ color: "#419794" }}
-                    onClick={searchDataHandler}
-                  /> */}
-
-                  {catalogServiceNewReducer?.getAllProducts !== null &&
-                    Object.keys(catalogServiceNewReducer?.getAllProducts)
-                      .length && (
-                      <Autocomplete
-                        id="free-solo-demo"
-                        freeSolo
-                        options={
-                          catalogServiceNewReducer?.getAllProducts?.content.map(
-                            (option) => option.itemId
-                          ) || []
-                        }
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label="Item Id.."
-                            className={styles.input_search_product}
-                          />
-                        )}
-                        onChange={(event, value) => {
-                          // Handle the onChange event here
-                          searchHandler(event, value); // Log the selected value to the console
-                        }}
-                      />
-                    )}
-                </Box>
                 <Box>
                   <Button
                     variant="outlined"
                     color="success"
                     component="label"
-                    // onClick={() => handleBulk()}
+                    onClick={() => handleBulk()}
                   >
                     Upload Products
                   </Button>
@@ -342,6 +303,32 @@ const AllProducts = (props) => {
                   />
                 </div>
               </Stack> */}
+              <Box sx={{ maxWidth: 200 }}>
+                {catalogServiceNewReducer?.getAllProducts !== null &&
+                  Object.keys(catalogServiceNewReducer?.getAllProducts)
+                    .length && (
+                    <Autocomplete
+                      id="free-solo-demo"
+                      freeSolo
+                      options={
+                        catalogServiceNewReducer?.getAllProducts?.content.map(
+                          (option) => option.itemId
+                        ) || []
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Item Id.."
+                          // className={styles.input_search_product}
+                        />
+                      )}
+                      onChange={(event, value) => {
+                        // Handle the onChange event here
+                        searchHandler(event, value); // Log the selected value to the console
+                      }}
+                    />
+                  )}
+              </Box>
               <Box sx={{ maxWidth: 1200 }}>
                 {/* <Container maxWidth="xl"> */}
                 <Tabs value={value} onChange={handleChange}>

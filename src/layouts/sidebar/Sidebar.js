@@ -24,7 +24,7 @@ import {
   // ExpandLess,
   // ExpandMore,
 } from "@mui/material";
-import FeatherIcon from "feather-icons-react";
+
 import LogoIcon from "../logo/LogoIcon";
 import Menuitems from "./MenuItems";
 
