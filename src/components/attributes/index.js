@@ -58,6 +58,7 @@ const Attributes = () => {
   const { catagories, loading } = useSelector(
     (state) => state.catalogQueryReducer
   );
+  console.log('catagories', catagories)
 
   const router = useRouter();
 

@@ -291,6 +291,7 @@ export const channelAttributeApiList = (
 };
 
 export const channelMappingApi = (channel, data) => {
+  console.log("data inside mapping", data)
   return (dispatch) => {
     dispatch(channelMappingLoading("loading...", "channel"));
     client
@@ -298,7 +299,7 @@ export const channelMappingApi = (channel, data) => {
       .then((response) => {
         if (response?.status === 200) {
           dispatch(channelMappingSuccess(response.data.result));
-          dispatch(channelAttributeApiList(channel, 0, 5));
+          dispatch(channelAttributeApiList(channel, 0, 20));
         }
       })
       .catch((err) => {
