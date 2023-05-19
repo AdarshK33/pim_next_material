@@ -5,9 +5,19 @@ import Logo from "../../../assets/icons/logo_2.svg";
 
 const LogoIcon = () => {
   return (
-    <Link href="#">
-      <Image src={Logo} alt={Logo} width={80} height={80} />
-    </Link>
+    <div
+      style={{
+        position: "fixed",
+        top: "-1px",
+        left: 10,
+
+        zIndex: 2,
+      }}
+    >
+      <Link href="#">
+        <Image src={Logo} alt={Logo} width={70} height={70} />
+      </Link>
+    </div>
   );
 };
 

@@ -1,23 +1,13 @@
-/* .main_fullLayout {
-  display: flex;
-  min-height: 100vh !important;
-  overflow: hidden !important;
-  width: 100% !important;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;1,500;1,600&display=swap');
 
-.pageWrapper_fullayout {
-  display: flex! !important;
-  flex: 1 1 auto !important;
-  overflow: hidden !important;
-  padding-top: 64px !important;
-  background-color: #ffffff !important;
-} */
 
 .borderRadius {
   border-radius: 6px;
 }
 .roundedCircle {
   border-radius: 100%;
+  padding-top: 10%;
+  position: relative;
 }
 .adarsh {
   color: red;
@@ -26,7 +16,21 @@
 .menu_item {
   margin-left: 20px !important;
 }
-
+.text-primary {
+  color: #419794 !important;
+  font-family: 'Montserrat', sans-serif;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.text-primary2{
+  color: 
+  #000000 !important;
+  font-family: 'Montserrat', sans-serif;
+ 
+  font-size: 20px;
+ 
+  text-align: center;
+}
 th,
 td {
   text-align: center !important;
