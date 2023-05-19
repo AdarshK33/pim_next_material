@@ -18,6 +18,9 @@ import {
   CREATE_CHANNEL_ATTRIBUT_DATA_LOADING,
   CREATE_CHANNEL_ATTRIBUT_DATA_SUCCESS,
   CREATE_CHANNEL_ATTRIBUTE_DATA_FAILURE,
+  ADD_MASTER_ATTRIBUTE_LOADING,
+  ADD_MASTER_ATTRIBUTE_SUCCESS,
+  ADD_MASTER_ATTRIBUTE_FAILURE
 } from "../types/types";
 import { client } from "../../utils/axios";
 import { toast } from "react-toastify";
@@ -139,6 +142,27 @@ export const createChannelAttributesDataFailure = (error) => {
     payload: error,
   };
 };
+
+
+export const addMasterAttributeLoading = () => {
+  return {
+    type: ADD_MASTER_ATTRIBUTE_LOADING,
+  }
+}
+
+export const addMasterAttributeSuccess = (data) => {
+  return {
+    type: ADD_MASTER_ATTRIBUTE_SUCCESS,
+    payload: data
+  }
+}
+
+export const addMasterAttributesFailure = (err) => {
+  return {
+    type: ADD_MASTER_ATTRIBUTE_FAILURE,
+    payload: err
+  }
+}
 
 export const createChannelApi = (data) => {
   return (dispatch) => {
@@ -310,3 +334,27 @@ export const createChannelAttributesApi = (info) => {
       });
   };
 };
+
+
+export const addmasterAttributeApi = (id, item) => {
+  console.log("item in addmasterattribute", id, item)
+  const data = {
+    id: id,
+    item: item
+  }
+  console.log("data in addMasterAttribute", data)
+  return (dispatch) => {
+    dispatch(addMasterAttributeLoading("...Attributes", "Masters"));
+    client
+      .post(`/api/catalogServiceNew/addMasterAttribute`, data)
+      .then(response => {
+        dispatch(addMasterAttributeSuccess(response.data))
+        toast.success('Attribute added successfully')
+      })
+      .catch(err => {
+        dispatch(addMasterAttributesFailure(err))
+        toast.error('Attribute Failed!!!')
+      })
+
+  }
+}

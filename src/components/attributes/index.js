@@ -92,10 +92,10 @@ const Attributes = () => {
 
   /*-----------------Pagination------------------*/
 
-  function handleEdit(id) {
+  function handleEdit(id, name) {
     router.push({
       pathname: "/attributeSet",
-      query: { attributeSet: id },
+      query: { attributeSet: id, attributeSetName: name },
     });
 
     dispatch(getAttributeSetDetailsListApi(id, 0, 10));
@@ -203,8 +203,8 @@ const Attributes = () => {
                     </TableHead>
                     <TableBody>
                       {currentRecords &&
-                      currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}
@@ -241,7 +241,7 @@ const Attributes = () => {
                                   fontSize: "xx-small",
                                   color: "#419794",
                                 }}
-                                onClick={() => handleEdit(row.id)}
+                                onClick={() => handleEdit(row.id, row.name)}
                               />
                             </div>
                           </TableRow>

@@ -339,7 +339,7 @@ const ChannelAttributes = () => {
 
   const options = getChannelAttributesOptions();
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <>
