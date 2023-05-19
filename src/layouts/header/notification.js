@@ -115,10 +115,16 @@ const Notification = () => {
                     aria-label="secondary mailbox folder"
                     onClick={handleClose4}
                   >
-                    <Alert severity="warning">
-                      ** Please check {alert.getAttributeSet}. Product Item{" "}
-                      {alert.getPimModelCode}
-                    </Alert>
+                    {userRole === "ADMIN" ? (
+                      <Alert severity="warning">
+                        Item ID {alert.getPimModelCode} has pending validation
+                        in attribute set {alert.getAttributeSet}.
+                      </Alert>
+                    ) : (
+                      <Alert severity="warning">
+                        Item ID {alert.getPimModelCode} is pending validation
+                      </Alert>
+                    )}
                   </List>
                 </Box>
               </React.Fragment>
