@@ -465,9 +465,9 @@ export const addCategoryApi = (data) => {
 export const revalidateApis = (info) => {
   // console.log("hello  revalidateApis info", info);
   const data = {
-    modelCode: info?.PimCodeId,
+    model_Code: info?.PimCodeId,
     attributeSetId: info.attributeSetId,
-    comments: info.comments,
+    // comments: info.comments,
     status: info.status,
   };
   // console.log("hello  revalidateApis data", data);
@@ -479,7 +479,7 @@ export const revalidateApis = (info) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
-          toast.info("Comment Added Successfully !!!");
+          toast.info("Revalidate status marked Successfully !!!");
 
           dispatch(
             revalidateDataSuccess(
@@ -491,7 +491,7 @@ export const revalidateApis = (info) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        toast.error("Comment Added Failed!!!");
+        toast.error("Revalidate failed!!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/revalidateApis",
           err
@@ -583,7 +583,7 @@ export const productUpdateApis = (data) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
-          toast.info("Product Update Successfully !!!");
+          toast.info("Product updated successfully !!!");
 
           dispatch(
             productUpdateDataSuccess(
@@ -595,7 +595,7 @@ export const productUpdateApis = (data) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        toast.error("Product Update Failed!!!");
+        toast.error("Product updated failed!!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/productUpdate",
           err

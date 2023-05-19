@@ -59,6 +59,7 @@ const Notification = () => {
 
   console.log("arrayData", arrayData[0]);
   const handleClose4 = () => {
+    setNotificationCount(0);
     setAnchorEl66(null);
   };
 
@@ -84,6 +85,7 @@ const Notification = () => {
           color="inherit"
           aria-controls="search-menu"
           aria-haspopup="true"
+          onClick={() => setAnchorEl66(true)}
           size="large"
         >
           <>
@@ -95,8 +97,16 @@ const Notification = () => {
       {loading === false && (
         <Menu
           id="basic-menu"
-          anchorEl={anchorEl66}
+          // anchorEl={anchorEl66}
           open={anchorEl66}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
           onClose={handleClose4}
           MenuListProps={{
             "aria-labelledby": "basic-button",

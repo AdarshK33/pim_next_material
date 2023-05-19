@@ -237,7 +237,7 @@ const AllProducts = (props) => {
                     variant="outlined"
                     color="success"
                     component="label"
-                    // onClick={() => handleBulk()}
+                    onClick={() => handleBulk()}
                   >
                     Upload Products
                   </Button>
