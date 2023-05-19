@@ -90,7 +90,7 @@ const AddFormRevalidate = ({
   return (
     <>
       <Alert severity="info">
-        Do you want the attribute set to be Revalidate?
+        Do you want the attribute set to be Revalidated?
       </Alert>
       {/* <div className={styles.add_title}></div> */}
       {/* <form> */}
