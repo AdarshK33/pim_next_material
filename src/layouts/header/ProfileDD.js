@@ -80,7 +80,7 @@ const ProfileDD = () => {
               }}
             >
               {userRole ? userRole : "My Profile"}
-              <ChevronDown icon="chevron-down" width="20" height="20" />
+              <ChevronDown icon="chevron-down" width="25" height="15" />
             </h4>
           </Box>
         </div>
