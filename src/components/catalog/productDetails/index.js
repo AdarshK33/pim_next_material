@@ -695,6 +695,38 @@ const ProductDetails = (props) => {
               }}
             >
               {value.attributeSet}
+
+              {value.notification && (
+                <CustomWidthTooltip
+                  title={
+                    value.notification ? (
+                      <>
+                        <Box>This attribute set has pending validation</Box>
+                      </>
+                    ) : (
+                      ""
+                    )
+                  }
+                >
+                  <Button
+                    sx={{ m: 1 }}
+                    style={{
+                      margin: "0px",
+                      padding: "0px",
+                      paddingBottom: "3px",
+                    }}
+                  >
+                    <AlertTriangle
+                      style={{
+                        // textAlign: "right",
+                        fontSize: "xx-small",
+                        color: "red",
+                        padding: "3px",
+                      }}
+                    />
+                  </Button>
+                </CustomWidthTooltip>
+              )}
             </Typography>
           </AccordionSummary>
 
@@ -743,7 +775,7 @@ const ProductDetails = (props) => {
                     Comment
                   </Button> */}
 
-                  {value.notification && (
+                  {/* {value.notification && (
                     <CustomWidthTooltip
                       title={
                         value.notification ? (
@@ -765,7 +797,7 @@ const ProductDetails = (props) => {
                         />
                       </Button>
                     </CustomWidthTooltip>
-                  )}
+                  )} */}
                 </Box>
                 {/* <CustomModal
                   id={`${key}-customModal`}
