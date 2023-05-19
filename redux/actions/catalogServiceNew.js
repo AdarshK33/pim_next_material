@@ -303,12 +303,24 @@ export const getAttributeListApi = (id, pageNo, pageSize) => {
   };
 };
 
-export const getAllProductListApi = (pageNo, pageSize, status) => {
-  const data = {
-    pageNo: pageNo,
-    pageSize: pageSize,
-    status: status,
-  };
+export const getAllProductListApi = (pageNo, pageSize, status, itemId) => {
+  let data;
+  if (itemId == null && itemId == undefined) {
+    data = {
+      pageNo: pageNo,
+      pageSize: pageSize,
+      productStaus: status,
+    };
+  } else {
+    data = {
+      pageNo: pageNo,
+      pageSize: pageSize,
+      productStaus: status,
+      itemId: [itemId],
+    };
+  }
+
+  console.log(data, "data here");
   return (dispatch) => {
     dispatch(getAllProductListLoading("ATTRIBUTE....", "ATTRIBUTE"));
     client

@@ -3,6 +3,8 @@ import styles from "./activeProducts.module.css";
 import Image from "next/image";
 import edit from "../../../../assets/icons/edit.svg";
 import lens from "../../../../assets/icons/lens.svg";
+import { Edit2, Eye, Search, Download } from "react-feather";
+
 import {
   Grid,
   Button,
@@ -251,7 +253,7 @@ const ActiveProducts = () => {
                             {row.productStatus}
                           </TableCell>
                           <div className="action_center Active_Product_Detials_Actions">
-                            <Image
+                            {/* <Image
                               className="px-2 "
                               src={lens}
                               alt="lens"
@@ -259,6 +261,14 @@ const ActiveProducts = () => {
                               height={20}
                               onClick={() => handleEdit(row.itemId)}
                               // onClick={() => setShowUserUpdateForm(true)}
+                            /> */}
+                            <Eye
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "#419794",
+                              }}
+                              onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
                         </TableRow>

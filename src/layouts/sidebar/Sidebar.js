@@ -48,7 +48,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const { loginReducer } = useSelector((state) => {
     return state;
   });
-  console.log("loginReducer", loginReducer.userRole);
+  // console.log("loginReducer", loginReducer.userRole);
 
   const [openSecondLevel, setOpenSecondLevel] = React.useState(true);
   const handleClick = () => {

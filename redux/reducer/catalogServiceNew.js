@@ -34,7 +34,7 @@ import {
 const initialState = {
   loading: false,
   attributeGet: {},
-  getAllProducts: {},
+  getAllProducts: [],
   bulkUpload: {},
   productPimCodeData: {},
   publishProduct: [],
@@ -45,7 +45,7 @@ const initialState = {
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
-  console.log("hello builk called", action.payload);
+  // console.log("hello builk called", action.payload);
   switch (action.type) {
     case ATTRIBUTE_LIST_LOADING:
       return {

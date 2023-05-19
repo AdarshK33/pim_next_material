@@ -6,11 +6,12 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-
+import Autocomplete from "@mui/material/Autocomplete";
 // import edit from "../../../../assets/icons/edit.svg";
 // import edit from "../../../../assets/icons/big-search-lens.svg";
 
 import lens from "../../../../assets/icons/lens.svg";
+import { Edit2, Eye, Search, Download } from "react-feather";
 
 import Image from "next/image";
 
@@ -27,6 +28,7 @@ import {
   Checkbox,
   Container,
   LinearProgress,
+  TextField,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -54,6 +56,8 @@ const AllProducts = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
   const [progress, setProgress] = React.useState(0);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchAllObject, setSearchAllObject] = useState("");
 
   // useEffect(() => {
   //   dispatch(getAllProductListApi(0, 5, "DRAFTED"));
@@ -62,10 +66,7 @@ const AllProducts = (props) => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  console.log(
-    "catalogServiceNewReducer",
-    catalogServiceNewReducer?.getAllProducts
-  );
+  console.log("searchAllObject", searchAllObject);
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
@@ -89,7 +90,7 @@ const AllProducts = (props) => {
     setCurrentPage(val);
 
     if (value === 0) {
-      dispatch(getAllProductListApi(val - 1, 5, "DRAFTED"));
+      dispatch(getAllProductListApi(val - 1, 5, "DRAFT"));
     } else if (value === 1) {
       dispatch(getAllProductListApi(val - 1, 5, "READY_FOR_REVIEW"));
     } else if (value === 2) {
@@ -105,14 +106,25 @@ const AllProducts = (props) => {
   // console.log("hello adarsh", value);
 
   useEffect(() => {
-    if (value === 0) {
-      dispatch(getAllProductListApi(0, 5, "DRAFTED"));
-    } else if (value === 1) {
-      dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW"));
-    } else if (value === 2) {
-      dispatch(getAllProductListApi(0, 5, "REVALIDATE"));
+    if (searchValue) {
+      if (value === 0) {
+        dispatch(getAllProductListApi(0, 5, "DRAFT", searchValue));
+      } else if (value === 1) {
+        dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW", searchValue));
+      } else if (value === 2) {
+        dispatch(getAllProductListApi(0, 5, "REVALIDATE", searchValue));
+      }
+    } else {
+      setSearchValue();
+      if (value === 0) {
+        dispatch(getAllProductListApi(0, 5, "DRAFT", searchValue));
+      } else if (value === 1) {
+        dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW", searchValue));
+      } else if (value === 2) {
+        dispatch(getAllProductListApi(0, 5, "REVALIDATE", searchValue));
+      }
     }
-  }, [value]);
+  }, [value, searchValue]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -194,6 +206,21 @@ const AllProducts = (props) => {
     console.log("Panel clicked");
   };
 
+  const searchHandler = (e, value) => {
+    // console.log(value, "hello e.target.value");
+    setSearchValue(value);
+  };
+
+  const searchDataHandler = () => {
+    if (value === 0) {
+      dispatch(getAllProductListApi(0, 5, "DRAFT", searchValue));
+    } else if (value === 1) {
+      dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW", searchValue));
+    } else if (value === 2) {
+      dispatch(getAllProductListApi(0, 5, "REVALIDATE", searchValue));
+    }
+  };
+
   return (
     <>
       <Grid container>
@@ -204,15 +231,57 @@ const AllProducts = (props) => {
               <Typography variant="h2" className={styles.main_title}>
                 Products
               </Typography>
-              <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                onClick={() => handleBulk()}
-              >
-                Upload Products
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+              <Box className={styles.product_Bar}>
+                <Box className={styles.Autocomplete_allProducts}>
+                  {/* <TextField
+                    className="form-control searchButton"
+                    type="text"
+                    value={searchValue}
+                    placeholder="Search.."
+                    onChange={(e) => searchHandler(e)}
+                  />
+                  <Search
+                    className="search-icon"
+                    style={{ color: "#419794" }}
+                    onClick={searchDataHandler}
+                  /> */}
+
+                  {catalogServiceNewReducer?.getAllProducts !== null &&
+                    Object.keys(catalogServiceNewReducer?.getAllProducts)
+                      .length && (
+                      <Autocomplete
+                        id="free-solo-demo"
+                        freeSolo
+                        options={
+                          catalogServiceNewReducer?.getAllProducts?.content.map(
+                            (option) => option.itemId
+                          ) || []
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Item Id.."
+                            className={styles.input_search_product}
+                          />
+                        )}
+                        onChange={(event, value) => {
+                          // Handle the onChange event here
+                          searchHandler(event, value); // Log the selected value to the console
+                        }}
+                      />
+                    )}
+                </Box>
+                <Box>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    // onClick={() => handleBulk()}
+                  >
+                    Upload Products
+                  </Button>
+                </Box>
+              </Box>
             </Grid>
             <CardContent>
               {/* <TableContainer component={Paper}>
@@ -319,12 +388,20 @@ const AllProducts = (props) => {
                           </TableCell>
                           <TableCell>{row.productStatus}</TableCell>
                           <div className="action_center product_Detials_Actions">
-                            <Image
+                            {/* <Image
                               className="px-2"
                               src={lens}
                               alt="lens"
                               width={20}
                               height={20}
+                              onClick={() => handleEdit(row.itemId)}
+                            /> */}
+                            <Eye
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "#419794",
+                              }}
                               onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
@@ -399,12 +476,20 @@ const AllProducts = (props) => {
                             {row.productStatus}
                           </TableCell>
                           <div className="action_center product_Detials_Actions">
-                            <Image
+                            {/* <Image
                               className="px-2"
                               src={lens}
                               alt="lens"
                               width={20}
                               height={20}
+                              onClick={() => handleEdit(row.itemId)}
+                            /> */}
+                            <Eye
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "#419794",
+                              }}
                               onClick={() => handleEdit(row.itemId)}
                             />
                           </div>
@@ -474,12 +559,20 @@ const AllProducts = (props) => {
                             {row.productStatus}
                           </TableCell>
                           <div className="action_center product_Detials_Actions">
-                            <Image
+                            {/* <Image
                               className="px-2"
                               src={lens}
                               alt="lens"
                               width={20}
                               height={20}
+                              onClick={() => handleEdit(row.itemId)}
+                            /> */}
+                            <Eye
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "#419794",
+                              }}
                               onClick={() => handleEdit(row.itemId)}
                             />
                           </div>

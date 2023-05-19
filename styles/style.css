@@ -212,3 +212,33 @@ ul .pagination {
 .MuiBackdrop-root {
   background-color: rgba(0, 0, 0, 0.2) !important;
 }
+
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Search>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.searchButton {
+  float: right;
+  border-radius: 12.25rem !important;
+}
+.job-filter {
+  float: right;
+  text-align: end;
+  padding-top: 8px;
+  border-radius: 552px;
+}
+
+.search-icon {
+  position: relative;
+  left: 220px;
+  top: 7px;
+  width: 25px;
+  height: 20px;
+}
+
+.search-icon:hover {
+  top: 4px;
+  width: 30px;
+  height: 30px;
+  color: #ffcf76 !important;
+}
+
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Search>>>>>>>>>>>>>>>>>>>>>>>>>> */
