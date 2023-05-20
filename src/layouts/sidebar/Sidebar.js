@@ -216,7 +216,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
         </div>
       </Box>
       <div className="copyright_block">
-        <p className="copyright_txt">All copyright 2023 @ Apollo</p>
+        <p className="copyright_txt">All copyrights reserved, 2023 @ APOLLO</p>
       </div>
     </Box>
   );
