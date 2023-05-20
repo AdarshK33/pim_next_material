@@ -13,7 +13,7 @@ function handler(req, res) {
       Authorization: `Bearer ${at}`,
     },
   };
-  console.log("saq",config);
+  console.log("saq", config);
   catalogServiceNew(config)
     .then((response) => {
       // console.log("res1", response);

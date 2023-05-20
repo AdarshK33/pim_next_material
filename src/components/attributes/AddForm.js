@@ -197,7 +197,7 @@ function AddForm({ classModal }) {
   };
   return (
     <>
-      <div className={styles.add_title}> Add Attribute</div>
+      <div className={styles.add_title}> Add Attribute Set</div>
       <form>
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -220,8 +220,8 @@ function AddForm({ classModal }) {
               variant="standard"
               value={description}
               onChange={descHandler}
-              // multiline
-              // rows={3}
+            // multiline
+            // rows={3}
             />
           </Grid>
 

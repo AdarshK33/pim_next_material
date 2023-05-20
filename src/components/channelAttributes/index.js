@@ -32,6 +32,7 @@ import Checkbox from "@mui/material/Checkbox";
 import {
   channelAttributeApiList,
   channelMappingApi,
+  getChannelListApi,
 } from "../../../redux/actions/channel";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -46,15 +47,21 @@ const ChannelAttributes = () => {
   const [channel, setChannel] = useState("Shopify");
   const [checkbox, setCheckbox] = useState([]);
   const [checkedData, setCheckedData] = useState([]);
+  const [unCheckedData, setUnCheckedData] = useState([])
   const [updatedPimAttributes, setUpdatedPimAttributes] = useState();
+  const [finalData, setFinalData] = useState()
 
-  const { channelAttribute } = useSelector((state) => {
+  const { channelAttribute, channelGet } = useSelector((state) => {
     return state.channelReducer;
   });
+  const channelOptions = channelGet?.content?.map((item) => ({
+    value: item.channelId,
+    name: item.channelName,
+  }));
 
-  console.log("channelAttribute", channelAttribute, updatedPimAttributes);
+  console.log("channelAttribute", channelAttribute, updatedPimAttributes, channelOptions, channelGet);
 
-  const [age, setAge] = useState("");
+  const [selectChannelName, setSelectChannelName] = useState("");
 
   const tableData = [];
 
@@ -74,7 +81,7 @@ const ChannelAttributes = () => {
   const handlePageChange = (value) => {
     // console.log("vvvvvvvvvvvvvvvvvvvvvvv", value);
     setCurrentPage(value);
-    dispatch(channelAttributeApiList("Shopify", value - 1, 10));
+    dispatch(channelAttributeApiList("Shopify", value - 1, 20));
     // dispatch(getChannelAttributes(pageNumber));
   };
 
@@ -82,9 +89,9 @@ const ChannelAttributes = () => {
 
   const pimAttributes = channelAttribute?.content?.pimAttributes;
   const channelAttributes =
-    channelAttribute?.content?.channelAttributes?.Shopify?.attributes;
+    channelAttribute?.content?.channelAttributes[selectChannelName]?.attributes;
   const mappedAttributes =
-    channelAttribute?.content?.channelAttributes?.Shopify?.mappedAttributes;
+    channelAttribute?.content?.channelAttributes[selectChannelName]?.mappedAttributes;
   // console.log(
   //   "primAttributes,channelAttributes",
   //   pimAttributes,
@@ -98,15 +105,17 @@ const ChannelAttributes = () => {
   //   setCurrentPage(value);
   // };
 
+  console.log("channelAttributessss", channelAttributes)
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setSelectChannelName(event.target.value);
     // console.log("event.target.value", event.target.value);
-    // dispatch(channelAttributeApiList(event.target.value, 0, 5));
+    dispatch(channelAttributeApiList(event.target.value, 0, 20));
   };
   // console.log("age", age);
 
   useEffect(() => {
-    dispatch(channelAttributeApiList("Shopify", 0, 10));
+    dispatch(channelAttributeApiList(selectChannelName, 0, 20));
+    dispatch(getChannelListApi(0, 1000));
   }, []);
 
   useEffect(() => {
@@ -120,7 +129,7 @@ const ChannelAttributes = () => {
       const array = [];
 
       pimAttributes.map((item) => {
-        const channel = channelAttributes.find(
+        const channel = channelAttributes?.find(
           (channel) =>
             mappedAttributes[item.attributeId] === channel.attributeId
         );
@@ -161,27 +170,82 @@ const ChannelAttributes = () => {
 
   const handleFilterChange = () => {
     setCurrentPage(0);
-    dispatch(channelAttributeApiList(channel, 0, 10));
+    dispatch(channelAttributeApiList(channel, 0, 20));
   };
 
+
+
+  useEffect(() => {
+    if (checkedData?.length) {
+      const channelMappingPayload = {
+        mappedAttributes: [],
+        unMappedAttribute: []
+      };
+
+      checkedData?.forEach(item => {
+        if (item?.isChecked && item?.checkedAttributes?.length) {
+          channelMappingPayload.mappedAttributes.push(...item.checkedAttributes);
+        }
+
+        if (!item?.isChecked && item?.checkedAttributes) {
+          channelMappingPayload.unMappedAttribute.push(...item.checkedAttributes);
+        }
+      });
+      // const channeMappingPayload = {
+      //   mappedAttributes: checkedData?.map(item => item?.isChecked && item?.checkedAttributes?.length ? item?.checkedAttributes : []),
+      //   unMappedAttribute: checkedData?.map(item => checkedData?.isChecked === false && item?.checkedAttributes)
+      // }
+      setFinalData(channelMappingPayload)
+    }
+  }, [checkedData])
+
+
+  console.log("jkahdsfkjahsdsad", checkedData, finalData)
+
   const onChangeOfCheckBox = (e, pim) => {
-    // console.log("e,pim", e.target.checked, pim);
+    console.log("e,pim", e.target.checked, pim);
+    const formatData = {
+      pimAttributesId: pim,
+      channelAttributeId: null,
+    };
     let array = [...checkedData];
+    console.log("array in checkbox", array)
     let pims = [...updatedPimAttributes];
+    console.log("asjdajsdkjadkjfa", pims)
     if (e.target.checked) {
       const checkedPim = pims.map((item) =>
         item.attributeId === pim
           ? { ...item, isChecked: e.target.checked }
           : item
       );
-      // console.log("checkedPim", checkedPim);
+      console.log("checkedPim inside if", checkedPim);
       setUpdatedPimAttributes(checkedPim);
+      const findIndex = checkbox.findIndex(
+        (item) => item.pimAttributesId === pim
+      );
       const checkedAttributes = checkbox.filter(
         (item) => item.pimAttributesId === pim
       );
-      // console.log("checkedAttributes", checkedAttributes);
+      console.log("checkedAttributes", checkedAttributes);
       const checked = { checkedAttributes, isChecked: e.target.checked };
       array.push({ checkedAttributes, isChecked: e.target.checked });
+      if (findIndex !== -1) {
+        const updatedCheckboxData = [...array];
+        // console.log("updatedCheckboxData", updatedCheckboxData);
+        updatedCheckboxData[findIndex] = checked;
+        setCheckedData(updatedCheckboxData);
+      }
+      else {
+        const filteredData = updatedPimAttributes?.filter(item => item.attributeId === pim)
+        const unCheckedData = [
+          {
+            pimAttributesId: pim,
+            channelAttributeId: filteredData[0].channel.attributeId,
+          }
+        ];
+        console.log("askjfdaklsjfa", filteredData, unCheckedData)
+        setCheckedData([...checkedData, { checkedAttributes: unCheckedData, isChecked: e.target.checked }])
+      }
       setCheckedData([
         ...checkedData,
         { checkedAttributes, isChecked: e.target.checked },
@@ -192,7 +256,7 @@ const ChannelAttributes = () => {
           ? { ...item, isChecked: e.target.checked }
           : item
       );
-      // console.log("checkedPim", checkedPim);
+      console.log("checkedPim", checkedPim, checkbox);
       setUpdatedPimAttributes(checkedPim);
       const findIndex = checkbox.findIndex(
         (item) => item.pimAttributesId === pim
@@ -208,6 +272,17 @@ const ChannelAttributes = () => {
         updatedCheckboxData[findIndex] = unChecked;
         setCheckedData(updatedCheckboxData);
       }
+      else {
+        const filteredData = updatedPimAttributes?.filter(item => item.attributeId === pim)
+        const unCheckedData = [
+          {
+            pimAttributesId: pim,
+            channelAttributeId: filteredData?.[0].channel.attributeId,
+          }
+        ];
+        console.log("askjfdaklsjfa", filteredData, unCheckedData)
+        setCheckedData([...array, { checkedAttributes: unCheckedData, isChecked: e.target.checked }])
+      }
     }
     // const data = modifiedPimRecord.map((arr) => {
     //   if (arr.id === item.id) {
@@ -220,7 +295,7 @@ const ChannelAttributes = () => {
     // setModifiedPimRecord(data);
   };
 
-  // console.log("checkedData", checkedData);
+  console.log("checkedData", checkedData, checkbox);
 
   const onSelectdropdown = (e, pim) => {
     const array = {
@@ -228,10 +303,11 @@ const ChannelAttributes = () => {
       channelAttributeId: e.target.value,
     };
 
+    console.log("array inside the select", array, checkbox)
     const findIndex = checkbox.findIndex(
       (item) => item.pimAttributesId === pim
     );
-    // console.log("findIndex", findIndex);
+    console.log("findIndex", findIndex, array, checkbox);
     if (findIndex !== -1) {
       const updatedCheckboxData = [...checkbox];
       updatedCheckboxData[findIndex] = array;
@@ -257,7 +333,9 @@ const ChannelAttributes = () => {
     // setModifiedPimRecord(pimAttribute);
   };
 
-  // console.log("checkbox", checkbox);
+  console.log("checkbox", checkbox);
+  console.log("sdkjflksdjflka", updatedPimAttributes)
+
 
   const onSelectedData = (item) => {
     const selectedData = modifiedPimRecord.filter((arr) => {
@@ -308,9 +386,9 @@ const ChannelAttributes = () => {
         // console.log("item", item.checkedAttributes);
         array = [...array, item.checkedAttributes.map((item) => item)];
         // console.log("array", array.flat());
-        dispatch(channelMappingApi("Shopify", array.flat()));
       }
     });
+    dispatch(channelMappingApi(selectChannelName, finalData));
   };
 
   const setDefaultOption = (item) => {
@@ -339,7 +417,7 @@ const ChannelAttributes = () => {
 
   const options = getChannelAttributesOptions();
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <>
@@ -377,22 +455,22 @@ const ChannelAttributes = () => {
               </Button>
             </Grid>
             <FormControl style={{ width: "200px", marginTop: "2rem" }}>
-              <InputLabel id="demo-simple-select-label">Shopify</InputLabel>
+              <InputLabel id="demo-simple-select-label">Select Channel</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
-                label="Shopify"
+                value={selectChannelName}
+                label="Select Channel"
                 onChange={handleChange}
               >
-                <MenuItem value="Shopify">Shopify</MenuItem>
-                <MenuItem value="Amazon">Amazon</MenuItem>
-                <MenuItem value="Myntra">Myntra</MenuItem>
+                {channelOptions && channelOptions?.map(item => (
+                  <MenuItem value={item?.name}>{item?.name}</MenuItem>
+                ))}
               </Select>
             </FormControl>
-            <CardContent>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <CardContent sx={{ display: 'flex', width: '100%' }}>
+              <TableContainer component={Paper} sx={{ width: '100%' }}>
+                <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
                       {/* <TableCell>#</TableCell> */}
@@ -401,11 +479,120 @@ const ChannelAttributes = () => {
                     </TableRow>
                   </TableHead>
                   {updatedPimAttributes?.length &&
-                    updatedPimAttributes.map((pim) => (
+                    updatedPimAttributes.slice(0, 10).map((pim) => (
                       <TableBody>
                         <TableRow>
                           <TableCell align="left">{pim.displayName}</TableCell>
                           <TableCell align="right">
+                            <Checkbox
+                              checked={pim.isChecked}
+                              onChange={(e) =>
+                                onChangeOfCheckBox(e, pim.attributeId)
+                              }
+                            />
+                            <FormControl
+                              style={{ width: "200px" }}
+                              // disabled={item.isChecked ? true : false}
+                              disabled={pim.isChecked ? true : false}
+                            >
+                              <InputLabel id="demo-simple-select-label">
+                                Select an Attribute
+                              </InputLabel>
+                              {console.log(
+                                "pim?.channel",
+                                pim?.channel.attributeId
+                              )}
+                              <Select
+                                labelId={"demo-simple-select-label"}
+                                id="demo-simple-select"
+                                label="Select an Attribute"
+                                onChange={(e) =>
+                                  onSelectdropdown(e, pim.attributeId)
+                                }
+                                value={pim?.channel?.attributeId}
+                              >
+                                {channelAttributes?.map((channel) => (
+                                  <MenuItem value={channel?.attributeId} key={channel?.attributeId}>
+                                    {channel?.displayName}
+                                  </MenuItem>
+                                ))}
+
+                              </Select>
+                            </FormControl>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    ))}
+                  {/* {modifiedPimRecord?.length ?
+                   (
+                    modifiedPimRecord.map((item, i) => {
+                      return (
+                        <TableBody>
+                          <TableRow
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell align="right">
+                              {item?.aliasKeyName}
+                            </TableCell>
+                            <TableCell align="right">
+                              <FormControl style={{ width: "200px" }} disabled={item.isChecked ? true : false}>
+                                <InputLabel id="demo-simple-select-label">
+                                  Select an Attribute
+                                </InputLabel>
+                                <Select
+                                  labelId={"demo-simple-select-label"}
+                                  id="demo-simple-select"
+                                  label="Select an Attribute"
+                                  onChange={(e) => onSelectdropdown(e.target.value, item)}
+                                  value={setDefaultOption(item).value}
+                                >
+                                  {options?.map((option) => (
+                                    <MenuItem value={option?.value}>
+                                      {option?.label}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+                              <Checkbox
+                                checked={item.isChecked}
+                                onChange={(e) => onChangeOfCheckBox(e, item)}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      );
+                    })
+                  )
+                    : (
+                      <TableRow>
+                        <TableCell colSpan={12}> No Record Found</TableCell>
+                      </TableRow>
+                    )} */}
+                </Table>
+              </TableContainer>
+              <TableContainer component={Paper} sx={{ width: '100%' }}>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      {/* <TableCell>#</TableCell> */}
+                      <TableCell align="right">PIM ATTRIBUTES</TableCell>
+                      <TableCell align="right">CHANNEL ATTRIBUTES</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  {updatedPimAttributes?.length &&
+                    updatedPimAttributes.slice(10, 20).map((pim) => (
+                      <TableBody>
+                        <TableRow>
+                          <TableCell align="left">{pim.displayName}</TableCell>
+                          <TableCell align="right">
+                            <Checkbox
+                              checked={pim.isChecked}
+                              onChange={(e) =>
+                                onChangeOfCheckBox(e, pim.attributeId)
+                              }
+                            />
                             <FormControl
                               style={{ width: "200px" }}
                               // disabled={item.isChecked ? true : false}
@@ -439,12 +626,6 @@ const ChannelAttributes = () => {
                                 ))}
                               </Select>
                             </FormControl>
-                            <Checkbox
-                              checked={pim.isChecked}
-                              onChange={(e) =>
-                                onChangeOfCheckBox(e, pim.attributeId)
-                              }
-                            />
                           </TableCell>
                         </TableRow>
                       </TableBody>
