@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;1,500;1,600&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;1,500;1,600&display=swap");
 
 .borderRadius {
   border-radius: 6px;
@@ -18,17 +17,16 @@
 }
 .text-primary {
   color: #419794 !important;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   padding-left: 10px;
   padding-right: 10px;
 }
-.text-primary2{
-  color: 
-  #000000 !important;
-  font-family: 'Montserrat', sans-serif;
- 
+.text-primary2 {
+  color: #000000 !important;
+  font-family: "Montserrat", sans-serif;
+
   font-size: 20px;
- 
+
   text-align: center;
 }
 th,
@@ -242,3 +240,16 @@ ul .pagination {
 }
 
 /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Search>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.copyright_block {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.copyright_txt {
+  color: #419794;
+  font-size: 12px;
+}

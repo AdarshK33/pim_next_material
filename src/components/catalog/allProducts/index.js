@@ -303,7 +303,7 @@ const AllProducts = (props) => {
                   />
                 </div>
               </Stack> */}
-              <Box sx={{ maxWidth: 200 }}>
+              <Box sx={{ maxWidth: 150 }}>
                 {catalogServiceNewReducer?.getAllProducts !== null &&
                   Object.keys(catalogServiceNewReducer?.getAllProducts)
                     .length && (
@@ -319,7 +319,7 @@ const AllProducts = (props) => {
                         <TextField
                           {...params}
                           label="Item Id.."
-                          // className={styles.input_search_product}
+                          className={styles.input_search_product}
                         />
                       )}
                       onChange={(event, value) => {
