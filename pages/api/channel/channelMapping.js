@@ -2,6 +2,7 @@ import { catalogServiceNew } from "../../../utils/axios";
 import withSession from "../../../utils/session";
 
 function handler(req, res) {
+  console.log("calling channel mapping api", req.body)
   const { user: { at = "" } = {}, loggedIn } = req.session;
   const body = req.body;
   const channelFilter = body.channelFilter;
@@ -10,7 +11,7 @@ function handler(req, res) {
   // const {user: {at =""} ={}, loggedIn} = req.session;
   const config = {
     method: "post",
-    url: `catalog/channel_mapping`,
+    url: `/catalog/channel_mapping`,
     data: body,
     headers: {
       Authorization: `Bearer ${at}`,

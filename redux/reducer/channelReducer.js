@@ -18,6 +18,9 @@ import {
   CREATE_CHANNEL_ATTRIBUT_DATA_LOADING,
   CREATE_CHANNEL_ATTRIBUT_DATA_SUCCESS,
   CREATE_CHANNEL_ATTRIBUTE_DATA_FAILURE,
+  ADD_MASTER_ATTRIBUTE_LOADING,
+  ADD_MASTER_ATTRIBUTE_SUCCESS,
+  ADD_MASTER_ATTRIBUTE_FAILURE
 } from "../types/types";
 const initialState = {
   loading: false,
@@ -29,6 +32,7 @@ const initialState = {
   error: {},
   getChannelAttribute: [],
   channelAttributeCreate: {},
+  masterAttribute: []
 };
 const channelReducer = (state = initialState, action) => {
   // console.log("hello CHANNEL reducer called",action)
@@ -154,6 +158,26 @@ const channelReducer = (state = initialState, action) => {
         channelAttributeCreate: [],
         error: action,
       };
+    case ADD_MASTER_ATTRIBUTE_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_MASTER_ATTRIBUTE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        masterAttribute: action.payload,
+        error: {},
+      };
+    case ADD_MASTER_ATTRIBUTE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        masterAttribute: [],
+        error: action.payload,
+      };
+
 
     default:
       return state;
