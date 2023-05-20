@@ -215,6 +215,9 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
           </List>
         </div>
       </Box>
+      <div className="copyright_block">
+        <p className="copyright_txt">All copyright 2023 @ Apollo</p>
+      </div>
     </Box>
   );
   if (lgUp) {

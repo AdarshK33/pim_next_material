@@ -178,7 +178,7 @@ const ActiveProducts = () => {
                 </Button>
               )}
             </Grid>
-            <Box style={{ paddingTop: "20px" }}>
+            <Box style={{ paddingTop: "20px", width: "60%" }}>
               <FormControl style={{ width: "30%" }}>
                 <InputLabel id="demo-simple-select-label">
                   Select Channel
@@ -189,6 +189,7 @@ const ActiveProducts = () => {
                   value={channel}
                   label="Select Channel"
                   onChange={handleChannel}
+                  className={styles.select_channel_active}
                 >
                   {channelOptions &&
                     channelOptions.map((item, i) => {

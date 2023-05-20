@@ -43,9 +43,9 @@ import AddAttributeForm from "../addAttributeForm";
 const AttributeSetDetails = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const attrbuteSetId = router.query.attributeSet
-  const attributeSetName = router.query.attributeSetName
-  console.log('attributeSetName', attributeSetName, attrbuteSetId)
+  const attrbuteSetId = router.query.attributeSet;
+  const attributeSetName = router.query.attributeSetName;
+  console.log("attributeSetName", attributeSetName, attrbuteSetId);
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
@@ -79,7 +79,8 @@ const AttributeSetDetails = () => {
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
-  const totalRecords = catalogServiceNewReducer?.attributeSetData?.totalElements;
+  const totalRecords =
+    catalogServiceNewReducer?.attributeSetData?.totalElements;
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
@@ -113,9 +114,10 @@ const AttributeSetDetails = () => {
             </Grid> */}
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
-              <Typography variant="h2" className={styles.main_title}>
+              <Typography variant="h2" className={styles.main_Details_title}>
                 {attributeSetName} Attributes
               </Typography>
+
               <Button
                 variant="outlined"
                 color="success"
@@ -123,15 +125,16 @@ const AttributeSetDetails = () => {
                 onClick={() => setShowAttributeAddForm(true)}
               >
                 Add New
+                {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
-              <Button
+              {/* <Button
                 variant="outlined"
                 color="success"
                 component="label"
                 onClick={ShowBack}
               >
                 Back
-              </Button>
+              </Button> */}
 
               <CustomModal
                 openModal={showAttributeAddForm}
@@ -139,7 +142,10 @@ const AttributeSetDetails = () => {
                   setShowAttributeAddForm(!showAttributeAddForm)
                 }
                 body={
-                  <AddAttributeForm classModal={() => setShowAttributeAddForm(false)} id={attrbuteSetId} />
+                  <AddAttributeForm
+                    classModal={() => setShowAttributeAddForm(false)}
+                    id={attrbuteSetId}
+                  />
                 }
               />
             </Grid>
@@ -174,8 +180,8 @@ const AttributeSetDetails = () => {
                     </TableHead>
                     <TableBody>
                       {currentRecords &&
-                        currentRecords !== null &&
-                        currentRecords.length > 0 ? (
+                      currentRecords !== null &&
+                      currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}
