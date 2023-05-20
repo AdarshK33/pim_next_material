@@ -11,7 +11,13 @@
   width: 25%;
   border-bottom: 2px solid #ffcf76;
 }
-
+.main_Details_title {
+  font-size: 20px;
+  font-weight: bold !important;
+  color: #399996;
+  width: 35%;
+  border-bottom: 2px solid #ffcf76;
+}
 .addButton {
   margin-top: 20px !important;
   margin-bottom: 20px !important;
