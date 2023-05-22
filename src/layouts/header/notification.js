@@ -118,26 +118,24 @@ const Notification = () => {
         <MenuItem onClick={handleClose4}>Logout</MenuItem> */}
           {Object.keys(arrayData).length &&
             arrayData[0].map((alert, index) => (
-              <React.Fragment key={index}>
-                <Box>
-                  <List
-                    component="nav"
-                    aria-label="secondary mailbox folder"
-                    onClick={handleClose4}
-                  >
-                    {userRole === "ADMIN" ? (
-                      <Alert severity="warning">
-                        Item ID {alert.getPimModelCode} has pending validation
-                        in attribute set {alert.getAttributeSet}.
-                      </Alert>
-                    ) : (
-                      <Alert severity="warning">
-                        Item ID {alert.getPimModelCode} is pending validation
-                      </Alert>
-                    )}
-                  </List>
-                </Box>
-              </React.Fragment>
+              <Box key={index}>
+                <List
+                  component="nav"
+                  aria-label="secondary mailbox folder"
+                  onClick={handleClose4}
+                >
+                  {userRole === "ADMIN" ? (
+                    <Alert severity="warning">
+                      Item ID {alert.getPimModelCode} has pending validation in
+                      attribute set {alert.getAttributeSet}.
+                    </Alert>
+                  ) : (
+                    <Alert severity="warning">
+                      Item ID {alert.getPimModelCode} is pending validation
+                    </Alert>
+                  )}
+                </List>
+              </Box>
             ))}
         </Menu>
       )}

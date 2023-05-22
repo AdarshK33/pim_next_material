@@ -149,6 +149,14 @@ const ActiveProducts = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Active Products
               </Typography>
+              <a
+                href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                  JSON.parse(JSON.stringify(publishProduct))
+                )}`}
+                download="filename.json"
+              >
+                Download Json
+              </a>
               {selectedItemIds.length > 0 && channel ? (
                 <Button
                   variant="outlined"
