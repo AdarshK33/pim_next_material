@@ -58,6 +58,9 @@ const AllProducts = (props) => {
   const [progress, setProgress] = React.useState(0);
   const [searchValue, setSearchValue] = useState("");
   const [searchAllObject, setSearchAllObject] = useState("");
+  const [countState, setCountState] = useState("");
+
+  // console.log("hello countState", countState);
 
   // useEffect(() => {
   //   dispatch(getAllProductListApi(0, 5, "DRAFTED"));
@@ -66,7 +69,7 @@ const AllProducts = (props) => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  console.log("searchAllObject", searchAllObject);
+  // console.log("searchAllObject", searchAllObject);
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
@@ -79,9 +82,9 @@ const AllProducts = (props) => {
   }
   //   /*-----------------Pagination------------------*/
 
-  const recordPerPage = 5;
+  const recordPerPage = 10;
   const totalRecords = catalogServiceNewReducer?.getAllProducts.totalElements;
-  const pageRange = 5;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = catalogServiceNewReducer?.getAllProducts.content;
@@ -103,24 +106,30 @@ const AllProducts = (props) => {
   const handleNext = () => {
     setValue((prevValue) => prevValue + 1);
   };
-  // console.log("hello adarsh", value);
 
   useEffect(() => {
     if (searchValue) {
       if (value === 0) {
         dispatch(getAllProductListApi(0, 5, "DRAFT", searchValue));
       } else if (value === 1) {
+        // setCountState("READY_FOR_REVIEW");
+
         dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW", searchValue));
       } else if (value === 2) {
+        // setCountState("REVALIDATE");
+
         dispatch(getAllProductListApi(0, 5, "REVALIDATE", searchValue));
       }
     } else {
       setSearchValue();
       if (value === 0) {
+        setCountState("DRAFT");
         dispatch(getAllProductListApi(0, 5, "DRAFT", searchValue));
       } else if (value === 1) {
+        setCountState("READY_FOR_REVIEW");
         dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW", searchValue));
       } else if (value === 2) {
+        setCountState("REVALIDATE");
         dispatch(getAllProductListApi(0, 5, "REVALIDATE", searchValue));
       }
     }
@@ -244,6 +253,7 @@ const AllProducts = (props) => {
                 </Box>
               </Box>
             </Grid>
+
             <CardContent>
               {/* <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -303,6 +313,7 @@ const AllProducts = (props) => {
                   />
                 </div>
               </Stack> */}
+
               <Box sx={{ maxWidth: 150 }}>
                 {catalogServiceNewReducer?.getAllProducts !== null &&
                   Object.keys(catalogServiceNewReducer?.getAllProducts)
@@ -329,53 +340,94 @@ const AllProducts = (props) => {
                     />
                   )}
               </Box>
+
               <Box sx={{ maxWidth: 1200 }}>
                 {/* <Container maxWidth="xl"> */}
+
                 <Tabs value={value} onChange={handleChange}>
-                  <Tab label={tabLabels[0]} className={styles.tab} />
+                  <Tab
+                    label={`${tabLabels[0]}  ${
+                      countState === "DRAFT"
+                        ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                        : ""
+                    }`}
+                    className={styles.tab}
+                  />
                   {/* {role === "ADMIN" && ( */}
-                  <Tab label={tabLabels[1]} className={styles.tab} />
+                  <Tab
+                    label={`${tabLabels[1]} ${
+                      countState === "READY_FOR_REVIEW"
+                        ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                        : ""
+                    }`}
+                    className={styles.tab}
+                  />
                   {/* )} */}
 
-                  <Tab label={tabLabels[2]} className={styles.tab} />
+                  <Tab
+                    label={`${tabLabels[2]} ${
+                      countState === "REVALIDATE"
+                        ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                        : ""
+                    }`}
+                    className={styles.tab}
+                  />
                 </Tabs>
                 {/* </Container> */}
               </Box>
-              <TabPanel value={value} index={0} onNext={handleNext}>
-                <Table style={{ margin: "10px 0" }}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>ITEM ID</TableCell>
-                      <TableCell>NAME</TableCell>
-                      <TableCell>CATEGORY</TableCell>
-                      <TableCell>FORMATION</TableCell>
-                      <TableCell>STATUS</TableCell>
-                      <TableCell>DETAILS</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
-                      currentRecords.map((row, i) => (
-                        <TableRow
-                          key={row.name}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {row.itemId}
-                          </TableCell>
-                          <TableCell>{row.itemName}</TableCell>
-                          <TableCell>{row.category}</TableCell>
-                          <TableCell>
-                            {" "}
-                            <LinearProgressWithLabel value={row.formation} />
-                          </TableCell>
-                          <TableCell>{row.productStatus}</TableCell>
-                          <div className="action_center product_Detials_Actions">
-                            {/* <Image
+              {catalogServiceNewReducer?.loading === true ? (
+                <div
+                  className="loader-box loader"
+                  style={{ width: "100% !important" }}
+                >
+                  <div className="loader">
+                    <div className="line bg-primary"></div>
+                    <div className="line bg-primary"></div>
+                    <div className="line bg-primary"></div>
+                    <div className="line bg-primary"></div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <TabPanel value={value} index={0} onNext={handleNext}>
+                    <Table style={{ margin: "10px 0" }}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ITEM ID</TableCell>
+                          <TableCell>NAME</TableCell>
+                          <TableCell>CATEGORY</TableCell>
+                          <TableCell>FORMATION</TableCell>
+                          <TableCell>STATUS</TableCell>
+                          <TableCell>DETAILS</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {currentRecords &&
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
+                          currentRecords.map((row, i) => (
+                            <TableRow
+                              key={row.name}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component="th" scope="row">
+                                {row.itemId}
+                              </TableCell>
+                              <TableCell>{row.itemName}</TableCell>
+                              <TableCell>{row.category}</TableCell>
+                              <TableCell>
+                                {" "}
+                                <LinearProgressWithLabel
+                                  value={row.formation}
+                                />
+                              </TableCell>
+                              <TableCell>{row.productStatus}</TableCell>
+                              <div className="action_center product_Detials_Actions">
+                                {/* <Image
                               className="px-2"
                               src={lens}
                               alt="lens"
@@ -383,87 +435,91 @@ const AllProducts = (props) => {
                               height={20}
                               onClick={() => handleEdit(row.itemId)}
                             /> */}
-                            <Eye
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "#419794",
-                              }}
-                              onClick={() => handleEdit(row.itemId)}
-                            />
-                          </div>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={12}>No Record Found</TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-                {/* <Button
+                                <Eye
+                                  style={{
+                                    textAlign: "right",
+                                    fontSize: "xx-small",
+                                    color: "#419794",
+                                  }}
+                                  onClick={() => handleEdit(row.itemId)}
+                                />
+                              </div>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={12}>No Record Found</TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                    {/* <Button
                   variant="contained"
                   color="primary"
                   onClick={handleNextClick}
                 >
                   READY FOR REVIEW
                 </Button> */}
-                <div className={styles.category_pagination}>
-                  <Pagination
-                    itemClass="page-item"
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    firstPageText="First"
-                    lastPageText="Last"
-                    onChange={handlePaginationChange}
-                  />
-                </div>
-              </TabPanel>
-              <TabPanel
-                value={value}
-                index={1}
-                onNext={handleNext}
-                onClick={handlePanelClick}
-              >
-                <Table style={{ margin: "10px 0" }}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>ITEM ID</TableCell>
-                      <TableCell>NAME</TableCell>
-                      <TableCell>CATEGORY</TableCell>
-                      <TableCell>FORMATION</TableCell>
-                      <TableCell>STATUS</TableCell>
-                      <TableCell>DETAILS</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
-                      currentRecords.map((row, i) => (
-                        <TableRow
-                          key={row.name}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {row.itemId}
-                          </TableCell>
-                          <TableCell>{row.itemName}</TableCell>
-                          <TableCell>{row.category}</TableCell>
-                          <TableCell>
-                            {" "}
-                            <LinearProgressWithLabel value={row.formation} />
-                          </TableCell>
-                          <TableCell style={{ color: "#f4c476" }}>
-                            {row.productStatus}
-                          </TableCell>
-                          <div className="action_center product_Detials_Actions">
-                            {/* <Image
+                    <div className={styles.category_pagination}>
+                      <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={currentPage}
+                        itemsCountPerPage={recordPerPage}
+                        totalItemsCount={totalRecords}
+                        pageRangeDisplayed={pageRange}
+                        firstPageText="First"
+                        lastPageText="Last"
+                        onChange={handlePaginationChange}
+                      />
+                    </div>
+                  </TabPanel>
+                  <TabPanel
+                    value={value}
+                    index={1}
+                    onNext={handleNext}
+                    onClick={handlePanelClick}
+                  >
+                    <Table style={{ margin: "10px 0" }}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ITEM ID</TableCell>
+                          <TableCell>NAME</TableCell>
+                          <TableCell>CATEGORY</TableCell>
+                          <TableCell>FORMATION</TableCell>
+                          <TableCell>STATUS</TableCell>
+                          <TableCell>DETAILS</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {currentRecords &&
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
+                          currentRecords.map((row, i) => (
+                            <TableRow
+                              key={row.name}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component="th" scope="row">
+                                {row.itemId}
+                              </TableCell>
+                              <TableCell>{row.itemName}</TableCell>
+                              <TableCell>{row.category}</TableCell>
+                              <TableCell>
+                                {" "}
+                                <LinearProgressWithLabel
+                                  value={row.formation}
+                                />
+                              </TableCell>
+                              <TableCell style={{ color: "#f4c476" }}>
+                                {row.productStatus}
+                              </TableCell>
+                              <div className="action_center product_Detials_Actions">
+                                {/* <Image
                               className="px-2"
                               src={lens}
                               alt="lens"
@@ -471,82 +527,84 @@ const AllProducts = (props) => {
                               height={20}
                               onClick={() => handleEdit(row.itemId)}
                             /> */}
-                            <Eye
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "#419794",
-                              }}
-                              onClick={() => handleEdit(row.itemId)}
-                            />
-                          </div>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={12}>No Record Found</TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-                {/* <Button
+                                <Eye
+                                  style={{
+                                    textAlign: "right",
+                                    fontSize: "xx-small",
+                                    color: "#419794",
+                                  }}
+                                  onClick={() => handleEdit(row.itemId)}
+                                />
+                              </div>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={12}>No Record Found</TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                    {/* <Button
                   variant="contained"
                   color="primary"
                   onClick={handleNextClick}
                 >
                   REVALIDATE
                 </Button> */}
-                <div className={styles.category_pagination}>
-                  <Pagination
-                    itemClass="page-item"
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    firstPageText="First"
-                    lastPageText="Last"
-                    onChange={handlePaginationChange}
-                  />
-                </div>
-              </TabPanel>
-              <TabPanel value={value} index={2} onNext={handleNext}>
-                <Table style={{ margin: "10px 0" }}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>ITEM ID</TableCell>
-                      <TableCell>NAME</TableCell>
-                      <TableCell>CATEGORY</TableCell>
-                      {/* <TableCell>FORMATION</TableCell> */}
-                      <TableCell>STATUS</TableCell>
-                      <TableCell>DETAILS</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
-                      currentRecords.map((row, i) => (
-                        <TableRow
-                          key={row.name}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {row.itemId}
-                          </TableCell>
-                          <TableCell>{row.itemName}</TableCell>
-                          <TableCell>{row.category}</TableCell>
-                          {/* <TableCell>
+                    <div className={styles.category_pagination}>
+                      <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={currentPage}
+                        itemsCountPerPage={recordPerPage}
+                        totalItemsCount={totalRecords}
+                        pageRangeDisplayed={pageRange}
+                        firstPageText="First"
+                        lastPageText="Last"
+                        onChange={handlePaginationChange}
+                      />
+                    </div>
+                  </TabPanel>
+                  <TabPanel value={value} index={2} onNext={handleNext}>
+                    <Table style={{ margin: "10px 0" }}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ITEM ID</TableCell>
+                          <TableCell>NAME</TableCell>
+                          <TableCell>CATEGORY</TableCell>
+                          {/* <TableCell>FORMATION</TableCell> */}
+                          <TableCell>STATUS</TableCell>
+                          <TableCell>DETAILS</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {currentRecords &&
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
+                          currentRecords.map((row, i) => (
+                            <TableRow
+                              key={row.name}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component="th" scope="row">
+                                {row.itemId}
+                              </TableCell>
+                              <TableCell>{row.itemName}</TableCell>
+                              <TableCell>{row.category}</TableCell>
+                              {/* <TableCell>
                             {" "}
                             {/* <LinearProgressWithLabel value={row.formation} /> */}
 
-                          <TableCell style={{ color: "red" }}>
-                            {row.productStatus}
-                          </TableCell>
-                          <div className="action_center product_Detials_Actions">
-                            {/* <Image
+                              <TableCell style={{ color: "red" }}>
+                                {row.productStatus}
+                              </TableCell>
+                              <div className="action_center product_Detials_Actions">
+                                {/* <Image
                               className="px-2"
                               src={lens}
                               alt="lens"
@@ -554,45 +612,47 @@ const AllProducts = (props) => {
                               height={20}
                               onClick={() => handleEdit(row.itemId)}
                             /> */}
-                            <Eye
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "#419794",
-                              }}
-                              onClick={() => handleEdit(row.itemId)}
-                            />
-                          </div>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={12}>No Record Found</TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-                {/* <Button
+                                <Eye
+                                  style={{
+                                    textAlign: "right",
+                                    fontSize: "xx-small",
+                                    color: "#419794",
+                                  }}
+                                  onClick={() => handleEdit(row.itemId)}
+                                />
+                              </div>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={12}>No Record Found</TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                    {/* <Button
                   variant="contained"
                   color="primary"
                   onClick={handleNextClick}
                 >
                   READY FOR PUBLISH
                 </Button> */}
-                <div className={styles.category_pagination}>
-                  <Pagination
-                    itemClass="page-item"
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    firstPageText="First"
-                    lastPageText="Last"
-                    onChange={handlePaginationChange}
-                  />
-                </div>
-              </TabPanel>
+                    <div className={styles.category_pagination}>
+                      <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={currentPage}
+                        itemsCountPerPage={recordPerPage}
+                        totalItemsCount={totalRecords}
+                        pageRangeDisplayed={pageRange}
+                        firstPageText="First"
+                        lastPageText="Last"
+                        onChange={handlePaginationChange}
+                      />
+                    </div>
+                  </TabPanel>
+                </>
+              )}
             </CardContent>
           </Card>
         </Grid>
