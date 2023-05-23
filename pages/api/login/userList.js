@@ -13,7 +13,7 @@ function handler(req, res) {
   // http://auth-command-handler.theretailinsightsdemos.com/api/v1/auth/users?pageNo=0&pageSize=10
   const config = {
     method: "get",
-    url: `/auth/users?pageNo=${body.pageNo}&pageSize=${body.pageSize}`,
+    url: `/auth/users?pageNo=${body.pageNo}&pageSize=10`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
