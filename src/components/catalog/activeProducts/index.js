@@ -69,9 +69,9 @@ const ActiveProducts = () => {
     value: item.channelId,
     name: item.channelName,
   }));
-  const recordPerPage = 5;
+  const recordPerPage = 10;
   const totalRecords = catalogServiceNewReducer?.getAllProducts?.totalElements;
-  const pageRange = 5;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = catalogServiceNewReducer?.getAllProducts.content;
@@ -86,7 +86,7 @@ const ActiveProducts = () => {
   // }
 
   useEffect(() => {
-    dispatch(getAllProductListApi(0, 5, "ACTIVATED"));
+    dispatch(getAllProductListApi(0, 10, "ACTIVATED"));
     dispatch(getChannelListApi(0, 1000));
   }, []);
 

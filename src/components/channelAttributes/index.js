@@ -78,9 +78,9 @@ const ChannelAttributes = () => {
   }
   //<<<<<<<<<<<<<<<<<<<<<PAGINATION>>>>>>>>>>>>>>>>>>>>>>
 
-  const recordPerPage = 5;
+  const recordPerPage = 20;
   const totalRecords = channelAttribute?.totalElements;
-  const pageRange = 5;
+  const pageRange = 20;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   // const currentRecords = tableData;

@@ -49,9 +49,9 @@ const Channels = () => {
   // console.log("catalogServiceNewReducer", channelReducer?.channelGet);
 
   // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  const recordPerPage = 5;
+  const recordPerPage = 10;
   const totalRecords = channelReducer?.channelGet?.totalElements;
-  const pageRange = 5;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = channelReducer?.channelGet?.content;

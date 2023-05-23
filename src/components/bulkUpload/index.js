@@ -103,9 +103,9 @@ const BulkUpload = (props) => {
 
   //   /*-----------------Pagination------------------*/
 
-  const recordPerPage = 5;
+  const recordPerPage = 10;
   const totalRecords = bulkData?.content?.totalElements;
-  const pageRange = 5;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = bulkData?.content?.content;

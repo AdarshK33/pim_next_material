@@ -71,9 +71,9 @@ const UserManagement = () => {
     });
   }
 
-  const recordPerPage = 5;
+  const recordPerPage = 10;
   const totalRecords = userGet.totalElements;
-  const pageRange = 5;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = userGet?.content;

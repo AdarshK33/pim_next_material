@@ -8,7 +8,7 @@ function handler(req, res) {
 
   const config = {
     method: "get",
-    url: `/catalog/channels?pageNo=${body.pageNo}&pageSize=${body.pageSize}`,
+    url: `/catalog/channels?pageNo=${body.pageNo}&pageSize=10`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
