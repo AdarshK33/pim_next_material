@@ -171,7 +171,7 @@ const BulkUpload = (props) => {
                         <TableCell>CREATED BY</TableCell>
                         <TableCell align="right">UPDATED BY</TableCell>
                         {/* <TableCell align="right">PRECEDENCE</TableCell> */}
-                        <TableCell align="right">STATUS</TableCell>
+                        {/* <TableCell align="right">STATUS</TableCell> */}
                         {/* <TableCell align="right">ACTION</TableCell> */}
                       </TableRow>
                     </TableHead>
@@ -193,7 +193,7 @@ const BulkUpload = (props) => {
                             <TableCell align="right">{row.createdAt}</TableCell>
                             <TableCell align="right">{row.createdBy}</TableCell>
                             <TableCell align="right">{row.updatedBy}</TableCell>
-                            <TableCell align="right">{row.status}</TableCell>
+                            {/* <TableCell align="right">{row.status}</TableCell> */}
 
                             {/* <TableCell align="right">
                             {row?.status === true ? "Active" : "In-Active"}
