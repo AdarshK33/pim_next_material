@@ -58,7 +58,7 @@ const Attributes = () => {
   const { catagories, loading } = useSelector(
     (state) => state.catalogQueryReducer
   );
-  console.log('catagories', catagories)
+  // /console.log("catagories", catagories);
 
   const router = useRouter();
 
@@ -127,31 +127,6 @@ const Attributes = () => {
               </Typography>
 
               <Box className={styles.category_btn_add_btn}>
-                <Box className={styles.category_btn_add_btn}>
-                  <FormControl fullWidth variant="standard">
-                    <InputLabel id="demo-simple-select-standard-label">
-                      Categories
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-standard-label"
-                      id="demo-simple-select-standard"
-                      label="Category"
-                      className={styles.selectCategory_dropdown_Att}
-                      value={categoryId || ""}
-                      onChange={categoryHandler}
-                    >
-                      {catagories &&
-                        catagories !== null &&
-                        catagories !== undefined &&
-                        Object.keys(catagories).length &&
-                        catagories?.map((item, i) => {
-                          return (
-                            <MenuItem value={item.id}>{item.name}</MenuItem>
-                          );
-                        })}
-                    </Select>
-                  </FormControl>
-                </Box>
                 <Box className={styles.add_dropDownBtn}>
                   <Button
                     variant="outlined"
@@ -188,47 +163,75 @@ const Attributes = () => {
                 </div>
               </div>
             ) : (
-              <CardContent>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>#</TableCell>
-                        <TableCell>NAME</TableCell>
-                        <TableCell>ROLE</TableCell>
-                        <TableCell align="right">DESCRIPTION</TableCell>
-                        <TableCell align="right">PRIORITY SEQUENCE</TableCell>
-                        {/* <TableCell align="right">STATUS</TableCell> */}
-                        <TableCell align="right">ACTION</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {currentRecords &&
+              <>
+                <Box style={{ paddingTop: "10px" }}>
+                  <FormControl variant="standard">
+                    <InputLabel id="demo-simple-select-standard-label">
+                      Categories
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      id="demo-simple-select-standard"
+                      label="Category"
+                      className={styles.selectCategory_dropdown_Att}
+                      value={categoryId || ""}
+                      onChange={categoryHandler}
+                    >
+                      {catagories &&
+                        catagories !== null &&
+                        catagories !== undefined &&
+                        Object.keys(catagories).length &&
+                        catagories?.map((item, i) => {
+                          return (
+                            <MenuItem value={item.id}>{item.name}</MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </Box>
+                <CardContent>
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>#</TableCell>
+                          <TableCell>NAME</TableCell>
+                          <TableCell>ROLE</TableCell>
+                          <TableCell align="right">DESCRIPTION</TableCell>
+                          <TableCell align="right">PRIORITY SEQUENCE</TableCell>
+                          {/* <TableCell align="right">STATUS</TableCell> */}
+                          <TableCell align="right">ACTION</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {currentRecords &&
                         currentRecords !== null &&
                         currentRecords.length > 0 ? (
-                        currentRecords.map((row, i) => (
-                          <TableRow
-                            key={row.name}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {i + 1 + indexOfFirstRecord}
-                            </TableCell>
-                            <TableCell align="right">{row.name}</TableCell>
-                            <TableCell align="right">{row.role}</TableCell>
-                            <TableCell align="right">
-                              {row.description}
-                            </TableCell>
-                            <TableCell align="right">
-                              {row.precedence}
-                            </TableCell>
-                            {/* <TableCell align="right">
+                          currentRecords.map((row, i) => (
+                            <TableRow
+                              key={row.name}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component="th" scope="row">
+                                {i + 1 + indexOfFirstRecord}
+                              </TableCell>
+                              <TableCell align="right">{row.name}</TableCell>
+                              <TableCell align="right">{row.role}</TableCell>
+                              <TableCell align="right">
+                                {row.description}
+                              </TableCell>
+                              <TableCell align="right">
+                                {row.precedence}
+                              </TableCell>
+                              {/* <TableCell align="right">
                             {row?.active === true ? "Active" : "In-Active"}
                           </TableCell> */}
-                            <div className="action_center">
-                              {/* <Image
+                              <div className="action_center">
+                                {/* <Image
                                 className="px-2 "
                                 src={lens}
                                 alt="lens"
@@ -236,49 +239,50 @@ const Attributes = () => {
                                 height={20}
                                 onClick={() => handleEdit(row.id)}
                               /> */}
-                              <Eye
-                                style={{
-                                  textAlign: "right",
-                                  fontSize: "xx-small",
-                                  color: "#419794",
-                                }}
-                                onClick={() => handleEdit(row.id, row.name)}
-                              />
-                            </div>
+                                <Eye
+                                  style={{
+                                    textAlign: "right",
+                                    fontSize: "xx-small",
+                                    color: "#419794",
+                                  }}
+                                  onClick={() => handleEdit(row.id, row.name)}
+                                />
+                              </div>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={12}>No Record Found</TableCell>
                           </TableRow>
-                        ))
-                      ) : (
-                        <TableRow>
-                          <TableCell colSpan={12}>No Record Found</TableCell>
-                        </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                {/* <Stack spacing={2}> */}
-                <div className={styles.attribute_pagination}>
-                  {/* <Pagination
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  {/* <Stack spacing={2}> */}
+                  <div className={styles.attribute_pagination}>
+                    {/* <Pagination
                     count={Math.ceil(totalRecords / recordPerPage)}
                     page={currentPage}
                     showFirstButton
                     showLastButton
                     onChange={handlePaginationChange}
                   /> */}
-                  <Pagination
-                    itemClass="page-item"
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    firstPageText="First"
-                    lastPageText="Last"
-                    onChange={handlePaginationChange}
-                  />
-                </div>
+                    <Pagination
+                      itemClass="page-item"
+                      linkClass="page-link"
+                      activePage={currentPage}
+                      itemsCountPerPage={recordPerPage}
+                      totalItemsCount={totalRecords}
+                      pageRangeDisplayed={pageRange}
+                      firstPageText="First"
+                      lastPageText="Last"
+                      onChange={handlePaginationChange}
+                    />
+                  </div>
 
-                {/* </Stack> */}
-              </CardContent>
+                  {/* </Stack> */}
+                </CardContent>
+              </>
             )}
           </Card>
         </Grid>
