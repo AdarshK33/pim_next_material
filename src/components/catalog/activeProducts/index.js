@@ -149,14 +149,14 @@ const ActiveProducts = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Active Products
               </Typography>
-              <a
+              {/* <a
                 href={`data:text/json;charset=utf-8,${encodeURIComponent(
                   JSON.parse(JSON.stringify(publishProduct))
                 )}`}
                 download="filename.json"
               >
                 Download Json
-              </a>
+              </a> */}
               {selectedItemIds.length > 0 && channel ? (
                 <Button
                   variant="outlined"
@@ -186,14 +186,14 @@ const ActiveProducts = () => {
                 </Button>
               )}
             </Grid>
-            <Box style={{ paddingTop: "20px", width: "60%" }}>
-              <FormControl style={{ width: "30%" }}>
-                <InputLabel id="demo-simple-select-label">
+            <Box style={{ width: "60%", paddingTop: "10px" }}>
+              <FormControl style={{ width: "25%" }} variant="standard">
+                <InputLabel id="demo-simple-select-standard-label">
                   Select Channel
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
                   value={channel}
                   label="Select Channel"
                   onChange={handleChannel}
