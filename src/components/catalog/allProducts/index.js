@@ -316,7 +316,7 @@ const AllProducts = (props) => {
 
               <Box sx={{ maxWidth: 150 }}>
                 {catalogServiceNewReducer?.getAllProducts !== null &&
-                  Object.keys(catalogServiceNewReducer?.getAllProducts)
+                  Object.entries(catalogServiceNewReducer?.getAllProducts)
                     .length && (
                     <Autocomplete
                       id="free-solo-demo"
