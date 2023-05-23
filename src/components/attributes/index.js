@@ -199,8 +199,8 @@ const Attributes = () => {
                           <TableCell>ROLE</TableCell>
                           <TableCell align="right">DESCRIPTION</TableCell>
                           <TableCell align="right">PRIORITY SEQUENCE</TableCell>
-                          {/* <TableCell align="right">STATUS</TableCell> */}
-                          <TableCell align="right">ACTIONS</TableCell>
+                          <TableCell align="right">ATTRIBUTES</TableCell>
+                          <TableCell align="right">EDIT</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -230,7 +230,8 @@ const Attributes = () => {
                               {/* <TableCell align="right">
                             {row?.active === true ? "Active" : "In-Active"}
                           </TableCell> */}
-                              <div className={styles.div_Actions}>
+                              {/* <div className={styles.div_Actions}> */}
+                              <TableCell align="right">
                                 <div className="action_center">
                                   {/* <Image
                                 className="px-2 "
@@ -249,17 +250,20 @@ const Attributes = () => {
                                     onClick={() => handleEdit(row.id, row.name)}
                                   />
                                 </div>
+                              </TableCell>
+                              <TableCell align="right">
                                 <div className="action_center">
                                   <Edit2
                                     style={{
                                       textAlign: "right",
-                                      fontSize: "xx-small",
+                                      fontSize: "10px",
                                       color: "#419794",
                                     }}
                                     // onClick={() => handleEdit(row.userId)}
                                   />
                                 </div>
-                              </div>
+                              </TableCell>
+                              {/* </div> */}
                             </TableRow>
                           ))
                         ) : (

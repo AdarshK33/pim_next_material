@@ -170,7 +170,7 @@ const UserManagement = () => {
                       <TableCell align="right">ROLE</TableCell>
 
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ACTION</TableCell>
+                      <TableCell align="right">EDIT</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

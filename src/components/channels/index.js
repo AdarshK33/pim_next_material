@@ -113,8 +113,8 @@ const Channels = () => {
                         TOTAL PRODUCT INACTIVE
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ATTRIBUTES / ACTIONS</TableCell>
-                      {/* <TableCell align="right">ACTIONS</TableCell> */}
+                      <TableCell align="right">ATTRIBUTES </TableCell>
+                      <TableCell align="right">EDIT</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -137,7 +137,8 @@ const Channels = () => {
                           <TableCell align="right">
                             {row.status === true ? "Active" : "In-Active"}
                           </TableCell>
-                          <div className={styles.div_actions}>
+                          {/* <div className={styles.div_actions}> */}
+                          <TableCell align="right">
                             <div className={`action_center }`}>
                               {/* <Image
                               className="px-2"
@@ -160,10 +161,9 @@ const Channels = () => {
                                 }
                               />
                             </div>
-
-                            <div
-                              className={`action_center ${styles.icon_center}`}
-                            >
+                          </TableCell>
+                          <TableCell align="right">
+                            <div className={`action_center `}>
                               {/* <Image
                               className="px-2"
                               src={edit}
@@ -185,7 +185,9 @@ const Channels = () => {
                                 // }
                               />
                             </div>
-                          </div>
+                          </TableCell>
+
+                          {/* </div> */}
                         </TableRow>
                       ))
                     ) : (
