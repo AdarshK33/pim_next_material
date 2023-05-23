@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./userManagement.module.css";
 import Image from "next/image";
-import edit from "../../../assets/icons/edit.svg";
+// import edit from "../../../assets/icons/edit.svg";
+import { Edit2, Eye, Search, Download } from "react-feather";
+
 import {
   Grid,
   Button,
@@ -189,12 +191,20 @@ const UserManagement = () => {
                           <TableCell align="right">{row.roleName}</TableCell>
                           <TableCell align="right">{row.status}</TableCell>
                           <div className="action_center">
-                            <Image
+                            {/* <Image
                               className="px-2 "
                               src={edit}
                               alt="edit"
                               width={30}
                               height={25}
+                              onClick={() => handleEdit(row.userId)}
+                            /> */}
+                            <Edit2
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "#419794",
+                              }}
                               onClick={() => handleEdit(row.userId)}
                             />
                           </div>
