@@ -32,6 +32,11 @@
   margin-bottom: 16px;
 }
 
+.div_Actions {
+  display: flex;
+  justify-content: center;
+}
+
 .category_btn_add_btn {
   display: flex;
   align-items: baseline;

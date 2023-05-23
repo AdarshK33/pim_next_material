@@ -200,7 +200,7 @@ const Attributes = () => {
                           <TableCell align="right">DESCRIPTION</TableCell>
                           <TableCell align="right">PRIORITY SEQUENCE</TableCell>
                           {/* <TableCell align="right">STATUS</TableCell> */}
-                          <TableCell align="right">ACTION</TableCell>
+                          <TableCell align="right">ACTIONS</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -230,8 +230,9 @@ const Attributes = () => {
                               {/* <TableCell align="right">
                             {row?.active === true ? "Active" : "In-Active"}
                           </TableCell> */}
-                              <div className="action_center">
-                                {/* <Image
+                              <div className={styles.div_Actions}>
+                                <div className="action_center">
+                                  {/* <Image
                                 className="px-2 "
                                 src={lens}
                                 alt="lens"
@@ -239,14 +240,25 @@ const Attributes = () => {
                                 height={20}
                                 onClick={() => handleEdit(row.id)}
                               /> */}
-                                <Eye
-                                  style={{
-                                    textAlign: "right",
-                                    fontSize: "xx-small",
-                                    color: "#419794",
-                                  }}
-                                  onClick={() => handleEdit(row.id, row.name)}
-                                />
+                                  <Eye
+                                    style={{
+                                      textAlign: "right",
+                                      fontSize: "xx-small",
+                                      color: "#419794",
+                                    }}
+                                    onClick={() => handleEdit(row.id, row.name)}
+                                  />
+                                </div>
+                                <div className="action_center">
+                                  <Edit2
+                                    style={{
+                                      textAlign: "right",
+                                      fontSize: "xx-small",
+                                      color: "#419794",
+                                    }}
+                                    // onClick={() => handleEdit(row.userId)}
+                                  />
+                                </div>
                               </div>
                             </TableRow>
                           ))

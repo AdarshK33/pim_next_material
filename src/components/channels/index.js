@@ -113,7 +113,8 @@ const Channels = () => {
                         TOTAL PRODUCT INACTIVE
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ATTRIBUTES</TableCell>
+                      <TableCell align="right">ATTRIBUTES / ACTIONS</TableCell>
+                      {/* <TableCell align="right">ACTIONS</TableCell> */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -136,11 +137,9 @@ const Channels = () => {
                           <TableCell align="right">
                             {row.status === true ? "Active" : "In-Active"}
                           </TableCell>
-
-                          <div
-                            className={`action_center ${styles.icon_center}`}
-                          >
-                            {/* <Image
+                          <div className={styles.div_actions}>
+                            <div className={`action_center }`}>
+                              {/* <Image
                               className="px-2"
                               src={edit}
                               alt="add"
@@ -150,16 +149,42 @@ const Channels = () => {
                                 handleAdd(row.channelId, row.channelName)
                               }
                             /> */}
-                            <Eye
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "#419794",
-                              }}
+                              <Eye
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "#419794",
+                                }}
+                                onClick={() =>
+                                  handleAdd(row.channelId, row.channelName)
+                                }
+                              />
+                            </div>
+
+                            <div
+                              className={`action_center ${styles.icon_center}`}
+                            >
+                              {/* <Image
+                              className="px-2"
+                              src={edit}
+                              alt="add"
+                              width={30}
+                              height={25}
                               onClick={() =>
                                 handleAdd(row.channelId, row.channelName)
                               }
-                            />
+                            /> */}
+                              <Edit2
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "#419794",
+                                }}
+                                // onClick={() =>
+                                //   handleAdd(row.channelId, row.channelName)
+                                // }
+                              />
+                            </div>
                           </div>
                         </TableRow>
                       ))

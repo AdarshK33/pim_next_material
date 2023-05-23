@@ -67,6 +67,10 @@
   display: flex !important;
   justify-content: space-around !important;
 }
+.div_actions {
+  display: flex !important;
+  justify-content: center;
+}
 
 .icon_center {
   padding-left: 50px !important;
