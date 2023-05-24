@@ -58,7 +58,7 @@ const Attributes = () => {
   const { catagories, loading } = useSelector(
     (state) => state.catalogQueryReducer
   );
-  // /console.log("catagories", catagories);
+  // console.log("hello 1 catagories", catagories);
 
   const router = useRouter();
 
@@ -67,28 +67,48 @@ const Attributes = () => {
   const dispatch = useDispatch();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
-  const [categoryId, setCategoryId] = useState();
+
+  const [categoryId, setCategoryId] = useState("");
+  // console.log("hello 2catagories", catagories[0]?.id);
 
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(getAttributeListApi(1, currentPage - 1, 5));
-    dispatch(getRoleApi());
-    dispatch(getCategoriesApi());
+    if (!catagories) {
+      dispatch(getCategoriesApi());
+    }
+    if (categoryId) {
+      dispatch(getAttributeListApi(categoryId, currentPage - 1, 5));
+    }
+    // dispatch(getRoleApi());
   }, []);
 
+  useEffect(() => {
+    if (catagories && catagories.length > 0) {
+      setCategoryId(catagories[0].id);
+    }
+  }, [catagories]);
+
+  useEffect(() => {
+    if (categoryId) {
+      dispatch(getAttributeListApi(categoryId, 0, 10));
+      setCurrentPage(1);
+    }
+  }, [categoryId]);
+
+  // console.log("hello 2catagories", catagories[0]?.id);
   //   /*-----------------Pagination------------------*/
 
-  const recordPerPage = 10;
+  const recordPerPage = 2;
   const totalRecords = catalogServiceNewReducer?.attributeGet?.totalElements;
-  const pageRange = 10;
+  const pageRange = 2;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = catalogServiceNewReducer?.attributeGet?.content;
 
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
-    dispatch(getAttributeListApi(categoryId, value - 1, 5));
+    dispatch(getAttributeListApi(categoryId, value - 1, 10));
   };
 
   /*-----------------Pagination------------------*/
@@ -102,10 +122,12 @@ const Attributes = () => {
     dispatch(getAttributeSetDetailsListApi(id, 0, 10));
   }
   const categoryHandler = (e) => {
-    console.log("hello called", e.target.value);
+    // console.log("hello called", e.target.value);
     setCategoryId(e.target.value);
-    dispatch(getAttributeListApi(e.target.value, currentPage - 1, 5));
+    // dispatch(getAttributeListApi(e.target.value, currentPage - 1, 5));
   };
+
+  // console.log("hello 4 currentPage", currentPage);
 
   return (
     <>
@@ -174,7 +196,7 @@ const Attributes = () => {
                       id="demo-simple-select-standard"
                       label="Category"
                       className={styles.selectCategory_dropdown_Att}
-                      value={categoryId || ""}
+                      value={categoryId}
                       onChange={categoryHandler}
                     >
                       {catagories &&

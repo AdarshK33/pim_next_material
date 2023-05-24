@@ -17,7 +17,7 @@ import { userRole } from "../redux/actions/login";
 import { useDispatch } from "react-redux";
 import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
 import { getNotificationApi } from "../redux/actions/login";
-
+import { getChannelListApi } from "../redux/actions/channel";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -51,6 +51,7 @@ function MyApp(props) {
   useEffect(() => {
     dispatch(getCategoriesApi());
     dispatch(getNotificationApi());
+    dispatch(getChannelListApi(0, 1000));
   }, []);
   // useeffect and dispatch called -init
   // client to server call - use : api/userApi
