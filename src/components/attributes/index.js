@@ -74,9 +74,8 @@ const Attributes = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    if (!catagories) {
-      dispatch(getCategoriesApi());
-    }
+    dispatch(getCategoriesApi());
+
     if (categoryId) {
       dispatch(getAttributeListApi(categoryId, currentPage - 1, 5));
     }
