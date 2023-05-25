@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./userManagement.module.css";
 import Image from "next/image";
-import edit from "../../../assets/icons/edit.svg";
+// import edit from "../../../assets/icons/edit.svg";
+import { Edit2, Eye, Search, Download } from "react-feather";
+
 import {
   Grid,
   Button,
@@ -69,9 +71,9 @@ const UserManagement = () => {
     });
   }
 
-  const recordPerPage = 5;
+  const recordPerPage = 10;
   const totalRecords = userGet.totalElements;
-  const pageRange = 5;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = userGet?.content;
@@ -89,10 +91,10 @@ const UserManagement = () => {
 
   useEffect(() => {
     if (role) {
-    setCurrentPage(1);
+      setCurrentPage(1);
       dispatch(filterUserApi(0, 5, role));
-    } 
-  },[role])
+    }
+  }, [role]);
 
   const handleEdit = (userId) => {
     setShowUserUpdateForm(true);
@@ -117,29 +119,6 @@ const UserManagement = () => {
                 justifyContent="space-between"
               > */}
               <Box className={styles.user_btn_add_btn}>
-                <Box className={styles.user_btn_add_btn}>
-                  <FormControl fullWidth variant="standard">
-                    <InputLabel id="demo-simple-select-standard-label">
-                      Select Role
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-standard-label"
-                      id="demo-simple-select-standard"
-                      label="Role"
-                      className={styles.selectUser_dropdown_Att}
-                      value={role || ""}
-                      onChange={(e) => roleHandler(e)}
-                    >
-                      <MenuItem value=""></MenuItem>
-                      {roleGet &&
-                        roleGet?.map((item, i) => {
-                          return (
-                            <MenuItem value={item.name}>{item.name}</MenuItem>
-                          );
-                        })}
-                    </Select>
-                  </FormControl>
-                </Box>
                 {/* </Grid> */}
                 <Box className={styles.add_dropDownBtn}>
                   <Button
@@ -159,6 +138,28 @@ const UserManagement = () => {
                 body={<AddForm classModal={() => setShowUserAddForm(false)} />}
               />
             </Grid>
+
+            <Box style={{ paddingTop: "10px" }}>
+              <FormControl variant="standard">
+                <InputLabel id="demo-simple-select-standard-label">
+                  Select Role
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  label="Role"
+                  className={styles.selectUser_dropdown_Att}
+                  value={role || ""}
+                  onChange={(e) => roleHandler(e)}
+                >
+                  <MenuItem value=""></MenuItem>
+                  {roleGet &&
+                    roleGet?.map((item, i) => {
+                      return <MenuItem value={item.name}>{item.name}</MenuItem>;
+                    })}
+                </Select>
+              </FormControl>
+            </Box>
             <CardContent>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -169,7 +170,7 @@ const UserManagement = () => {
                       <TableCell align="right">ROLE</TableCell>
 
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ACTION</TableCell>
+                      <TableCell align="right">EDIT</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -190,12 +191,20 @@ const UserManagement = () => {
                           <TableCell align="right">{row.roleName}</TableCell>
                           <TableCell align="right">{row.status}</TableCell>
                           <div className="action_center">
-                            <Image
+                            {/* <Image
                               className="px-2 "
                               src={edit}
                               alt="edit"
                               width={30}
                               height={25}
+                              onClick={() => handleEdit(row.userId)}
+                            /> */}
+                            <Edit2
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "#419794",
+                              }}
                               onClick={() => handleEdit(row.userId)}
                             />
                           </div>

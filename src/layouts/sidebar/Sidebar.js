@@ -34,10 +34,11 @@ import Image from "next/image";
 import styles from "./sidebar.module.css";
 
 import ProfileDD from "../header/ProfileDD";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+// import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useDispatch, useSelector } from "react-redux";
+import { ChevronRight, ChevronDown } from "react-feather";
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const [open, setOpen] = React.useState(true);
@@ -156,11 +157,21 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                         menuitem.title === selectedMenu &&
                         menuitem.list ? (
                           <>
-                            <KeyboardArrowUpIcon />
+                            {/* <KeyboardArrowUpIcon /> */}
+
+                            <ChevronDown
+                              icon="chevron-down"
+                              width="25"
+                              height="20"
+                            />
                           </>
                         ) : menuitem.list ? (
                           <>
-                            <KeyboardArrowDownIcon />
+                            <ChevronRight
+                              icon="chevron-right"
+                              width="25"
+                              height="20"
+                            />
                           </>
                         ) : (
                           <></>
@@ -195,7 +206,13 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                                 }
                               >
                                 <ListItemIcon>
-                                  <ChevronRightIcon />
+                                  {/* <ChevronRightIcon />
+                                   */}
+                                  <ChevronRight
+                                    icon="chevron-right"
+                                    width="25"
+                                    height="20"
+                                  />
                                   {/* Change the icon based on the state */}
                                 </ListItemIcon>
                                 <ListItemText
@@ -215,6 +232,9 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
           </List>
         </div>
       </Box>
+      <div className="copyright_block">
+        <p className="copyright_txt">All copyrights reserved, 2023 @ APOLLO</p>
+      </div>
     </Box>
   );
   if (lgUp) {

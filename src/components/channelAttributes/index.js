@@ -48,7 +48,7 @@ const ChannelAttributes = () => {
   const [checkbox, setCheckbox] = useState([]);
   const [selectedAttribute, setSelectedAttribute] = useState([]);
   const [checkedData, setCheckedData] = useState([]);
-  const [unCheckedData, setUnCheckedData] = useState([])
+  const [unCheckedData, setUnCheckedData] = useState([]);
   const [updatedPimAttributes, setUpdatedPimAttributes] = useState();
   const [finalData, setFinalData] = useState()
   const [checkboxChecked, setCheckboxChecked] = useState(true);
@@ -80,9 +80,9 @@ const ChannelAttributes = () => {
   }
   //<<<<<<<<<<<<<<<<<<<<<PAGINATION>>>>>>>>>>>>>>>>>>>>>>
 
-  const recordPerPage = 5;
+  const recordPerPage = 20;
   const totalRecords = channelAttribute?.totalElements;
-  const pageRange = 5;
+  const pageRange = 20;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   // const currentRecords = tableData;
@@ -113,7 +113,7 @@ const ChannelAttributes = () => {
   //   setCurrentPage(value);
   // };
 
-  console.log("channelAttributessss", channelAttributes)
+  console.log("channelAttributessss", channelAttributes);
   const handleChange = (event) => {
     setSelectChannelName(event.target.value);
     // console.log("event.target.value", event.target.value);
@@ -183,31 +183,33 @@ const ChannelAttributes = () => {
     dispatch(channelAttributeApiList(channel, 0, 20));
   };
 
-
-
   useEffect(() => {
     if (checkedData?.length) {
       const channelMappingPayload = {
         mappedAttributes: [],
-        unMappedAttribute: []
+        unMappedAttribute: [],
       };
 
-      checkedData?.forEach(item => {
+      checkedData?.forEach((item) => {
         if (item?.isChecked && item?.checkedAttributes?.length) {
-          channelMappingPayload.mappedAttributes.push(...item.checkedAttributes);
+          channelMappingPayload.mappedAttributes.push(
+            ...item.checkedAttributes
+          );
         }
 
         if (!item?.isChecked && item?.checkedAttributes) {
-          channelMappingPayload.unMappedAttribute.push(...item.checkedAttributes);
+          channelMappingPayload.unMappedAttribute.push(
+            ...item.checkedAttributes
+          );
         }
       });
       // const channeMappingPayload = {
       //   mappedAttributes: checkedData?.map(item => item?.isChecked && item?.checkedAttributes?.length ? item?.checkedAttributes : []),
       //   unMappedAttribute: checkedData?.map(item => checkedData?.isChecked === false && item?.checkedAttributes)
       // }
-      setFinalData(channelMappingPayload)
+      setFinalData(channelMappingPayload);
     }
-  }, [checkedData])
+  }, [checkedData]);
 
 
   const onChangeOfCheckBox = (e, pim) => {
@@ -442,22 +444,27 @@ const ChannelAttributes = () => {
                 {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
             </Grid>
-            <FormControl style={{ width: "200px", marginTop: "2rem" }}>
-              <InputLabel id="demo-simple-select-label">Select Channel</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={selectChannelName}
-                label="Select Channel"
-                onChange={handleChange}
-              >
-                {channelOptions && channelOptions?.map(item => (
-                  <MenuItem value={item?.name}>{item?.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <CardContent sx={{ display: 'flex', width: '100%' }}>
-              <TableContainer component={Paper} sx={{ width: '100%' }}>
+            <Box style={{ width: "60%", paddingTop: "10px" }}>
+              <FormControl style={{ width: "25%" }} variant="standard">
+                <InputLabel id="demo-standard-select-label">
+                  Select Channel
+                </InputLabel>
+                <Select
+                  labelId="demo-standard-select-label"
+                  id="demo-standard-select"
+                  value={selectChannelName}
+                  label="Select Channel"
+                  onChange={handleChange}
+                >
+                  {channelOptions &&
+                    channelOptions?.map((item) => (
+                      <MenuItem value={item?.name}>{item?.name}</MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Box>
+            <CardContent sx={{ display: "flex", width: "100%" }}>
+              <TableContainer component={Paper} sx={{ width: "100%" }}>
                 <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
@@ -496,11 +503,13 @@ const ChannelAttributes = () => {
                                 value={pim?.selectedChannelAttributeId ? pim?.selectedChannelAttributeId : pim?.channel?.attributeId || ''}
                               >
                                 {channelAttributes?.map((channel) => (
-                                  <MenuItem value={channel?.attributeId} key={channel?.attributeId}>
+                                  <MenuItem
+                                    value={channel?.attributeId}
+                                    key={channel?.attributeId}
+                                  >
                                     {channel?.displayName}
                                   </MenuItem>
                                 ))}
-
                               </Select>
                             </FormControl>
                           </TableCell>
@@ -556,7 +565,7 @@ const ChannelAttributes = () => {
                     )} */}
                 </Table>
               </TableContainer>
-              <TableContainer component={Paper} sx={{ width: '100%' }}>
+              <TableContainer component={Paper} sx={{ width: "100%" }}>
                 <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>

@@ -1,4 +1,11 @@
-import { useState } from "react";
+import React, {
+  Fragment,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
@@ -20,4 +27,4 @@ function CustomModal(props) {
   );
 }
 
-export default CustomModal;
+export default React.memo(CustomModal);

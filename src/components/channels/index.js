@@ -49,9 +49,9 @@ const Channels = () => {
   // console.log("catalogServiceNewReducer", channelReducer?.channelGet);
 
   // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  const recordPerPage = 5;
+  const recordPerPage = 10;
   const totalRecords = channelReducer?.channelGet?.totalElements;
-  const pageRange = 5;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = channelReducer?.channelGet?.content;
@@ -113,7 +113,8 @@ const Channels = () => {
                         TOTAL PRODUCT INACTIVE
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ATTRIBUTES</TableCell>
+                      <TableCell align="right">ATTRIBUTES </TableCell>
+                      <TableCell align="right">EDIT</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -136,11 +137,10 @@ const Channels = () => {
                           <TableCell align="right">
                             {row.status === true ? "Active" : "In-Active"}
                           </TableCell>
-
-                          <div
-                            className={`action_center ${styles.icon_center}`}
-                          >
-                            {/* <Image
+                          {/* <div className={styles.div_actions}> */}
+                          <TableCell align="right">
+                            <div className={`action_center }`}>
+                              {/* <Image
                               className="px-2"
                               src={edit}
                               alt="add"
@@ -150,17 +150,44 @@ const Channels = () => {
                                 handleAdd(row.channelId, row.channelName)
                               }
                             /> */}
-                            <Eye
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "#419794",
-                              }}
+                              <Eye
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "#419794",
+                                }}
+                                onClick={() =>
+                                  handleAdd(row.channelId, row.channelName)
+                                }
+                              />
+                            </div>
+                          </TableCell>
+                          <TableCell align="right">
+                            <div className={`action_center `}>
+                              {/* <Image
+                              className="px-2"
+                              src={edit}
+                              alt="add"
+                              width={30}
+                              height={25}
                               onClick={() =>
                                 handleAdd(row.channelId, row.channelName)
                               }
-                            />
-                          </div>
+                            /> */}
+                              <Edit2
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "#419794",
+                                }}
+                                // onClick={() =>
+                                //   handleAdd(row.channelId, row.channelName)
+                                // }
+                              />
+                            </div>
+                          </TableCell>
+
+                          {/* </div> */}
                         </TableRow>
                       ))
                     ) : (
