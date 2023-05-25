@@ -56,7 +56,7 @@ const ProductDetails = (props) => {
   );
 
   const router = useRouter();
-  // console.log("rrrrrrrrrrrrrrrr", router.query.tab);
+  console.log("rrrrrrrrrrrrrrrr", router.query.PimCodeId);
 
   console.log(
     " catalogServiceNewReducer?.productPimCodeData",
@@ -576,6 +576,9 @@ const ProductDetails = (props) => {
     });
     setcheckUpdate(true);
   };
+  useEffect(() => {
+    dispatch(productDetailsApi(router.query.PimCodeId));
+  }, []);
 
   useEffect(() => {
     if (role === "ADMIN" && updateApiCall) {
