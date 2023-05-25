@@ -4,15 +4,14 @@ import withSession from "../../../utils/session";
 function handler(req, res) {
   console.log("calling channel mapping api", req.body)
   const { user: { at = "" } = {}, loggedIn } = req.session;
-  const body = req.body;
-  const channelFilter = body.channelFilter;
-  const pageNo = body.pageNo;
-  const pageSize = body.pageSize;
+  const attributesData = req.body.attributesData;
+  const channelName = req.body.channelName;
   // const {user: {at =""} ={}, loggedIn} = req.session;
+  console.log("attributesData", attributesData, channelName)
   const config = {
     method: "post",
-    url: `/catalog/channel_mapping`,
-    data: body,
+    url: `/catalog/channel_mapping/${channelName}`,
+    data: attributesData,
     headers: {
       Authorization: `Bearer ${at}`,
       "Content-Type": "application/json",
