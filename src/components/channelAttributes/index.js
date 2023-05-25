@@ -46,10 +46,18 @@ const ChannelAttributes = () => {
   const [modifiedPimRecord, setModifiedPimRecord] = useState([]);
   const [channel, setChannel] = useState("Shopify");
   const [checkbox, setCheckbox] = useState([]);
+  const [selectedAttribute, setSelectedAttribute] = useState([]);
   const [checkedData, setCheckedData] = useState([]);
   const [unCheckedData, setUnCheckedData] = useState([])
   const [updatedPimAttributes, setUpdatedPimAttributes] = useState();
   const [finalData, setFinalData] = useState()
+  const [checkboxChecked, setCheckboxChecked] = useState(true);
+  const [selectedAttributes, setSelectedAttributes] = useState([]);
+  const [unselectedAttributes, setUnselectedAttributes] = useState([]);
+  const [dropdownValue, setDropdownValue] = useState('')
+  const [apiCalled, setApiCalled] = useState(false);
+
+  console.log("dcwencdkewjnckjewnc", checkboxChecked, selectedAttributes, unselectedAttributes)
 
   const { channelAttribute, channelGet } = useSelector((state) => {
     return state.channelReducer;
@@ -59,9 +67,9 @@ const ChannelAttributes = () => {
     name: item.channelName,
   }));
 
-  console.log("channelAttribute", channelAttribute, updatedPimAttributes, channelOptions, channelGet);
+  console.log("channelAttribute from reducer", channelAttribute, updatedPimAttributes, channelOptions);
 
-  const [selectChannelName, setSelectChannelName] = useState("");
+  const [selectChannelName, setSelectChannelName] = useState('');
 
   const tableData = [];
 
@@ -81,7 +89,7 @@ const ChannelAttributes = () => {
   const handlePageChange = (value) => {
     // console.log("vvvvvvvvvvvvvvvvvvvvvvv", value);
     setCurrentPage(value);
-    dispatch(channelAttributeApiList("Shopify", value - 1, 20));
+    dispatch(channelAttributeApiList(selectChannelName, value - 1, 20));
     // dispatch(getChannelAttributes(pageNumber));
   };
 
@@ -92,13 +100,13 @@ const ChannelAttributes = () => {
     channelAttribute?.content?.channelAttributes[selectChannelName]?.attributes;
   const mappedAttributes =
     channelAttribute?.content?.channelAttributes[selectChannelName]?.mappedAttributes;
-  // console.log(
-  //   "primAttributes,channelAttributes",
-  //   pimAttributes,
-  //   channelAttributes,
-  //   mappedAttributes,
-  //   updatedPimAttributes
-  // );
+  console.log(
+    "primAttributes,channelAttributes",
+    pimAttributes,
+    channelAttributes,
+    mappedAttributes,
+    updatedPimAttributes
+  );
   // const attributes = channelAttributes?.[channel]?.attributes;
 
   // const handlePaginationChange = (event, value) => {
@@ -111,7 +119,6 @@ const ChannelAttributes = () => {
     // console.log("event.target.value", event.target.value);
     dispatch(channelAttributeApiList(event.target.value, 0, 20));
   };
-  // console.log("age", age);
 
   useEffect(() => {
     dispatch(channelAttributeApiList(selectChannelName, 0, 20));
@@ -119,13 +126,18 @@ const ChannelAttributes = () => {
   }, []);
 
   useEffect(() => {
+    if (channelOptions && channelOptions.length > 0 && !apiCalled) {
+      console.log("kjsafakjnfakka", selectChannelName, channelOptions);
+      const firstChannelName = channelOptions[0]?.name;
+      // Call your API here using the first channel name
+      dispatch(channelAttributeApiList(firstChannelName, 0, 20));
+      setSelectChannelName(firstChannelName)
+      setApiCalled(true);
+    }
+  }, [channelOptions]);
+
+  useEffect(() => {
     if (pimAttributes?.length) {
-      // console.log(
-      //   "pimAttributes",
-      //   pimAttributes,
-      //   mappedAttributes,
-      //   channelAttributes
-      // );
       const array = [];
 
       pimAttributes.map((item) => {
@@ -134,13 +146,14 @@ const ChannelAttributes = () => {
             mappedAttributes[item.attributeId] === channel.attributeId
         );
 
+        console.log("channel inside useEffect", channel)
         if (channel) {
-          array.push({ ...item, isChecked: true, channel: channel });
+          array.push({ ...item, isChecked: true, channel: channel, selectedChannelAttributeId: '' });
         } else {
-          array.push({ ...item, isChecked: false, channel: {} });
+          array.push({ ...item, isChecked: false, channel: {}, selectedChannelAttributeId: '' });
         }
       });
-      console.log("arrayyyyyyyyy", array);
+      console.log("arrayyyyyyyyy", array, channelAttribute);
 
       // pimAttributes.map(item => array.push({ ...item, isChecked: false }))
       // console.log('array in use', array)
@@ -164,9 +177,6 @@ const ChannelAttributes = () => {
     setModifiedPimRecord(updatedRecord);
   }, [pimAttributes]);
 
-  // useEffect(() => {
-  //   dispatch(getChannelsApi());
-  // }, []);
 
   const handleFilterChange = () => {
     setCurrentPage(0);
@@ -200,142 +210,116 @@ const ChannelAttributes = () => {
   }, [checkedData])
 
 
-  console.log("jkahdsfkjahsdsad", checkedData, finalData)
-
   const onChangeOfCheckBox = (e, pim) => {
-    console.log("e,pim", e.target.checked, pim);
-    const formatData = {
-      pimAttributesId: pim,
-      channelAttributeId: null,
-    };
-    let array = [...checkedData];
-    console.log("array in checkbox", array)
+    const isChecked = e.target.checked;
+    const selectedOption = dropdownValue
+    const filteredData = updatedPimAttributes?.filter(item => item.attributeId === pim)
+    setCheckboxChecked(e.target.checked);
     let pims = [...updatedPimAttributes];
-    console.log("asjdajsdkjadkjfa", pims)
-    if (e.target.checked) {
-      const checkedPim = pims.map((item) =>
-        item.attributeId === pim
-          ? { ...item, isChecked: e.target.checked }
-          : item
-      );
-      console.log("checkedPim inside if", checkedPim);
-      setUpdatedPimAttributes(checkedPim);
-      const findIndex = checkbox.findIndex(
-        (item) => item.pimAttributesId === pim
-      );
-      const checkedAttributes = checkbox.filter(
-        (item) => item.pimAttributesId === pim
-      );
-      console.log("checkedAttributes", checkedAttributes);
-      const checked = { checkedAttributes, isChecked: e.target.checked };
-      array.push({ checkedAttributes, isChecked: e.target.checked });
-      if (findIndex !== -1) {
-        const updatedCheckboxData = [...array];
-        // console.log("updatedCheckboxData", updatedCheckboxData);
-        updatedCheckboxData[findIndex] = checked;
-        setCheckedData(updatedCheckboxData);
-      }
-      else {
-        const filteredData = updatedPimAttributes?.filter(item => item.attributeId === pim)
-        const unCheckedData = [
-          {
-            pimAttributesId: pim,
-            channelAttributeId: filteredData[0].channel.attributeId,
-          }
-        ];
-        console.log("askjfdaklsjfa", filteredData, unCheckedData)
-        setCheckedData([...checkedData, { checkedAttributes: unCheckedData, isChecked: e.target.checked }])
-      }
-      setCheckedData([
-        ...checkedData,
-        { checkedAttributes, isChecked: e.target.checked },
-      ]);
-    } else {
-      const checkedPim = pims.map((item) =>
-        item.attributeId === pim
-          ? { ...item, isChecked: e.target.checked }
-          : item
-      );
-      console.log("checkedPim", checkedPim, checkbox);
-      setUpdatedPimAttributes(checkedPim);
-      const findIndex = checkbox.findIndex(
-        (item) => item.pimAttributesId === pim
-      );
-      const checkedAttributes = checkbox.filter(
-        (item) => item.pimAttributesId === pim
-      );
-      const unChecked = { checkedAttributes, isChecked: e.target.checked };
-      // console.log("findIndex", findIndex, unChecked);
-      if (findIndex !== -1) {
-        const updatedCheckboxData = [...array];
-        // console.log("updatedCheckboxData", updatedCheckboxData);
-        updatedCheckboxData[findIndex] = unChecked;
-        setCheckedData(updatedCheckboxData);
-      }
-      else {
-        const filteredData = updatedPimAttributes?.filter(item => item.attributeId === pim)
-        const unCheckedData = [
-          {
-            pimAttributesId: pim,
-            channelAttributeId: filteredData?.[0].channel.attributeId,
-          }
-        ];
-        console.log("askjfdaklsjfa", filteredData, unCheckedData)
-        setCheckedData([...array, { checkedAttributes: unCheckedData, isChecked: e.target.checked }])
-      }
-    }
-    // const data = modifiedPimRecord.map((arr) => {
-    //   if (arr.id === item.id) {
-    //     return {
-    //       ...arr,
-    //       isChecked: !item.isChecked,
-    //     };
-    //   } else return arr;
-    // });
-    // setModifiedPimRecord(data);
+    const checkedPim = pims.map((item) =>
+      item.attributeId === pim
+        ? { ...item, isChecked: e.target.checked }
+        : item
+    );
+    setUpdatedPimAttributes(checkedPim);
+    handleAttributeChange(isChecked, pim, selectedOption);
+
   };
 
-  console.log("checkedData", checkedData, checkbox);
+  const handleAttributeChange = (isChecked, pim, selectedOption) => {
+    console.log("isChecked, pim, selectedOption", isChecked, pim, selectedOption)
+
+    const attribute = {
+      pimAttributesId: pim,
+      channelAttributeId: selectedOption,
+    };
+
+    if (isChecked && selectedOption) {
+      const findIndex = selectedAttributes.findIndex(
+        (attr) => attr.pimAttributeId === pim
+      );
+
+      if (findIndex !== -1) {
+        const updatedAttributes = [...selectedAttributes];
+        updatedAttributes[findIndex] = attribute;
+        setSelectedAttributes(updatedAttributes);
+      } else {
+        setSelectedAttributes([...selectedAttributes, attribute]);
+      }
+
+      setUnselectedAttributes(
+        unselectedAttributes.filter(
+          (attr) =>
+            attr.pimAttributeId !== attribute.pimAttributeId ||
+            attr.channelAttributeId !== attribute.channelAttributeId
+        )
+      );
+    } else if (!isChecked) {
+      const filteredDataUnChecked = updatedPimAttributes?.filter(item => item.attributeId === pim)
+      console.log("filteredDataUnchecked", filteredDataUnChecked, selectedOption)
+      const attributeUnchecked = {
+        pimAttributesId: pim,
+        channelAttributeId: filteredDataUnChecked?.[0]?.channel?.attributeId,
+      };
+      console.log("arrrrrrrrrrrr", attribute, dropdownValue)
+      const findIndex = unselectedAttributes.findIndex(
+        (attr) => attr.pimAttributeId === pim
+      );
+
+      if (findIndex !== -1) {
+        const updatedAttributes = [...unselectedAttributes];
+        updatedAttributes[findIndex] = attributeUnchecked;
+        setUnselectedAttributes(updatedAttributes);
+      } else {
+        setUnselectedAttributes([...unselectedAttributes, attributeUnchecked]);
+      }
+
+      setSelectedAttributes((prevSelectedAttributes) =>
+        prevSelectedAttributes.filter(
+          (attr) =>
+            attr.pimAttributeId !== attribute.pimAttributeId ||
+            attr.channelAttributeId !== attribute.channelAttributeId
+        )
+      );
+    }
+    else if (isChecked) {
+      const findIndex = selectedAttributes.findIndex(
+        (attr) => attr.pimAttributeId === pim
+      );
+
+      if (findIndex !== -1) {
+        const updatedAttributes = [...selectedAttributes];
+        updatedAttributes[findIndex] = attribute;
+        setSelectedAttributes(updatedAttributes);
+      } else {
+        setSelectedAttributes([...selectedAttributes, attribute]);
+      }
+
+      setUnselectedAttributes(
+        unselectedAttributes.filter(
+          (attr) =>
+            attr.pimAttributeId !== attribute.pimAttributeId ||
+            attr.channelAttributeId !== attribute.channelAttributeId
+        )
+      );
+    }
+  };
+
 
   const onSelectdropdown = (e, pim) => {
-    const array = {
-      pimAttributesId: pim,
-      channelAttributeId: e.target.value,
-    };
-
-    console.log("array inside the select", array, checkbox)
-    const findIndex = checkbox.findIndex(
-      (item) => item.pimAttributesId === pim
+    const selectedOption = e.target.value;
+    console.log("kjsdfakljkjalskjfda", selectedOption)
+    const isChecked = checkboxChecked
+    setDropdownValue(e.target.value)
+    let pims = [...updatedPimAttributes];
+    const checkedPim = pims.map((item) =>
+      item.attributeId === pim
+        ? { ...item, selectedChannelAttributeId: e.target.value }
+        : item
     );
-    console.log("findIndex", findIndex, array, checkbox);
-    if (findIndex !== -1) {
-      const updatedCheckboxData = [...checkbox];
-      updatedCheckboxData[findIndex] = array;
-      setCheckbox(updatedCheckboxData);
-    } else {
-      setCheckbox([...checkbox, array]);
-    }
-
-    // const channelAttributes = channelAttribute?.content?.channelAttributes;
-    // const attributes = channelAttributes?.[channel]?.attributes;
-    // const selectedChannelAttributes = attributes.filter(
-    //   (arr) => arr.id === value
-    // );
-
-    // const pimAttribute = modifiedPimRecord.map((arr) => {
-    //   if (arr.id === item.id) {
-    //     return {
-    //       ...arr,
-    //       selectedChannelAttributes: selectedChannelAttributes[0],
-    //     };
-    //   } else return arr;
-    // });
-    // setModifiedPimRecord(pimAttribute);
+    setUpdatedPimAttributes(checkedPim);
+    handleAttributeChange(isChecked, pim, selectedOption);
   };
-
-  console.log("checkbox", checkbox);
-  console.log("sdkjflksdjflka", updatedPimAttributes)
-
 
   const onSelectedData = (item) => {
     const selectedData = modifiedPimRecord.filter((arr) => {
@@ -388,7 +372,13 @@ const ChannelAttributes = () => {
         // console.log("array", array.flat());
       }
     });
-    dispatch(channelMappingApi(selectChannelName, finalData));
+    const channelMappingPayload = {
+      mappedAttributes: selectedAttributes,
+      unMappedAttribute: unselectedAttributes
+    };
+    dispatch(channelMappingApi(selectChannelName, channelMappingPayload));
+    setSelectedAttributes([])
+    setUnselectedAttributes([])
   };
 
   const setDefaultOption = (item) => {
@@ -416,8 +406,6 @@ const ChannelAttributes = () => {
   };
 
   const options = getChannelAttributesOptions();
-
-  useEffect(() => { }, []);
 
   return (
     <>
@@ -498,10 +486,6 @@ const ChannelAttributes = () => {
                               <InputLabel id="demo-simple-select-label">
                                 Select an Attribute
                               </InputLabel>
-                              {console.log(
-                                "pim?.channel",
-                                pim?.channel.attributeId
-                              )}
                               <Select
                                 labelId={"demo-simple-select-label"}
                                 id="demo-simple-select"
@@ -509,7 +493,7 @@ const ChannelAttributes = () => {
                                 onChange={(e) =>
                                   onSelectdropdown(e, pim.attributeId)
                                 }
-                                value={pim?.channel?.attributeId}
+                                value={pim?.selectedChannelAttributeId ? pim?.selectedChannelAttributeId : pim?.channel?.attributeId || ''}
                               >
                                 {channelAttributes?.map((channel) => (
                                   <MenuItem value={channel?.attributeId} key={channel?.attributeId}>
@@ -601,10 +585,6 @@ const ChannelAttributes = () => {
                               <InputLabel id="demo-simple-select-label">
                                 Select an Attribute
                               </InputLabel>
-                              {console.log(
-                                "pim?.channel",
-                                pim?.channel.attributeId
-                              )}
                               <Select
                                 labelId={"demo-simple-select-label"}
                                 id="demo-simple-select"
