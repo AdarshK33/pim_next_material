@@ -77,7 +77,7 @@ const Attributes = () => {
     dispatch(getCategoriesApi());
 
     if (categoryId) {
-      dispatch(getAttributeListApi(categoryId, currentPage - 1, 5));
+      dispatch(getAttributeListApi(categoryId, currentPage - 1, 10));
     }
     // dispatch(getRoleApi());
   }, []);
@@ -98,9 +98,9 @@ const Attributes = () => {
   // console.log("hello 2catagories", catagories[0]?.id);
   //   /*-----------------Pagination------------------*/
 
-  const recordPerPage = 2;
+  const recordPerPage = 10;
   const totalRecords = catalogServiceNewReducer?.attributeGet?.totalElements;
-  const pageRange = 2;
+  const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = catalogServiceNewReducer?.attributeGet?.content;
