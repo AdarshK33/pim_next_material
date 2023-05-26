@@ -52,6 +52,7 @@ const Category = () => {
 
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [parentDetails, setParentDetails] = useState(false);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -63,6 +64,7 @@ const Category = () => {
   const [descError, setDescError] = useState(false);
 
   console.log(selectedNodeId, "hello selectedNodeId");
+  console.log(parentDetails, "hello parentDetails");
 
   useEffect(() => {
     dispatch(getCategoriesApi());
@@ -77,6 +79,9 @@ const Category = () => {
         categoryList,
         selectedNodeId?.parentCategoryId
       );
+      console.log(parentObj, "parentObj");
+
+      setParentDetails(parentObj);
     }
   }, [selectedNodeId]);
 
@@ -179,7 +184,7 @@ const Category = () => {
       if (!selectedNodeId && showAddForm == false) {
         const addParentInfo = {
           // new categopry
-          //  precedence is not required
+          //  precedence is not required 0 /
           name: name,
           description: description,
           slug: "string", // now empty sending
@@ -190,9 +195,45 @@ const Category = () => {
       }
       if (selectedNodeId && showAddForm == false) {
         // update will call
+
+        let info = {
+          payload: {
+            name: name,
+            description: description,
+          },
+          category_id: router.query.PimCodeId,
+        };
+        dispatch(productUpdateApis(info));
       }
       if (selectedNodeId && showAddForm == true) {
         // set sub category  will call
+        if (parentDetails == null) {
+          // create who have no one  sub category  will call
+
+          const addSubParentInfo = {
+            // new categopry
+            //  precedence is  required 1
+            name: name,
+            description: description,
+            parentCategoryId: selectedNodeId.id,
+            slug: "string", // now empty sending
+            precedence: 1,
+          };
+          dispatch(addCategoryApi(addSubParentInfo));
+        } else {
+          // create who have one sub category  will call
+
+          const addSubParentInfo = {
+            // new categopry
+            //  precedence is  required 1
+            name: name,
+            description: description,
+            parentCategoryId: selectedNodeId.id,
+            slug: "string", // now empty sending
+            precedence: 1,
+          };
+          dispatch(addCategoryApi(addSubParentInfo));
+        }
       }
     }
   };
@@ -244,6 +285,10 @@ const Category = () => {
   const cancelToNewAdd = () => {
     setShowAddForm(false);
     setSelectedNodeId();
+    setNameError(false);
+    setDescError(false);
+    setName("");
+    setDescription("");
   };
 
   const addNewBtn = () => {
@@ -338,57 +383,78 @@ const Category = () => {
                       <p></p>
                     )}
                   </Grid>
+                  {showAddForm && selectedNodeId?.parentCategoryId ? (
+                    <>
+                      <Grid item xs={6}>
+                        <TextField
+                          id="outlined-name"
+                          label="Parent Category"
+                          type="text"
+                          variant="standard"
+                          value={selectedNodeId?.name || "Parent Category"}
+                          // onChange={nameHandler}
+                          fullWidth
+                          disabled={true}
+                        />
+                      </Grid>
+                    </>
+                  ) : (
+                    <>
+                      <Grid item xs={6}>
+                        <TextField
+                          id="outlined-name"
+                          label="Parent Category"
+                          type="text"
+                          variant="standard"
+                          value={
+                            parentDetails
+                              ? parentDetails?.name
+                              : selectedNodeId?.name || "Parent Category"
+                          }
+                          // onChange={nameHandler}
+                          fullWidth
+                          disabled={true}
+                        />
+                      </Grid>
+                    </>
+                  )}
+                  {/* 
+                  {showAddForm && selectedNodeId?.parentCategoryId ? (
+                    <>
+                      <Grid item xs={6}>
+                        <TextField
+                          id="outlined-name"
+                          label="Sub Category"
+                          type="text"
+                          variant="standard"
+                          value={
+                            showAddForm
+                              ? selectedNodeId?.name
+                              : "" || `Sub Category`
+                          }
+                          // onChange={nameHandler}
+                          fullWidth
+                          // disabled={true}
+                        />
+                      </Grid>
+                    </>
+                  ) : (
+                    <>
+                      <Grid item xs={6}>
+                        <TextField
+                          id="outlined-name"
+                          label="Sub Category"
+                          type="text"
+                          variant="standard"
+                          value={`Sub Category`}
+                          // onChange={nameHandler}
+                          fullWidth
+                          // disabled={true}
+                        />
+                      </Grid>
+                    </>
+                  )} */}
 
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel id="demo-simple-select-standard-label">
-                        {name || `Parent Category`}
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        label="Parent Category"
-                        // value={category}
-                        // onChange={categoryHandler}
-                        disabled={true}
-                      >
-                        <MenuItem value=""></MenuItem>
-                        {/* {dropdownOptions &&
-                          dropdownOptions.map((item, i) => {
-                            return (
-                              <MenuItem value={item.value}>
-                                {item.name}
-                              </MenuItem>
-                            );
-                          })} */}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel id="demo-simple-select-standard-label">
-                        {name || `  Sub Category`}
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        label="Category"
-                        // value={category}
-                        // onChange={categoryHandler}
-                        disabled={true}
-                      >
-                        <MenuItem value=""></MenuItem>
-                        {/* {dropdownOptions &&
-                          dropdownOptions.map((item, i) => {
-                            return (
-                              <MenuItem value={item.value}>
-                                {item.name}
-                              </MenuItem>
-                            );
-                          })} */}
-                      </Select>
-                    </FormControl>
-                  </Grid>
                   {/* <Grid item xs={6}>
                     <TextField
                       id="outlined-name"
