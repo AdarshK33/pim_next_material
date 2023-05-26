@@ -29,6 +29,9 @@ import {
   BULK_LIST_DATA_LOADING,
   BULK_LIST_DATA_SUCCESS,
   BULK_LIST_DATA_FAILURE,
+  GET_CATEGORIES_LIST_DATA_LOADING,
+  GET_CATEGORIES_LIST_DATA_SUCCESS,
+  GET_CATEGORIES_LIST_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -42,6 +45,7 @@ const initialState = {
   productUpdate: {},
   attributeSetData: {},
   bulkData: {},
+  categoryList: {},
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
@@ -239,6 +243,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         bulkData: [],
+        error: action,
+      };
+    case GET_CATEGORIES_LIST_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_CATEGORIES_LIST_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        categoryList: action.payload,
+        error: {},
+      };
+    case GET_CATEGORIES_LIST_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        categoryList: [],
         error: action,
       };
 

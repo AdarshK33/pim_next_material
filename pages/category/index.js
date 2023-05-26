@@ -1,23 +1,23 @@
 import Category from "../../src/components/category";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOption } from "../../utils/session";
-import AddCategory from "../../src/components/category/addCategory";
+// import AddCategory from "../../src/components/category/addCategory";
 
 function index() {
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        // justifyContent: "center",
-        // alignItems: "center",
-        width: "100%",
-        height: "100%",
-        "webkit-scrollbar": "none",
-      }}
+    // style={{
+    //   display: "flex",
+    //   flexDirection: "row",
+    //   // justifyContent: "center",
+    //   // alignItems: "center",
+    //   width: "100%",
+    //   height: "100%",
+    //   "webkit-scrollbar": "none",
+    // }}
     >
       <Category />
-      <AddCategory />
+      {/* <AddCategory /> */}
     </div>
   );
 }
