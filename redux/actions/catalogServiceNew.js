@@ -41,6 +41,9 @@ import {
   MEDIA_LISTING_LOADING,
   MEDIA_LISTING_SUCCESS,
   MEDIA_LISTING_FAILURE,
+  GET_CATEGORIES_LIST_DATA_LOADING,
+  GET_CATEGORIES_LIST_DATA_SUCCESS,
+  GET_CATEGORIES_LIST_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -292,6 +295,24 @@ export const mediaListingSuccess = (data) => {
 export const mediaListingFailure = (error) => {
   return {
     type: MEDIA_LISTING_FAILURE,
+    payload: error,
+  };
+};
+
+export const getCategoriesListLoading = () => {
+  return {
+    type: GET_CATEGORIES_LIST_DATA_LOADING,
+  };
+};
+export const getCategoriesListSuccess = (data) => {
+  return {
+    type: GET_CATEGORIES_LIST_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getCategoriesListFailure = (error) => {
+  return {
+    type: GET_CATEGORIES_LIST_DATA_FAILURE,
     payload: error,
   };
 };
@@ -708,6 +729,25 @@ export const getMediaListingApi = (pageNo, pageSize, modelCode) => {
       .catch((err) => {
         console.log("mediaListingFailure", err);
         dispatch(mediaListingFailure(err));
+      });
+  };
+};
+
+export const getCategoriesListApi = () => {
+  return (dispatch) => {
+    dispatch(getCategoriesListLoading("Categories List....", "Loading!"));
+    client
+      .get("/api/catalogServiceNew/categoryList")
+      .then((response) => {
+        // console.log("categories list response=>", response);
+        dispatch(getCategoriesListSuccess(response.data));
+      })
+      .catch((err) => {
+        console.log(
+          "error caught in -> redux/actions/catalogServiceNew/getCategoriesListApi",
+          err
+        );
+        dispatch(getCategoriesListFailure(err));
       });
   };
 };

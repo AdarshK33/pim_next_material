@@ -7,6 +7,7 @@ function handler(req, res) {
   const pageNo = body.pageNo;
   const pageSize = body.pageSize;
   const { user: { at = "" } = {}, loggedIn } = req.session;
+  console.log("channelFilter", channelFilter, pageNo, pageSize)
   const config = {
     method: "get",
     // url:`/ct/channel/mapping/${channelFilter}?pageNo=${pageNo}&pageSize=${pageSize}`,
@@ -18,7 +19,7 @@ function handler(req, res) {
   catalogServiceNew(config)
     .then((response) => {
       if (response.status === 200) {
-        // console.log('response inside if', response.data.result.content)
+        // console.log('response inside if', response.data.result.content.channelAttributes.Marketing)
         res.status(200).json(response.data);
       }
     })
