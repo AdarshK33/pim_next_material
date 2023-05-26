@@ -29,6 +29,9 @@ import {
   BULK_LIST_DATA_LOADING,
   BULK_LIST_DATA_SUCCESS,
   BULK_LIST_DATA_FAILURE,
+  MEDIA_LISTING_LOADING,
+  MEDIA_LISTING_SUCCESS,
+  MEDIA_LISTING_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -42,6 +45,7 @@ const initialState = {
   productUpdate: {},
   attributeSetData: {},
   bulkData: {},
+  mediaData: {},
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
@@ -239,6 +243,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         bulkData: [],
+        error: action,
+      };
+    case MEDIA_LISTING_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case MEDIA_LISTING_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        mediaData: action.payload,
+        error: {},
+      };
+    case MEDIA_LISTING_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        mediaData: [],
         error: action,
       };
 

@@ -101,7 +101,7 @@ const Menuitems = [
   {
     title: "MEDIA",
     icon: media,
-    href: "#",
+    href: "/media",
   },
 ];
 
