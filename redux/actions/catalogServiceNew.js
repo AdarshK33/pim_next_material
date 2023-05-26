@@ -38,6 +38,9 @@ import {
   BULK_LIST_DATA_LOADING,
   BULK_LIST_DATA_SUCCESS,
   BULK_LIST_DATA_FAILURE,
+  MEDIA_LISTING_LOADING,
+  MEDIA_LISTING_SUCCESS,
+  MEDIA_LISTING_FAILURE,
   GET_CATEGORIES_LIST_DATA_LOADING,
   GET_CATEGORIES_LIST_DATA_SUCCESS,
   GET_CATEGORIES_LIST_DATA_FAILURE,
@@ -274,6 +277,24 @@ export const bulkDetailListSuccess = (data) => {
 export const bulkDetailListFailure = (error) => {
   return {
     type: BULK_LIST_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const mediaListingLoading = () => {
+  return {
+    type: MEDIA_LISTING_LOADING,
+  };
+};
+export const mediaListingSuccess = (data) => {
+  return {
+    type: MEDIA_LISTING_SUCCESS,
+    payload: data,
+  };
+};
+export const mediaListingFailure = (error) => {
+  return {
+    type: MEDIA_LISTING_FAILURE,
     payload: error,
   };
 };
@@ -683,6 +704,31 @@ export const getBuilkDetailsListApi = (pageNo, pageSize) => {
           err
         );
         dispatch(bulkDetailListFailure(err));
+      });
+  };
+};
+
+export const getMediaListingApi = (pageNo, pageSize, modelCode) => {
+  const data = {
+    pageNo: pageNo,
+    pageSize: pageSize,
+    modelCode: modelCode,
+  };
+  return (dispatch) => {
+    dispatch(mediaListingLoading("MEDIA....", "LISTING"));
+    client
+      .post("/api/catalogServiceNew/getMedia", data)
+      .then((response) => {
+        console.log(" mediaListLoading response", response);
+
+        if (response?.status === 200) {
+          console.log("mediaListingSuccess", response.data);
+          dispatch(mediaListingSuccess(response.data));
+        }
+      })
+      .catch((err) => {
+        console.log("mediaListingFailure", err);
+        dispatch(mediaListingFailure(err));
       });
   };
 };

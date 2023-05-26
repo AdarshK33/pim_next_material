@@ -29,6 +29,9 @@ import {
   BULK_LIST_DATA_LOADING,
   BULK_LIST_DATA_SUCCESS,
   BULK_LIST_DATA_FAILURE,
+  MEDIA_LISTING_LOADING,
+  MEDIA_LISTING_SUCCESS,
+  MEDIA_LISTING_FAILURE,
   GET_CATEGORIES_LIST_DATA_LOADING,
   GET_CATEGORIES_LIST_DATA_SUCCESS,
   GET_CATEGORIES_LIST_DATA_FAILURE,
@@ -45,6 +48,7 @@ const initialState = {
   productUpdate: {},
   attributeSetData: {},
   bulkData: {},
+  mediaData: {},
   categoryList: {},
   // refreshToken:{}
 };
@@ -245,6 +249,26 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         bulkData: [],
         error: action,
       };
+    case MEDIA_LISTING_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case MEDIA_LISTING_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        mediaData: action.payload,
+        error: {},
+      };
+    case MEDIA_LISTING_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        mediaData: [],
+      };
+
     case GET_CATEGORIES_LIST_DATA_LOADING:
       return {
         ...state,
