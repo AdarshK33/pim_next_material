@@ -77,7 +77,13 @@ const Category = () => {
       setName(selectedNodeId?.name);
       // setDescription("jhello");
 
-      setDescription(selectedNodeId?.description);
+      if (selectedNodeId?.description) {
+        // console.log(selectedNodeId?.description, "hello if description");
+        setDescription(selectedNodeId?.description);
+      } else {
+        // console.log(selectedNodeId?.description, "hello else description");
+        setDescription("");
+      }
 
       let parentObj = findNestedCategoryById(
         categoryList,
