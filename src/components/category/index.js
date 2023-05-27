@@ -36,6 +36,7 @@ import {
   getCategoriesApi,
   getCategoriesListApi,
   addCategoryApi,
+  updateCategoryApis,
 } from "../../../redux/actions/catalogServiceNew";
 
 import AddCategory from "./addCategory";
@@ -63,8 +64,8 @@ const Category = () => {
   const [nameError, setNameError] = useState(false);
   const [descError, setDescError] = useState(false);
 
-  console.log(selectedNodeId, "hello selectedNodeId");
-  console.log(parentDetails, "hello parentDetails");
+  // console.log(selectedNodeId, "hello selectedNodeId");
+  // console.log(parentDetails, "hello parentDetails");
 
   useEffect(() => {
     dispatch(getCategoriesApi());
@@ -74,16 +75,20 @@ const Category = () => {
   useEffect(() => {
     if (selectedNodeId) {
       setName(selectedNodeId?.name);
-      setDescription();
+      // setDescription("jhello");
+
+      setDescription(selectedNodeId?.description);
+
       let parentObj = findNestedCategoryById(
         categoryList,
         selectedNodeId?.parentCategoryId
       );
-      console.log(parentObj, "parentObj");
 
       setParentDetails(parentObj);
+      // console.log(description, "description");
     }
   }, [selectedNodeId]);
+  // console.log(description, "description");
 
   const data = [
     {
@@ -155,7 +160,7 @@ const Category = () => {
     setNameError(false);
     setDescError(false);
     setName("");
-    setDescription("");
+    // setDescription("");
   };
 
   //   /*-----------------  selected catagory menu------------------*/
@@ -201,9 +206,9 @@ const Category = () => {
             name: name,
             description: description,
           },
-          category_id: router.query.PimCodeId,
+          category_id: selectedNodeId.id,
         };
-        dispatch(productUpdateApis(info));
+        dispatch(updateCategoryApis(info));
       }
       if (selectedNodeId && showAddForm == true) {
         // set sub category  will call
@@ -235,6 +240,12 @@ const Category = () => {
           dispatch(addCategoryApi(addSubParentInfo));
         }
       }
+      // setShowAddForm(false);
+      // setSelectedNodeId();
+      // setNameError(false);
+      // setDescError(false);
+      // setName("");
+      // setDescription("");
     }
   };
 

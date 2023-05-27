@@ -3,7 +3,9 @@ import withSession from "../../../utils/session";
 
 function handler(req, res) {
   const body = req.body;
-  const id = body.categoryId;
+  const id = body.category_id;
+
+  console.log("update adarsh", body.category_id, body.payload);
 
   const { user: { at = "" } = {}, loggedIn } = req.session;
   const config = {
