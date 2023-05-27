@@ -35,6 +35,9 @@ import {
   GET_CATEGORIES_LIST_DATA_LOADING,
   GET_CATEGORIES_LIST_DATA_SUCCESS,
   GET_CATEGORIES_LIST_DATA_FAILURE,
+  CATEGORY_UPDATE_DATA_LOADING,
+  CATEGORY_UPDATE_DATA_SUCCESS,
+  CATEGORY_UPDATE_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -50,6 +53,7 @@ const initialState = {
   bulkData: {},
   mediaData: {},
   categoryList: {},
+  categoryUpdate: {},
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
@@ -286,6 +290,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         categoryList: [],
+        error: action,
+      };
+    case CATEGORY_UPDATE_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CATEGORY_UPDATE_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        categoryUpdate: action.payload,
+        error: {},
+      };
+    case CATEGORY_UPDATE_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        categoryUpdate: [],
         error: action,
       };
 

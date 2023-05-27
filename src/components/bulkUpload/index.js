@@ -104,7 +104,7 @@ const BulkUpload = (props) => {
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
-  const totalRecords = bulkData?.content?.totalElements;
+  const totalRecords = bulkData?.totalElements;
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
@@ -121,7 +121,7 @@ const BulkUpload = (props) => {
   return (
     <>
       <Grid container>
-        <Grid item xs={12} lg={12}>
+        <Grid item xs={12}>
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
@@ -181,7 +181,7 @@ const BulkUpload = (props) => {
                       currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
-                            key={row.name}
+                            key={i + "rows"}
                             sx={{
                               "&:last-child td, &:last-child th": { border: 0 },
                             }}

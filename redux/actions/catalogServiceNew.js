@@ -44,6 +44,9 @@ import {
   GET_CATEGORIES_LIST_DATA_LOADING,
   GET_CATEGORIES_LIST_DATA_SUCCESS,
   GET_CATEGORIES_LIST_DATA_FAILURE,
+  CATEGORY_UPDATE_DATA_LOADING,
+  CATEGORY_UPDATE_DATA_SUCCESS,
+  CATEGORY_UPDATE_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -313,6 +316,24 @@ export const getCategoriesListSuccess = (data) => {
 export const getCategoriesListFailure = (error) => {
   return {
     type: GET_CATEGORIES_LIST_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const categoryUpdateDataLoading = () => {
+  return {
+    type: CATEGORY_UPDATE_DATA_LOADING,
+  };
+};
+export const categoryUpdateDataSuccess = (data) => {
+  return {
+    type: CATEGORY_UPDATE_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const categoryUpdateDataFailure = (error) => {
+  return {
+    type: CATEGORY_UPDATE_DATA_FAILURE,
     payload: error,
   };
 };
@@ -748,6 +769,42 @@ export const getCategoriesListApi = () => {
           err
         );
         dispatch(getCategoriesListFailure(err));
+      });
+  };
+};
+
+export const updateCategoryApis = (data) => {
+  return (dispatch) => {
+    dispatch(categoryUpdateDataLoading("STATUS....", "STATUS"));
+    client
+      .post("/api/catalogServiceNew/updateCategory", data)
+      .then((response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          toast.info("Category updated successfully !!!");
+
+          dispatch(
+            categoryUpdateDataSuccess(
+              response.data,
+              " status Successfully",
+              "status UPDATE"
+            )
+          );
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        toast.error("Category updated failed !!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/categoryUpdate",
+          err
+        );
+        dispatch(
+          categoryUpdateDataFailure(
+            err,
+            "Something went wrong",
+            "category UPDATE"
+          )
+        );
       });
   };
 };
