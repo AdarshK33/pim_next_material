@@ -213,7 +213,7 @@ const ActiveProducts = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell> </TableCell>
+                      {/* <TableCell> </TableCell> */}
                       <TableCell align="right">ITEM ID</TableCell>
                       <TableCell align="right">NAME</TableCell>
                       <TableCell align="right">CATEGORY</TableCell>
@@ -221,11 +221,43 @@ const ActiveProducts = () => {
                       <TableCell align="right">DETAILS</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
-                    {currentRecords &&
+
+                  {catalogServiceNewReducer?.loading == true &&
+                  currentRecords !== null &&
+                  currentRecords !== undefined ? (
+                    <TableBody>
+                      <TableRow
+                        key="row"
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <Grid
+                          container
+                          style={{
+                            position: "relative",
+                            left: "330px",
+                          }}
+                        >
+                          <Grid
+                            item
+                            md={12}
+                            style={{ width: "100% !important" }}
+                          >
+                            <Box className="loader">
+                              <Box className="circle"></Box>
+                              <Box className="circle"></Box>
+                              <Box className="circle"></Box>
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      </TableRow>
+                    </TableBody>
+                  ) : currentRecords &&
                     currentRecords !== null &&
                     currentRecords.length > 0 ? (
-                      currentRecords.map((row, i) => (
+                    currentRecords.map((row, i) => (
+                      <TableBody>
                         <TableRow
                           key={row.name}
                           sx={{
@@ -281,13 +313,15 @@ const ActiveProducts = () => {
                             />
                           </div>
                         </TableRow>
-                      ))
-                    ) : (
+                      </TableBody>
+                    ))
+                  ) : (
+                    <TableBody>
                       <TableRow>
                         <TableCell colSpan={12}>No Record Found</TableCell>
                       </TableRow>
-                    )}
-                  </TableBody>
+                    </TableBody>
+                  )}
                 </Table>
               </TableContainer>
               {/* <Stack spacing={2}> */}
