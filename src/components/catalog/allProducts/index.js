@@ -390,9 +390,40 @@ const AllProducts = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {currentRecords &&
+                      {catalogServiceNewReducer?.loading == true &&
                       currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                      currentRecords !== undefined ? (
+                        <TableBody>
+                          <TableRow
+                            key="row"
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <Grid
+                              container
+                              style={{
+                                position: "relative",
+                                left: "370px",
+                              }}
+                            >
+                              <Grid
+                                item
+                                md={12}
+                                style={{ width: "100% !important" }}
+                              >
+                                <Box className="loader">
+                                  <Box className="circle"></Box>
+                                  <Box className="circle"></Box>
+                                  <Box className="circle"></Box>
+                                </Box>
+                              </Grid>
+                            </Grid>
+                          </TableRow>
+                        </TableBody>
+                      ) : currentRecords &&
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}
@@ -478,9 +509,40 @@ const AllProducts = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {currentRecords &&
+                      {catalogServiceNewReducer?.loading == true &&
                       currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                      currentRecords !== undefined ? (
+                        <TableBody>
+                          <TableRow
+                            key="row"
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <Grid
+                              container
+                              style={{
+                                position: "relative",
+                                left: "370px",
+                              }}
+                            >
+                              <Grid
+                                item
+                                md={12}
+                                style={{ width: "100% !important" }}
+                              >
+                                <Box className="loader">
+                                  <Box className="circle"></Box>
+                                  <Box className="circle"></Box>
+                                  <Box className="circle"></Box>
+                                </Box>
+                              </Grid>
+                            </Grid>
+                          </TableRow>
+                        </TableBody>
+                      ) : currentRecords &&
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}
@@ -563,9 +625,40 @@ const AllProducts = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {currentRecords &&
+                      {catalogServiceNewReducer?.loading == true &&
                       currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                      currentRecords !== undefined ? (
+                        <TableBody>
+                          <TableRow
+                            key="row"
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <Grid
+                              container
+                              style={{
+                                position: "relative",
+                                left: "370px",
+                              }}
+                            >
+                              <Grid
+                                item
+                                md={12}
+                                style={{ width: "100% !important" }}
+                              >
+                                <Box className="loader">
+                                  <Box className="circle"></Box>
+                                  <Box className="circle"></Box>
+                                  <Box className="circle"></Box>
+                                </Box>
+                              </Grid>
+                            </Grid>
+                          </TableRow>
+                        </TableBody>
+                      ) : currentRecords &&
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}

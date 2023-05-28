@@ -254,3 +254,37 @@ ul .pagination {
   font-size: 12px;
   font-weight: 500;
 }
+
+.loader {
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 10vh;
+}
+
+.circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #419794;
+  margin: 0 5px;
+  animation: loaderAnimation 1s infinite;
+}
+
+@keyframes loaderAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
