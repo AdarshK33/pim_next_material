@@ -321,121 +321,122 @@ const Category = () => {
   };
 
   return (
-    <div className={styles.catogory_container}>
-      <Grid container spacing={2}>
-        <Grid container spacing={2} justifyContent="space-between">
-          <Typography variant="h5" className={styles.main_title}>
-            Category
-          </Typography>
+    <Card>
+      <div className={styles.catogory_container}>
+        <Grid container spacing={2}>
+          <Grid container spacing={2} justifyContent="space-between">
+            <Typography variant="h5" className={styles.main_title}>
+              Category
+            </Typography>
 
-          <Box>
-            <Button
-              variant="outlined"
-              color="success"
-              component="label"
-              onClick={addNewBtn}
-            >
-              ADD NEW
-              {/* <input hidden accept="image/*" multiple type="file" /> */}
-            </Button>
-          </Box>
-        </Grid>
+            <Box>
+              <Button
+                variant="outlined"
+                color="success"
+                component="label"
+                onClick={addNewBtn}
+              >
+                ADD NEW
+                {/* <input hidden accept="image/*" multiple type="file" /> */}
+              </Button>
+            </Box>
+          </Grid>
 
-        <Grid item xs={4}>
-          <Card sx={{ p: 0 }}>
-            <CardContent>
-              <Grid xs={12}>
-                <TreeView
-                  aria-label="rich object"
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpanded={["root-1", "root-2"]}
-                  defaultExpandIcon={<ChevronRightIcon />}
-                  sx={{
-                    height: 400,
-                    flexGrow: 1,
-                    maxWidth: 400,
-                    overflowY: "auto",
-                  }}
-                  onNodeSelect={handleNodeSelect}
-                >
-                  {renderTree(categoryList)}
-                </TreeView>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
+          <Grid item xs={4}>
+            <Card sx={{ p: 0 }}>
+              <CardContent>
+                <Grid xs={12}>
+                  <TreeView
+                    aria-label="rich object"
+                    defaultCollapseIcon={<ExpandMoreIcon />}
+                    defaultExpanded={["root-1", "root-2"]}
+                    defaultExpandIcon={<ChevronRightIcon />}
+                    sx={{
+                      height: 400,
+                      flexGrow: 1,
+                      maxWidth: 400,
+                      overflowY: "auto",
+                    }}
+                    onNodeSelect={handleNodeSelect}
+                  >
+                    {renderTree(categoryList)}
+                  </TreeView>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
 
-        <Grid item xs={8} className={styles.main_addCategory}>
-          <Card sx={{ p: 1 }} className={styles.form_addCategory}>
-            <CardContent>
-              {selectedNodeId && showAddForm ? (
-                <>
-                  <div className={styles.add_title}> Add Sub Category</div>
-                </>
-              ) : selectedNodeId && !showAddForm ? (
-                <>
-                  <div className={styles.add_title}> Update Category</div>
-                </>
-              ) : (
-                <>
-                  <div className={styles.add_title}> Add Category</div>
-                </>
-              )}
+          <Grid item xs={8} className={styles.main_addCategory}>
+            <Card sx={{ p: 1 }} className={styles.form_addCategory}>
+              <CardContent>
+                {selectedNodeId && showAddForm ? (
+                  <>
+                    <div className={styles.add_title}> Add Sub Category</div>
+                  </>
+                ) : selectedNodeId && !showAddForm ? (
+                  <>
+                    <div className={styles.add_title}> Update Category</div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.add_title}> Add Category</div>
+                  </>
+                )}
 
-              <form>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-name"
-                      label="Name"
-                      type="text"
-                      variant="standard"
-                      value={name}
-                      onChange={nameHandler}
-                      fullWidth
-                    />
-                    {nameError ? (
-                      <p style={{ color: "red" }}>** Please enter name</p>
+                <form>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="outlined-name"
+                        label="Name"
+                        type="text"
+                        variant="standard"
+                        value={name}
+                        onChange={nameHandler}
+                        fullWidth
+                      />
+                      {nameError ? (
+                        <p style={{ color: "red" }}>** Please enter name</p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Grid>
+                    {showAddForm && selectedNodeId?.parentCategoryId ? (
+                      <>
+                        <Grid item xs={6}>
+                          <TextField
+                            id="outlined-name"
+                            label="Parent Category"
+                            type="text"
+                            variant="standard"
+                            value={selectedNodeId?.name || "Parent Category"}
+                            // onChange={nameHandler}
+                            fullWidth
+                            disabled={true}
+                          />
+                        </Grid>
+                      </>
                     ) : (
-                      <p></p>
+                      <>
+                        <Grid item xs={6}>
+                          <TextField
+                            id="outlined-name"
+                            label="Parent Category"
+                            type="text"
+                            variant="standard"
+                            value={
+                              parentDetails
+                                ? parentDetails?.name
+                                : selectedNodeId?.name || "Parent Category"
+                            }
+                            // onChange={nameHandler}
+                            fullWidth
+                            disabled={true}
+                          />
+                        </Grid>
+                      </>
                     )}
-                  </Grid>
-                  {showAddForm && selectedNodeId?.parentCategoryId ? (
-                    <>
-                      <Grid item xs={6}>
-                        <TextField
-                          id="outlined-name"
-                          label="Parent Category"
-                          type="text"
-                          variant="standard"
-                          value={selectedNodeId?.name || "Parent Category"}
-                          // onChange={nameHandler}
-                          fullWidth
-                          disabled={true}
-                        />
-                      </Grid>
-                    </>
-                  ) : (
-                    <>
-                      <Grid item xs={6}>
-                        <TextField
-                          id="outlined-name"
-                          label="Parent Category"
-                          type="text"
-                          variant="standard"
-                          value={
-                            parentDetails
-                              ? parentDetails?.name
-                              : selectedNodeId?.name || "Parent Category"
-                          }
-                          // onChange={nameHandler}
-                          fullWidth
-                          disabled={true}
-                        />
-                      </Grid>
-                    </>
-                  )}
-                  {/* 
+                    {/* 
                   {showAddForm && selectedNodeId?.parentCategoryId ? (
                     <>
                       <Grid item xs={6}>
@@ -472,7 +473,7 @@ const Category = () => {
                     </>
                   )} */}
 
-                  {/* <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                     <TextField
                       id="outlined-name"
                       label="Slug"
@@ -483,62 +484,63 @@ const Category = () => {
                       fullWidth
                     />
                   </Grid> */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      id="outlined-name"
-                      label="Description"
-                      type="text"
-                      variant="standard"
-                      value={description}
-                      onChange={descHandler}
-                      multiline
-                      rows={3}
-                      disabled={selectedNodeId?.length > 0 ? true : false}
-                    />
-                    {descError ? (
-                      <p style={{ color: "red" }}>
-                        ** Please enter description
-                      </p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        id="outlined-name"
+                        label="Description"
+                        type="text"
+                        variant="standard"
+                        value={description}
+                        onChange={descHandler}
+                        multiline
+                        rows={3}
+                        disabled={selectedNodeId?.length > 0 ? true : false}
+                      />
+                      {descError ? (
+                        <p style={{ color: "red" }}>
+                          ** Please enter description
+                        </p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Grid>
 
-                  <Grid
-                    container
-                    justifyContent="space-around"
-                    className={styles.addButton}
-                  >
-                    <Button
-                      onClick={cancelToNewAdd}
-                      variant="outlined"
-                      color="secondary"
+                    <Grid
+                      container
+                      justifyContent="space-around"
+                      className={styles.addButton}
                     >
-                      CANCEL
-                    </Button>
+                      <Button
+                        onClick={cancelToNewAdd}
+                        variant="outlined"
+                        color="secondary"
+                      >
+                        CANCEL
+                      </Button>
 
-                    <Button
-                      variant="outlined"
-                      onClick={submitHandler}
-                      type="submit"
-                      // variant="contained"
-                      // disabled={isLoading}
-                      color="success"
-                    >
-                      Submit
-                      {/* {isLoading ? <CircularProgress size={12} /> : "Submit"} */}
-                    </Button>
+                      <Button
+                        variant="outlined"
+                        onClick={submitHandler}
+                        type="submit"
+                        // variant="contained"
+                        // disabled={isLoading}
+                        color="success"
+                      >
+                        Submit
+                        {/* {isLoading ? <CircularProgress size={12} /> : "Submit"} */}
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>
-                <ToastContainer />
-              </form>
-            </CardContent>
-          </Card>
+                  <ToastContainer />
+                </form>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-      <ToastContainer />
-    </div>
+        <ToastContainer />
+      </div>
+    </Card>
   );
 };
 
