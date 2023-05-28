@@ -189,17 +189,19 @@ const AllProducts = (props) => {
   };
 
   function handleEdit(PimCodeId) {
+    if (value === 2) {
+      router.push({
+        pathname: "/productDetails",
+        query: { PimCodeId: PimCodeId, tab: "Revalidate" },
+      });
+    }
     if (value === 1) {
       router.push({
         pathname: "/productDetails",
         query: { PimCodeId: PimCodeId, tab: "Ready-for-review" },
       });
-    } else if (value === 2) {
-      router.push({
-        pathname: "/productDetails",
-        query: { PimCodeId: PimCodeId, tab: "Revalidate" },
-      });
-    } else {
+    }
+    if (value === 0) {
       router.push({
         pathname: "/productDetails",
         query: { PimCodeId: PimCodeId, tab: "Draft" },
