@@ -38,6 +38,10 @@ const Channels = () => {
   const { channelReducer } = useSelector((state) => {
     return state;
   });
+  const { authorities } = useSelector((state) => {
+    return state.loginReducer;
+  });
+
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,6 +49,10 @@ const Channels = () => {
   useEffect(() => {
     dispatch(getChannelListApi(currentPage - 1, 5));
   }, []);
+
+  useEffect(() => {
+    console.log('Channels authorities ==>', authorities)
+  }, [authorities])
 
   // console.log("catalogServiceNewReducer", channelReducer?.channelGet);
 
@@ -85,6 +93,7 @@ const Channels = () => {
                 color="success"
                 component="label"
                 onClick={() => setShowAttributeAddForm(true)}
+                disabled={authorities?.CHANNELS == 'r' ? true : false}
               >
                 Add New
                 {/* <input hidden accept="image/*" multiple type="file" /> */}
@@ -114,13 +123,16 @@ const Channels = () => {
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ATTRIBUTES </TableCell>
-                      <TableCell align="right">EDIT</TableCell>
+                      {
+                        authorities.CHANNELS == 'w'
+                        && <TableCell align="right">EDIT</TableCell>
+                      }
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
+                      currentRecords !== null &&
+                      currentRecords.length > 0 ? (
                       currentRecords.map((row, i) => (
                         <TableRow
                           key={row.name}
@@ -162,9 +174,11 @@ const Channels = () => {
                               />
                             </div>
                           </TableCell>
-                          <TableCell align="right">
-                            <div className={`action_center `}>
-                              {/* <Image
+                          {
+                            authorities.CHANNELS == 'w'
+                            && <TableCell align="right">
+                              <div className={`action_center `}>
+                                {/* <Image
                               className="px-2"
                               src={edit}
                               alt="add"
@@ -174,18 +188,19 @@ const Channels = () => {
                                 handleAdd(row.channelId, row.channelName)
                               }
                             /> */}
-                              <Edit2
-                                style={{
-                                  textAlign: "right",
-                                  fontSize: "xx-small",
-                                  color: "#419794",
-                                }}
+                                <Edit2
+                                  style={{
+                                    textAlign: "right",
+                                    fontSize: "xx-small",
+                                    color: "#419794",
+                                  }}
                                 // onClick={() =>
                                 //   handleAdd(row.channelId, row.channelName)
                                 // }
-                              />
-                            </div>
-                          </TableCell>
+                                />
+                              </div>
+                            </TableCell>
+                          }
 
                           {/* </div> */}
                         </TableRow>

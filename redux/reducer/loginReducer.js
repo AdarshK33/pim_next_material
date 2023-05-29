@@ -34,6 +34,7 @@ import {
   NOTIFICATION_DATA_LOADING,
   NOTIFICATION_DATA_SUCCESS,
   NOTIFICATION_DATA_FAILURE,
+  USER_AUTHORITIES,
 } from "../types/types";
 
 const initialState = {
@@ -56,6 +57,7 @@ const initialState = {
   notifyData: {}, //notification data
   // accessToken:{},
   // refreshToken:{}
+  authorities: {}
 };
 const loginReducer = (state = initialState, action) => {
   // console.log("hello loginReducer called",action)
@@ -289,6 +291,11 @@ const loginReducer = (state = initialState, action) => {
         loading: false,
         notifyData: [],
         error: action,
+      };
+    case USER_AUTHORITIES:
+      return {
+        ...state,
+        authorities: action.payload
       };
 
     default:

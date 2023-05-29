@@ -13,7 +13,7 @@ import withRedux from "next-redux-wrapper";
 import { mainStore } from "../redux/store";
 // import { withIronSessionSsr } from "iron-session/next";
 import { client } from "../utils/axios";
-import { userRole } from "../redux/actions/login";
+import { userAuthorities, userRole } from "../redux/actions/login";
 import { useDispatch } from "react-redux";
 import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
 import { getNotificationApi } from "../redux/actions/login";
@@ -34,6 +34,7 @@ function MyApp(props) {
     client
       .post("api/userApi")
       .then((response) => {
+        console.log('MyApp => useEffect => response =>', response)
         console.log("testing response", response?.data?.role);
         dispatch(
           userRole(
@@ -42,6 +43,7 @@ function MyApp(props) {
             "LOGIN DETAILS"
           )
         );
+        dispatch(userAuthorities(response.data.authorities))
       })
       .catch((err) => {
         console.log("err in catch", err);

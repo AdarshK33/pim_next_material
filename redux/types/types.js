@@ -106,6 +106,8 @@ export const USER_EMAIL = "USER_EMAIL";
 
 export const USER_ROLE = "USER_ROLE";
 
+export const USER_AUTHORITIES = "USER_AUTHORITIES"
+
 export const INIT_APP_SUCCESS = "INIT_APP_SUCCESS";
 export const INIT_APP_FAILURE = "INIT_APP_FAILURE";
 
