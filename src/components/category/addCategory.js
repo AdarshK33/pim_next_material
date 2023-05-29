@@ -23,12 +23,17 @@ export default function addCategory() {
   const dispatch = useDispatch();
   // get loader fron useSelector
   const { loading } = useSelector((state) => state.catalogServiceNewReducer);
+  const { authorities } = useSelector((state) => state.loginReducer);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [subCategoryId, setSubCategoryId] = useState("");
   const [slug, setSlug] = useState("");
   // const [addCatData, setAddCatData] = useState();
+
+  useEffect(() => {
+    console.log('addCategory authorities ==>', authorities)
+  }, [authorities])
 
   const handleSubmit = (e) => {
     e.preventDefault();

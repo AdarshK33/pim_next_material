@@ -32,6 +32,7 @@ import {
   NOTIFICATION_DATA_LOADING,
   NOTIFICATION_DATA_SUCCESS,
   NOTIFICATION_DATA_FAILURE,
+  USER_AUTHORITIES,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -74,6 +75,13 @@ export const userEmail = (data) => {
     payload: data,
   };
 };
+
+export const userAuthorities = data => {
+  return {
+    type: USER_AUTHORITIES,
+    payload: data,
+  };
+}
 
 export const getUserDataLoading = () => {
   return {
@@ -280,6 +288,8 @@ export const userLoginApi = (data) => {
               "LOGIN DETAILS"
             )
           );
+          console.log('userLoginApi authorities', response.data)
+          // dispatch(userAuthorities(response.data.result.authorities))
           console.log(
             "response?.data?.result?.role",
             response?.data?.result?.role
