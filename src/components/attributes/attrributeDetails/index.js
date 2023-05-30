@@ -1,16 +1,9 @@
 import React, {
-  Fragment,
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
+  useState
 } from "react";
 import {
   Grid,
   Button,
-  Box,
-  Card,
   CardContent,
   Typography,
 } from "@mui/material";
@@ -21,23 +14,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import Pagination from "@mui/material/Pagination";
-// import Stack from "@mui/material/Stack";
-// import styles from "./attribute.module.css";
 import styles from "../attribute.module.css";
-
-import Image from "next/image";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
-
-// import edit from "../../../assets/icons/edit.svg";
-// import CustomModal from "../../common/customModal";
-// import AddForm from "./AddForm.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getAttributeSetDetailsListApi } from "../../../../redux/actions/catalogServiceNew";
-import { getRoleApi, getUserListApi } from "../../../../redux/actions/login";
 import CustomModal from "../../../common/customModal";
-import AddForm from "../AddForm";
 import AddAttributeForm from "../addAttributeForm";
 
 const AttributeSetDetails = () => {
@@ -45,26 +27,15 @@ const AttributeSetDetails = () => {
   const dispatch = useDispatch();
   const attrbuteSetId = router.query.attributeSet;
   const attributeSetName = router.query.attributeSetName;
-  console.log("attributeSetName", attributeSetName, attrbuteSetId);
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
   const { loading } = useSelector((state) => state.catalogServiceNewReducer);
+  const { authorities } = useSelector((state) => state.loginReducer);
 
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
-  //   useEffect(() => {
-  //     dispatch(getAttributeListApi(currentPage - 1, 5));
-  //     dispatch(getRoleApi());
-  //     dispatch(getCategoriesApi());
-  //   }, []);
-
-  console.log(
-    "catalogServiceNewReducer",
-    catalogServiceNewReducer?.attributeSetData
-  );
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
@@ -92,10 +63,6 @@ const AttributeSetDetails = () => {
       getAttributeSetDetailsListApi(router.query.attributeSet, value - 1, 10)
     );
   };
-  const ShowBack = () => {
-    console.log("called back");
-    router.push("/attributes");
-  };
 
   /*-----------------Pagination------------------*/
 
@@ -104,14 +71,6 @@ const AttributeSetDetails = () => {
       <Grid container>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
-          {/* <Grid item md={4}>
-              <button
-                onClick={() => setShowBrandCreationForm(true)}
-                className={`btn btn-sm ${styles.add_button_text}`}
-              >
-            + Add New
-              </button>
-            </Grid> */}
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_Details_title}>
@@ -123,18 +82,10 @@ const AttributeSetDetails = () => {
                 color="success"
                 component="label"
                 onClick={() => setShowAttributeAddForm(true)}
+                disabled={authorities?.ATTRIBUTES == 'r' ? true : false}
               >
                 Add New
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
-              {/* <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                onClick={ShowBack}
-              >
-                Back
-              </Button> */}
 
               <CustomModal
                 openModal={showAttributeAddForm}
@@ -175,13 +126,12 @@ const AttributeSetDetails = () => {
 
                         <TableCell align="right">STATUS</TableCell>
 
-                        {/* <TableCell align="right">ACTION</TableCell> */}
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {currentRecords &&
-                      currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}
@@ -204,16 +154,6 @@ const AttributeSetDetails = () => {
                             <TableCell align="right">
                               {row?.active === true ? "Active" : "In-Active"}
                             </TableCell>
-                            {/* <div className="action_center">
-                            <Image
-                              className="px-2 "
-                              src={edit}
-                              alt="edit"
-                              width={30}
-                              height={25}
-                              onClick={() => handleEdit(row.id)}
-                            />
-                          </div> */}
                           </TableRow>
                         ))
                       ) : (
@@ -224,15 +164,7 @@ const AttributeSetDetails = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
-                {/* <Stack spacing={2}> */}
                 <div className={styles.attribute_pagination}>
-                  {/* <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
-                    onChange={handlePaginationChange}
-                  /> */}
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -245,7 +177,6 @@ const AttributeSetDetails = () => {
                     onChange={handlePaginationChange}
                   />
                 </div>
-                {/* </Stack> */}
               </CardContent>
             )}
           </Card>

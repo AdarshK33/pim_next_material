@@ -1,13 +1,7 @@
 import React, {
-  Fragment,
-  useMemo,
   useState,
   useEffect,
-  useCallback,
-  useRef,
 } from "react";
-import edit from "../../../assets/icons/edit.svg";
-import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,12 +11,6 @@ import { Button, Card, CardContent, Typography } from "@mui/material";
 
 import {
   Grid,
-  FormControl,
-  FormLabel,
-  InputLabel,
-  Input,
-  Select,
-  MenuItem,
   TextField,
   Box,
 } from "@mui/material";
@@ -39,17 +27,13 @@ import {
   updateCategoryApis,
 } from "../../../redux/actions/catalogServiceNew";
 
-import AddCategory from "./addCategory";
-
 const Category = () => {
   const dispatch = useDispatch();
 
-  const { catagories } = useSelector((state) => state.catalogQueryReducer);
   const { categoryList } = useSelector(
     (state) => state.catalogServiceNewReducer
   );
-
-  // console.log(categoryList, "categoryList");
+  const { authorities } = useSelector(state => state.loginReducer)
 
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -57,15 +41,10 @@ const Category = () => {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [parentCategoryId, setParentCategoryId] = useState("");
-  const [subCategoryId, setSubCategoryId] = useState("");
-  const [slug, setSlug] = useState("");
 
   const [nameError, setNameError] = useState(false);
   const [descError, setDescError] = useState(false);
 
-  // console.log(selectedNodeId, "hello selectedNodeId");
-  // console.log(parentDetails, "hello parentDetails");
 
   useEffect(() => {
     dispatch(getCategoriesApi());
@@ -75,13 +54,10 @@ const Category = () => {
   useEffect(() => {
     if (selectedNodeId) {
       setName(selectedNodeId?.name);
-      // setDescription("jhello");
 
       if (selectedNodeId?.description) {
-        // console.log(selectedNodeId?.description, "hello if description");
         setDescription(selectedNodeId?.description);
       } else {
-        // console.log(selectedNodeId?.description, "hello else description");
         setDescription("");
       }
 
@@ -91,53 +67,9 @@ const Category = () => {
       );
 
       setParentDetails(parentObj);
-      // console.log(description, "description");
     }
   }, [selectedNodeId]);
-  // console.log(description, "description");
 
-  const data = [
-    {
-      id: "root-1",
-      name: "Parent 1",
-      children: [
-        {
-          id: "1",
-          name: "Child - 1",
-        },
-        {
-          id: "3",
-          name: "Child - 3",
-          children: [
-            {
-              id: "4",
-              name: "Child - 4",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: "root-2",
-      name: "Parent 2",
-      children: [
-        {
-          id: "5",
-          name: "Child - 5",
-        },
-        {
-          id: "6",
-          name: "Child - 6",
-          children: [
-            {
-              id: "7",
-              name: "Child - 7",
-            },
-          ],
-        },
-      ],
-    },
-  ];
   const renderTree = (nodes) => {
     return (
       <>
@@ -148,9 +80,7 @@ const Category = () => {
               nodeId={node.id}
               label={node.name}
               style={{ margin: 10 }}
-              // onLabelClick={handleNodeSelect(nodes)}
             >
-              {/* <ChevronRightIcon /> */}
               {Array.isArray(node.categories)
                 ? renderTree(node.categories)
                 : null}
@@ -166,7 +96,6 @@ const Category = () => {
     setNameError(false);
     setDescError(false);
     setName("");
-    // setDescription("");
   };
 
   //   /*-----------------  selected catagory menu------------------*/
@@ -246,12 +175,6 @@ const Category = () => {
           dispatch(addCategoryApi(addSubParentInfo));
         }
       }
-      // setShowAddForm(false);
-      // setSelectedNodeId();
-      // setNameError(false);
-      // setDescError(false);
-      // setName("");
-      // setDescription("");
     }
   };
 
@@ -291,7 +214,6 @@ const Category = () => {
   };
 
   const checkValidations = () => {
-    // console.log("isChecked");
     if ((nameValidations() == true) & (descValidations() == true)) {
       return true;
     } else {
@@ -335,9 +257,9 @@ const Category = () => {
                 color="success"
                 component="label"
                 onClick={addNewBtn}
+                disabled={authorities?.CATEGORY == 'r' ? true : false}
               >
                 ADD NEW
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
             </Box>
           </Grid>
@@ -394,6 +316,7 @@ const Category = () => {
                         value={name}
                         onChange={nameHandler}
                         fullWidth
+                        disabled={authorities?.CATEGORY == 'r' ? true : false}
                       />
                       {nameError ? (
                         <p style={{ color: "red" }}>** Please enter name</p>
@@ -410,7 +333,6 @@ const Category = () => {
                             type="text"
                             variant="standard"
                             value={selectedNodeId?.name || "Parent Category"}
-                            // onChange={nameHandler}
                             fullWidth
                             disabled={true}
                           />
@@ -429,61 +351,12 @@ const Category = () => {
                                 ? parentDetails?.name
                                 : selectedNodeId?.name || "Parent Category"
                             }
-                            // onChange={nameHandler}
                             fullWidth
                             disabled={true}
                           />
                         </Grid>
                       </>
                     )}
-                    {/* 
-                  {showAddForm && selectedNodeId?.parentCategoryId ? (
-                    <>
-                      <Grid item xs={6}>
-                        <TextField
-                          id="outlined-name"
-                          label="Sub Category"
-                          type="text"
-                          variant="standard"
-                          value={
-                            showAddForm
-                              ? selectedNodeId?.name
-                              : "" || `Sub Category`
-                          }
-                          // onChange={nameHandler}
-                          fullWidth
-                          // disabled={true}
-                        />
-                      </Grid>
-                    </>
-                  ) : (
-                    <>
-                      <Grid item xs={6}>
-                        <TextField
-                          id="outlined-name"
-                          label="Sub Category"
-                          type="text"
-                          variant="standard"
-                          value={`Sub Category`}
-                          // onChange={nameHandler}
-                          fullWidth
-                          // disabled={true}
-                        />
-                      </Grid>
-                    </>
-                  )} */}
-
-                    {/* <Grid item xs={6}>
-                    <TextField
-                      id="outlined-name"
-                      label="Slug"
-                      type="text"
-                      variant="standard"
-                      // value={name}
-                      // onChange={nameHandler}
-                      fullWidth
-                    />
-                  </Grid> */}
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
@@ -495,7 +368,7 @@ const Category = () => {
                         onChange={descHandler}
                         multiline
                         rows={3}
-                        disabled={selectedNodeId?.length > 0 ? true : false}
+                        disabled={authorities?.CATEGORY == 'r' ? true : selectedNodeId?.length > 0 ? true : false}
                       />
                       {descError ? (
                         <p style={{ color: "red" }}>
@@ -515,6 +388,7 @@ const Category = () => {
                         onClick={cancelToNewAdd}
                         variant="outlined"
                         color="secondary"
+                        disabled={authorities?.CATEGORY == 'r' ? true : false}
                       >
                         CANCEL
                       </Button>
@@ -523,12 +397,10 @@ const Category = () => {
                         variant="outlined"
                         onClick={submitHandler}
                         type="submit"
-                        // variant="contained"
-                        // disabled={isLoading}
                         color="success"
+                        disabled={authorities?.CATEGORY == 'r' ? true : false}
                       >
                         Submit
-                        {/* {isLoading ? <CircularProgress size={12} /> : "Submit"} */}
                       </Button>
                     </Grid>
                   </Grid>
