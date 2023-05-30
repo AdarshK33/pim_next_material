@@ -7,13 +7,11 @@ function handler(req, res) {
   // const sku2 = body.pageSize
 
   const { user: { at = "" } = {}, loggedIn } = req.session;
-
-  // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/getAllProduct?pageNo=0&pageSize=10&sortBy=updatedAt&productStatus=DRAFTED
-
+  // /catalog/products?pageNo=0&pageSize=10&productStatus=DRAFT&sortBy=updatedAt
   const config = {
-    method: "post",
+    method: "get",
 
-    url: `/catalog/products_filter?pageNo=${body.pageNo}&pageSize=10&productStaus=${body.productStaus}&sortBy=updatedAt`,
+    url: `/catalog/products?pageNo=${body.pageNo}&pageSize=10&productStatus=${body.productStatus}&sortBy=updatedAt`,
 
     // url: `/catalog/products_filter?pageNo=${body.pageNo}&pageSize=${body.pageSize}&productStaus=${body.productStaus}&sortBy=updatedAt`,
     headers: {

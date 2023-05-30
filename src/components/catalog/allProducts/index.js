@@ -93,11 +93,11 @@ const AllProducts = (props) => {
     setCurrentPage(val);
 
     if (value === 0) {
-      dispatch(getAllProductListApi(val - 1, 5, "DRAFT"));
+      dispatch(getAllProductListApi(val - 1, 10, "DRAFT"));
     } else if (value === 1) {
-      dispatch(getAllProductListApi(val - 1, 5, "READY_FOR_REVIEW"));
+      dispatch(getAllProductListApi(val - 1, 10, "READY_FOR_REVIEW"));
     } else if (value === 2) {
-      dispatch(getAllProductListApi(val - 1, 5, "REVALIDATE"));
+      dispatch(getAllProductListApi(val - 1, 10, "REVALIDATE"));
     }
   };
 
@@ -110,27 +110,27 @@ const AllProducts = (props) => {
   useEffect(() => {
     if (searchValue) {
       if (value === 0) {
-        dispatch(getAllProductListApi(0, 5, "DRAFT", searchValue));
+        dispatch(getAllProductListApi(0, 10, "DRAFT", searchValue));
       } else if (value === 1) {
         // setCountState("READY_FOR_REVIEW");
 
-        dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW", searchValue));
+        dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW", searchValue));
       } else if (value === 2) {
         // setCountState("REVALIDATE");
 
-        dispatch(getAllProductListApi(0, 5, "REVALIDATE", searchValue));
+        dispatch(getAllProductListApi(0, 10, "REVALIDATE", searchValue));
       }
     } else {
       setSearchValue();
       if (value === 0) {
         setCountState("DRAFT");
-        dispatch(getAllProductListApi(0, 5, "DRAFT"));
+        dispatch(getAllProductListApi(0, 10, "DRAFT"));
       } else if (value === 1) {
         setCountState("READY_FOR_REVIEW");
-        dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW"));
+        dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
       } else if (value === 2) {
         setCountState("REVALIDATE");
-        dispatch(getAllProductListApi(0, 5, "REVALIDATE"));
+        dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
       }
     }
   }, [value, searchValue]);
