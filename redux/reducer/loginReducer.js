@@ -57,7 +57,7 @@ const initialState = {
   notifyData: {}, //notification data
   // accessToken:{},
   // refreshToken:{}
-  authorities: {}
+  authorities: ''
 };
 const loginReducer = (state = initialState, action) => {
   // console.log("hello loginReducer called",action)
