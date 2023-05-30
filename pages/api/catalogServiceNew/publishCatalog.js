@@ -5,9 +5,10 @@ function handler(req, res) {
   const body = req.body;
   const { user: { at = "" } = {}, loggedIn } = req.session;
 
+  // https://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/export/9?filetype=JSON
   const config = {
     method: "post",
-    url: `/catalog/publish/${body.channelId}`,
+    url: `/catalog/export/${body.channelId}?filetype=${body.filetype}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },

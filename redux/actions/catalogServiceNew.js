@@ -367,21 +367,20 @@ export const getAttributeListApi = (id, pageNo, pageSize) => {
 };
 
 export const getAllProductListApi = (pageNo, pageSize, status, itemId) => {
-  let data;
-  if (itemId == null && itemId == undefined) {
-    data = {
-      pageNo: pageNo,
-      pageSize: pageSize,
-      productStaus: status,
-    };
-  } else {
-    data = {
-      pageNo: pageNo,
-      pageSize: pageSize,
-      productStaus: status,
-      itemId: [itemId],
-    };
-  }
+  // if (itemId == null && itemId == undefined) {
+  let data = {
+    pageNo: pageNo,
+    pageSize: pageSize,
+    productStatus: status,
+    // };
+    // } else {
+    //   data = {
+    //     pageNo: pageNo,
+    //     pageSize: pageSize,
+    //     productStatus: status,
+    //     itemId: [itemId],
+    //   };
+  };
 
   console.log(data, "data here");
   return (dispatch) => {
@@ -605,8 +604,9 @@ export const statusChangedApis = (info) => {
   };
 };
 
-export const getCatalogPublishApi = (selectedItemIds, channelId) => {
+export const getCatalogPublishApi = (filetype, selectedItemIds, channelId) => {
   const data = {
+    filetype,
     selectedItemIds,
     channelId,
   };
