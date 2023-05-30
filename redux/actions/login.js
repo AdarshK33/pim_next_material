@@ -289,7 +289,7 @@ export const userLoginApi = (data) => {
             )
           );
           console.log('userLoginApi authorities', response.data)
-          // dispatch(userAuthorities(response.data.result.authorities))
+          dispatch(userAuthorities(response.data.result.authorities))
           console.log(
             "response?.data?.result?.role",
             response?.data?.result?.role

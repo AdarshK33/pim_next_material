@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./channels.module.css";
-import Image from "next/image";
-import edit from "../../../assets/icons/edit.svg";
-import add from "../../../assets/icons/plus.svg";
-import { Edit2, Eye, Search, Download } from "react-feather";
+import { Edit2, Eye } from "react-feather";
 
 import {
   Grid,
   Button,
-  Box,
   Card,
   CardContent,
   Typography,
@@ -20,8 +16,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import Pagination from "@mui/material/Pagination";
-// import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getChannelListApi,
@@ -50,11 +44,6 @@ const Channels = () => {
     dispatch(getChannelListApi(currentPage - 1, 5));
   }, []);
 
-  useEffect(() => {
-    console.log('Channels authorities ==>', authorities)
-  }, [authorities])
-
-  // console.log("catalogServiceNewReducer", channelReducer?.channelGet);
 
   // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   const recordPerPage = 10;
@@ -71,7 +60,6 @@ const Channels = () => {
   // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   const handleAdd = (channelId, channelName) => {
-    // console.log("channelId", channelId);
     router.push({
       pathname: "/channelAddAttribute",
       query: { channelId: channelId, channelName: channelName },
@@ -96,7 +84,6 @@ const Channels = () => {
                 disabled={authorities?.CHANNELS == 'r' ? true : false}
               >
                 Add New
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
               <CustomModal
                 openModal={showAttributeAddForm}
@@ -116,15 +103,10 @@ const Channels = () => {
                       <TableCell>#</TableCell>
                       <TableCell align="right">NAME</TableCell>
                       <TableCell align="right">DESCRIPTION</TableCell>
-                      {/* <TableCell align="right">LAST UPLOADED</TableCell> */}
-                      {/* <TableCell align="right">TOTAL PRODUCT ACTIVE</TableCell> */}
-                      {/* <TableCell align="right">
-                        TOTAL PRODUCT INACTIVE
-                      </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ATTRIBUTES </TableCell>
                       {
-                        authorities.CHANNELS == 'w'
+                        authorities?.CHANNELS == 'w'
                         && <TableCell align="right">EDIT</TableCell>
                       }
                     </TableRow>
@@ -142,26 +124,14 @@ const Channels = () => {
                         >
                           <TableCell component="th" scope="row">
                             {i + 1 + indexOfFirstRecord}
-                            {/* {row.channelId} */}
                           </TableCell>
                           <TableCell align="right">{row.channelName}</TableCell>
                           <TableCell align="right">{row.description}</TableCell>
                           <TableCell align="right">
                             {row.status === true ? "Active" : "In-Active"}
                           </TableCell>
-                          {/* <div className={styles.div_actions}> */}
                           <TableCell align="right">
                             <div className={`action_center }`}>
-                              {/* <Image
-                              className="px-2"
-                              src={edit}
-                              alt="add"
-                              width={30}
-                              height={25}
-                              onClick={() =>
-                                handleAdd(row.channelId, row.channelName)
-                              }
-                            /> */}
                               <Eye
                                 style={{
                                   textAlign: "right",
@@ -175,34 +145,20 @@ const Channels = () => {
                             </div>
                           </TableCell>
                           {
-                            authorities.CHANNELS == 'w'
+                            authorities?.CHANNELS == 'w'
                             && <TableCell align="right">
                               <div className={`action_center `}>
-                                {/* <Image
-                              className="px-2"
-                              src={edit}
-                              alt="add"
-                              width={30}
-                              height={25}
-                              onClick={() =>
-                                handleAdd(row.channelId, row.channelName)
-                              }
-                            /> */}
                                 <Edit2
                                   style={{
                                     textAlign: "right",
                                     fontSize: "xx-small",
                                     color: "#419794",
                                   }}
-                                // onClick={() =>
-                                //   handleAdd(row.channelId, row.channelName)
-                                // }
                                 />
                               </div>
                             </TableCell>
                           }
 
-                          {/* </div> */}
                         </TableRow>
                       ))
                     ) : (
@@ -213,15 +169,7 @@ const Channels = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              {/* <Stack spacing={2}> */}
               <div className={styles.category_pagination}>
-                {/* <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
-                    onChange={handlePaginationChange}
-                  /> */}
                 <Pagination
                   itemClass="page-item"
                   linkClass="page-link"
@@ -234,7 +182,6 @@ const Channels = () => {
                   onChange={handlePaginationChange}
                 />
               </div>
-              {/* </Stack> */}
             </CardContent>
           </Card>
         </Grid>

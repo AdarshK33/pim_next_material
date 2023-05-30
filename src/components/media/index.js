@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Card, Box, Typography, Grid, TextField } from "@mui/material";
 import styles from "./media.module.css";
-import { useDropzone } from "react-dropzone";
 import axios from "axios";
-import Image from "next/image";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllProductListApi,
   getMediaListingApi,
 } from "../../../redux/actions/catalogServiceNew";
-import { uploadClient } from "../../../utils/axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -22,7 +19,7 @@ import Paper from "@mui/material/Paper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "react-js-pagination";
-import { Edit2, Eye, Search, Download } from "react-feather";
+import { Eye } from "react-feather";
 
 const Media = (props) => {
   const { loading, mediaData } = useSelector((state) => {
@@ -34,12 +31,9 @@ const Media = (props) => {
   const [enableUpload, setEnableUpload] = useState(false);
   const [selectItemId, setSelectItemId] = useState("");
 
-  const { catalogServiceNewReducer } = useSelector((state) => {
+  const { catalogServiceNewReducer, loginReducer } = useSelector((state) => {
     return state;
   });
-
-  //   console.log("catalogServiceNewReducer", catalogServiceNewReducer);
-  //   console.log("selectItemId", selectItemId);
 
   useEffect(() => {
     dispatch(getMediaListingApi(0, 10, selectItemId));
@@ -69,12 +63,10 @@ const Media = (props) => {
         }
       )
       .then((response) => {
-        console.log(response);
         toast.info("media file uploaded Successfully !!!");
       })
       .catch((error) => {
         toast.error("media file upload Failed !!!");
-        console.log(error);
       });
   };
 
@@ -150,43 +142,46 @@ const Media = (props) => {
                   />
                 )}
             </Box>
-            {enableUpload ? (
-              <Box className="dropZone-container">
-                <Dropzone onDrop={onDrop}>
-                  {({ getRootProps, getInputProps }) => (
-                    <Box
-                      {...getRootProps()}
-                      className="dropzone col-2 p-3 text-end align-self-center d-flex"
-                    >
-                      <input {...getInputProps()} />
-                      {}
-                      <Box className="upload_placeholder upload_blk">
-                        <Box></Box>
-                        <u className="">Upload Image</u>
+            {
+              loginReducer?.authorities?.MEDIA == 'w' &&
+                enableUpload ? (
+                <Box className="dropZone-container" >
+                  <Dropzone onDrop={onDrop}>
+                    {({ getRootProps, getInputProps }) => (
+                      <Box
+                        {...getRootProps()}
+                        className="dropzone col-2 p-3 text-end align-self-center d-flex"
+                      >
+                        <input {...getInputProps()} />
+                        { }
+                        <Box className="upload_placeholder upload_blk">
+                          <Box></Box>
+                          <u className="">Upload Image</u>
+                        </Box>
                       </Box>
-                    </Box>
-                  )}
-                </Dropzone>
-              </Box>
-            ) : (
-              <Box className="dropZone-container">
-                <Dropzone onDrop={onDropNotify}>
-                  {({ getRootProps, getInputProps }) => (
-                    <Box
-                      {...getRootProps()}
-                      className="dropzone col-2 p-3 text-end align-self-center d-flex"
-                    >
-                      <input {...getInputProps()} />
-                      {}
-                      <Box className="upload_placeholder upload_blk">
-                        <Box></Box>
-                        <u className="">Upload Image</u>
+                    )}
+                  </Dropzone>
+                </Box>
+              ) : (
+                <Box className="dropZone-container">
+                  <Dropzone onDrop={onDropNotify}>
+                    {({ getRootProps, getInputProps }) => (
+                      <Box
+                        {...getRootProps()}
+                        className="dropzone col-2 p-3 text-end align-self-center d-flex"
+                      >
+                        <input {...getInputProps()} />
+                        { }
+                        <Box className="upload_placeholder upload_blk">
+                          <Box></Box>
+                          <u className="">Upload Image</u>
+                        </Box>
                       </Box>
-                    </Box>
-                  )}
-                </Dropzone>
-              </Box>
-            )}
+                    )}
+                  </Dropzone>
+                </Box>
+              )
+            }
 
             <Box>
               {loading === true ? (
@@ -216,8 +211,8 @@ const Media = (props) => {
                     </TableHead>
                     <TableBody>
                       {currentRecords &&
-                      currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}
@@ -255,7 +250,6 @@ const Media = (props) => {
                   </Table>
                 </TableContainer>
               )}
-              {/* <Stack spacing={2}> */}
               <div className={styles.bulk_pagination}>
                 <Pagination
                   itemClass="page-item"

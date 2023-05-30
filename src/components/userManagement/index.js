@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./userManagement.module.css";
-import Image from "next/image";
-// import edit from "../../../assets/icons/edit.svg";
-import { Edit2, Eye, Search, Download } from "react-feather";
+import { Edit2 } from "react-feather";
 
 import {
   Grid,
@@ -23,15 +21,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import Pagination from "@mui/material/Pagination";
-// import Stack from "@mui/material/Stack";
-
 import Pagination from "react-js-pagination";
-
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
 import UpdateForm from "./UpdateForm.js";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   getRoleApi,
@@ -41,7 +34,7 @@ import {
 } from "../../../redux/actions/login";
 
 const UserManagement = () => {
-  const { userGet, roleGet, loading } = useSelector((state) => {
+  const { userGet, roleGet, authorities } = useSelector((state) => {
     return state.loginReducer;
   });
   const dispatch = useDispatch();
@@ -57,8 +50,6 @@ const UserManagement = () => {
 
   const roleHandler = (e) => {
     setRole(e.target.value);
-    // setCurrentPage(0);
-    // dispatch(filterUserApi(currentPage-1, 5, e.target.value));
   };
 
   const tableData = [];
@@ -80,9 +71,7 @@ const UserManagement = () => {
 
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
-    // console.log(value, "value");
     if (role) {
-      console.log("pagination called");
       dispatch(filterUserApi(currentPage - 1, 5, role));
     } else {
       dispatch(getUserListApi(value - 1, 5));
@@ -111,24 +100,16 @@ const UserManagement = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Users
               </Typography>
-              {/* <Grid
-                item
-                xs={4}
-                container
-                spacing={2}
-                justifyContent="space-between"
-              > */}
               <Box className={styles.user_btn_add_btn}>
-                {/* </Grid> */}
                 <Box className={styles.add_dropDownBtn}>
                   <Button
                     variant="outlined"
                     color="success"
                     component="label"
                     onClick={() => setShowUserAddForm(true)}
+                    disabled={authorities?.USERS == 'r' ? true : false}
                   >
                     Add New
-                    {/* <input hidden accept="image/*" multiple type="file" /> */}
                   </Button>
                 </Box>
               </Box>
@@ -170,13 +151,16 @@ const UserManagement = () => {
                       <TableCell align="right">ROLE</TableCell>
 
                       <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">EDIT</TableCell>
+                      {
+                        authorities?.USERS == 'w' &&
+                        <TableCell align="right">EDIT</TableCell>
+                      }
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
+                      currentRecords !== null &&
+                      currentRecords.length > 0 ? (
                       currentRecords.map((row, i) => (
                         <TableRow
                           key={row.name}
@@ -190,24 +174,19 @@ const UserManagement = () => {
                           <TableCell align="right">{row.email}</TableCell>
                           <TableCell align="right">{row.roleName}</TableCell>
                           <TableCell align="right">{row.status}</TableCell>
-                          <div className="action_center">
-                            {/* <Image
-                              className="px-2 "
-                              src={edit}
-                              alt="edit"
-                              width={30}
-                              height={25}
-                              onClick={() => handleEdit(row.userId)}
-                            /> */}
-                            <Edit2
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "#419794",
-                              }}
-                              onClick={() => handleEdit(row.userId)}
-                            />
-                          </div>
+                          {
+                            authorities?.USERS == 'w' &&
+                            <div className="action_center">
+                              <Edit2
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "#419794",
+                                }}
+                                onClick={() => handleEdit(row.userId)}
+                              />
+                            </div>
+                          }
                           <CustomModal
                             openModal={showUserUpdateForm}
                             closeModal={() => setShowUserUpdateForm(false)}
@@ -227,15 +206,7 @@ const UserManagement = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              {/* <Stack spacing={2}> */}
               <div className={styles.category_pagination}>
-                {/* <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
-                    onChange={handlePaginationChange}
-                  /> */}
                 <Pagination
                   itemClass="page-item"
                   linkClass="page-link"
@@ -248,7 +219,6 @@ const UserManagement = () => {
                   onChange={handlePaginationChange}
                 />
               </div>
-              {/* </Stack> */}
             </CardContent>
           </Card>
         </Grid>
