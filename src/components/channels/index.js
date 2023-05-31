@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./channels.module.css";
 import { Edit2, Eye } from "react-feather";
 
-import {
-  Grid,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Grid, Button, Card, CardContent, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -45,7 +39,6 @@ const Channels = () => {
   useEffect(() => {
     dispatch(getChannelListApi(currentPage - 1, 5));
   }, []);
-
 
   // >>>>>>>>>>>>>>>>>PAGINATION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   const recordPerPage = 10;
@@ -113,10 +106,9 @@ const handleEdit = (channelId) => {
                       <TableCell align="right">DESCRIPTION</TableCell>
                       <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ATTRIBUTES </TableCell>
-                      {
-                        authorities?.CHANNELS == 'w'
-                        && <TableCell align="right">EDIT</TableCell>
-                      }
+                      {authorities?.CHANNELS == "w" && (
+                        <TableCell align="right">EDIT</TableCell>
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -152,9 +144,8 @@ const handleEdit = (channelId) => {
                               />
                             </div>
                           </TableCell>
-                          {
-                            authorities?.CHANNELS == 'w'
-                            && <TableCell align="right">
+                          {authorities?.CHANNELS == "w" && (
+                            <TableCell align="right">
                               <div className={`action_center `}>
                                 <Edit2
                                   style={{
@@ -182,8 +173,7 @@ const handleEdit = (channelId) => {
                                 }
                               />
                             </TableCell>
-                          }
-
+                          )}
                         </TableRow>
                       ))
                     ) : (

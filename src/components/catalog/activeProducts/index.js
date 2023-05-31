@@ -161,7 +161,7 @@ const ActiveProducts = () => {
       Object.keys(publishProduct).length &&
       viewDoc == "JSON"
     ) {
-      downloadJsonFile(publishProduct, "ActiveProductExport.json");
+      downloadJsonFile(publishProduct, "Export.json");
       setViewDoc("");
     }
   }, [publishProduct]);
@@ -180,6 +180,7 @@ const ActiveProducts = () => {
                     variant="outlined"
                     color="success"
                     component="label"
+                    className={styles.activeProductJson_btn}
                     onClick={() => {
                       setViewDoc("JSON");
                       dispatch(
@@ -197,6 +198,7 @@ const ActiveProducts = () => {
                     variant="outlined"
                     color="success"
                     component="label"
+                    className={styles.activeProductJson_btn}
                     // onClick={() =>
                     //   dispatch(getCatalogPublishApi(selectedItemIds, channel))
                     // }

@@ -78,3 +78,6 @@
 .select_channel_active div {
   padding: 0px 0px 0px 0px !important;
 }
+.activeProductJson_btn {
+  margin-right: 10px !important;
+}
