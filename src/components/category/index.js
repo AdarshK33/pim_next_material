@@ -331,7 +331,7 @@ const Category = () => {
                             label="Parent Category"
                             type="text"
                             variant="standard"
-                            value={selectedNodeId?.name || "Parent Category"}
+                            value={selectedNodeId?.name || ""}
                             fullWidth
                             disabled={true}
                           />
@@ -348,7 +348,7 @@ const Category = () => {
                             value={
                               parentDetails
                                 ? parentDetails?.name
-                                : selectedNodeId?.name || "Parent Category"
+                                : selectedNodeId?.name || ""
                             }
                             fullWidth
                             disabled={true}
