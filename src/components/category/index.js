@@ -220,6 +220,7 @@ const Category = () => {
     setDescError(false);
     setName("");
     setDescription("");
+    setParentDetails("");
   };
 
   const addNewBtn = () => {
