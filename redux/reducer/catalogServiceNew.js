@@ -54,6 +54,7 @@ const initialState = {
   mediaData: {},
   categoryList: {},
   categoryUpdate: {},
+  catagoriesAdd: {},
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
@@ -147,14 +148,15 @@ const catalogServiceNewReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        catagories: action.payload,
+        catagoriesAdd: action.payload,
         error: {},
       };
     case ADD_CATEGORY_FAILURE:
       return {
         ...state,
         loading: false,
-        error: action.err,
+        catagoriesAdd: [],
+        error: action,
       };
 
     case CREATE_ATTRIBUTE_SET_LOADING:
