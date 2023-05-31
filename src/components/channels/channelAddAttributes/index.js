@@ -23,14 +23,16 @@ import CustomModal from "../../../common/customModal";
 import AddForm from "./AddForm";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector } from "react-redux";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useDispatch, useSelector } from "react-redux";
+import { channelAttributeUpdateApis } from "../../../../redux/actions/channel";
 
 const ChannelAddAttributes = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { channelAttribute } = useSelector((state) => {
     return state.channelReducer;
@@ -83,11 +85,11 @@ const ChannelAddAttributes = () => {
     const obj = channelAttribute?.content?.channelAttributes;
     const inputState = new Object();
     Object.entries(obj).map(([key, value]) => {
-      console.log("heuello iiiiiiiiiiii", key, value);
+      // console.log("heuello iiiiiiiiiiii", key, value);
 
       value?.attributes.forEach((val) => {
         // console.log("hello iiiiiiiiiiii", val);
-        inputState[val.attributeId] = val.keyName;
+        inputState[val.attributeId] = val.displayName;
       });
     });
 
@@ -100,14 +102,23 @@ const ChannelAddAttributes = () => {
     }
     const obj = channelAttr;
     return channelAttr.map((row, i) => {
-      console.log("channelAttr", row, i);
+      // console.log("channelAttr", row, i);
       return inputAllMasterRender(row, i);
     });
   };
 
   const updateHandler = () => {
     //call update apis
-    console.log("hello update called");
+
+    let info = {
+      payload: {
+        ...stateInput,
+      },
+      channelId: router.query.channelId,
+    };
+    // console.log("hello update called", info);
+
+    dispatch(channelAttributeUpdateApis(info));
     setcheckUpdate(false);
   };
   const inputAllMasterRender = (sectionItem, index) => {
