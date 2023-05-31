@@ -511,7 +511,7 @@ export const addCategoryApi = (data) => {
     client
       .post("/api/catalogServiceNew/addcategory", data)
 
-      .then((response) => {
+      .then(async (response) => {
         // console.log(" csdxfsdf", response);
         dispatch(addCategorySuccess(response.data));
 
@@ -780,11 +780,11 @@ export const updateCategoryApis = (data) => {
     dispatch(categoryUpdateDataLoading("STATUS....", "STATUS"));
     client
       .post("/api/catalogServiceNew/updateCategory", data)
-      .then((response) => {
+      .then(async (response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
           toast.info("Category updated successfully !!!");
-          dispatch(getCategoriesListApi());
+
           dispatch(
             categoryUpdateDataSuccess(
               response.data,
@@ -792,6 +792,7 @@ export const updateCategoryApis = (data) => {
               "status UPDATE"
             )
           );
+          dispatch(getCategoriesListApi());
         } else throw new Error("");
       })
       .catch((err) => {
