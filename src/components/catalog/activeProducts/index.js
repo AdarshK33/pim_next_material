@@ -112,7 +112,7 @@ const ActiveProducts = () => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.setAttribute("href", url);
-    a.setAttribute("download", "catalog.csv");
+    a.setAttribute("download", "Export.csv");
     a.click();
   };
 
