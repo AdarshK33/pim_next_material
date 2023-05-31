@@ -31,6 +31,8 @@ import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
+import UpdateForm from "./UpdateForm.js";
+import { getChannelByIdApi } from "../../../redux/actions/channel";
 
 const Channels = () => {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ const Channels = () => {
   });
 
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
-  const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
+  const [showChannelEditForm, setShowChannnelEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -51,8 +53,8 @@ const Channels = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Channels authorities ==>', authorities)
-  }, [authorities])
+    console.log("Channels authorities ==>", authorities);
+  }, [authorities]);
 
   // console.log("catalogServiceNewReducer", channelReducer?.channelGet);
 
@@ -78,6 +80,12 @@ const Channels = () => {
     });
     dispatch(channelAttributeApiList(channelName, 0, 5));
   };
+
+const handleEdit = (channelId) => {
+  setShowChannnelEditForm(true);
+  dispatch(getChannelByIdApi(channelId));
+}
+
   return (
     <>
       <Grid container spacing={0}>
@@ -93,7 +101,7 @@ const Channels = () => {
                 color="success"
                 component="label"
                 onClick={() => setShowAttributeAddForm(true)}
-                disabled={authorities?.CHANNELS == 'r' ? true : false}
+                disabled={authorities?.CHANNELS == "r" ? true : false}
               >
                 Add New
                 {/* <input hidden accept="image/*" multiple type="file" /> */}
@@ -123,16 +131,15 @@ const Channels = () => {
                       </TableCell> */}
                       <TableCell align="right">STATUS</TableCell>
                       <TableCell align="right">ATTRIBUTES </TableCell>
-                      {
-                        authorities.CHANNELS == 'w'
-                        && <TableCell align="right">EDIT</TableCell>
-                      }
+                      {authorities.CHANNELS == "w" && (
+                        <TableCell align="right">EDIT</TableCell>
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {currentRecords &&
-                      currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
                       currentRecords.map((row, i) => (
                         <TableRow
                           key={row.name}
@@ -174,9 +181,8 @@ const Channels = () => {
                               />
                             </div>
                           </TableCell>
-                          {
-                            authorities.CHANNELS == 'w'
-                            && <TableCell align="right">
+                          {authorities.CHANNELS == "w" && (
+                            <TableCell align="right">
                               <div className={`action_center `}>
                                 {/* <Image
                               className="px-2"
@@ -194,13 +200,27 @@ const Channels = () => {
                                     fontSize: "xx-small",
                                     color: "#419794",
                                   }}
-                                // onClick={() =>
-                                //   handleAdd(row.channelId, row.channelName)
-                                // }
+                                  onClick={() =>
+                                    // handleAdd(row.channelId, row.channelName)
+                                    handleEdit(row.channelId)
+                                  }
                                 />
                               </div>
+                              <CustomModal
+                                openModal={showChannelEditForm}
+                                closeModal={() =>
+                                  setShowChannnelEditForm(false)
+                                }
+                                body={
+                                  <UpdateForm
+                                    classModal={() =>
+                                      setShowChannnelEditForm(false)
+                                    }
+                                  />
+                                }
+                              />
                             </TableCell>
-                          }
+                          )}
 
                           {/* </div> */}
                         </TableRow>
