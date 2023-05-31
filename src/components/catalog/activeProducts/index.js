@@ -161,7 +161,7 @@ const ActiveProducts = () => {
       Object.keys(publishProduct).length &&
       viewDoc == "JSON"
     ) {
-      downloadJsonFile(publishProduct, "ActiveProductExport.json");
+      downloadJsonFile(publishProduct, "Export.json");
       setViewDoc("");
     }
   }, [publishProduct]);
