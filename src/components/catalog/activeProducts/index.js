@@ -180,6 +180,7 @@ const ActiveProducts = () => {
                     variant="outlined"
                     color="success"
                     component="label"
+                    className={styles.activeProductJson_btn}
                     onClick={() => {
                       setViewDoc("JSON");
                       dispatch(
@@ -197,6 +198,7 @@ const ActiveProducts = () => {
                     variant="outlined"
                     color="success"
                     component="label"
+                    className={styles.activeProductJson_btn}
                     // onClick={() =>
                     //   dispatch(getCatalogPublishApi(selectedItemIds, channel))
                     // }
