@@ -80,6 +80,7 @@ const catalogServiceNew = axios.create({
   baseURL: process.env.CATALOG_NEW_SERVICE_URL,
 
   headers: {
+    accept: "*/*",
     "Content-Type": "application/json",
   },
 });

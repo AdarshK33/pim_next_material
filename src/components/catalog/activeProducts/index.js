@@ -53,7 +53,7 @@ const ActiveProducts = () => {
   const [selectedItemIds, setSelectedItemIds] = useState([]);
   // console.log("selectedItemIds", selectedItemIds);
 
-  const [viewDoc, setViewDoc] = useState(false);
+  const [viewDoc, setViewDoc] = useState();
   const [channel, setChannel] = useState("");
 
   const { catalogServiceNewReducer, channelReducer } = useSelector((state) => {
@@ -124,6 +124,20 @@ const ActiveProducts = () => {
     csvRows.push(values);
     return csvRows.join("\n");
   };
+  const downloadJsonFile = (data, filename) => {
+    const json = JSON.stringify(data);
+    const dataUri = `data:text/json;charset=utf-8,${encodeURIComponent(json)}`;
+
+    const link = document.createElement("a");
+    link.href = dataUri;
+    link.download = filename;
+
+    // Simulate a click event to trigger the download
+    link.click();
+
+    // Clean up the temporary link
+    link.remove();
+  };
 
   useEffect(() => {
     console.log("publishProduct", publishProduct);
@@ -132,12 +146,23 @@ const ActiveProducts = () => {
       publishProduct !== null &&
       publishProduct !== undefined &&
       Object.keys(publishProduct).length &&
-      viewDoc
+      viewDoc == "CSV"
     ) {
       const csvdata = csvmaker(publishProduct);
+
       download(csvdata);
       // console.log("publishProduct", publishProduct);
-      setViewDoc(false);
+      setViewDoc("");
+    }
+    if (
+      publishProduct &&
+      publishProduct !== null &&
+      publishProduct !== undefined &&
+      Object.keys(publishProduct).length &&
+      viewDoc == "JSON"
+    ) {
+      downloadJsonFile(publishProduct, "ActiveProductExport.json");
+      setViewDoc("");
     }
   }, [publishProduct]);
   return (
@@ -149,42 +174,73 @@ const ActiveProducts = () => {
               <Typography variant="h7" className={styles.main_title}>
                 Active Products
               </Typography>
-              {/* <a
-                href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                  JSON.parse(JSON.stringify(publishProduct))
-                )}`}
-                download="filename.json"
-              >
-                Download Json
-              </a> */}
-              {selectedItemIds.length > 0 && channel ? (
-                <Button
-                  variant="outlined"
-                  color="success"
-                  component="label"
-                  onClick={() => {
-                    setViewDoc(true);
-                    dispatch(getCatalogPublishApi(selectedItemIds, channel));
-                  }}
-                  disabled={
-                    selectedItemIds.length === 0 && channel.length === 0
-                  }
-                >
-                  Export
-                </Button>
-              ) : (
-                <Button
-                  variant="outlined"
-                  color="success"
-                  component="label"
-                  // onClick={() =>
-                  //   dispatch(getCatalogPublishApi(selectedItemIds, channel))
-                  // }
-                  disabled={selectedItemIds.length === 0 || channel.length == 0}
-                >
-                  Export
-                </Button>
-              )}
+              <Box spacing={2} justifyContent="space-between">
+                {selectedItemIds.length > 0 && channel ? (
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    onClick={() => {
+                      setViewDoc("JSON");
+                      dispatch(
+                        getCatalogPublishApi("JSON", selectedItemIds, channel)
+                      );
+                    }}
+                    disabled={
+                      selectedItemIds.length === 0 && channel.length === 0
+                    }
+                  >
+                    Export JSON
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    // onClick={() =>
+                    //   dispatch(getCatalogPublishApi(selectedItemIds, channel))
+                    // }
+                    disabled={
+                      selectedItemIds.length === 0 || channel.length == 0
+                    }
+                  >
+                    Export JSON
+                  </Button>
+                )}
+
+                {selectedItemIds.length > 0 && channel ? (
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    onClick={() => {
+                      setViewDoc("CSV");
+                      dispatch(
+                        getCatalogPublishApi("CSV", selectedItemIds, channel)
+                      );
+                    }}
+                    disabled={
+                      selectedItemIds.length === 0 && channel.length === 0
+                    }
+                  >
+                    Export CSV
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    component="label"
+                    // onClick={() =>
+                    //   dispatch(getCatalogPublishApi(selectedItemIds, channel))
+                    // }
+                    disabled={
+                      selectedItemIds.length === 0 || channel.length == 0
+                    }
+                  >
+                    Export CSV
+                  </Button>
+                )}
+              </Box>
             </Grid>
             <Box style={{ width: "60%", paddingTop: "10px" }}>
               <FormControl style={{ width: "25%" }} variant="standard">

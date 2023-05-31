@@ -1,25 +1,18 @@
 import React, {
-  Fragment,
-  useMemo,
   useState,
   useEffect,
-  useCallback,
-  useRef,
 } from "react";
-import { Edit2, Eye, Search, Download } from "react-feather";
+import { Edit2, Eye } from "react-feather";
 
 import {
   Grid,
   FormControl,
-  FormLabel,
   InputLabel,
-  Input,
   Select,
   Box,
   Card,
   CardContent,
   MenuItem,
-  TextField,
   Button,
   Typography,
 } from "@mui/material";
@@ -30,13 +23,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import Pagination from "@mui/material/Pagination";
-// import Stack from "@mui/material/Stack";
 import styles from "./attribute.module.css";
-import Image from "next/image";
-// import edit from "../../../assets/icons/edit.svg";
-import lens from "../../../assets/icons/lens.svg";
-
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,11 +31,9 @@ import {
   getAttributeListApi,
   getAttributeSetDetailsListApi,
 } from "../../../redux/actions/catalogServiceNew";
-import { getRoleApi, getUserListApi } from "../../../redux/actions/login";
 import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const Attributes = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
@@ -58,19 +43,13 @@ const Attributes = () => {
   const { catagories, loading } = useSelector(
     (state) => state.catalogQueryReducer
   );
-  // console.log("hello 1 catagories", catagories);
+  const { authorities } = useSelector(state => state.loginReducer)
 
   const router = useRouter();
-
-  // console.log("catalogQueryReducer =>>>>>>>>>>>>>catagories", catagories[0].id);
-
   const dispatch = useDispatch();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
-
   const [categoryId, setCategoryId] = useState("");
-  // console.log("hello 2catagories", catagories[0]?.id);
-
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -79,7 +58,6 @@ const Attributes = () => {
     if (categoryId) {
       dispatch(getAttributeListApi(categoryId, currentPage - 1, 10));
     }
-    // dispatch(getRoleApi());
   }, []);
 
   useEffect(() => {
@@ -95,7 +73,6 @@ const Attributes = () => {
     }
   }, [categoryId]);
 
-  // console.log("hello 2catagories", catagories[0]?.id);
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
@@ -121,26 +98,15 @@ const Attributes = () => {
     dispatch(getAttributeSetDetailsListApi(id, 0, 10));
   }
   const categoryHandler = (e) => {
-    // console.log("hello called", e.target.value);
     setCategoryId(e.target.value);
-    // dispatch(getAttributeListApi(e.target.value, currentPage - 1, 5));
   };
 
-  // console.log("hello 4 currentPage", currentPage);
 
   return (
     <>
       <Grid container>
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
-          {/* <Grid item md={4}>
-            <button
-              onClick={() => setShowBrandCreationForm(true)}
-              className={`btn btn-sm ${styles.add_button_text}`}
-            >
-          + Add New
-            </button>
-          </Grid> */}
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
               <Typography variant="h2" className={styles.main_title}>
@@ -154,9 +120,9 @@ const Attributes = () => {
                     color="success"
                     component="label"
                     onClick={() => setShowAttributeAddForm(true)}
+                    disabled={authorities?.ATTRIBUTES == 'r' ? true : false}
                   >
                     ADD NEW
-                    {/* <input hidden accept="image/*" multiple type="file" /> */}
                   </Button>
                 </Box>
               </Box>
@@ -221,13 +187,16 @@ const Attributes = () => {
                           <TableCell align="right">DESCRIPTION</TableCell>
                           <TableCell align="right">PRIORITY SEQUENCE</TableCell>
                           <TableCell align="right">ATTRIBUTES</TableCell>
-                          <TableCell align="right">EDIT</TableCell>
+                          {
+                            authorities?.ATTRIBUTES == 'w' &&
+                            <TableCell align="right">EDIT</TableCell>
+                          }
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {currentRecords &&
-                        currentRecords !== null &&
-                        currentRecords.length > 0 ? (
+                          currentRecords !== null &&
+                          currentRecords.length > 0 ? (
                           currentRecords.map((row, i) => (
                             <TableRow
                               key={row.name}
@@ -248,20 +217,9 @@ const Attributes = () => {
                               <TableCell align="right">
                                 {row.precedence}
                               </TableCell>
-                              {/* <TableCell align="right">
-                            {row?.active === true ? "Active" : "In-Active"}
-                          </TableCell> */}
-                              {/* <div className={styles.div_Actions}> */}
+
                               <TableCell align="right">
                                 <div className="action_center">
-                                  {/* <Image
-                                className="px-2 "
-                                src={lens}
-                                alt="lens"
-                                width={20}
-                                height={20}
-                                onClick={() => handleEdit(row.id)}
-                              /> */}
                                   <Eye
                                     style={{
                                       textAlign: "right",
@@ -272,19 +230,22 @@ const Attributes = () => {
                                   />
                                 </div>
                               </TableCell>
-                              <TableCell align="right">
-                                <div className="action_center">
-                                  <Edit2
-                                    style={{
-                                      textAlign: "right",
-                                      fontSize: "10px",
-                                      color: "#419794",
-                                    }}
-                                    // onClick={() => handleEdit(row.userId)}
-                                  />
-                                </div>
-                              </TableCell>
-                              {/* </div> */}
+
+                              {
+                                authorities?.ATTRIBUTES == 'w' &&
+                                <TableCell align="right">
+                                  <div className="action_center">
+                                    <Edit2
+                                      style={{
+                                        textAlign: "right",
+                                        fontSize: "10px",
+                                        color: "#419794",
+                                      }}
+                                      onClick={() => handleEdit(row.userId)}
+                                    />
+                                  </div>
+                                </TableCell>
+                              }
                             </TableRow>
                           ))
                         ) : (
@@ -295,15 +256,7 @@ const Attributes = () => {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  {/* <Stack spacing={2}> */}
                   <div className={styles.attribute_pagination}>
-                    {/* <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
-                    onChange={handlePaginationChange}
-                  /> */}
                     <Pagination
                       itemClass="page-item"
                       linkClass="page-link"
@@ -317,7 +270,6 @@ const Attributes = () => {
                     />
                   </div>
 
-                  {/* </Stack> */}
                 </CardContent>
               </>
             )}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./channelAddAttributes.module.css";
-
 import { useRouter } from "next/router";
 
 import {
@@ -10,7 +9,9 @@ import {
   Card,
   CardContent,
   Typography,
+  TextField,
 } from "@mui/material";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -18,22 +19,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import Pagination from "@mui/material/Pagination";
-// import Stack from "@mui/material/Stack";
-import Checkbox from "@mui/material/Checkbox";
 import CustomModal from "../../../common/customModal";
 import AddForm from "./AddForm";
-
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { myProfileAPi } from "../../../../redux/actions/login";
-import Pagination from "react-js-pagination";
-
-import {
-  getChannelListApi,
-  channelAttributeApiList,
-} from "../../../../redux/actions/channel";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDispatch, useSelector } from "react-redux";
+import { channelAttributeUpdateApis } from "../../../../redux/actions/channel";
 
 const ChannelAddAttributes = () => {
   const router = useRouter();
@@ -42,18 +37,24 @@ const ChannelAddAttributes = () => {
   const { channelAttribute } = useSelector((state) => {
     return state.channelReducer;
   });
-  const channelName = router.query.channelName;
-  const channelId = router.query.channelId;
-
-  // console.log(channelId, "channelId");
+  const { authorities } = useSelector((state) => state.loginReducer);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [channelAttr, setChannelAttr] = useState();
+  const [stateInput, setStateInput] = useState();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
-  const [attributeAddFormId, setAttributeAddFormId] = useState();
-  // useEffect(() => {
-  // dispatch(myProfileAPi());
-  // }, []);
+  const [checkUpdate, setcheckUpdate] = useState(false);
+
+  const inputChangeHandler = (e) => {
+    setStateInput({
+      ...stateInput,
+      [e.target.name]: e.target.value,
+    });
+    setcheckUpdate(true);
+  };
+
+  console.log(stateInput, "hello stateInput channel");
+
   useEffect(() => {
     if (!channelAttribute?.content?.channelAttributes) {
       return;
@@ -63,41 +64,92 @@ const ChannelAddAttributes = () => {
     const channelAttributes = new Object();
     Object.entries(obj).map(([key, value]) => {
       return Object.entries(value).map(([key, val]) => {
-        // console.log("hello 1", key, val);
         if (key === "attributes") {
           channelAttributes = val;
         }
       });
     });
     setChannelAttr(channelAttributes);
-    // console.log(channelAttributes, "channelAttributes");
   }, [channelAttribute]);
 
-  // console.log(channelAttr, "channelAttr");
-
-  //   const tableData = [];
-
-  //   for (let i = 1; i <= 5; i++) {
-  //     tableData.push({
-  //       attributes: "AirEnabled" + i,
-  //     });
-  //   }
-
   const recordPerPage = 100;
-  //   const totalRecords = 100;
-  //   const pageRange = 5;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = channelAttr;
 
-  //   const handlePaginationChange = (event, value) => {
-  //     setCurrentPage(value);
-  //     dispatch(channelAttributeApiList(router.query.channelName, value - 1, 5));
-  //   };
+  useEffect(() => {
+    if (!channelAttribute?.content?.channelAttributes) {
+      return;
+    }
+    // mapping the master.modelAttributes for input field
+    const obj = channelAttribute?.content?.channelAttributes;
+    const inputState = new Object();
+    Object.entries(obj).map(([key, value]) => {
+      // console.log("heuello iiiiiiiiiiii", key, value);
 
-  const onChangeOfCheckBox = (e, pim) => {
-    console.log(pim, e);
+      value?.attributes.forEach((val) => {
+        // console.log("hello iiiiiiiiiiii", val);
+        inputState[val.attributeId] = val.displayName;
+      });
+    });
+
+    setStateInput(inputState);
+  }, [channelAttribute]);
+
+  const sectionAccordionSetUpRender = () => {
+    if (!channelAttr) {
+      return;
+    }
+    const obj = channelAttr;
+    return channelAttr.map((row, i) => {
+      // console.log("channelAttr", row, i);
+      return inputAllMasterRender(row, i);
+    });
   };
+
+  const updateHandler = () => {
+    //call update apis
+
+    let info = {
+      payload: {
+        ...stateInput,
+      },
+      channelId: router.query.channelId,
+    };
+    // console.log("hello update called", info);
+
+    dispatch(channelAttributeUpdateApis(info));
+    setcheckUpdate(false);
+  };
+  const inputAllMasterRender = (sectionItem, index) => {
+    return (
+      <>
+        <Grid
+          md={4}
+          key={index}
+          className={styles.inputAllMasterRender_Text_Field}
+        >
+          <TextField
+            id="outlined-basic"
+            // label={sectionItem.displayName}
+            variant="outlined"
+            name={sectionItem.attributeId}
+            value={getInputValue(sectionItem.attributeId)}
+            onChange={inputChangeHandler}
+            // disabled={sectionItem.accessRole !== role ? true : false}
+          />
+        </Grid>
+      </>
+    );
+  };
+  const getInputValue = (attributeId) => {
+    try {
+      return stateInput[attributeId];
+    } catch (error) {
+      return "";
+    }
+  };
+
   return (
     <>
       <Grid container spacing={0}>
@@ -108,20 +160,34 @@ const ChannelAddAttributes = () => {
               <Typography variant="h2" className={styles.main_title}>
                 {router.query.channelName} Attributes
               </Typography>
-              <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                onClick={() => setShowAttributeAddForm(true)}
-              >
-                Add New
-                {/* <input hidden accept="image/*" multiple type="file" /> */}
-              </Button>
+              <Box>
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component="label"
+                  className={styles.buttonAdd_channelAtt}
+                  onClick={() => setShowAttributeAddForm(true)}
+                  disabled={
+                    authorities?.CHANNELS == "r" || checkUpdate ? true : false
+                  }
+                >
+                  Add New
+                </Button>
+
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component="label"
+                  onClick={updateHandler}
+                  disabled={!checkUpdate}
+                >
+                  Update
+                </Button>
+              </Box>
               <CustomModal
                 openModal={showAttributeAddForm}
                 closeModal={() => {
                   setShowAttributeAddForm(!showAttributeAddForm);
-                  // setAttributeAddFormId(router.query.channelId);
                 }}
                 body={
                   <AddForm
@@ -131,20 +197,28 @@ const ChannelAddAttributes = () => {
                 }
               />
             </Grid>
+
+            {/* <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                <Typography>{router.query.channelName} Attributes</Typography>
+              </AccordionSummary>
+
+              <AccordionDetails> */}
             <CardContent>
+              <Grid container>{sectionAccordionSetUpRender()}</Grid>
+            </CardContent>
+            {/* </AccordionDetails>
+            </Accordion> */}
+            {/* <CardContent>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
                       <TableCell>#</TableCell>
-                      {/* <TableCell align="right">ATTRIBUTE ID</TableCell> */}
-                      {/* <TableCell align="right">DESCRIPTION</TableCell> */}
-                      {/* <TableCell align="right">LAST UPLOADED</TableCell> */}
-                      {/* <TableCell align="right">TOTAL PRODUCT ACTIVE</TableCell> */}
-                      {/* <TableCell align="right">
-                        TOTAL PRODUCT INACTIVE
-                      </TableCell> */}
-                      {/* <TableCell align="right">STATUS</TableCell> */}
                       <TableCell align="right">ATTRIBUTE NAME </TableCell>
                     </TableRow>
                   </TableHead>
@@ -161,9 +235,7 @@ const ChannelAddAttributes = () => {
                         >
                           <TableCell component="th" scope="row">
                             {i + 1 + indexOfFirstRecord}
-                            {/* {row.channelId} */}
                           </TableCell>
-                          {/* <TableCell align="right">{row.attributeId}</TableCell> */}
                           <TableCell align="right">{row.displayName}</TableCell>
 
                           <TableCell align="right"></TableCell>
@@ -177,18 +249,7 @@ const ChannelAddAttributes = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              {/* <Stack spacing={2}>
-                <div className={styles.category_pagination}>
-                  <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
-                    onChange={handlePaginationChange}
-                  />
-                </div> */}
-              {/* </Stack> */}
-            </CardContent>
+            </CardContent> */}
           </Card>
         </Grid>
       </Grid>

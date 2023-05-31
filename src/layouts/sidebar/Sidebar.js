@@ -1,10 +1,6 @@
 import React, {
-  Fragment,
-  useMemo,
   useState,
   useEffect,
-  useCallback,
-  useRef,
 } from "react";
 import NextLink from "next/link";
 import PropTypes from "prop-types";
@@ -13,55 +9,49 @@ import {
   Drawer,
   useMediaQuery,
   List,
-  Link,
-  Button,
-  Typography,
   ListItem,
   ListItemText,
-  Divider,
   Collapse,
   ListItemIcon,
-  // ExpandLess,
-  // ExpandMore,
 } from "@mui/material";
 
-import LogoIcon from "../logo/LogoIcon";
 import Menuitems from "./MenuItems";
 
 import { useRouter } from "next/router";
-import SideBarContent from "./siderBarContent";
 import Image from "next/image";
 import styles from "./sidebar.module.css";
 
-import ProfileDD from "../header/ProfileDD";
-// import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ChevronRight, ChevronDown } from "react-feather";
+import dashboard from "../../../assets/images/ICONS/Dashboard.svg";
+import master from "../../../assets/images/ICONS/Master.svg";
+import products from "../../../assets/images/ICONS/Products.svg";
+import Publish from "../../../assets/images/ICONS/Publish.svg";
+import userManagement from "../../../assets/images/ICONS/UserManagement.svg";
+import upload from "../../../assets/images/ICONS/Upload.svg";
+import media from "../../../assets/images/ICONS/Media.svg";
 
-const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
+const Sidebar = ({ onSidebarClose, isSidebarOpen }) => {
   const [open, setOpen] = React.useState(true);
   const [submenuOpen, setSubmenuOpen] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("");
   const [selectedSubMenu, setSelectedSubMenu] = useState(null);
+  const [dynamicMenu, setDynamicMenu] = useState('')
 
   const { loginReducer } = useSelector((state) => {
     return state;
   });
-  // console.log("loginReducer", loginReducer.userRole);
+  const { authorities } = useSelector(state => state.loginReducer)
 
   const [openSecondLevel, setOpenSecondLevel] = React.useState(true);
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
-  const handleClickSecondLevel = () => {
-    setOpenSecondLevel(!openSecondLevel);
-  };
+  useEffect(() => {
+    if (authorities) {
+      updateDynamicMenu()
+    }
+  }, [authorities])
 
   const handleMenuClick = (title) => {
-    // console.log(title, "hello menu title");
 
     if (title === selectedMenu) {
       setSubmenuOpen(!submenuOpen);
@@ -71,7 +61,6 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
     }
   };
   const handleSubMenuClick = (submenuTitle) => {
-    // console.log(submenuTitle, "hello submenuTitle title");
 
     if (selectedSubMenu === submenuTitle) {
       setSelectedSubMenu(null);
@@ -85,68 +74,287 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   let curl = useRouter();
   const location = curl.pathname;
 
-  // the below role has to be dynamic
-  // const ROLE = ["ADMIN", "R_DRUGS", "KEYMED_MANAGER", "HIPAR", "ONLINE_MASTER"];
-
-  // const filteredMenuItems = Menuitems.filter((item) => {
-  //   const uppercaseTitles = item.title.toUpperCase();
-  //   return ROLES.some(
-  //     (role) =>
-  //       ["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(uppercaseTitles) &&
-  //       role === uppercaseTitles
-  //   );
-  // });
-
   const menuProtected = Menuitems.filter(
     (item) =>
       !["DASHBOARD", "USER MANAGEMENT", "PUBLISH"].includes(
         item.title.toUpperCase()
       )
   );
-  // console.log(menuProtected, "menuProtected");
-  // console.log(Menuitems, "Menuitems");
 
   const filteredMenuItems =
     loginReducer?.userRole === "ADMIN" ? Menuitems : menuProtected;
 
+  const updateDynamicMenu = () => {
+    let menu = []
+
+    if (authorities?.DASHBOARD) {
+      menu.push(
+        {
+          title: "DASHBOARD",
+          icon: dashboard,
+          href: "/dashboard",
+        },
+      )
+    }
+
+    if (authorities?.CATEGORY && authorities?.ATTRIBUTES) {
+      menu.push(
+        {
+          title: "MASTER",
+          icon: master,
+          href: "",
+          list: [
+            {
+              title: "CATEGORIES",
+              href: "/category",
+            },
+            {
+              title: "ATTRIBUTES",
+              href: "/attributes",
+            },
+          ],
+        },
+      )
+    }
+
+    if (authorities?.CATEGORY && !authorities?.ATTRIBUTES) {
+      menu.push(
+        {
+          title: "MASTER",
+          icon: master,
+          href: "",
+          list: [
+            {
+              title: "CATEGORIES",
+              href: "/category",
+            }
+          ],
+        },
+      )
+    }
+
+    if (!authorities?.CATEGORY && authorities?.ATTRIBUTES) {
+      menu.push(
+        {
+          title: "MASTER",
+          icon: master,
+          href: "",
+          list: [
+            {
+              title: "ATTRIBUTES",
+              href: "/attributes",
+            },
+          ],
+        },
+      )
+    }
+
+    if (authorities?.FORMATION && authorities?.ACTIVE_PRODUCTS) {
+      menu.push(
+        {
+          title: "PRODUCTS",
+          icon: products,
+          href: "#",
+          list: [
+            {
+              title: "FORMATION",
+              href: "/allProducts",
+            },
+            {
+              title: "ACTIVE PRODUCTS",
+              href: "/activeProducts",
+            },
+          ],
+        },
+      )
+    }
+
+    if (authorities?.FORMATION && !authorities?.ACTIVE_PRODUCTS) {
+      menu.push(
+        {
+          title: "PRODUCTS",
+          icon: products,
+          href: "#",
+          list: [
+            {
+              title: "FORMATION",
+              href: "/allProducts",
+            }
+          ],
+        },
+      )
+    }
+
+    if (!authorities?.FORMATION && authorities?.ACTIVE_PRODUCTS) {
+      menu.push(
+        {
+          title: "PRODUCTS",
+          icon: products,
+          href: "#",
+          list: [
+            {
+              title: "ACTIVE PRODUCTS",
+              href: "/activeProducts",
+            }
+          ],
+        },
+      )
+    }
+
+    if (authorities?.CHANNELS && authorities?.ATTRIBUTE_MAPPING) {
+      menu.push(
+        {
+          title: "PUBLISH",
+          icon: Publish,
+          href: "#",
+          list: [
+            {
+              title: "CHANNELS",
+              href: "/channels",
+            },
+            {
+              title: "ATTRIBUTES MAPPING",
+              href: "/channelAttributes",
+            },
+          ],
+        }
+      )
+    }
+
+    if (authorities?.CHANNELS && !authorities?.ATTRIBUTE_MAPPING) {
+      menu.push(
+        {
+          title: "PUBLISH",
+          icon: Publish,
+          href: "#",
+          list: [
+            {
+              title: "CHANNELS",
+              href: "/channels",
+            }
+          ],
+        }
+      )
+    }
+
+    if (!authorities?.CHANNELS && authorities?.ATTRIBUTE_MAPPING) {
+      menu.push(
+        {
+          title: "PUBLISH",
+          icon: Publish,
+          href: "#",
+          list: [
+            {
+              title: "ATTRIBUTES MAPPING",
+              href: "/channelAttributes",
+            }
+          ],
+        }
+      )
+    }
+
+    if (authorities?.ROLES && authorities?.USERS) {
+      menu.push(
+        {
+          title: "USER MANAGEMENT",
+          icon: userManagement,
+          href: "#",
+          list: [
+            {
+              title: "ROLES",
+              href: "/roles",
+            },
+            {
+              title: "USERS",
+              href: "/userManagement",
+            },
+          ],
+        }
+      )
+    }
+    if (authorities?.ROLES && !authorities?.USERS) {
+      menu.push(
+        {
+          title: "USER MANAGEMENT",
+          icon: userManagement,
+          href: "#",
+          list: [
+            {
+              title: "ROLES",
+              href: "/roles",
+            }
+          ],
+        }
+      )
+    }
+
+    if (!authorities?.ROLES && authorities?.USERS) {
+      menu.push(
+        {
+          title: "USER MANAGEMENT",
+          icon: userManagement,
+          href: "#",
+          list: [
+            {
+              title: "USERS",
+              href: "/userManagement",
+            }
+          ],
+        }
+      )
+    }
+
+    if (authorities?.BULK_UPLOAD) {
+      menu.push(
+        {
+          title: "BULK UPLOAD",
+          icon: upload,
+          href: "/bulkUpload",
+        },
+      )
+    }
+
+    if (authorities?.MEDIA) {
+      menu.push(
+        {
+          title: "MEDIA",
+          icon: media,
+          href: "/media",
+        }
+      )
+    }
+    setDynamicMenu(menu)
+  }
+
   const SidebarContent = (
     <Box p={5} height="100%" className={styles.bg_color}>
-      <div>{/* <ProfileDD /> */}</div>
+      <div></div>
 
       <Box mt={2}>
         <div className={styles.roots}>
           <List>
-            {filteredMenuItems.map((menuitem, index) => {
-              // console.log("menuIiem", menuitem);
+            {dynamicMenu && dynamicMenu.map((menuitem, index) => {
               return (
                 <div style={{ marginTop: 10 }} key={index}>
                   <List component="li" disablePadding>
                     <NextLink href={menuitem.href}>
                       <ListItem
-                        // button
                         onClick={() => handleMenuClick(menuitem.title)}
-                        // onClick={() => handleClick(index)}
-                        // button
                         selected={location === menuitem.href}
                         sx={{
                           mb: 1,
                           pl: 0,
                           ...(location === menuitem.href && {
                             color: "#419794",
-                            // backgroundColor: (theme) =>
-                            //   `${theme.palette.primary.main}!important`,
                           }),
                         }}
                       >
                         <ListItemIcon>
-                          {/* <img src={menuitem.icon} alt={menuitem.title} /> */}
                           <Image
-                            // className="px-2 "
                             src={menuitem.icon}
                             alt="edit"
                             width={20}
                             height={20}
-                            // onClick={()=>handleEdit(item.brandId)}
                           />
                         </ListItemIcon>
                         <ListItemText
@@ -154,10 +362,9 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                           className={styles.text_menu}
                         />
                         {submenuOpen &&
-                        menuitem.title === selectedMenu &&
-                        menuitem.list ? (
+                          menuitem.title === selectedMenu &&
+                          menuitem.list ? (
                           <>
-                            {/* <KeyboardArrowUpIcon /> */}
 
                             <ChevronDown
                               icon="chevron-down"
@@ -196,9 +403,6 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                                 sx={{
                                   mb: 1,
                                   ...(location === submenu.href && {
-                                    color: "#419794",
-                                    // backgroundColor: (theme) =>
-                                    //   `${theme.palette.primary.main}!important`,
                                   }),
                                 }}
                                 onClick={() =>
@@ -206,8 +410,6 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                                 }
                               >
                                 <ListItemIcon>
-                                  {/* <ChevronRightIcon />
-                                   */}
                                   <ChevronRight
                                     icon="chevron-right"
                                     width="25"
@@ -232,9 +434,10 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
           </List>
         </div>
       </Box>
-      <div className="copyright_block">
+      {/* <div className="copyright_block">
         <p className="copyright_txt">All copyrights reserved, 2023 @ APOLLO</p>
-      </div>
+      // </div> */}
+      {/* Its working  */}
     </Box>
   );
   if (lgUp) {

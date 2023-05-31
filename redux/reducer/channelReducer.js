@@ -24,6 +24,9 @@ import {
   GET_CHANNEL_BYID_DATA_LOADING,
   GET_CHANNEL_BYID_DATA_SUCCESS,
   GET_CHANNEL_BYID_DATA_FAILURE,
+  CHANNEL_ATTRIBUTE_UPDATE_DATA_LOADING,
+  CHANNEL_ATTRIBUTE_UPDATE_DATA_SUCCESS,
+  CHANNEL_ATTRIBUTE_UPDATE_DATA_FAILURE,
 } from "../types/types";
 const initialState = {
   loading: false,
@@ -38,6 +41,7 @@ const initialState = {
   masterAttribute: [],
   channelUpdate: {},
   channelById:{},
+  updateChannelAttribute: {},
 };
 const channelReducer = (state = initialState, action) => {
   // console.log("hello CHANNEL reducer called",action)
@@ -204,6 +208,25 @@ const channelReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
+    case CHANNEL_ATTRIBUTE_UPDATE_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CHANNEL_ATTRIBUTE_UPDATE_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updateChannelAttribute: action.payload,
+        error: {},
+      };
+    case CHANNEL_ATTRIBUTE_UPDATE_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        updateChannelAttribute: [],
+        error: action.payload,
+      };
 
     default:
       return state;
