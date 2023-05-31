@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,11 +6,7 @@ import styles from "./category.module.css";
 
 import { Button, Card, CardContent, Typography } from "@mui/material";
 
-import {
-  Grid,
-  TextField,
-  Box,
-} from "@mui/material";
+import { Grid, TextField, Box } from "@mui/material";
 
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -33,7 +26,7 @@ const Category = () => {
   const { categoryList } = useSelector(
     (state) => state.catalogServiceNewReducer
   );
-  const { authorities } = useSelector(state => state.loginReducer)
+  const { authorities } = useSelector((state) => state.loginReducer);
 
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -44,7 +37,6 @@ const Category = () => {
 
   const [nameError, setNameError] = useState(false);
   const [descError, setDescError] = useState(false);
-
 
   useEffect(() => {
     dispatch(getCategoriesApi());
@@ -257,7 +249,7 @@ const Category = () => {
                 color="success"
                 component="label"
                 onClick={addNewBtn}
-                disabled={authorities?.CATEGORY == 'r' ? true : false}
+                disabled={authorities?.CATEGORY == "r" ? true : false}
               >
                 ADD NEW
               </Button>
@@ -293,15 +285,21 @@ const Category = () => {
               <CardContent>
                 {selectedNodeId && showAddForm ? (
                   <>
-                    <div className={styles.add_title}> Add Sub Category</div>
+                    <div className={styles.catergory_add_title}>
+                      Add Sub Category
+                    </div>
                   </>
                 ) : selectedNodeId && !showAddForm ? (
                   <>
-                    <div className={styles.add_title}> Update Category</div>
+                    <div className={styles.catergory_add_title}>
+                      Update Category
+                    </div>
                   </>
                 ) : (
                   <>
-                    <div className={styles.add_title}> Add Category</div>
+                    <div className={styles.catergory_add_title}>
+                      Add Category
+                    </div>
                   </>
                 )}
 
@@ -316,7 +314,7 @@ const Category = () => {
                         value={name}
                         onChange={nameHandler}
                         fullWidth
-                        disabled={authorities?.CATEGORY == 'r' ? true : false}
+                        disabled={authorities?.CATEGORY == "r" ? true : false}
                       />
                       {nameError ? (
                         <p style={{ color: "red" }}>** Please enter name</p>
@@ -368,7 +366,13 @@ const Category = () => {
                         onChange={descHandler}
                         multiline
                         rows={3}
-                        disabled={authorities?.CATEGORY == 'r' ? true : selectedNodeId?.length > 0 ? true : false}
+                        disabled={
+                          authorities?.CATEGORY == "r"
+                            ? true
+                            : selectedNodeId?.length > 0
+                            ? true
+                            : false
+                        }
                       />
                       {descError ? (
                         <p style={{ color: "red" }}>
@@ -388,7 +392,7 @@ const Category = () => {
                         onClick={cancelToNewAdd}
                         variant="outlined"
                         color="secondary"
-                        disabled={authorities?.CATEGORY == 'r' ? true : false}
+                        disabled={authorities?.CATEGORY == "r" ? true : false}
                       >
                         CANCEL
                       </Button>
@@ -398,7 +402,7 @@ const Category = () => {
                         onClick={submitHandler}
                         type="submit"
                         color="success"
-                        disabled={authorities?.CATEGORY == 'r' ? true : false}
+                        disabled={authorities?.CATEGORY == "r" ? true : false}
                       >
                         Submit
                       </Button>
