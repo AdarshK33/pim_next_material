@@ -5,10 +5,13 @@ import { useRouter } from "next/router";
 import {
   Grid,
   Button,
+  Box,
   Card,
   CardContent,
   Typography,
+  TextField,
 } from "@mui/material";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -20,20 +23,37 @@ import CustomModal from "../../../common/customModal";
 import AddForm from "./AddForm";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector } from "react-redux";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useDispatch, useSelector } from "react-redux";
+import { channelAttributeUpdateApis } from "../../../../redux/actions/channel";
 
 const ChannelAddAttributes = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { channelAttribute } = useSelector((state) => {
     return state.channelReducer;
   });
-  const { authorities } = useSelector(state => state.loginReducer)
-
+  const { authorities } = useSelector((state) => state.loginReducer);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [channelAttr, setChannelAttr] = useState();
+  const [stateInput, setStateInput] = useState();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
+  const [checkUpdate, setcheckUpdate] = useState(false);
+
+  const inputChangeHandler = (e) => {
+    setStateInput({
+      ...stateInput,
+      [e.target.name]: e.target.value,
+    });
+    setcheckUpdate(true);
+  };
+
+  console.log(stateInput, "hello stateInput channel");
 
   useEffect(() => {
     if (!channelAttribute?.content?.channelAttributes) {
@@ -57,6 +77,79 @@ const ChannelAddAttributes = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords = channelAttr;
 
+  useEffect(() => {
+    if (!channelAttribute?.content?.channelAttributes) {
+      return;
+    }
+    // mapping the master.modelAttributes for input field
+    const obj = channelAttribute?.content?.channelAttributes;
+    const inputState = new Object();
+    Object.entries(obj).map(([key, value]) => {
+      // console.log("heuello iiiiiiiiiiii", key, value);
+
+      value?.attributes.forEach((val) => {
+        // console.log("hello iiiiiiiiiiii", val);
+        inputState[val.attributeId] = val.displayName;
+      });
+    });
+
+    setStateInput(inputState);
+  }, [channelAttribute]);
+
+  const sectionAccordionSetUpRender = () => {
+    if (!channelAttr) {
+      return;
+    }
+    const obj = channelAttr;
+    return channelAttr.map((row, i) => {
+      // console.log("channelAttr", row, i);
+      return inputAllMasterRender(row, i);
+    });
+  };
+
+  const updateHandler = () => {
+    //call update apis
+
+    let info = {
+      payload: {
+        ...stateInput,
+      },
+      channelId: router.query.channelId,
+    };
+    // console.log("hello update called", info);
+
+    dispatch(channelAttributeUpdateApis(info));
+    setcheckUpdate(false);
+  };
+  const inputAllMasterRender = (sectionItem, index) => {
+    return (
+      <>
+        <Grid
+          md={4}
+          key={index}
+          className={styles.inputAllMasterRender_Text_Field}
+        >
+          <TextField
+            id="outlined-basic"
+            // label={sectionItem.displayName}
+            variant="outlined"
+            name={sectionItem.attributeId}
+            value={getInputValue(sectionItem.attributeId)}
+            onChange={inputChangeHandler}
+            // disabled={sectionItem.accessRole !== role ? true : false}
+          />
+        </Grid>
+      </>
+    );
+  };
+  const getInputValue = (attributeId) => {
+    try {
+      return stateInput[attributeId];
+    } catch (error) {
+      return "";
+    }
+  };
+
   return (
     <>
       <Grid container spacing={0}>
@@ -67,15 +160,30 @@ const ChannelAddAttributes = () => {
               <Typography variant="h2" className={styles.main_title}>
                 {router.query.channelName} Attributes
               </Typography>
-              <Button
-                variant="outlined"
-                color="success"
-                component="label"
-                onClick={() => setShowAttributeAddForm(true)}
-                disabled={authorities?.CHANNELS == 'r' ? true : false}
-              >
-                Add New
-              </Button>
+              <Box>
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component="label"
+                  className={styles.buttonAdd_channelAtt}
+                  onClick={() => setShowAttributeAddForm(true)}
+                  disabled={
+                    authorities?.CHANNELS == "r" || checkUpdate ? true : false
+                  }
+                >
+                  Add New
+                </Button>
+
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component="label"
+                  onClick={updateHandler}
+                  disabled={!checkUpdate}
+                >
+                  Update
+                </Button>
+              </Box>
               <CustomModal
                 openModal={showAttributeAddForm}
                 closeModal={() => {
@@ -89,7 +197,23 @@ const ChannelAddAttributes = () => {
                 }
               />
             </Grid>
+
+            {/* <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                <Typography>{router.query.channelName} Attributes</Typography>
+              </AccordionSummary>
+
+              <AccordionDetails> */}
             <CardContent>
+              <Grid container>{sectionAccordionSetUpRender()}</Grid>
+            </CardContent>
+            {/* </AccordionDetails>
+            </Accordion> */}
+            {/* <CardContent>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
@@ -100,8 +224,8 @@ const ChannelAddAttributes = () => {
                   </TableHead>
                   <TableBody>
                     {currentRecords &&
-                      currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
                       currentRecords.map((row, i) => (
                         <TableRow
                           key={row.name}
@@ -125,7 +249,7 @@ const ChannelAddAttributes = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-            </CardContent>
+            </CardContent> */}
           </Card>
         </Grid>
       </Grid>

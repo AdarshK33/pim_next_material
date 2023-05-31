@@ -1,12 +1,5 @@
-import React, {
-  useState
-} from "react";
-import {
-  Grid,
-  Button,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Grid, Button, CardContent, Typography, Card } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -82,7 +75,7 @@ const AttributeSetDetails = () => {
                 color="success"
                 component="label"
                 onClick={() => setShowAttributeAddForm(true)}
-                disabled={authorities?.ATTRIBUTES == 'r' ? true : false}
+                disabled={authorities?.ATTRIBUTES == "r" ? true : false}
               >
                 Add New
               </Button>
@@ -125,13 +118,12 @@ const AttributeSetDetails = () => {
                         <TableCell align="right">MANDATORY</TableCell>
 
                         <TableCell align="right">STATUS</TableCell>
-
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {currentRecords &&
-                        currentRecords !== null &&
-                        currentRecords.length > 0 ? (
+                      currentRecords !== null &&
+                      currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}

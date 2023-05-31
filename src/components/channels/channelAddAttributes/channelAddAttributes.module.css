@@ -80,3 +80,10 @@
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;
 }
+
+.inputAllMasterRender_Text_Field {
+  margin-bottom: 10px !important;
+}
+.buttonAdd_channelAtt {
+  margin-right: 10px !important;
+}

@@ -20,7 +20,10 @@ import {
   CREATE_CHANNEL_ATTRIBUTE_DATA_FAILURE,
   ADD_MASTER_ATTRIBUTE_LOADING,
   ADD_MASTER_ATTRIBUTE_SUCCESS,
-  ADD_MASTER_ATTRIBUTE_FAILURE
+  ADD_MASTER_ATTRIBUTE_FAILURE,
+  CHANNEL_ATTRIBUTE_UPDATE_DATA_LOADING,
+  CHANNEL_ATTRIBUTE_UPDATE_DATA_SUCCESS,
+  CHANNEL_ATTRIBUTE_UPDATE_DATA_FAILURE,
 } from "../types/types";
 import { client } from "../../utils/axios";
 import { toast } from "react-toastify";
@@ -143,26 +146,45 @@ export const createChannelAttributesDataFailure = (error) => {
   };
 };
 
-
 export const addMasterAttributeLoading = () => {
   return {
     type: ADD_MASTER_ATTRIBUTE_LOADING,
-  }
-}
+  };
+};
 
 export const addMasterAttributeSuccess = (data) => {
   return {
     type: ADD_MASTER_ATTRIBUTE_SUCCESS,
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 export const addMasterAttributesFailure = (err) => {
   return {
     type: ADD_MASTER_ATTRIBUTE_FAILURE,
-    payload: err
-  }
-}
+    payload: err,
+  };
+};
+
+export const updateChannelAttributeLoading = () => {
+  return {
+    type: CHANNEL_ATTRIBUTE_UPDATE_DATA_LOADING,
+  };
+};
+
+export const updateChannelAttributeSuccess = (data) => {
+  return {
+    type: CHANNEL_ATTRIBUTE_UPDATE_DATA_SUCCESS,
+    payload: data,
+  };
+};
+
+export const updateChannelAttributesFailure = (err) => {
+  return {
+    type: CHANNEL_ATTRIBUTE_UPDATE_DATA_FAILURE,
+    payload: err,
+  };
+};
 
 export const createChannelApi = (data) => {
   return (dispatch) => {
@@ -291,11 +313,11 @@ export const channelAttributeApiList = (
 };
 
 export const channelMappingApi = (channel, data) => {
-  console.log("data inside mapping", channel, data)
+  console.log("data inside mapping", channel, data);
   const dataObj = {
     channelName: channel,
-    attributesData: data
-  }
+    attributesData: data,
+  };
   return (dispatch) => {
     dispatch(channelMappingLoading("loading...", "channel"));
     client
@@ -340,26 +362,59 @@ export const createChannelAttributesApi = (info) => {
   };
 };
 
-
 export const addmasterAttributeApi = (id, item) => {
-  console.log("item in addmasterattribute", id, item)
+  console.log("item in addmasterattribute", id, item);
   const data = {
     id: id,
-    item: item
-  }
-  console.log("data in addMasterAttribute", data)
+    item: item,
+  };
+  console.log("data in addMasterAttribute", data);
   return (dispatch) => {
     dispatch(addMasterAttributeLoading("...Attributes", "Masters"));
     client
       .post(`/api/catalogServiceNew/addMasterAttribute`, data)
-      .then(response => {
-        dispatch(addMasterAttributeSuccess(response.data))
-        toast.success('Attribute added successfully')
+      .then((response) => {
+        dispatch(addMasterAttributeSuccess(response.data));
+        toast.success("Attribute added successfully");
       })
-      .catch(err => {
-        dispatch(addMasterAttributesFailure(err))
-        toast.error('Attribute Failed!!!')
-      })
+      .catch((err) => {
+        dispatch(addMasterAttributesFailure(err));
+        toast.error("Attribute Failed!!!");
+      });
+  };
+};
 
-  }
-}
+export const channelAttributeUpdateApis = (data) => {
+  return (dispatch) => {
+    dispatch(updateChannelAttributeLoading("STATUS....", "STATUS"));
+    client
+      .post("/api/channel/updateAttribute", data)
+      .then((response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          dispatch(
+            updateChannelAttributeSuccess(
+              response.data,
+              " status Successfully",
+              "status UPDATE"
+            )
+          );
+          toast.info("Channel attribute updated successfully !!!");
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        toast.error("Channel attribute updated failed!!!");
+        console.log(
+          "error caught in -> actions/channel/channelAttributeUpdateApis",
+          err
+        );
+        dispatch(
+          updateChannelAttributesFailure(
+            err,
+            "Something went wrong",
+            "Channel UPDATE"
+          )
+        );
+      });
+  };
+};

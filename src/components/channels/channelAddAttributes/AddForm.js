@@ -119,7 +119,7 @@ function AddForm({ classModal, dataID }) {
           <Grid item xs={12}>
             <TextField
               id="outlined-name"
-              label="KeyName"
+              label="DisplayName"
               type="text"
               variant="standard"
               fullWidth
