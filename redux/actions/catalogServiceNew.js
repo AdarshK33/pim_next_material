@@ -514,7 +514,9 @@ export const addCategoryApi = (data) => {
       .then((response) => {
         // console.log(" csdxfsdf", response);
         dispatch(addCategorySuccess(response.data));
+
         toast.info("Category Added Successfully !!!");
+        dispatch(getCategoriesListApi());
       })
       .catch((err) => {
         toast.error("Category  failed!!!");
@@ -782,7 +784,7 @@ export const updateCategoryApis = (data) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
           toast.info("Category updated successfully !!!");
-
+          dispatch(getCategoriesListApi());
           dispatch(
             categoryUpdateDataSuccess(
               response.data,

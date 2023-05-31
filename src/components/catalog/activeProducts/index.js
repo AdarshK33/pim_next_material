@@ -271,7 +271,7 @@ const ActiveProducts = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      {/* <TableCell> </TableCell> */}
+                      <TableCell>#</TableCell>
                       <TableCell align="right">ITEM ID</TableCell>
                       <TableCell align="right">NAME</TableCell>
                       <TableCell align="right">CATEGORY</TableCell>
