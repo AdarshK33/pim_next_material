@@ -52,7 +52,7 @@ const Media = (props) => {
 
     axios
       .post(
-        `${process.env.CATALOG_NEW_SERVICE_URL}/catalog/${selectItemId}`,
+        `${process.env.CATALOG_NEW_SERVICE_URL}/catalog/media/${selectItemId}`,
         formData,
         {
           headers: {

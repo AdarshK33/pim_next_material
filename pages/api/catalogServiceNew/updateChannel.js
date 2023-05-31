@@ -3,38 +3,30 @@ import withSession from "../../../utils/session";
 
 function handler(req, res) {
   const body = req.body;
-  //   const category = body.category;
+  const id = body.channelId;
+
   const { user: { at = "" } = {}, loggedIn } = req.session;
-  let data = {
-    channelName: body.channelName,
-    description: body.description,
-    isActive: body.isActive,
-  };
   const config = {
-    method: "post",
-    url: `/catalog/create_channel`,
-    // url: `/catalog/createChannel`,
+    method: "patch",
+    url: `/catalog/channel/${id}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
-    data: data,
+    data: body.payload,
   };
-  console.log("saq", config);
-
   catalogServiceNew(config)
     .then((response) => {
-      //   console.log("res1", response);
       if (response.status === 200) {
-        res.status(200).json(response.data);
+        res.status(200).json(response.data.result);
         Promise.resolve();
       }
     })
     .catch((err) => {
       console.log(
-        "error caught in -> pages/api/catalogServiceNew/createchannel.js",
+        "error caught in -> pages/api/catalogServiceNew/updateChannel",
         err
       );
-      if (err?.response?.data) {
+      if (err?.response) {
         const { status = {} } = err?.response;
         res.status(status).json(err.response.data.error + " " + status);
       } else res.status(500).json({ message: "something went wrong" });
