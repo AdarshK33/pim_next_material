@@ -21,6 +21,9 @@ import {
   ADD_MASTER_ATTRIBUTE_LOADING,
   ADD_MASTER_ATTRIBUTE_SUCCESS,
   ADD_MASTER_ATTRIBUTE_FAILURE,
+  GET_CHANNEL_BYID_DATA_LOADING,
+  GET_CHANNEL_BYID_DATA_SUCCESS,
+  GET_CHANNEL_BYID_DATA_FAILURE,
   CHANNEL_ATTRIBUTE_UPDATE_DATA_LOADING,
   CHANNEL_ATTRIBUTE_UPDATE_DATA_SUCCESS,
   CHANNEL_ATTRIBUTE_UPDATE_DATA_FAILURE,
@@ -91,6 +94,27 @@ export const updateChannelDataFailure = (error) => {
     payload: error,
   };
 };
+
+export const getChannelByIdLoading = () => {
+  return {
+    type: GET_CHANNEL_BYID_DATA_LOADING,
+  };
+};
+
+export const getChannelByIdSuccess = (data) => {
+  return {
+    type: GET_CHANNEL_BYID_DATA_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getChannelByIdFailure = (error) => {
+  return {
+    type: GET_CHANNEL_BYID_DATA_FAILURE,
+    payload: error,
+  };
+};
+
 
 export const getChannelAttributeLoading = () => {
   return {
@@ -223,21 +247,19 @@ export const createChannelApi = (data) => {
 //   };
 // };
 
-export const updateChannelApi = (info) => {
-  const data = {
-    channelId: info?.channelId,
-    // channelName: info.channelName,
-    description: info.channelDescription,
-    // countryName: info.countryName,
-    // brandName: info.brandName,
-    // marketplaceName: info.marketplaceName
-  };
-  // console.log("hello  updateChannelApi called",info)
+export const updateChannelApi = (data) => {
+  // const data = {
+  //   // id: info?.channelId,
+  //   channel: info?.channel,
+  //   description: info.description,
+  //   isActive:info.isActive,
+  // };
+  console.log("hello  updateChannelApi called", data);
 
   return (dispatch) => {
-    dispatch(updateChannelDataLoading("Channel....", "Channel"));
+    dispatch(updateChannelDataLoading("Update....", "Channel"));
     client
-      .post("/api/channel/updateChannel", data)
+      .post("/api/catalogServiceNew/updateChannel", data)
       .then((response) => {
         if (response.status === 200) {
           dispatch(
@@ -257,6 +279,29 @@ export const updateChannelApi = (info) => {
             "Channel UPDATE"
           )
         );
+      });
+  };
+};
+
+export const getChannelByIdApi = (channelId) => {
+  const data = {
+    channelId: channelId,
+  };
+
+  return (dispatch) => {
+    dispatch(getChannelByIdLoading("CHANNEL BY ID....", "CHANNEL BY ID"));
+    client
+      .post("/api/catalogServiceNew/getChannelById", data)
+      .then((response) => {
+        // console.log("api response",response)
+        if (response?.status === 200) {
+          // console.log("API SUCCESS2", response.data.result);
+          dispatch(getChannelByIdSuccess(response.data.result));
+        }
+      })
+      .catch((err) => {
+        console.log("actions/onboardQuery/ GET CHANNEL BY ID =>FAILURE", err);
+        dispatch(getChannelByIdFailure(err));
       });
   };
 };
