@@ -17,8 +17,6 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-// import AddFormRevalidate from "./AddFormRevalidate";
-// import AddFormComment from "./AddFormComment";
 
 import {
   productDetailsApi,
@@ -52,7 +50,7 @@ const ProductViewDetails = (props) => {
   const [showRevalidateAddForm, setShowRevalidateAddForm] = useState(false);
   const [attributeSetIdForm, setAttributeSetId] = useState(false);
   const [commentAPICalled, setCommentAPICalled] = useState(false);
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState(0);
 
   const [objectId, setObjectId] = useState("");
 
@@ -65,8 +63,68 @@ const ProductViewDetails = (props) => {
   }, []);
 
   console.log(productPimCodeData, "hello productPimCodeData");
+
+  useEffect(() => {
+    if (!productPimCodeData?.productDetails) {
+      return;
+    }
+    // mapping the master.modelAttributes for input field
+    const obj = productPimCodeData?.productDetails;
+    const inputState = new Object();
+    Object.entries(obj).map(([key, value]) => {
+      value?.attributes.forEach((val) => {
+        inputState[val.keyName] = val.value;
+      });
+    });
+
+    setStateInput(inputState);
+  }, [productPimCodeData]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    console.log(newValue, "newValue");
+  };
+
+  const inputChangeHandler = (e) => {
+    setStateInput({
+      ...stateInput,
+      [e.target.name]: e.target.value,
+    });
+    setcheckUpdate(true);
+  };
+
+  const getInputValue = (keyName) => {
+    try {
+      return stateInput[keyName];
+    } catch (error) {
+      return "";
+    }
+  };
+
+  const sectionAllMasterRender = (value) => {
+    if (!value) {
+      return;
+    }
+    return value.map((val, index) => {
+      return inputAllMasterRender(val, index);
+    });
+  };
+
+  const inputAllMasterRender = (sectionItem, index) => {
+    return (
+      <>
+        <Grid md={4} key={index} className={styles.role_based_Text_Field}>
+          <TextField
+            id="outlined-basic"
+            label={sectionItem.displayName}
+            variant="outlined"
+            name={sectionItem.keyName}
+            value={getInputValue(sectionItem.keyName)}
+            // onChange={inputChangeHandler}
+            disabled={sectionItem.accessRole !== role ? true : false}
+          />
+        </Grid>
+      </>
+    );
   };
   return (
     <>
@@ -243,154 +301,32 @@ const ProductViewDetails = (props) => {
                     onChange={handleChange}
                     aria-label="lab API tabs example"
                   >
-                    {productPimCodeData?.productDetails.map((tab, index) => (
-                      <Tab label={tab.attributeSet} value="1" key={index} />
-                    ))}
-                    {/* <Tab label="Item One" value="1" />
-                    <Tab label="Item Two" value="2" />
-                    <Tab label="Item Three" value="3" />
-                    <Tab label="Item four" value="4" />
-                    <Tab label="Item five" value="5" /> */}
+                    {productPimCodeData?.productDetails !== null &&
+                      productPimCodeData?.productDetails !== undefined &&
+                      Object.keys(productPimCodeData?.productDetails).length &&
+                      productPimCodeData?.productDetails.map((tab, index) => (
+                        <Tab
+                          label={tab.attributeSet}
+                          value={index}
+                          key={index}
+                        />
+                      ))}
+
+                    {/* <Tab label="Item One" value="1" /> */}
+                    {/* <Tab label="Item Two" value="2" />
+                    <Tab label="Item Three" value="3" /> */}
                   </TabList>
                 </Box>
-                <TabPanel value="1">
-                  <Grid container>
-                    <Grid
-                      md={4}
-                      key={"12223"}
-                      className={styles.role_based_Text_Field}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={"sectionItem.displayName"}
-                        variant="outlined"
-                        // name={sectionItem.keyName}
-                        // value={getInputValue(sectionItem.keyName)}
-                        // onChange={inputChangeHandler}
-                        // disabled={sectionItem.accessRole !== role ? true : false}
-                      />
-                    </Grid>
-                    <Grid
-                      md={4}
-                      key={"12223"}
-                      className={styles.role_based_Text_Field}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={"sectionItem.displayName"}
-                        variant="outlined"
-                        // name={sectionItem.keyName}
-                        // value={getInputValue(sectionItem.keyName)}
-                        // onChange={inputChangeHandler}
-                        // disabled={sectionItem.accessRole !== role ? true : false}
-                      />
-                    </Grid>
-                    <Grid
-                      md={4}
-                      key={"12223"}
-                      className={styles.role_based_Text_Field}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={"sectionItem.displayName"}
-                        variant="outlined"
-                        // name={sectionItem.keyName}
-                        // value={getInputValue(sectionItem.keyName)}
-                        // onChange={inputChangeHandler}
-                        // disabled={sectionItem.accessRole !== role ? true : false}
-                      />
-                    </Grid>
-                    <Grid
-                      md={4}
-                      key={"12223"}
-                      className={styles.role_based_Text_Field}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={"sectionItem.displayName"}
-                        variant="outlined"
-                        // name={sectionItem.keyName}
-                        // value={getInputValue(sectionItem.keyName)}
-                        // onChange={inputChangeHandler}
-                        // disabled={sectionItem.accessRole !== role ? true : false}
-                      />
-                    </Grid>
-                  </Grid>
-                </TabPanel>
-                <TabPanel value="2">
-                  <Grid container>
-                    <Grid
-                      md={4}
-                      key={"12223"}
-                      className={styles.role_based_Text_Field}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={"sectionItem.displayName"}
-                        variant="outlined"
-                        // name={sectionItem.keyName}
-                        // value={getInputValue(sectionItem.keyName)}
-                        // onChange={inputChangeHandler}
-                        // disabled={sectionItem.accessRole !== role ? true : false}
-                      />
-                    </Grid>
-                    <Grid
-                      md={4}
-                      key={"12223"}
-                      className={styles.role_based_Text_Field}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={"sectionItem.displayName"}
-                        variant="outlined"
-                        // name={sectionItem.keyName}
-                        // value={getInputValue(sectionItem.keyName)}
-                        // onChange={inputChangeHandler}
-                        // disabled={sectionItem.accessRole !== role ? true : false}
-                      />
-                    </Grid>
-                    <Grid
-                      md={4}
-                      key={"12223"}
-                      className={styles.role_based_Text_Field}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={"sectionItem.displayName"}
-                        variant="outlined"
-                        // name={sectionItem.keyName}
-                        // value={getInputValue(sectionItem.keyName)}
-                        // onChange={inputChangeHandler}
-                        // disabled={sectionItem.accessRole !== role ? true : false}
-                      />
-                    </Grid>
-                    <Grid
-                      md={4}
-                      key={"12223"}
-                      className={styles.role_based_Text_Field}
-                    >
-                      <TextField
-                        id="outlined-basic"
-                        label={"sectionItem.displayName"}
-                        variant="outlined"
-                        // name={sectionItem.keyName}
-                        // value={getInputValue(sectionItem.keyName)}
-                        // onChange={inputChangeHandler}
-                        // disabled={sectionItem.accessRole !== role ? true : false}
-                      />
-                    </Grid>
-                  </Grid>
-                </TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
-                <TabPanel value="1">Item One</TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
-                <TabPanel value="1">Item One</TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
-                <TabPanel value="1">Item One</TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
+                {productPimCodeData?.productDetails !== null &&
+                  productPimCodeData?.productDetails !== undefined &&
+                  Object.keys(productPimCodeData?.productDetails).length &&
+                  productPimCodeData?.productDetails.map((item, i) => (
+                    <TabPanel value={i}>
+                      <Grid container>
+                        {sectionAllMasterRender(item.attributes)}
+                      </Grid>
+                    </TabPanel>
+                  ))}
               </TabContext>
             </Box>
           </Card>
