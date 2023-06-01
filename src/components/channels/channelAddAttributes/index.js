@@ -28,15 +28,21 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDispatch, useSelector } from "react-redux";
-import { channelAttributeUpdateApis } from "../../../../redux/actions/channel";
+import {
+  channelAttributeUpdateApis,
+  channelAttributeApiList,
+  updateChannelAttributeSuccess,
+} from "../../../../redux/actions/channel";
 
 const ChannelAddAttributes = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { channelAttribute } = useSelector((state) => {
+  const { channelAttribute, updateChannelAttribute } = useSelector((state) => {
     return state.channelReducer;
   });
+
+  console.log("updateChannelAttribute", updateChannelAttribute);
   const { authorities } = useSelector((state) => state.loginReducer);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +50,7 @@ const ChannelAddAttributes = () => {
   const [stateInput, setStateInput] = useState();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [checkUpdate, setcheckUpdate] = useState(false);
+  const [enableUpdate, setEnableUpdate] = useState(true);
 
   const inputChangeHandler = (e) => {
     setStateInput({
@@ -53,7 +60,20 @@ const ChannelAddAttributes = () => {
     setcheckUpdate(true);
   };
 
-  console.log(stateInput, "hello stateInput channel");
+  useEffect(() => {
+    dispatch(channelAttributeApiList(router.query.channelName, 0, 5));
+  }, []);
+
+  useEffect(() => {
+    console.log("check :>> ");
+    if (updateChannelAttribute) {
+      dispatch(channelAttributeApiList(router.query.channelName, 0, 5));
+      dispatch(updateChannelAttributeSuccess()); //null
+      setEnableUpdate(true);
+    }
+  }, [updateChannelAttribute]);
+
+  // console.log(stateInput, "hello stateInput channel");
 
   useEffect(() => {
     if (!channelAttribute?.content?.channelAttributes) {
@@ -107,6 +127,17 @@ const ChannelAddAttributes = () => {
     });
   };
 
+  const updateEnableHandler = () => {
+    //call update apis
+    setEnableUpdate(false);
+  };
+
+  const updateCancelHandler = () => {
+    //call update apis
+    setEnableUpdate(true);
+    setcheckUpdate(false);
+    dispatch(channelAttributeApiList(router.query.channelName, 0, 5));
+  };
   const updateHandler = () => {
     //call update apis
 
@@ -121,6 +152,7 @@ const ChannelAddAttributes = () => {
     dispatch(channelAttributeUpdateApis(info));
     setcheckUpdate(false);
   };
+
   const inputAllMasterRender = (sectionItem, index) => {
     return (
       <>
@@ -136,7 +168,7 @@ const ChannelAddAttributes = () => {
             name={sectionItem.attributeId}
             value={getInputValue(sectionItem.attributeId)}
             onChange={inputChangeHandler}
-            // disabled={sectionItem.accessRole !== role ? true : false}
+            disabled={enableUpdate ? true : false}
           />
         </Grid>
       </>
@@ -161,28 +193,56 @@ const ChannelAddAttributes = () => {
                 {router.query.channelName} Attributes
               </Typography>
               <Box>
-                <Button
-                  variant="outlined"
-                  color="success"
-                  component="label"
-                  className={styles.buttonAdd_channelAtt}
-                  onClick={() => setShowAttributeAddForm(true)}
-                  disabled={
-                    authorities?.CHANNELS == "r" || checkUpdate ? true : false
-                  }
-                >
-                  Add New
-                </Button>
+                {enableUpdate ? (
+                  <>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      component="label"
+                      className={styles.buttonAdd_channelAtt}
+                      onClick={() => setShowAttributeAddForm(true)}
+                      disabled={
+                        authorities?.CHANNELS == "r" || checkUpdate
+                          ? true
+                          : false
+                      }
+                    >
+                      Add New
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      component="label"
+                      onClick={updateEnableHandler}
+                      // disabled={}
+                    >
+                      Update
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      component="label"
+                      className={styles.buttonAdd_channelAtt}
+                      onClick={updateCancelHandler}
+                      // disabled={}
+                    >
+                      Cancel
+                    </Button>
 
-                <Button
-                  variant="outlined"
-                  color="success"
-                  component="label"
-                  onClick={updateHandler}
-                  disabled={!checkUpdate}
-                >
-                  Update
-                </Button>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      component="label"
+                      onClick={updateHandler}
+                      disabled={!checkUpdate}
+                    >
+                      Update
+                    </Button>
+                  </>
+                )}
               </Box>
               <CustomModal
                 openModal={showAttributeAddForm}

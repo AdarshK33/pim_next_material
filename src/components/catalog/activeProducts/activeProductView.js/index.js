@@ -38,24 +38,14 @@ import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 const ProductViewDetails = (props) => {
   const { user: { role = "" } = {}, loggedIn } = props.user;
-  const { catalogServiceNewReducer, catalogQueryReducer } = useSelector(
-    (state) => {
-      return state;
-    }
-  );
+  const { productPimCodeData } = useSelector((state) => {
+    return state.catalogServiceNewReducer;
+  });
   const { authorities } = useSelector((state) => {
     return state.loginReducer;
   });
 
   const router = useRouter();
-
-  const CustomWidthTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))({
-    [`& .${tooltipClasses.tooltip}`]: {
-      maxWidth: 500,
-    },
-  });
 
   const dispatch = useDispatch();
 
@@ -70,252 +60,11 @@ const ProductViewDetails = (props) => {
   const [checkUpdate, setcheckUpdate] = useState(false);
   const [updateApiCall, setCallApi] = useState(false);
 
-  // console.log(
-  //   catalogServiceNewReducer?.productPimCodeData,
-  //   "catalogServiceNewReducer?.productPimCodeData"
-  // );
-  const inputChangeHandler = (e) => {
-    setStateInput({
-      ...stateInput,
-      [e.target.name]: e.target.value,
-    });
-    setcheckUpdate(true);
-  };
   useEffect(() => {
     dispatch(productDetailsApi(router.query.PimCodeId));
   }, []);
 
-  useEffect(() => {
-    if (role === "ADMIN" && updateApiCall) {
-      let info = {
-        payload: {
-          "AX MASTER": {
-            ...stateInput,
-          },
-        },
-        modelCode: router.query.PimCodeId,
-      };
-      dispatch(productUpdateApis(info));
-      setCallApi(false);
-    }
-    if (role === "ONLINE_MASTER" && updateApiCall) {
-      let info = {
-        payload: {
-          ONLINEMASTER: {
-            ...stateInput,
-          },
-        },
-        modelCode: router.query.PimCodeId,
-      };
-      dispatch(productUpdateApis(info));
-      setCallApi(false);
-    }
-    if (role === "HIPAR" && updateApiCall) {
-      let info = {
-        payload: {
-          HIPAR: {
-            ...stateInput,
-          },
-        },
-        modelCode: router.query.PimCodeId,
-      };
-      dispatch(productUpdateApis(info));
-      setCallApi(false);
-    }
-    if (role === "R_DRUGS" && updateApiCall) {
-      let info = {
-        payload: {
-          R_DRUGS: {
-            ...stateInput,
-          },
-        },
-        modelCode: router.query.PimCodeId,
-      };
-      dispatch(productUpdateApis(info));
-      setCallApi(false);
-    }
-
-    if (role === "KEYMED_MANAGER" && updateApiCall) {
-      let info = {
-        payload: {
-          KEYMEDMASTER: {
-            ...stateInput,
-          },
-        },
-        modelCode: router.query.PimCodeId,
-      };
-      dispatch(productUpdateApis(info));
-      setCallApi(false);
-    }
-  }, [role, updateApiCall]);
-
-  useEffect(() => {
-    if (!catalogServiceNewReducer?.productPimCodeData?.productDetails) {
-      return;
-    }
-    // mapping the master.modelAttributes for input field
-    const obj = catalogServiceNewReducer?.productPimCodeData?.productDetails;
-    const inputState = new Object();
-    Object.entries(obj).map(([key, value]) => {
-      value?.attributes.forEach((val) => {
-        inputState[val.keyName] = val.value;
-      });
-    });
-
-    setStateInput(inputState);
-  }, [catalogServiceNewReducer?.productPimCodeData]);
-  const getInputValue = (keyName) => {
-    try {
-      return stateInput[keyName];
-    } catch (error) {
-      return "";
-    }
-  };
-
-  const AccordionSetUp = (key, value) => {
-    return (
-      <>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            <Typography
-              onChange={() => {
-                setObjectId(value.attributeSet);
-              }}
-            >
-              {value.attributeSet}
-
-              {value.notification && (
-                <CustomWidthTooltip
-                  title={
-                    value.notification ? (
-                      <>
-                        <Box>This attribute set has pending validation</Box>
-                      </>
-                    ) : (
-                      ""
-                    )
-                  }
-                >
-                  <Button
-                    sx={{ m: 1 }}
-                    style={{
-                      margin: "0px",
-                      padding: "0px",
-                      paddingBottom: "3px",
-                    }}
-                  >
-                    <AlertTriangle
-                      style={{
-                        fontSize: "xx-small",
-                        color: "red",
-                        padding: "3px",
-                      }}
-                    />
-                  </Button>
-                </CustomWidthTooltip>
-              )}
-            </Typography>
-          </AccordionSummary>
-
-          <AccordionDetails>
-            {role === "ADMIN" && router.query.tab == "Ready-for-review" ? (
-              <>
-                <Box className={styles.revalidate_Btn}>
-                  <Button
-                    variant="outlined"
-                    color="danger"
-                    component="label"
-                    onClick={() => {
-                      setShowRevalidateAddForm(true);
-
-                      setAttributeSetId(value.attributeSetId);
-                    }}
-                  >
-                    Revalidate
-                  </Button>
-                </Box>
-                {/* <CustomModal
-                  openModal={showRevalidateAddForm}
-                  closeModal={() => setShowRevalidateAddForm(false)}
-                  body={
-                    <AddFormRevalidate
-                      classModal={() => setShowRevalidateAddForm(false)}
-                      attributeSetIdData={attributeSetIdForm}
-                      revalidateCalled={() => setCommentAPICalled(true)}
-                    />
-                  }
-                /> */}
-              </>
-            ) : role && router.query.tab == "Revalidate" ? (
-              <>
-                <Box className={styles.revalidate_Btn}></Box>
-              </>
-            ) : (
-              <></>
-            )}
-
-            <CardContent>
-              <Grid container>{sectionAllMasterRender(value.attributes)}</Grid>
-            </CardContent>
-          </AccordionDetails>
-        </Accordion>
-      </>
-    );
-  };
-
-  const sectionAllMasterRender = (value) => {
-    if (!value) {
-      return;
-    }
-    return value.map((val, index) => {
-      return inputAllMasterRender(val, index);
-    });
-  };
-
-  const sectionAccordionSetUpRender = () => {
-    if (!catalogServiceNewReducer?.productPimCodeData?.productDetails) {
-      return;
-    }
-    const obj = catalogServiceNewReducer?.productPimCodeData?.productDetails;
-    return Object.entries(obj).map(([key, value]) => {
-      if (key) {
-        return AccordionSetUp(key, value);
-      }
-    });
-  };
-
-  const inputAllMasterRender = (sectionItem, index) => {
-    return (
-      <>
-        <Grid md={4} key={index} className={styles.role_based_Text_Field}>
-          <TextField
-            id="outlined-basic"
-            label={sectionItem.displayName}
-            variant="outlined"
-            name={sectionItem.keyName}
-            value={getInputValue(sectionItem.keyName)}
-            onChange={inputChangeHandler}
-            disabled={sectionItem.accessRole !== role ? true : false}
-          />
-        </Grid>
-      </>
-    );
-  };
-  const activateHandler = () => {
-    let infoData = {
-      pimModelCode: router.query.PimCodeId,
-      status: "ACTIVATED",
-    };
-    dispatch(statusChangedApis(infoData));
-  };
-  const updateHandler = () => {
-    setCallApi(true);
-  };
-
+  console.log(productPimCodeData, "hello productPimCodeData");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -485,11 +234,7 @@ const ProductViewDetails = (props) => {
               </div>
             </Box>
 
-            {/* </Card> */}
-
             {/* details */}
-
-            {/* <Box sx={{ p: 1 }}>{sectionAccordionSetUpRender()}</Box> */}
 
             <Box sx={{ width: "100%", typography: "body1" }}>
               <TabContext value={value}>
@@ -574,7 +319,6 @@ const ProductViewDetails = (props) => {
                   </Grid>
                 </TabPanel>
                 <TabPanel value="2">
-                  {" "}
                   <Grid container>
                     <Grid
                       md={4}

@@ -115,7 +115,6 @@ export const getChannelByIdFailure = (error) => {
   };
 };
 
-
 export const getChannelAttributeLoading = () => {
   return {
     type: GET_CHANNEL_ATTRIBUTE_LOADING,
@@ -435,7 +434,7 @@ export const channelAttributeUpdateApis = (data) => {
     client
       .post("/api/channel/updateAttribute", data)
       .then((response) => {
-        // console.log("rrrrrr",response)
+        // console.log("rrrrrr", response);
         if (response.status === 200) {
           dispatch(
             updateChannelAttributeSuccess(
