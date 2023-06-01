@@ -62,10 +62,10 @@ const Channels = () => {
     dispatch(channelAttributeApiList(channelName, 0, 5));
   };
 
-const handleEdit = (channelId) => {
-  setShowChannnelEditForm(true);
-  dispatch(getChannelByIdApi(channelId));
-}
+  const handleEdit = (channelId) => {
+    setShowChannnelEditForm(true);
+    dispatch(getChannelByIdApi(channelId));
+  };
 
   return (
     <>

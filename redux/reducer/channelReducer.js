@@ -40,7 +40,7 @@ const initialState = {
   channelAttributeCreate: {},
   masterAttribute: [],
   channelUpdate: {},
-  channelById:{},
+  channelById: {},
   updateChannelAttribute: {},
 };
 const channelReducer = (state = initialState, action) => {
@@ -123,26 +123,25 @@ const channelReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
-      case GET_CHANNEL_BYID_DATA_LOADING:
-        return {
-          ...state,
-          loading: true,
-        };
-      case GET_CHANNEL_BYID_DATA_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          channelById: action.payload,
-          error: {},
-        };
-      case GET_CHANNEL_BYID_DATA_FAILURE:
-        return {
-          ...state,
-          loading: false,
-          channelById: [],
-          error: action,
-        };
-  
+    case GET_CHANNEL_BYID_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_CHANNEL_BYID_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        channelById: action.payload,
+        error: {},
+      };
+    case GET_CHANNEL_BYID_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        channelById: [],
+        error: action,
+      };
 
     case CHANNEL_MAPPING_LOADING:
       return {

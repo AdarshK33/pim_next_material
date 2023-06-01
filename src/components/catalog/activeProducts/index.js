@@ -101,7 +101,7 @@ const ActiveProducts = () => {
 
   function handleEdit(PimCodeId) {
     router.push({
-      pathname: "/productDetails",
+      pathname: "/productView",
       query: { PimCodeId: PimCodeId, ActiveProduct: "Active%Products" },
     });
 

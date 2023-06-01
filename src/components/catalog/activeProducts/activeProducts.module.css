@@ -81,3 +81,92 @@
 .activeProductJson_btn {
   margin-right: 10px !important;
 }
+
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<active Product view css>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.main_title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #399996;
+  width: auto;
+  border-bottom: 2px solid #ffcf76;
+}
+
+.sub_title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #399996;
+  width: auto;
+}
+
+.addButton {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.add_title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #399996;
+  width: 100% !important;
+  border-bottom: 2px solid #ffcf76;
+  margin-bottom: 16px;
+}
+
+.revalidate_Btn {
+  display: flex !important;
+  justify-content: end !important;
+}
+
+.role_based_Text_Field {
+  margin-bottom: 10px !important;
+}
+
+.productDetailTitle {
+  color: #419794;
+  font-size: 21px;
+  font-weight: 600;
+  border-bottom: 0.5px solid #434343;
+  width: 100%;
+}
+
+.prodImg {
+  width: 20%;
+  float: left;
+  background-color: blue;
+}
+
+.prodDetailsDiv {
+  width: 80%;
+  float: right;
+  /* background-color: red; */
+  padding: 10px;
+}
+
+.pimCodeId {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.manufacturerDetails {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.manufacturerDetailData {
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.manufactureDiv {
+  display: flex;
+  justify-content: space-between;
+}
+
+.divider {
+  width: 0.1%;
+  border: 1px solid #adacac;
+  margin-top: 1.5rem;
+}
+
+/* <<<<<<<<<<<<<<<<<<<<<<>>>>end                                       >>>>>>>>>>>>>>>>>>>>>>>>>> */
