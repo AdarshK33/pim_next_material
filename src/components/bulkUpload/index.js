@@ -67,28 +67,28 @@ const BulkUpload = (props) => {
       formData.append("file", file);
     });
 
-    // dispatch(bulkUploadApi(formData));
+    dispatch(bulkUploadApi(formData));
 
-    axios
-      .post(
-        `https://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/bulk`,
-        formData,
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${at}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        toast.info("Bulk File uploaded Successfully !!!");
-      })
-      .catch((error) => {
-        toast.error("Bulk File upload Failed !!!");
-        console.log(error);
-      });
+    // axios
+    //   .post(
+    //     `https://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/bulk`,
+    //     formData,
+    //     {
+    //       headers: {
+    //         Accept: "*/*",
+    //         "Content-Type": "multipart/form-data",
+    //         Authorization: `Bearer ${at}`,
+    //       },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     console.log(response);
+    //     toast.info("Bulk File uploaded Successfully !!!");
+    //   })
+    //   .catch((error) => {
+    //     toast.error("Bulk File upload Failed !!!");
+    //     console.log(error);
+    //   });
   };
 
   const tableData = [];

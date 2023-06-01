@@ -415,13 +415,15 @@ export const bulkUploadApi = (data) => {
     uploadClient
       .post("/api/catalogServiceNew/bulkUpload", data)
       .then((response) => {
+        toast.info("Bulk File uploaded Successfully !!!");
+
         console.log("---------bulkUpload------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
         dispatch(
           bulkUploadDataSuccess("bulkUpload Successfully", "bulkUpload ")
         ); // } else throw new Error("");
       })
       .catch((err) => {
-        // toast.error("User Data Not Found!!!");
+        toast.error("Bulk File upload Failed !!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/BulkUploadApi",
           err
