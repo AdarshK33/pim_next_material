@@ -55,6 +55,15 @@ const ProductViewDetails = (props) => {
   const [objectId, setObjectId] = useState("");
 
   const [stateInput, setStateInput] = useState();
+  const [stateAxDetails, setAXStateDetails] = useState();
+  const [stateKeyDetails, setKeyStateDetails] = useState();
+
+  const [stateHiDetails, setHiStateDetails] = useState();
+
+  const [stateRdDetails, setRdStateDetails] = useState();
+
+  const [stateOnDetails, setOnStateDetails] = useState();
+
   const [checkUpdate, setcheckUpdate] = useState(false);
   const [updateApiCall, setCallApi] = useState(false);
 
@@ -63,6 +72,9 @@ const ProductViewDetails = (props) => {
   }, []);
 
   console.log(productPimCodeData, "hello productPimCodeData");
+  console.log(stateAxDetails, "hello stateAxDetails");
+
+  // console.log(stateDetails, "hello stateDetails");
 
   useEffect(() => {
     if (!productPimCodeData?.productDetails) {
@@ -78,6 +90,64 @@ const ProductViewDetails = (props) => {
     });
 
     setStateInput(inputState);
+  }, [productPimCodeData]);
+
+  useEffect(() => {
+    if (!productPimCodeData?.productDetails) {
+      return;
+    }
+    // mapping the master.modelAttributes for input field
+    const obj = productPimCodeData?.productDetails;
+    const inputAxState = new Object();
+    const inputKeyState = new Object();
+    const inputRdState = new Object();
+    const inputHiState = new Object();
+    const inputOnState = new Object();
+
+    Object.entries(obj).map(([key, value]) => {
+      // console.log(value, "kkkkkkkkkkkkkkkk");
+      if (value.attributeSet == "AX MASTER") {
+        value?.attributes.forEach((val) => {
+          if (val.keyName == "MANUFACTURER NAME") {
+            inputAxState = val.value;
+          }
+        });
+      }
+      if (value.attributeSet == "KEYMEDMASTER") {
+        value?.attributes.forEach((val) => {
+          if (val.keyName == "ITEM ID") {
+            inputKeyState = val.value;
+          }
+        });
+      }
+      if (value.attributeSet == "R_DRUGS") {
+        value?.attributes.forEach((val) => {
+          if (val.keyName == "COMPOSITION") {
+            inputRdState = val.value;
+          }
+        });
+      }
+      if (value.attributeSet == "HIPAR") {
+        value?.attributes.forEach((val) => {
+          if (val.keyName == "ITEM ID") {
+            inputHiState = val.value;
+          }
+        });
+      }
+      if (value.attributeSet == "ONLINEMASTER") {
+        value?.attributes.forEach((val) => {
+          if (val.keyName == "status") {
+            inputOnState = val.value;
+          }
+        });
+      }
+    });
+
+    setAXStateDetails(inputAxState);
+    setKeyStateDetails(inputKeyState);
+    setRdStateDetails(inputRdState);
+    setHiStateDetails(inputHiState);
+    setOnStateDetails(inputOnState);
   }, [productPimCodeData]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -158,7 +228,7 @@ const ProductViewDetails = (props) => {
                         Manufacturer/Marketer
                       </h3>
                       <h3 className={styles.manufacturerDetailData}>
-                        APEX LABORATORIES PVT LTD
+                        {stateAxDetails}
                       </h3>
                     </div>
                     <div>
@@ -174,7 +244,7 @@ const ProductViewDetails = (props) => {
                         Manufacturer/Marketer
                       </h3>
                       <h3 className={styles.manufacturerDetailData}>
-                        APEX LABORATORIES PVT LTD
+                        {stateOnDetails}
                       </h3>
                     </div>
                   </div>
@@ -250,7 +320,9 @@ const ProductViewDetails = (props) => {
                       <h3 className={styles.manufacturerDetailHead}>
                         Safety Information
                       </h3>
+
                       <ul>
+                        <li>{stateRdDetails}</li>
                         <li>
                           Helps in strengthening immunity system of the body so
                           that it can fight against infections
