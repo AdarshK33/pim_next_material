@@ -98,46 +98,46 @@ const ProductViewDetails = (props) => {
     }
     // mapping the master.modelAttributes for input field
     const obj = productPimCodeData?.productDetails;
-    const inputAxState = new Object();
-    const inputKeyState = new Object();
-    const inputRdState = new Object();
-    const inputHiState = new Object();
-    const inputOnState = new Object();
+    const inputAxState = [];
+    const inputKeyState = [];
+    const inputRdState = [];
+    const inputHiState = [];
+    const inputOnState = [];
 
     Object.entries(obj).map(([key, value]) => {
       // console.log(value, "kkkkkkkkkkkkkkkk");
       if (value.attributeSet == "AX MASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "MANUFACTURER NAME") {
-            inputAxState = val.value;
+            inputAxState.push(val.value);
           }
         });
       }
       if (value.attributeSet == "KEYMEDMASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "ITEM ID") {
-            inputKeyState = val.value;
+            inputKeyState.push(val.value);
           }
         });
       }
       if (value.attributeSet == "R_DRUGS") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "COMPOSITION") {
-            inputRdState = val.value;
+            inputRdState.push(val.value);
           }
         });
       }
       if (value.attributeSet == "HIPAR") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "ITEM ID") {
-            inputHiState = val.value;
+            inputHiState.push(val.value);
           }
         });
       }
       if (value.attributeSet == "ONLINEMASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "status") {
-            inputOnState = val.value;
+            inputOnState.push(val.value);
           }
         });
       }
