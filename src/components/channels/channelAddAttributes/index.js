@@ -216,7 +216,7 @@ const ChannelAddAttributes = () => {
                       onClick={updateEnableHandler}
                       // disabled={}
                     >
-                      Update
+                      Edit
                     </Button>
                   </>
                 ) : (
@@ -237,7 +237,12 @@ const ChannelAddAttributes = () => {
                       color="success"
                       component="label"
                       onClick={updateHandler}
-                      disabled={!checkUpdate}
+                      // disabled={!checkUpdate}
+                      disabled={
+                        authorities?.CHANNELS == "r" || !checkUpdate
+                          ? true
+                          : false
+                      }
                     >
                       Update
                     </Button>
