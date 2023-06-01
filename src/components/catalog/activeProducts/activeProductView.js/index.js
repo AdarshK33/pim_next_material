@@ -243,15 +243,14 @@ const ProductViewDetails = (props) => {
                     onChange={handleChange}
                     aria-label="lab API tabs example"
                   >
-                    <Tab label="Item One" value="1" />
+                    {productPimCodeData?.productDetails.map((tab, index) => (
+                      <Tab label={tab.attributeSet} value="1" key={index} />
+                    ))}
+                    {/* <Tab label="Item One" value="1" />
                     <Tab label="Item Two" value="2" />
                     <Tab label="Item Three" value="3" />
-                    <Tab label="Item One" value="1" />
-                    <Tab label="Item Two" value="2" />
-                    <Tab label="Item Three" value="3" />
-                    <Tab label="Item One" value="1" />
-                    <Tab label="Item Two" value="2" />
-                    <Tab label="Item Three" value="3" />
+                    <Tab label="Item four" value="4" />
+                    <Tab label="Item five" value="5" /> */}
                   </TabList>
                 </Box>
                 <TabPanel value="1">
