@@ -38,6 +38,9 @@ import {
   CATEGORY_UPDATE_DATA_LOADING,
   CATEGORY_UPDATE_DATA_SUCCESS,
   CATEGORY_UPDATE_DATA_FAILURE,
+  MEDIA_UPLOAD_LOADING,
+  MEDIA_UPLOAD_SUCCESS,
+  MEDIA_UPLOAD_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -55,6 +58,7 @@ const initialState = {
   categoryList: {},
   categoryUpdate: {},
   catagoriesAdd: {},
+  mediaUpload: {},
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
@@ -311,6 +315,26 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         categoryUpdate: [],
+        error: action,
+      };
+
+    case MEDIA_UPLOAD_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case MEDIA_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        mediaUpload: action.payload,
+        error: {},
+      };
+    case MEDIA_UPLOAD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        mediaUpload: [],
         error: action,
       };
 

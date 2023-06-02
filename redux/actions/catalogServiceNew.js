@@ -47,6 +47,9 @@ import {
   CATEGORY_UPDATE_DATA_LOADING,
   CATEGORY_UPDATE_DATA_SUCCESS,
   CATEGORY_UPDATE_DATA_FAILURE,
+  MEDIA_UPLOAD_LOADING,
+  MEDIA_UPLOAD_SUCCESS,
+  MEDIA_UPLOAD_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -338,6 +341,24 @@ export const categoryUpdateDataFailure = (error) => {
   };
 };
 
+export const mediaUploadDataLoading = () => {
+  return {
+    type: MEDIA_UPLOAD_LOADING,
+  };
+};
+export const mediaUploadDataSuccess = (data) => {
+  return {
+    type: MEDIA_UPLOAD_SUCCESS,
+    payload: data,
+  };
+};
+export const mediaUploadDataFailure = (error) => {
+  return {
+    type: MEDIA_UPLOAD_FAILURE,
+    payload: error,
+  };
+};
+
 export const getAttributeListApi = (id, pageNo, pageSize) => {
   const data = {
     id: id,
@@ -415,12 +436,13 @@ export const bulkUploadApi = (data) => {
     uploadClient
       .post("/api/catalogServiceNew/bulkUpload", data)
       .then((response) => {
-        toast.info("Bulk File uploaded Successfully !!!");
+        toast.info("Bulk file uploaded successfully !!!");
 
         console.log("---------bulkUpload------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
         dispatch(
           bulkUploadDataSuccess("bulkUpload Successfully", "bulkUpload ")
         ); // } else throw new Error("");
+        dispatch(getBuilkDetailsListApi(0, 10));
       })
       .catch((err) => {
         console.log(
@@ -434,11 +456,55 @@ export const bulkUploadApi = (data) => {
         if (status == 404) {
           toast.error("Access denied to upload file !!!");
         } else {
-          toast.error("Bulk File upload Failed !!!");
+          toast.error("Bulk file upload failed !!!");
         }
 
         dispatch(
           bulkUploadDataFailure(err, "Something went wrong", "BulkUploadApi")
+        );
+      });
+  };
+};
+
+export const mediaUploadApi = (data) => {
+  // const data = {
+  //   // pim_code: pim_code,
+  //   formData: formData,
+  // };
+  console.log("hello mediaUploadApi called", data);
+  return (dispatch) => {
+    dispatch(mediaUploadDataLoading("BULK....", "UPLOAD"));
+    uploadClient
+      .post("/api/catalogServiceNew/mediaUpload", data)
+      .then((response) => {
+        toast.info("Media file uploaded successfully !!!");
+
+        console.log("---------mediaUpload------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        dispatch(
+          mediaUploadDataSuccess(
+            "Media Upload Successfully",
+            "Media Upload ",
+            response
+          )
+        ); // } else throw new Error("");
+      })
+      .catch((err) => {
+        console.log(
+          "error caught in -> actions/catalogServiceNew/MediaUploadApi",
+          err
+        );
+        const { status = {} } = err?.response;
+        if (status == 409) {
+          toast.error("File already exists !!!");
+        }
+        if (status == 404) {
+          toast.error("Access denied to upload file !!!");
+        } else {
+          toast.error("Media file upload failed !!!");
+        }
+
+        dispatch(
+          mediaUploadDataFailure(err, "Something went wrong", "Media UploadApi")
         );
       });
   };
