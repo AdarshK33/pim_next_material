@@ -147,68 +147,89 @@ const BulkUpload = (props) => {
             </Box>
 
             <Box>
-              {loading === true ? (
-                <div
-                  className="loader-box loader"
-                  style={{ width: "100% !important" }}
-                >
-                  <div className="loader">
-                    <div className="line bg-primary"></div>
-                    <div className="line bg-primary"></div>
-                    <div className="line bg-primary"></div>
-                    <div className="line bg-primary"></div>
-                  </div>
-                </div>
-              ) : (
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>#</TableCell>
-                        <TableCell>FILE NAME</TableCell>
-                        <TableCell>CREATED AT</TableCell>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>#</TableCell>
+                      <TableCell>FILE NAME</TableCell>
+                      <TableCell>CREATED AT</TableCell>
 
-                        <TableCell>CREATED BY</TableCell>
-                        <TableCell align="right">UPDATED BY</TableCell>
-                        {/* <TableCell align="right">PRECEDENCE</TableCell> */}
-                        {/* <TableCell align="right">STATUS</TableCell> */}
-                        {/* <TableCell align="right">ACTION</TableCell> */}
-                      </TableRow>
-                    </TableHead>
+                      <TableCell>CREATED BY</TableCell>
+                      <TableCell align="right">UPDATED BY</TableCell>
+                      {/* <TableCell align="right">PRECEDENCE</TableCell> */}
+                      {/* <TableCell align="right">STATUS</TableCell> */}
+                      {/* <TableCell align="right">ACTION</TableCell> */}
+                    </TableRow>
+                  </TableHead>
+
+                  {loading == true &&
+                  currentRecords !== null &&
+                  currentRecords !== undefined ? (
                     <TableBody>
-                      {currentRecords &&
-                      currentRecords !== null &&
-                      currentRecords.length > 0 ? (
-                        currentRecords.map((row, i) => (
-                          <TableRow
-                            key={i + "rows"}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
+                      <TableRow
+                        key="row"
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <Grid
+                          container
+                          style={{
+                            position: "relative",
+                            left: "330px",
+                          }}
+                        >
+                          <Grid
+                            item
+                            md={12}
+                            style={{ width: "100% !important" }}
                           >
-                            <TableCell component="th" scope="row">
-                              {i + 1 + indexOfFirstRecord}
-                            </TableCell>
-                            <TableCell align="right">{row.fileName}</TableCell>
-                            <TableCell align="right">{row.createdAt}</TableCell>
-                            <TableCell align="right">{row.createdBy}</TableCell>
-                            <TableCell align="right">{row.updatedBy}</TableCell>
-                            {/* <TableCell align="right">{row.status}</TableCell> */}
+                            <Box className="loader">
+                              <Box className="circle"></Box>
+                              <Box className="circle"></Box>
+                              <Box className="circle"></Box>
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      </TableRow>
+                    </TableBody>
+                  ) : currentRecords &&
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
+                    currentRecords.map((row, i) => (
+                      <TableBody>
+                        <TableRow
+                          key={i + "rows"}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {i + 1 + indexOfFirstRecord}
+                          </TableCell>
+                          <TableCell align="right">{row.fileName}</TableCell>
+                          <TableCell align="right">{row.createdAt}</TableCell>
+                          <TableCell align="right">{row.createdBy}</TableCell>
+                          <TableCell align="right">{row.updatedBy}</TableCell>
+                          {/* <TableCell align="right">{row.status}</TableCell> */}
 
-                            {/* <TableCell align="right">
+                          {/* <TableCell align="right">
                             {row?.status === true ? "Active" : "In-Active"}
                           </TableCell> */}
-                          </TableRow>
-                        ))
-                      ) : (
-                        <TableRow>
-                          <TableCell colSpan={12}>No Record Found</TableCell>
                         </TableRow>
-                      )}
+                      </TableBody>
+                    ))
+                  ) : (
+                    <TableBody>
+                      <TableRow>
+                        <TableCell colSpan={12}>No Record Found</TableCell>
+                      </TableRow>
                     </TableBody>
-                  </Table>
-                </TableContainer>
-              )}
+                  )}
+                </Table>
+              </TableContainer>
+
               {/* <Stack spacing={2}> */}
               <div className={styles.bulk_pagination}>
                 <Pagination

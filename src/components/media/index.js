@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllProductListApi,
   getMediaListingApi,
+  mediaUploadApi,
 } from "../../../redux/actions/catalogServiceNew";
 import Autocomplete from "@mui/material/Autocomplete";
 import Table from "@mui/material/Table";
@@ -49,25 +50,28 @@ const Media = (props) => {
     acceptedFiles.forEach((file) => {
       formData.append("file", file);
     });
+    formData.append("id", selectItemId);
 
-    axios
-      .post(
-        `${process.env.CATALOG_NEW_SERVICE_URL}/catalog/media/${selectItemId}`,
-        formData,
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${at}`,
-          },
-        }
-      )
-      .then((response) => {
-        toast.info("media file uploaded Successfully !!!");
-      })
-      .catch((error) => {
-        toast.error("media file upload Failed !!!");
-      });
+    dispatch(mediaUploadApi(formData));
+
+    // axios
+    //   .post(
+    //     `${process.env.CATALOG_NEW_SERVICE_URL}/catalog/media/${selectItemId}`,
+    //     ś,
+    //     {
+    //       headers: {
+    //         Accept: "*/*",
+    //         "Content-Type": "multipart/form-data",
+    //         Authorization: `Bearer ${at}`,
+    //       },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     toast.info("media file uploaded Successfully !!!");
+    //   })
+    //   .catch((error) => {
+    //     toast.error("media file upload Failed !!!");
+    //   });
   };
 
   const onDropNotify = () => {
@@ -142,46 +146,46 @@ const Media = (props) => {
                   />
                 )}
             </Box>
-            {
-              loginReducer?.authorities?.MEDIA == 'w' &&
-                enableUpload ? (
-                <Box className="dropZone-container" >
-                  <Dropzone onDrop={onDrop}>
-                    {({ getRootProps, getInputProps }) => (
-                      <Box
-                        {...getRootProps()}
-                        className="dropzone col-2 p-3 text-end align-self-center d-flex"
-                      >
-                        <input {...getInputProps()} />
-                        { }
-                        <Box className="upload_placeholder upload_blk">
-                          <Box></Box>
-                          <u className="">Upload Image</u>
-                        </Box>
+            {loginReducer?.authorities?.MEDIA == "w" && enableUpload ? (
+              <Box className="dropZone-container">
+                <Dropzone
+                  onDrop={onDrop}
+                  // accept={{ "image/*": [".png", ".jpg", ".jpeg"] }}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <Box
+                      {...getRootProps()}
+                      className="dropzone col-2 p-3 text-end align-self-center d-flex"
+                    >
+                      <input {...getInputProps()} />
+                      {}
+                      <Box className="upload_placeholder upload_blk">
+                        <Box></Box>
+                        <u className="">Upload Image</u>
                       </Box>
-                    )}
-                  </Dropzone>
-                </Box>
-              ) : (
-                <Box className="dropZone-container">
-                  <Dropzone onDrop={onDropNotify}>
-                    {({ getRootProps, getInputProps }) => (
-                      <Box
-                        {...getRootProps()}
-                        className="dropzone col-2 p-3 text-end align-self-center d-flex"
-                      >
-                        <input {...getInputProps()} />
-                        { }
-                        <Box className="upload_placeholder upload_blk">
-                          <Box></Box>
-                          <u className="">Upload Image</u>
-                        </Box>
+                    </Box>
+                  )}
+                </Dropzone>
+              </Box>
+            ) : (
+              <Box className="dropZone-container">
+                <Dropzone onDrop={onDropNotify}>
+                  {({ getRootProps, getInputProps }) => (
+                    <Box
+                      {...getRootProps()}
+                      className="dropzone col-2 p-3 text-end align-self-center d-flex"
+                    >
+                      <input {...getInputProps()} />
+                      {}
+                      <Box className="upload_placeholder upload_blk">
+                        <Box></Box>
+                        <u className="">Upload Image</u>
                       </Box>
-                    )}
-                  </Dropzone>
-                </Box>
-              )
-            }
+                    </Box>
+                  )}
+                </Dropzone>
+              </Box>
+            )}
 
             <Box>
               {loading === true ? (
@@ -211,8 +215,8 @@ const Media = (props) => {
                     </TableHead>
                     <TableBody>
                       {currentRecords &&
-                        currentRecords !== null &&
-                        currentRecords.length > 0 ? (
+                      currentRecords !== null &&
+                      currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}
