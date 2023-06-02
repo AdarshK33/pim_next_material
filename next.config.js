@@ -28,6 +28,9 @@ module.exports = {
     PIMSESSION_TIMEOUT,
   },
   images: {
-    domains: ["ri-brands-pim.s3.ap-south-1.amazonaws.com"],
+    domains: [
+      "ri-brands-pim.s3.ap-south-1.amazonaws.com",
+      "images.unsplash.com",
+    ],
   },
 };

@@ -223,7 +223,7 @@ const ProductViewDetails = (props) => {
                   /> */}
                     <Image
                       className="px-2 "
-                      src="https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/dsx%20cszzc-1685516684125-.png"
+                      src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
                       alt="A description of the image"
                       width={200}
                       height={150}
@@ -235,7 +235,7 @@ const ProductViewDetails = (props) => {
                         <Box>
                           <Image
                             className="px-2 "
-                            src="https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/dsx%20cszzc-1685516684125-.png"
+                            src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
                             alt="A description of the image"
                             width={100}
                             height={100}
@@ -248,7 +248,7 @@ const ProductViewDetails = (props) => {
                         <Box>
                           <Image
                             className="px-2 "
-                            src="https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/dsx%20cszzc-1685516684125-.png"
+                            src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
                             alt="A description of the image"
                             width={100}
                             height={100}
