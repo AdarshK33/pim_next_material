@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../activeProducts.module.css";
 
 import { AlertTriangle } from "react-feather";
+import Image from "next/image";
 
 import {
   Grid,
@@ -213,60 +214,114 @@ const ProductViewDetails = (props) => {
                 </h1>
               </Grid>
 
-              <div style={{ width: "100%" }}>
-                <div className={styles.prodImg}>
-                  <img
+              <Box>
+                <Grid container spacing={2}>
+                  <Grid item xs={3}>
+                    {/* <img
                     src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
                     style={{ width: "100%" }}
-                  />
-                </div>
-                <div className={styles.prodDetailsDiv}>
-                  <h2 className={styles.pimCodeId}>{router.query.PimCodeId}</h2>
-                  <div className={styles.manufactureDiv}>
-                    <div>
-                      <h3 className={styles.manufacturerDetailHead}>
-                        Manufacturer/Marketer
-                      </h3>
-                      <h3 className={styles.manufacturerDetailData}>
-                        {stateAxDetails}
-                      </h3>
-                    </div>
-                    <div>
-                      <h3 className={styles.manufacturerDetailHead}>
-                        Manufacturer/Marketer
-                      </h3>
-                      <h3 className={styles.manufacturerDetailData}>
-                        APEX LABORATORIES PVT LTD
-                      </h3>
-                    </div>
-                    <div>
-                      <h3 className={styles.manufacturerDetailHead}>
-                        Manufacturer/Marketer
-                      </h3>
-                      <h3 className={styles.manufacturerDetailData}>
-                        {stateOnDetails}
-                      </h3>
-                    </div>
-                  </div>
+                  /> */}
+                    <Image
+                      className="px-2 "
+                      src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
+                      alt="A description of the image"
+                      width={200}
+                      height={150}
+                      //onClick={() => handleEdit(row.itemId)}
+                      // onClick={() => setShowUserUpdateForm(true)}
+                    />
+                    <Grid container spacing={1}>
+                      <Grid item xs={3}>
+                        <Box>
+                          <Image
+                            className="px-2 "
+                            src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
+                            alt="A description of the image"
+                            width={100}
+                            height={100}
+                            //onClick={() => handleEdit(row.itemId)}
+                            // onClick={() => setShowUserUpdateForm(true)}
+                          />
+                        </Box>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Box>
+                          <Image
+                            className="px-2 "
+                            src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
+                            alt="A description of the image"
+                            width={100}
+                            height={100}
+                            //onClick={() => handleEdit(row.itemId)}
+                            // onClick={() => setShowUserUpdateForm(true)}
+                          />
+                        </Box>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Box>
+                          <Image
+                            className="px-2 "
+                            src="https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/dsx%20cszzc-1685516684125-.png"
+                            alt="A description of the image"
+                            width={100}
+                            height={100}
+                            //onClick={() => handleEdit(row.itemId)}
+                            // onClick={() => setShowUserUpdateForm(true)}
+                          />
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={9}>
+                    <h2 className={styles.pimCodeId}>
+                      {router.query.PimCodeId}
+                    </h2>
+                    <Box className={styles.manufactureDiv}>
+                      <Box>
+                        <h3 className={styles.manufacturerDetailHead}>
+                          Manufacturer/Marketer
+                        </h3>
+                        <h3 className={styles.manufacturerDetailData}>
+                          {stateAxDetails}
+                        </h3>
+                      </Box>
 
-                  <div>
-                    <h3 className={styles.manufacturerDetailHead}>
-                      Description
-                    </h3>
-                    <h3 className={styles.manufacturerDetailData}>
-                      Give your body a nutritional boost with the multivitamin
-                      and multimineral Zincovit Tablet that is specially
-                      formulated to support the overall body functioning. The
-                      essential vitamins and minerals support the healthy
-                      functioning of the heart, nervous system, immune system,
-                      etc. It also has Grape Seed extracts that are loaded with
-                      antioxidant properties and help in reducing the cell
-                      damage caused by free radicals.... READ MORE
-                    </h3>
-                  </div>
-                </div>
+                      <Box>
+                        <h3 className={styles.manufacturerDetailHead}>
+                          Manufacturer/Marketer
+                        </h3>
+                        <h3 className={styles.manufacturerDetailData}>
+                          APEX LABORATORIES PVT LTD
+                        </h3>
+                      </Box>
+                      <Box>
+                        <h3 className={styles.manufacturerDetailHead}>
+                          Manufacturer/Marketer
+                        </h3>
+                        <h3 className={styles.manufacturerDetailData}>
+                          {stateOnDetails}
+                        </h3>
+                      </Box>
+                    </Box>
 
-                <div
+                    <Box>
+                      <h3 className={styles.manufacturerDetailHead}>
+                        Description
+                      </h3>
+                      <h3 className={styles.manufacturerDetailData}>
+                        Give your body a nutritional boost with the multivitamin
+                        and multimineral Zincovit Tablet that is specially
+                        formulated to support the overall body functioning. The
+                        essential vitamins and minerals support the healthy
+                        functioning of the heart, nervous system, immune system,
+                        etc. It also has Grape Seed extracts that are loaded
+                        with antioxidant properties and help in reducing the
+                        cell damage caused by free radicals.... READ MORE
+                      </h3>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Box
                   style={{
                     width: "100%",
                     display: "flex",
@@ -344,10 +399,10 @@ const ProductViewDetails = (props) => {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </Box>
 
-                <div>
-                  <div>
+                <Box>
+                  <Box>
                     <h3 className={styles.manufacturerDetailHead}>
                       Key Ingredients
                     </h3>
@@ -359,9 +414,9 @@ const ProductViewDetails = (props) => {
                       Symbiotic Food Colour(214), Coating Agents (901, 462).
                       ..... READ MORE
                     </h3>
-                  </div>
-                </div>
-              </div>
+                  </Box>
+                </Box>
+              </Box>
             </Box>
 
             {/* details */}

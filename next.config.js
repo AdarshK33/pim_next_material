@@ -27,10 +27,10 @@ module.exports = {
     PIM_COOKIE_PASSWORD,
     PIMSESSION_TIMEOUT,
   },
-  // images: {
-  // 	domains: [
-  // 		"",
-  // 	],
-  // 	disableStaticImages: false,
-  // },
+  images: {
+    domains: [
+      "ri-brands-pim.s3.ap-south-1.amazonaws.com",
+      "images.unsplash.com",
+    ],
+  },
 };

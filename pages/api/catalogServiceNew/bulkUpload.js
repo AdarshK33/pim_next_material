@@ -48,31 +48,25 @@ const handler = async (req, res) => {
     // console.log("FormData:", formData.getHeaders());
 
     axios
-      .post(
-        `https://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/bulk`,
-        formData,
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${at}`,
-            ...formData.getHeaders(),
-          },
-        }
-      )
+      .post(`${process.env.CATALOG_NEW_SERVICE_URL}/catalog/bulk`, formData, {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${at}`,
+          ...formData.getHeaders(),
+        },
+      })
       .then((response) => {
         console.log(response, "res here");
         res.status(200).json(response.data.result);
         // toast.info("Bulk File uploaded Successfully !!!");
       })
-      .catch((error) => {
-        // toast.error("Bulk File upload Failed !!!");
-        // console.log(error, "erro here");
+      .catch((err) => {
         console.log(
           "error caught in -> pages/api/catalogServiceNew/bulk upload",
-          error
+          err
         );
-        if (error?.response) {
+        if (err?.response) {
           const { status = {} } = err?.response;
           res.status(status).json(err.response.data.error + " " + status);
         } else res.status(500).json({ message: "something went wrong" });
