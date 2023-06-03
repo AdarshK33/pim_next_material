@@ -50,6 +50,9 @@ import {
   MEDIA_UPLOAD_LOADING,
   MEDIA_UPLOAD_SUCCESS,
   MEDIA_UPLOAD_FAILURE,
+  PRODUCT_SEARCH_DATA_LOADING,
+  PRODUCT_SEARCH_DATA_SUCCESS,
+  PRODUCT_SEARCH_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -355,6 +358,24 @@ export const mediaUploadDataSuccess = (data) => {
 export const mediaUploadDataFailure = (error) => {
   return {
     type: MEDIA_UPLOAD_FAILURE,
+    payload: error,
+  };
+};
+
+export const productSearchDataLoading = () => {
+  return {
+    type: PRODUCT_SEARCH_DATA_LOADING,
+  };
+};
+export const productSearchDataSuccess = (data) => {
+  return {
+    type: PRODUCT_SEARCH_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const productSearchDataFailure = (error) => {
+  return {
+    type: PRODUCT_SEARCH_DATA_FAILURE,
     payload: error,
   };
 };
@@ -883,6 +904,34 @@ export const updateCategoryApis = (data) => {
             "Something went wrong",
             "category UPDATE"
           )
+        );
+      });
+  };
+};
+
+export const productSearchApis = (status) => {
+  const data = {
+    productStatus: status,
+  };
+  return (dispatch) => {
+    dispatch(productSearchDataLoading("productSearch....", "productSearch"));
+    client
+      .post("/api/catalogServiceNew/productSearch", data)
+      .then(async (response) => {
+        // console.log("rrrrrr", response);
+        if (response.status === 200) {
+          // toast.info("Product search  successfully !!!");
+          dispatch(productSearchDataSuccess(response?.data?.result));
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        // toast.error("Category updated failed !!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/productSearch",
+          err
+        );
+        dispatch(
+          productSearchDataFailure(err, "Something went wrong", "productSearch")
         );
       });
   };

@@ -94,7 +94,7 @@ const Notification = () => {
           </>
         </IconButton>
       )}
-      {loading === false && (
+      {loading === false && notificationCount > 0 ? (
         <Menu
           id="basic-menu"
           // anchorEl={anchorEl66}
@@ -138,6 +138,36 @@ const Notification = () => {
               </Box>
             ))}
         </Menu>
+      ) : (
+        <>
+          <Menu
+            id="basic-menu"
+            // anchorEl={anchorEl66}
+            open={anchorEl66}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            onClose={handleClose4}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <Box>
+              <List
+                component="nav"
+                aria-label="secondary mailbox folder"
+                onClick={handleClose4}
+              >
+                <Alert severity="warning">No new notification</Alert>
+              </List>
+            </Box>
+          </Menu>
+        </>
       )}
     </>
   );
