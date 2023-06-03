@@ -45,6 +45,7 @@ import { useRouter } from "next/router";
 import {
   getAllProductListApi,
   productDetailsApi,
+  productSearchApis,
 } from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -69,7 +70,7 @@ const AllProducts = (props) => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  // console.log("searchAllObject", searchAllObject);
+  console.log("productCount?", catalogServiceNewReducer);
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
@@ -87,7 +88,7 @@ const AllProducts = (props) => {
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = catalogServiceNewReducer?.getAllProducts.content;
+  const currentRecords = catalogServiceNewReducer?.getAllProducts?.content;
 
   const handlePaginationChange = (val) => {
     setCurrentPage(val);
@@ -108,32 +109,20 @@ const AllProducts = (props) => {
   };
 
   useEffect(() => {
-    if (searchValue) {
-      if (value === 0) {
-        dispatch(getAllProductListApi(0, 10, "DRAFT", searchValue));
-      } else if (value === 1) {
-        // setCountState("READY_FOR_REVIEW");
-
-        dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW", searchValue));
-      } else if (value === 2) {
-        // setCountState("REVALIDATE");
-
-        dispatch(getAllProductListApi(0, 10, "REVALIDATE", searchValue));
-      }
-    } else {
-      setSearchValue();
-      if (value === 0) {
-        setCountState("DRAFT");
-        dispatch(getAllProductListApi(0, 10, "DRAFT"));
-      } else if (value === 1) {
-        setCountState("READY_FOR_REVIEW");
-        dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
-      } else if (value === 2) {
-        setCountState("REVALIDATE");
-        dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
-      }
+    if (value === 0) {
+      setCountState("DRAFT");
+      dispatch(getAllProductListApi(0, 10, "DRAFT"));
+      dispatch(productSearchApis("DRAFT"));
+    } else if (value === 1) {
+      setCountState("READY_FOR_REVIEW");
+      dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
+      dispatch(productSearchApis("READY_FOR_REVIEW"));
+    } else if (value === 2) {
+      setCountState("REVALIDATE");
+      dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
+      dispatch(productSearchApis("REVALIDATE"));
     }
-  }, [value, searchValue]);
+  }, [value]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -218,7 +207,7 @@ const AllProducts = (props) => {
   };
 
   const searchHandler = (e, value) => {
-    // console.log(value, "hello e.target.value");
+    console.log(value, "hello e.target.value");
     setSearchValue(value);
   };
 
@@ -316,28 +305,45 @@ const AllProducts = (props) => {
                 </div>
               </Stack> */}
 
-              <Box sx={{ maxWidth: 150 }}>
-                {catalogServiceNewReducer?.getAllProducts !== null &&
-                  Object.entries(catalogServiceNewReducer?.getAllProducts)
+              <Box sx={{ maxWidth: 250 }}>
+                {catalogServiceNewReducer?.productSearch !== null &&
+                  Object.entries(catalogServiceNewReducer?.productSearch)
                     .length && (
                     <Autocomplete
-                      id="free-solo-demo"
                       freeSolo
-                      options={
-                        catalogServiceNewReducer?.getAllProducts?.content.map(
-                          (option) => option.itemId
-                        ) || []
+                      id="free-solo-demo"
+                      options={catalogServiceNewReducer?.productSearch}
+                      getOptionLabel={(option) =>
+                        `${option.itemId ?? ""} / ${option.itemName ?? ""}`
                       }
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          label="Item Id.."
+                          label="Id/Name.."
                           className={styles.input_search_product}
                         />
                       )}
                       onChange={(event, value) => {
                         // Handle the onChange event here
                         searchHandler(event, value); // Log the selected value to the console
+                      }}
+                      filterOptions={(options, params) => {
+                        const inputValue = params.inputValue.toLowerCase();
+                        const minimumLength = 3;
+
+                        if (inputValue.length < minimumLength) {
+                          return []; // Return an empty array when inputValue length is less than the minimum length
+                        }
+
+                        const filteredOptions = options.filter((option) => {
+                          const optionTitle =
+                            (option.itemId ?? "") +
+                            " / " +
+                            (option.itemName ?? "");
+                          return optionTitle.toLowerCase().includes(inputValue);
+                        });
+
+                        return filteredOptions;
                       }}
                     />
                   )}

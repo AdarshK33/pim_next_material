@@ -4,6 +4,7 @@ import {
   ATTRIBUTE_LIST_FAILURE,
   GET_ALL_PRODUCT_LIST_LOADING,
   GET_ALL_PRODUCT_LIST_SUCCESS,
+  GET_ALL_PRODUCT_COUNT_SUCCESS,
   GET_ALL_PRODUCT_LIST_FAILURE,
   BULK_UPLOAD_LOADING,
   BULK_UPLOAD_SUCCESS,
@@ -41,12 +42,16 @@ import {
   MEDIA_UPLOAD_LOADING,
   MEDIA_UPLOAD_SUCCESS,
   MEDIA_UPLOAD_FAILURE,
+  PRODUCT_SEARCH_DATA_LOADING,
+  PRODUCT_SEARCH_DATA_SUCCESS,
+  PRODUCT_SEARCH_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
   loading: false,
   attributeGet: {},
   getAllProducts: [],
+  productCount: [],
   bulkUpload: {},
   productPimCodeData: {},
   publishProduct: [],
@@ -59,10 +64,12 @@ const initialState = {
   categoryUpdate: {},
   catagoriesAdd: {},
   mediaUpload: {},
+  productSearch: [],
+
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
-  // console.log("hello builk called", action.payload);
+  console.log("hello search called", action);
   switch (action.type) {
     case ATTRIBUTE_LIST_LOADING:
       return {
@@ -96,6 +103,14 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         getAllProducts: action.payload,
         error: {},
       };
+    case GET_ALL_PRODUCT_COUNT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        productCount: action.payload,
+        error: {},
+      };
+
     case GET_ALL_PRODUCT_LIST_FAILURE:
       return {
         ...state,
@@ -335,6 +350,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         mediaUpload: [],
+        error: action,
+      };
+    case PRODUCT_SEARCH_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case PRODUCT_SEARCH_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        productSearch: action.payload,
+        error: {},
+      };
+    case PRODUCT_SEARCH_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        productSearch: [],
         error: action,
       };
 
