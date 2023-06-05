@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "../activeProducts.module.css";
-
-import { AlertTriangle } from "react-feather";
+import { StopCircle, Eye } from "react-feather";
 import Image from "next/image";
+
+import benefits from "../../../../../assets/icons/benefit.svg";
+import honey from "../../../../../assets/icons/honey.svg";
+import instructions from "../../../../../assets/icons/instructions.svg";
+import protection from "../../../../../assets/icons/protection.svg";
 
 import {
   Grid,
@@ -12,7 +16,13 @@ import {
   CardContent,
   Typography,
   TextField,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
 } from "@mui/material";
+
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import CustomModal from "../../../../common/customModal";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -150,6 +160,24 @@ const ProductViewDetails = (props) => {
     setHiStateDetails(inputHiState);
     setOnStateDetails(inputOnState);
   }, [productPimCodeData]);
+
+  // useEffect(() => {
+  //   const str = "i have learned something new today";
+
+  //   //split the above string into an array of strings
+  //   //whenever a blank space is encountered
+
+  //   const arr = str.split(" ");
+
+  //   //loop through each element of the array and capitalize the first letter.
+
+  //   for (var i = 0; i < arr.length; i++) {
+  //     arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+  //   }
+
+  //   console.log("aaaaaaaaaaaaaaaa", arr);
+  // }, [productPimCodeData]);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue, "newValue");
@@ -197,6 +225,7 @@ const ProductViewDetails = (props) => {
       </>
     );
   };
+
   return (
     <>
       <Grid container>
@@ -208,9 +237,7 @@ const ProductViewDetails = (props) => {
             <Box>
               <Grid container spacing={2} justifyContent="space-between">
                 <h1 className={styles.productDetailTitle}>
-                  {router.query.ActiveProduct?.length > 0
-                    ? `Active Products - ${router.query.PimCodeId}`
-                    : `Product Details - ${router.query.PimCodeId}`}
+                  {router.query.PimCodeId}
                 </h1>
               </Grid>
 
@@ -273,10 +300,10 @@ const ProductViewDetails = (props) => {
                     </Grid>
                   </Grid>
                   <Grid item xs={9}>
-                    <h2 className={styles.pimCodeId}>
+                    {/* <h2 className={styles.pimCodeId}>
                       {router.query.PimCodeId}
-                    </h2>
-                    <Box className={styles.manufactureDiv}>
+                    </h2> */}
+                    <Box>
                       <Box>
                         <h3 className={styles.manufacturerDetailHead}>
                           Manufacturer/Marketer
@@ -288,7 +315,7 @@ const ProductViewDetails = (props) => {
 
                       <Box>
                         <h3 className={styles.manufacturerDetailHead}>
-                          Manufacturer/Marketer
+                          Contry Of Origin
                         </h3>
                         <h3 className={styles.manufacturerDetailData}>
                           APEX LABORATORIES PVT LTD
@@ -296,7 +323,7 @@ const ProductViewDetails = (props) => {
                       </Box>
                       <Box>
                         <h3 className={styles.manufacturerDetailHead}>
-                          Manufacturer/Marketer
+                          Manufacturer/Marketer Address
                         </h3>
                         <h3 className={styles.manufacturerDetailData}>
                           {stateOnDetails}
@@ -316,7 +343,8 @@ const ProductViewDetails = (props) => {
                         functioning of the heart, nervous system, immune system,
                         etc. It also has Grape Seed extracts that are loaded
                         with antioxidant properties and help in reducing the
-                        cell damage caused by free radicals.... READ MORE
+                        cell damage caused by free radicals....
+                        <a className={styles.read_more_href}>READ MORE</a>
                       </h3>
                     </Box>
                   </Grid>
@@ -328,91 +356,284 @@ const ProductViewDetails = (props) => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <div style={{ width: "49%" }}>
-                    <h3 className={styles.manufacturerDetailHead}>
-                      Medicinal Benfits
-                    </h3>
-                    <ul>
-                      <li>
-                        Helps in strengthening immunity system of the body so
-                        that it can fight against infections
-                      </li>
-                      <li>
-                        Replenishes the body's needsfor essential vitamins and
-                        minerals
-                      </li>
-                      <li>
-                        Good for a speedy recovery after surgery and pregnancy
-                      </li>
-                      <li>
-                        Maintains a healthy metabolism and improves appetite
-                      </li>
-                      <li>
-                        Has a balanced nutrional (vitamins and minerals) dose
-                        that helps reduce body fatigue
-                      </li>
-                    </ul>
-                  </div>
-                  <div className={styles.divider}></div>
-                  <div style={{ width: "49%" }}>
-                    <div>
-                      <h3 className={styles.manufacturerDetailHead}>
-                        Directions for use
-                      </h3>
-                      <ul>
-                        <li>
-                          Helps in strengthening immunity system of the body so
-                          that it can fight against infections
-                        </li>
-                        <li>
-                          Replenishes the body's needsfor essential vitamins and
-                          minerals
-                        </li>
-                      </ul>
-                    </div>
+                  <Box style={{ width: "49%", marginTop: "15px" }}>
+                    <Box className={styles.right_box_details}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Image
+                          className="px-2 "
+                          src={benefits}
+                          alt="lens"
+                          width={30}
+                          height={30}
+                        />
+                        <Typography
+                          variant="h3"
+                          className={styles.manufacturerDetailHead}
+                        >
+                          Medicinal Benefits
+                        </Typography>
+                      </Box>
 
-                    <div>
-                      <h3 className={styles.manufacturerDetailHead}>
-                        Safety Information
-                      </h3>
+                      <List>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Helps in strengthening immunity system of the body
+                            so that it can fight against infections
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Good for a speedy recovery after surgery and
+                            pregnancy
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Maintains a healthy metabolism and improves appetite
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Has a balanced nutrional (vitamins and minerals)
+                            dose that helps reduce body fatigue
+                          </ListItemText>
+                        </ListItem>
+                      </List>
+                    </Box>
+                  </Box>
+                  <Box className={styles.divider}></Box>
+                  <Box style={{ width: "49%", marginTop: "15px" }}>
+                    <Box className={styles.right_box_details}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Image
+                          className="px-2 "
+                          src={instructions}
+                          alt="lens"
+                          width={30}
+                          height={30}
+                        />
+                        <Typography
+                          variant="h3"
+                          className={styles.manufacturerDetailHead}
+                        >
+                          Directions for use
+                        </Typography>
+                      </Box>
+                      <List>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Helps in strengthening immunity system of the body
+                            so that it can fight against infections
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Replenishes the body's needs for essential vitamins
+                            and minerals
+                          </ListItemText>
+                        </ListItem>
+                      </List>
+                    </Box>
 
-                      <ul>
-                        <li>{stateRdDetails}</li>
-                        <li>
-                          Helps in strengthening immunity system of the body so
-                          that it can fight against infections
-                        </li>
-                        <li>
-                          Replenishes the body's needsfor essential vitamins and
-                          minerals
-                        </li>
-                        <li>
-                          Good for a speedy recovery after surgery and pregnancy
-                        </li>
-                        <li>
-                          Maintains a healthy metabolism and improves appetite
-                        </li>
-                        <li>
-                          Has a balanced nutrional (vitamins and minerals) dose
-                          that helps reduce body fatigue
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                    <Box className={styles.right_box_details}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Image
+                          className="px-2 "
+                          src={protection}
+                          alt="lens"
+                          width={30}
+                          height={30}
+                        />
+                        <Typography
+                          variant="h3"
+                          className={styles.manufacturerDetailHead}
+                        >
+                          Safety Information
+                        </Typography>
+                      </Box>
+
+                      <List>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>{stateRdDetails}</ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Helps in strengthening immunity system of the body
+                            so that it can fight against infections
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Replenishes the body's needs for essential vitamins
+                            and minerals
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Good for a speedy recovery after surgery and
+                            pregnancy
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Maintains a healthy metabolism and improves appetite
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <StopCircle
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "Black ",
+                                padding: "8px",
+                              }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText>
+                            Has a balanced nutritional (vitamins and minerals)
+                            dose that helps reduce body fatigue
+                          </ListItemText>
+                        </ListItem>
+                      </List>
+                    </Box>
+                  </Box>
                 </Box>
 
                 <Box>
                   <Box>
-                    <h3 className={styles.manufacturerDetailHead}>
-                      Key Ingredients
-                    </h3>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Image
+                        className="px-2 "
+                        src={honey}
+                        alt="lens"
+                        width={30}
+                        height={30}
+                      />
+                      <Typography
+                        variant="h3"
+                        className={styles.manufacturerDetailHead}
+                      >
+                        Key Ingredients
+                      </Typography>
+                    </Box>
                     <h3 className={styles.manufacturerDetailData}>
                       Sugar, Microcrystalline Cellulose (460(i)), Vitamins, Talc
                       (553(iii)), Grape Seed Extract, Calcium Carbonate
                       (170(i)), Stabilizer (468), Minerals, Binders (1401, 1202,
                       1201), Silicon Dioxide (551), Disodium EDTA, Permitted
                       Symbiotic Food Colour(214), Coating Agents (901, 462).
-                      ..... READ MORE
+                      ..... <a className={styles.read_more_href}>READ MORE</a>
                     </h3>
                   </Box>
                 </Box>
@@ -433,9 +654,13 @@ const ProductViewDetails = (props) => {
                       Object.keys(productPimCodeData?.productDetails).length &&
                       productPimCodeData?.productDetails.map((tab, index) => (
                         <Tab
-                          label={tab.attributeSet}
+                          label={
+                            tab?.attributeSet?.charAt(0).toUpperCase() +
+                            tab?.attributeSet.slice(1).toLowerCase()
+                          }
                           value={index}
                           key={index}
+                          className={styles.tab_active_master}
                         />
                       ))}
 
