@@ -236,14 +236,14 @@ const ProductViewDetails = (props) => {
           <Card sx={{ p: 5 }}>
             <Box>
               <Grid container spacing={2} justifyContent="space-between">
-                <h1 className={styles.productDetailTitle}>
+                {/* <h1 className={styles.productDetailTitle}>
                   {router.query.PimCodeId}
-                </h1>
+                </h1> */}
               </Grid>
 
               <Box>
                 <Grid container spacing={2}>
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
                     {/* <img
                     src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
                     style={{ width: "100%" }}
@@ -252,13 +252,13 @@ const ProductViewDetails = (props) => {
                       className="px-2 "
                       src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
                       alt="A description of the image"
-                      width={200}
-                      height={150}
+                      width={300}
+                      height={250}
                       //onClick={() => handleEdit(row.itemId)}
                       // onClick={() => setShowUserUpdateForm(true)}
                     />
-                    <Grid container spacing={1}>
-                      <Grid item xs={3}>
+                    <Grid container spacing={0.4}>
+                      <Grid item md={3}>
                         <Box>
                           <Image
                             className="px-2 "
@@ -271,7 +271,7 @@ const ProductViewDetails = (props) => {
                           />
                         </Box>
                       </Grid>
-                      <Grid item xs={3}>
+                      <Grid item md={3}>
                         <Box>
                           <Image
                             className="px-2 "
@@ -284,7 +284,7 @@ const ProductViewDetails = (props) => {
                           />
                         </Box>
                       </Grid>
-                      <Grid item xs={3}>
+                      <Grid item md={3}>
                         <Box>
                           <Image
                             className="px-2 "
@@ -299,10 +299,10 @@ const ProductViewDetails = (props) => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xs={9}>
-                    {/* <h2 className={styles.pimCodeId}>
+                  <Grid item xs={8}>
+                    <h2 className={styles.pimCodeId}>
                       {router.query.PimCodeId}
-                    </h2> */}
+                    </h2>
                     <Box>
                       <Box>
                         <h3 className={styles.manufacturerDetailHead}>

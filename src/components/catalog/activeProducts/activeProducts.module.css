@@ -146,8 +146,11 @@
 }
 
 .pimCodeId {
-  font-size: 18px;
+  color: #419794;
+  font-size: 26px;
   font-weight: 600;
+  padding-left: 15px;
+  margin-top: 0px !important;
 }
 
 .manufacturerDetails {
