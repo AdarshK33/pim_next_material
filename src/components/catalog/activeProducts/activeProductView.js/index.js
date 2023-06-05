@@ -227,9 +227,7 @@ const ProductViewDetails = (props) => {
             <Box>
               <Grid container spacing={2} justifyContent="space-between">
                 <h1 className={styles.productDetailTitle}>
-                  {router.query.ActiveProduct?.length > 0
-                    ? `Active Products - ${router.query.PimCodeId}`
-                    : `Product Details - ${router.query.PimCodeId}`}
+                  {router.query.PimCodeId}
                 </h1>
               </Grid>
 
