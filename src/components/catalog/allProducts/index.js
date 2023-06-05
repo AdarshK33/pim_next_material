@@ -63,24 +63,20 @@ const AllProducts = (props) => {
 
   // console.log("hello countState", countState);
 
-  // useEffect(() => {
-  //   dispatch(getAllProductListApi(0, 5, "DRAFTED"));
-  // }, []);
-
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
   console.log("productCount?", catalogServiceNewReducer);
-  const tableData = [];
-  for (let i = 1; i <= 5; i++) {
-    tableData.push({
-      itemId: "DTE000" + i,
-      itemName: "Dolo 650mg",
-      category: "PHARMA",
-      formation: "20%",
-      productStatus: "Draft",
-    });
-  }
+  // const tableData = [];
+  // for (let i = 1; i <= 5; i++) {
+  //   tableData.push({
+  //     itemId: "DTE000" + i,
+  //     itemName: "Dolo 650mg",
+  //     category: "PHARMA",
+  //     formation: "20%",
+  //     productStatus: "Draft",
+  //   });
+  // }
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
@@ -110,6 +106,7 @@ const AllProducts = (props) => {
 
   useEffect(() => {
     if (value === 0) {
+      //default call
       setCountState("DRAFT");
       dispatch(getAllProductListApi(0, 10, "DRAFT"));
       dispatch(productSearchApis("DRAFT"));
@@ -306,13 +303,13 @@ const AllProducts = (props) => {
               </Stack> */}
 
               <Box sx={{ maxWidth: 250 }}>
-                {catalogServiceNewReducer?.productSearch !== null &&
-                  Object.entries(catalogServiceNewReducer?.productSearch)
+                {catalogServiceNewReducer?.getAllProducts !== null &&
+                  Object.entries(catalogServiceNewReducer?.getAllProducts)
                     .length && (
                     <Autocomplete
                       freeSolo
                       id="free-solo-demo"
-                      options={catalogServiceNewReducer?.productSearch}
+                      options={catalogServiceNewReducer?.productSearch || ""}
                       getOptionLabel={(option) =>
                         `${option.itemId ?? ""} / ${option.itemName ?? ""}`
                       }
