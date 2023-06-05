@@ -74,22 +74,25 @@ const ProductViewDetails = (props) => {
   const [stateRdDetails, setRdStateDetails] = useState();
 
   const [stateOnDetails, setOnStateDetails] = useState();
+  const [stateImageDetails, setImageDetails] = useState();
 
   const [checkUpdate, setcheckUpdate] = useState(false);
   const [updateApiCall, setCallApi] = useState(false);
-  const [imageDataState, setImageDataState] = useState();
 
   useEffect(() => {
     dispatch(productDetailsApi(router.query.PimCodeId));
   }, []);
 
   console.log(productPimCodeData, "hello productPimCodeData");
-  console.log(imageDataState, "hello imageDataState");
+  console.log(stateImageDetails, "hello stateImageDetails");
 
   // console.log(stateDetails, "hello stateDetails");
 
   useEffect(() => {
-    if (!productPimCodeData?.productDetails) {
+    if (
+      !productPimCodeData?.productDetails &&
+      !productPimCodeData?.mediaDetails
+    ) {
       return;
     }
     // mapping the master.modelAttributes for input field
@@ -101,7 +104,13 @@ const ProductViewDetails = (props) => {
       });
     });
 
+    const images = productPimCodeData?.mediaDetails.map((item) => ({
+      original: item.completeUrl,
+      thumbnail: item.completeUrl,
+    }));
+
     setStateInput(inputState);
+    setImageDetails(images);
   }, [productPimCodeData]);
 
   useEffect(() => {
@@ -162,17 +171,11 @@ const ProductViewDetails = (props) => {
     setOnStateDetails(inputOnState);
   }, [productPimCodeData]);
 
-  useEffect(() => {
-    if (!productPimCodeData?.mediaDetails) {
-      return;
-    }
-    const obj = productPimCodeData?.mediaDetails;
-    const images = productPimCodeData?.mediaDetails.map((item) => ({
-      original: item.completeUrl,
-      thumbnail: item.completeUrl,
-    }));
-    setImageDataState(images);
-  }, [productPimCodeData]);
+  // useEffect(() => {
+  //   if (!productPimCodeData?.mediaDetails) {
+  //     return;
+
+  // }, [productPimCodeData]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -228,24 +231,6 @@ const ProductViewDetails = (props) => {
       thumbnail:
         "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/2-1685701543077-.jpg",
     },
-    {
-      original:
-        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80",
-      thumbnail:
-        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80",
-    },
-    {
-      original:
-        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/Screenshot%20%2810%29-1685967991250-.png",
-      thumbnail:
-        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/Screenshot%20%2810%29-1685967991250-.png",
-    },
-    {
-      original:
-        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80",
-      thumbnail:
-        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80",
-    },
   ];
 
   return (
@@ -266,7 +251,13 @@ const ProductViewDetails = (props) => {
               <Box>
                 <Grid container spacing={2}>
                   <Grid item xs={4}>
-                    <ThumbnailSlider images={imageDataState} />
+                    {stateImageDetails && stateImageDetails.length ? (
+                      <ThumbnailSlider images={stateImageDetails} />
+                    ) : (
+                      <>
+                        <ThumbnailSlider images={images} />
+                      </>
+                    )}
                   </Grid>
                   <Grid item xs={8}>
                     <h2 className={styles.pimCodeId}>
