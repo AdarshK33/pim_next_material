@@ -7,7 +7,7 @@ import benefits from "../../../../../assets/icons/benefit.svg";
 import honey from "../../../../../assets/icons/honey.svg";
 import instructions from "../../../../../assets/icons/instructions.svg";
 import protection from "../../../../../assets/icons/protection.svg";
-
+import ThumbnailSlider from "./imageView";
 import {
   Grid,
   Button,
@@ -77,13 +77,14 @@ const ProductViewDetails = (props) => {
 
   const [checkUpdate, setcheckUpdate] = useState(false);
   const [updateApiCall, setCallApi] = useState(false);
+  const [imageDataState, setImageDataState] = useState();
 
   useEffect(() => {
     dispatch(productDetailsApi(router.query.PimCodeId));
   }, []);
 
   console.log(productPimCodeData, "hello productPimCodeData");
-  console.log(stateAxDetails, "hello stateAxDetails");
+  console.log(imageDataState, "hello imageDataState");
 
   // console.log(stateDetails, "hello stateDetails");
 
@@ -161,22 +162,17 @@ const ProductViewDetails = (props) => {
     setOnStateDetails(inputOnState);
   }, [productPimCodeData]);
 
-  // useEffect(() => {
-  //   const str = "i have learned something new today";
-
-  //   //split the above string into an array of strings
-  //   //whenever a blank space is encountered
-
-  //   const arr = str.split(" ");
-
-  //   //loop through each element of the array and capitalize the first letter.
-
-  //   for (var i = 0; i < arr.length; i++) {
-  //     arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-  //   }
-
-  //   console.log("aaaaaaaaaaaaaaaa", arr);
-  // }, [productPimCodeData]);
+  useEffect(() => {
+    if (!productPimCodeData?.mediaDetails) {
+      return;
+    }
+    const obj = productPimCodeData?.mediaDetails;
+    const images = productPimCodeData?.mediaDetails.map((item) => ({
+      original: item.completeUrl,
+      thumbnail: item.completeUrl,
+    }));
+    setImageDataState(images);
+  }, [productPimCodeData]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -225,6 +221,32 @@ const ProductViewDetails = (props) => {
       </>
     );
   };
+  const images = [
+    {
+      original:
+        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/2-1685701543077-.jpg",
+      thumbnail:
+        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/2-1685701543077-.jpg",
+    },
+    {
+      original:
+        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80",
+      thumbnail:
+        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80",
+    },
+    {
+      original:
+        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/Screenshot%20%2810%29-1685967991250-.png",
+      thumbnail:
+        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/Screenshot%20%2810%29-1685967991250-.png",
+    },
+    {
+      original:
+        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80",
+      thumbnail:
+        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80",
+    },
+  ];
 
   return (
     <>
@@ -244,60 +266,7 @@ const ProductViewDetails = (props) => {
               <Box>
                 <Grid container spacing={2}>
                   <Grid item xs={4}>
-                    {/* <img
-                    src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
-                    style={{ width: "100%" }}
-                  /> */}
-                    <Image
-                      className="px-2 "
-                      src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
-                      alt="A description of the image"
-                      width={300}
-                      height={250}
-                      //onClick={() => handleEdit(row.itemId)}
-                      // onClick={() => setShowUserUpdateForm(true)}
-                    />
-                    <Grid container spacing={0.4}>
-                      <Grid item md={3}>
-                        <Box>
-                          <Image
-                            className="px-2 "
-                            src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
-                            alt="A description of the image"
-                            width={100}
-                            height={100}
-                            //onClick={() => handleEdit(row.itemId)}
-                            // onClick={() => setShowUserUpdateForm(true)}
-                          />
-                        </Box>
-                      </Grid>
-                      <Grid item md={3}>
-                        <Box>
-                          <Image
-                            className="px-2 "
-                            src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
-                            alt="A description of the image"
-                            width={100}
-                            height={100}
-                            //onClick={() => handleEdit(row.itemId)}
-                            // onClick={() => setShowUserUpdateForm(true)}
-                          />
-                        </Box>
-                      </Grid>
-                      <Grid item md={3}>
-                        <Box>
-                          <Image
-                            className="px-2 "
-                            src="https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/dsx%20cszzc-1685516684125-.png"
-                            alt="A description of the image"
-                            width={100}
-                            height={100}
-                            //onClick={() => handleEdit(row.itemId)}
-                            // onClick={() => setShowUserUpdateForm(true)}
-                          />
-                        </Box>
-                      </Grid>
-                    </Grid>
+                    <ThumbnailSlider images={imageDataState} />
                   </Grid>
                   <Grid item xs={8}>
                     <h2 className={styles.pimCodeId}>
