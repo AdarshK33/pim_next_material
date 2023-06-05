@@ -7,7 +7,7 @@ import benefits from "../../../../../assets/icons/benefit.svg";
 import honey from "../../../../../assets/icons/honey.svg";
 import instructions from "../../../../../assets/icons/instructions.svg";
 import protection from "../../../../../assets/icons/protection.svg";
-
+import ThumbnailSlider from "./imageView";
 import {
   Grid,
   Button,
@@ -74,6 +74,7 @@ const ProductViewDetails = (props) => {
   const [stateRdDetails, setRdStateDetails] = useState();
 
   const [stateOnDetails, setOnStateDetails] = useState();
+  const [stateImageDetails, setImageDetails] = useState();
 
   const [checkUpdate, setcheckUpdate] = useState(false);
   const [updateApiCall, setCallApi] = useState(false);
@@ -83,12 +84,15 @@ const ProductViewDetails = (props) => {
   }, []);
 
   console.log(productPimCodeData, "hello productPimCodeData");
-  console.log(stateAxDetails, "hello stateAxDetails");
+  console.log(stateImageDetails, "hello stateImageDetails");
 
   // console.log(stateDetails, "hello stateDetails");
 
   useEffect(() => {
-    if (!productPimCodeData?.productDetails) {
+    if (
+      !productPimCodeData?.productDetails &&
+      !productPimCodeData?.mediaDetails
+    ) {
       return;
     }
     // mapping the master.modelAttributes for input field
@@ -100,7 +104,13 @@ const ProductViewDetails = (props) => {
       });
     });
 
+    const images = productPimCodeData?.mediaDetails.map((item) => ({
+      original: item.completeUrl,
+      thumbnail: item.completeUrl,
+    }));
+
     setStateInput(inputState);
+    setImageDetails(images);
   }, [productPimCodeData]);
 
   useEffect(() => {
@@ -162,20 +172,9 @@ const ProductViewDetails = (props) => {
   }, [productPimCodeData]);
 
   // useEffect(() => {
-  //   const str = "i have learned something new today";
+  //   if (!productPimCodeData?.mediaDetails) {
+  //     return;
 
-  //   //split the above string into an array of strings
-  //   //whenever a blank space is encountered
-
-  //   const arr = str.split(" ");
-
-  //   //loop through each element of the array and capitalize the first letter.
-
-  //   for (var i = 0; i < arr.length; i++) {
-  //     arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-  //   }
-
-  //   console.log("aaaaaaaaaaaaaaaa", arr);
   // }, [productPimCodeData]);
 
   const handleChange = (event, newValue) => {
@@ -225,6 +224,14 @@ const ProductViewDetails = (props) => {
       </>
     );
   };
+  const images = [
+    {
+      original:
+        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/2-1685701543077-.jpg",
+      thumbnail:
+        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/2-1685701543077-.jpg",
+    },
+  ];
 
   return (
     <>
@@ -236,73 +243,26 @@ const ProductViewDetails = (props) => {
           <Card sx={{ p: 5 }}>
             <Box>
               <Grid container spacing={2} justifyContent="space-between">
-                <h1 className={styles.productDetailTitle}>
+                {/* <h1 className={styles.productDetailTitle}>
                   {router.query.PimCodeId}
-                </h1>
+                </h1> */}
               </Grid>
 
               <Box>
                 <Grid container spacing={2}>
-                  <Grid item xs={3}>
-                    {/* <img
-                    src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
-                    style={{ width: "100%" }}
-                  /> */}
-                    <Image
-                      className="px-2 "
-                      src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
-                      alt="A description of the image"
-                      width={200}
-                      height={150}
-                      //onClick={() => handleEdit(row.itemId)}
-                      // onClick={() => setShowUserUpdateForm(true)}
-                    />
-                    <Grid container spacing={1}>
-                      <Grid item xs={3}>
-                        <Box>
-                          <Image
-                            className="px-2 "
-                            src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
-                            alt="A description of the image"
-                            width={100}
-                            height={100}
-                            //onClick={() => handleEdit(row.itemId)}
-                            // onClick={() => setShowUserUpdateForm(true)}
-                          />
-                        </Box>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Box>
-                          <Image
-                            className="px-2 "
-                            src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1240&q=80"
-                            alt="A description of the image"
-                            width={100}
-                            height={100}
-                            //onClick={() => handleEdit(row.itemId)}
-                            // onClick={() => setShowUserUpdateForm(true)}
-                          />
-                        </Box>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Box>
-                          <Image
-                            className="px-2 "
-                            src="https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/dsx%20cszzc-1685516684125-.png"
-                            alt="A description of the image"
-                            width={100}
-                            height={100}
-                            //onClick={() => handleEdit(row.itemId)}
-                            // onClick={() => setShowUserUpdateForm(true)}
-                          />
-                        </Box>
-                      </Grid>
-                    </Grid>
+                  <Grid item xs={4}>
+                    {stateImageDetails && stateImageDetails.length ? (
+                      <ThumbnailSlider images={stateImageDetails} />
+                    ) : (
+                      <>
+                        <ThumbnailSlider images={images} />
+                      </>
+                    )}
                   </Grid>
-                  <Grid item xs={9}>
-                    {/* <h2 className={styles.pimCodeId}>
+                  <Grid item xs={8}>
+                    <h2 className={styles.pimCodeId}>
                       {router.query.PimCodeId}
-                    </h2> */}
+                    </h2>
                     <Box>
                       <Box>
                         <h3 className={styles.manufacturerDetailHead}>
