@@ -150,6 +150,24 @@ const ProductViewDetails = (props) => {
     setHiStateDetails(inputHiState);
     setOnStateDetails(inputOnState);
   }, [productPimCodeData]);
+
+  // useEffect(() => {
+  //   const str = "i have learned something new today";
+
+  //   //split the above string into an array of strings
+  //   //whenever a blank space is encountered
+
+  //   const arr = str.split(" ");
+
+  //   //loop through each element of the array and capitalize the first letter.
+
+  //   for (var i = 0; i < arr.length; i++) {
+  //     arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+  //   }
+
+  //   console.log("aaaaaaaaaaaaaaaa", arr);
+  // }, [productPimCodeData]);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue, "newValue");
@@ -197,6 +215,7 @@ const ProductViewDetails = (props) => {
       </>
     );
   };
+
   return (
     <>
       <Grid container>
@@ -433,7 +452,10 @@ const ProductViewDetails = (props) => {
                       Object.keys(productPimCodeData?.productDetails).length &&
                       productPimCodeData?.productDetails.map((tab, index) => (
                         <Tab
-                          label={tab.attributeSet}
+                          label={
+                            tab?.attributeSet?.charAt(0).toUpperCase() +
+                            tab?.attributeSet.slice(1).toLowerCase()
+                          }
                           value={index}
                           key={index}
                         />
