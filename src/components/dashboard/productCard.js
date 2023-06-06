@@ -20,44 +20,35 @@ import {
   Grid,
 } from "@mui/material";
 
-const blogs = [
+const DummiyData = [
   {
     value: 68,
     title: "Draft",
-    subtitle: "",
-    btncolor: "error",
+
     color: "#FDBA39",
     textShadow: "1px 2px 1px #FDBA39",
   },
   {
     value: 10,
     title: "Redy for review",
-    subtitle: "",
-    btncolor: "warning",
     color: "#FD4539",
     textShadow: "1px 2px 1px #FDBA39",
   },
   {
     value: 12345,
     title: "Active",
-    subtitle: "",
-    btncolor: "primary",
     color: "#419794",
     textShadow: "1px 2px 1px #419794",
   },
   {
     value: 123,
     title: "Revalidate",
-    subtitle: "",
-    btncolor: "primary",
     color: "#838585",
     textShadow: "1px 2px 1px #838585",
   },
   {
     value: 45,
     title: "In Active",
-    subtitle: "",
-    btncolor: "primary",
     color: "#838585",
     textShadow: "1px 2px 1px #838585",
   },
@@ -67,7 +58,7 @@ const ProductCard = () => {
   return (
     // #F2F0F0
     <Grid container>
-      {blogs.map((blog, index) => (
+      {DummiyData.map((blog, index) => (
         <Grid
           key={index}
           item
