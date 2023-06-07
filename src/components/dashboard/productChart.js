@@ -37,22 +37,25 @@ const ProductChart = () => {
   const [masterData, setMasterData] = useState();
   const [chartData, setChartData] = useState();
 
-  console.log(masterData, "masterData");
+  // console.log(masterData, "masterData");
   // console.log(chartData, "chartData");
 
   const data = [
-    ["Task", "Hours per Day"],
-    ["Partially  Completed", 11],
-    ["Fully Completed", 12],
-    ["No Data", 10],
+    ["attributeSetName", "Ax master"],
+    ["Partially_Completed", 11],
+    ["Fully_Completed", 12],
+    ["No_Data", 10],
   ];
+  // console.log("dashBoardData :>> ", dashBoardData);
+
+  // console.log("data :>> ", data);
 
   const options = {
     // title: [{ text: "Ax master" }],
     pieHole: 0.4,
     is3D: false,
     legend: "none",
-    colors: ["#D9D9D9", "#419794", "#FDB834"],
+    colors: ["#419794", "#D9D9D9", "#FDB834"],
   };
 
   useEffect(() => {
@@ -63,14 +66,19 @@ const ProductChart = () => {
       response.attributeSetName,
     ]);
     setMasterData(convertedData);
-    const chartData = dashBoardData?.dashboardResponses.map((item) => ({
-      PartiallyCompleted: item.partially,
-      FullCompleted: item.completed,
-      NoData: item.noData,
-    }));
-    setChartData(chartData);
-    console.log(chartData, "chartData");
+
+    const dynamicData = dashBoardData?.dashboardResponses.map((response) => {
+      return Object.entries(response).map(([key, value]) => {
+        if (key === "attributeSetName") {
+          return [key, value];
+        } else {
+          return [key, value];
+        }
+      });
+    });
+    setChartData(dynamicData);
   }, [dashBoardData]);
+  // console.log(chartData, "chartData");
 
   // const DummiyData = [
   //   {
@@ -92,9 +100,9 @@ const ProductChart = () => {
   return (
     <>
       <Grid container>
-        {masterData &&
-          masterData.length &&
-          masterData.map((blog, index) => (
+        {chartData &&
+          chartData.length &&
+          chartData.map((blog, index) => (
             <Grid
               key={index}
               item
@@ -125,7 +133,7 @@ const ProductChart = () => {
                       fontWeight: "600",
                     }}
                   >
-                    {blog}
+                    {blog.find(([key]) => key === "attributeSetName")[1]}
                   </Typography>
                 </Box>
                 <Box
@@ -138,7 +146,7 @@ const ProductChart = () => {
                     chartType="PieChart"
                     width="200px"
                     height="200px"
-                    data={data}
+                    data={blog}
                     options={options}
                     // style={{ border: ".6px solid red" }}
                   />
