@@ -5,6 +5,7 @@ import user1 from "../../../assets/images/backgrounds/u2.jpg";
 import user2 from "../../../assets/images/backgrounds/u3.jpg";
 import user3 from "../../../assets/images/backgrounds/u4.jpg";
 import styles from "./dashboard.module.css";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   IconButton,
@@ -22,45 +23,53 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
+import loginReducer from "../../../redux/reducer/loginReducer";
 
 const Chart = dynamic(() => import("react-google-charts"), { ssr: false });
-export const data = [
-  ["Task", "Hours per Day"],
-  ["Partially  Completed", 11],
-  ["Fully Completed", 12],
-  ["No Data", 10],
-];
-
-export const options = {
-  title: [
-    { text: "Ax master", textStyle: { fontSize: 16, bold: true } },
-    { text: "Keymed master", textStyle: { fontSize: 14 } },
-  ],
-  pieHole: 0.4,
-  is3D: false,
-  legend: "none",
-  colors: ["#D9D9D9", "#419794", "#FDB834"],
-};
-
-const DummiyData = [
-  {
-    title: "AX MASTER",
-  },
-  {
-    title: "KEYMED MASTER",
-  },
-  {
-    title: "HIPER MASTER",
-  },
-  {
-    title: "R_DRUGS",
-  },
-  {
-    title: "ONLINE MASTER",
-  },
-];
 
 const ProductChart = () => {
+  const dispatch = useDispatch();
+  // const router = useRouter();
+  const { dashBoardData } = useSelector((state) => {
+    return state.loginReducer;
+  });
+
+  console.log(dashBoardData, "dashBoardData");
+  const data = [
+    ["Task", "Hours per Day"],
+    ["Partially  Completed", 11],
+    ["Fully Completed", 12],
+    ["No Data", 10],
+  ];
+
+  const options = {
+    title: [
+      { text: "Ax master", textStyle: { fontSize: 16, bold: true } },
+      { text: "Keymed master", textStyle: { fontSize: 14 } },
+    ],
+    pieHole: 0.4,
+    is3D: false,
+    legend: "none",
+    colors: ["#D9D9D9", "#419794", "#FDB834"],
+  };
+
+  const DummiyData = [
+    {
+      title: "AX MASTER",
+    },
+    {
+      title: "KEYMED MASTER",
+    },
+    {
+      title: "HIPER MASTER",
+    },
+    {
+      title: "R_DRUGS",
+    },
+    {
+      title: "ONLINE MASTER",
+    },
+  ];
   return (
     <>
       <Grid container>
@@ -89,7 +98,14 @@ const ProductChart = () => {
                 }}
                 className={styles.text_title}
               >
-                <p className={styles.text_main_title}> {blog.title}</p>
+                <Typography
+                  className={styles.text_main_title}
+                  sx={{
+                    fontWeight: "600",
+                  }}
+                >
+                  {blog.title}
+                </Typography>
               </Box>
               <Box
                 sx={{

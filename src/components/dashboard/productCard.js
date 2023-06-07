@@ -19,6 +19,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
 const DummiyData = [
   {
@@ -55,6 +56,11 @@ const DummiyData = [
 ];
 
 const ProductCard = () => {
+  const dispatch = useDispatch();
+  // const router = useRouter();
+  const { dashBoardData } = useSelector((state) => {
+    return state.loginReducer;
+  });
   return (
     // #F2F0F0
     <Grid container>
