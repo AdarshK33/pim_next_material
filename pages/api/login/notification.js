@@ -19,7 +19,7 @@ function handler(req, res) {
       }
     })
     .catch((err) => {
-      console.log("error caught in -> pages/api/login/notification.js.js", err);
+      console.log("error caught in -> pages/api/login/notification.js", err);
       if (err?.response?.data) {
         const { status = {} } = err?.response;
         res.status(status).json(err.response.data.error + " " + status);

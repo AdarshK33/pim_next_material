@@ -16,7 +16,7 @@ import { client } from "../utils/axios";
 import { userAuthorities, userRole } from "../redux/actions/login";
 import { useDispatch } from "react-redux";
 import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
-import { getNotificationApi } from "../redux/actions/login";
+import { getNotificationApi, getDashBoardApi } from "../redux/actions/login";
 import { getChannelListApi } from "../redux/actions/channel";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -34,7 +34,7 @@ function MyApp(props) {
     client
       .post("api/userApi")
       .then((response) => {
-        console.log('MyApp => useEffect => response =>', response)
+        console.log("MyApp => useEffect => response =>", response);
         console.log("testing response", response?.data?.role);
         dispatch(
           userRole(
@@ -43,7 +43,7 @@ function MyApp(props) {
             "LOGIN DETAILS"
           )
         );
-        dispatch(userAuthorities(response.data.authorities))
+        dispatch(userAuthorities(response.data.authorities));
       })
       .catch((err) => {
         console.log("err in catch", err);
@@ -53,6 +53,8 @@ function MyApp(props) {
   useEffect(() => {
     dispatch(getCategoriesApi());
     dispatch(getNotificationApi());
+    dispatch(getDashBoardApi());
+
     dispatch(getChannelListApi(0, 1000));
   }, []);
   // useeffect and dispatch called -init

@@ -21,46 +21,48 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
-const DummiyData = [
-  {
-    value: 68,
-    title: "Draft",
-
-    color: "#FDBA39",
-    textShadow: "1px 2px 1px #FDBA39",
-  },
-  {
-    value: 10,
-    title: "Redy for review",
-    color: "#FD4539",
-    textShadow: "1px 2px 1px #FDBA39",
-  },
-  {
-    value: 12345,
-    title: "Active",
-    color: "#419794",
-    textShadow: "1px 2px 1px #419794",
-  },
-  {
-    value: 123,
-    title: "Revalidate",
-    color: "#838585",
-    textShadow: "1px 2px 1px #838585",
-  },
-  {
-    value: 45,
-    title: "In Active",
-    color: "#838585",
-    textShadow: "1px 2px 1px #838585",
-  },
-];
-
 const ProductCard = () => {
   const dispatch = useDispatch();
   // const router = useRouter();
   const { dashBoardData } = useSelector((state) => {
     return state.loginReducer;
   });
+
+  console.log(dashBoardData?.productStatusCounts?.DRAFT, "productStatusCounts");
+  const DummiyData = [
+    {
+      value: dashBoardData?.productStatusCounts?.DRAFT,
+      title: "Draft",
+
+      color: "#FDBA39",
+      textShadow: "1px 2px 1px #FDBA39",
+    },
+    {
+      value: dashBoardData?.productStatusCounts?.READY_FOR_REVIEW,
+      title: "Ready for review",
+      color: "#FD4539",
+      textShadow: "1px 2px 1px #FDBA39",
+    },
+    {
+      value: dashBoardData?.productStatusCounts?.ACTIVATED,
+      title: "Active",
+      color: "#419794",
+      textShadow: "1px 2px 1px #419794",
+    },
+    {
+      value: dashBoardData?.productStatusCounts?.REVALIDATE,
+      title: "Revalidate",
+      color: "#838585",
+      textShadow: "1px 2px 1px #838585",
+    },
+    {
+      value: dashBoardData?.productStatusCounts?.BLOCKED,
+      title: "In Active",
+      color: "#838585",
+      textShadow: "1px 2px 1px #838585",
+    },
+  ];
+
   return (
     // #F2F0F0
     <Grid container>
@@ -69,7 +71,7 @@ const ProductCard = () => {
           key={index}
           item
           xs={12}
-          lg={2.3}
+          lg={2.33}
           sx={{
             display: "flex",
             alignItems: "stretch",
@@ -100,7 +102,7 @@ const ProductCard = () => {
               <Divider />
               <Typography
                 sx={{
-                  fontSize: "15px",
+                  fontSize: "14px",
                   fontWeight: "500",
                   paddingTop: "5px",
                 }}

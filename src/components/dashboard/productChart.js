@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import user1 from "../../../assets/images/backgrounds/u2.jpg";
@@ -33,8 +34,12 @@ const ProductChart = () => {
   const { dashBoardData } = useSelector((state) => {
     return state.loginReducer;
   });
+  const [masterData, setMasterData] = useState();
+  const [chartData, setChartData] = useState();
 
-  console.log(dashBoardData, "dashBoardData");
+  console.log(masterData, "masterData");
+  // console.log(chartData, "chartData");
+
   const data = [
     ["Task", "Hours per Day"],
     ["Partially  Completed", 11],
@@ -43,88 +48,104 @@ const ProductChart = () => {
   ];
 
   const options = {
-    title: [
-      { text: "Ax master", textStyle: { fontSize: 16, bold: true } },
-      { text: "Keymed master", textStyle: { fontSize: 14 } },
-    ],
+    // title: [{ text: "Ax master" }],
     pieHole: 0.4,
     is3D: false,
     legend: "none",
     colors: ["#D9D9D9", "#419794", "#FDB834"],
   };
 
-  const DummiyData = [
-    {
-      title: "AX MASTER",
-    },
-    {
-      title: "KEYMED MASTER",
-    },
-    {
-      title: "HIPER MASTER",
-    },
-    {
-      title: "R_DRUGS",
-    },
-    {
-      title: "ONLINE MASTER",
-    },
-  ];
+  useEffect(() => {
+    if (!dashBoardData?.dashboardResponses) {
+      return;
+    }
+    const convertedData = dashBoardData?.dashboardResponses.map((response) => [
+      response.attributeSetName,
+    ]);
+    setMasterData(convertedData);
+    const chartData = dashBoardData?.dashboardResponses.map((item) => ({
+      PartiallyCompleted: item.partially,
+      FullCompleted: item.completed,
+      NoData: item.noData,
+    }));
+    setChartData(chartData);
+    console.log(chartData, "chartData");
+  }, [dashBoardData]);
+
+  // const DummiyData = [
+  //   {
+  //     title: "AX MASTER",
+  //   },
+  //   {
+  //     title: "KEYMED MASTER",
+  //   },
+  //   {
+  //     title: "HIPER MASTER",
+  //   },
+  //   {
+  //     title: "R_DRUGS",
+  //   },
+  //   {
+  //     title: "ONLINE MASTER",
+  //   },
+  // ];
   return (
     <>
       <Grid container>
-        {DummiyData.map((blog, index) => (
-          <Grid
-            key={index}
-            item
-            xs={12}
-            lg={2.34}
-            sx={{
-              display: "flex",
-              alignItems: "stretch",
-            }}
-          >
-            <Box
+        {masterData &&
+          masterData.length &&
+          masterData.map((blog, index) => (
+            <Grid
+              key={index}
+              item
+              xs={12}
+              lg={2.34}
               sx={{
-                p: 0,
-                width: "100%",
-                // alignItems: "stretch",
-                // border: "1px solid blue",
+                display: "flex",
+                alignItems: "stretch",
               }}
             >
               <Box
                 sx={{
-                  textAlign: "center",
+                  p: 0,
+                  width: "100%",
+                  // alignItems: "stretch",
+                  // border: "1px solid blue",
                 }}
-                className={styles.text_title}
               >
-                <Typography
-                  className={styles.text_main_title}
+                <Box
                   sx={{
-                    fontWeight: "600",
+                    textAlign: "center",
+                  }}
+                  className={styles.text_title}
+                >
+                  <Typography
+                    className={styles.text_main_title}
+                    sx={{
+                      fontWeight: "600",
+                    }}
+                  >
+                    {blog}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    // border: "5px solid green",
+                    textAlign: "center",
                   }}
                 >
-                  {blog.title}
-                </Typography>
+                  <Chart
+                    chartType="PieChart"
+                    width="200px"
+                    height="200px"
+                    data={data}
+                    options={options}
+                    // style={{ border: ".6px solid red" }}
+                  />
+                </Box>
               </Box>
-              <Box
-                sx={{
-                  // border: "5px solid green",
-                  textAlign: "center",
-                }}
-              >
-                <Chart
-                  chartType="PieChart"
-                  width="200px"
-                  height="200px"
-                  data={data}
-                  options={options}
-                  // style={{ border: ".6px solid red" }}
-                />
-              </Box>
-            </Box>
-          </Grid>
-        ))}
+            </Grid>
+          ))}
       </Grid>
       <Box
         sx={{

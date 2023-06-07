@@ -311,7 +311,7 @@ export const userLoginApi = (data) => {
           );
           console.log("userLoginApi authorities", response.data);
           dispatch(userAuthorities(response.data.result.authorities));
-          dispatch(getDashBoardApi());
+          // dispatch(getDashBoardApi());
 
           console.log(
             "response?.data?.result?.role",
