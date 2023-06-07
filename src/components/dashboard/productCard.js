@@ -28,7 +28,7 @@ const ProductCard = () => {
     return state.loginReducer;
   });
 
-  console.log(dashBoardData?.productStatusCounts?.DRAFT, "productStatusCounts");
+  // console.log(dashBoardData?.productStatusCounts?.DRAFT, "productStatusCounts");
   const DummiyData = [
     {
       value: dashBoardData?.productStatusCounts?.DRAFT,

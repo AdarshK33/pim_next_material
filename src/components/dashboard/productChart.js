@@ -37,7 +37,7 @@ const ProductChart = () => {
   const [masterData, setMasterData] = useState();
   const [chartData, setChartData] = useState();
 
-  console.log(masterData, "masterData");
+  // console.log(masterData, "masterData");
   // console.log(chartData, "chartData");
 
   const data = [
@@ -46,9 +46,9 @@ const ProductChart = () => {
     ["Fully_Completed", 12],
     ["No_Data", 10],
   ];
-  console.log("dashBoardData :>> ", dashBoardData);
+  // console.log("dashBoardData :>> ", dashBoardData);
 
-  console.log("data :>> ", data);
+  // console.log("data :>> ", data);
 
   const options = {
     // title: [{ text: "Ax master" }],
@@ -78,7 +78,7 @@ const ProductChart = () => {
     });
     setChartData(dynamicData);
   }, [dashBoardData]);
-  console.log(chartData, "chartData");
+  // console.log(chartData, "chartData");
 
   // const DummiyData = [
   //   {
