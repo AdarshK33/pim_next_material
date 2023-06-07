@@ -214,7 +214,7 @@ const ProductViewDetails = (props) => {
           <TextField
             id="outlined-basic"
             label={sectionItem.displayName}
-            variant="outlined"
+            variant="standard"
             name={sectionItem.keyName}
             value={getInputValue(sectionItem.keyName)}
             // onChange={inputChangeHandler}
