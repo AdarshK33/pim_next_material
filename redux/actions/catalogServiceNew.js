@@ -909,10 +909,12 @@ export const updateCategoryApis = (data) => {
   };
 };
 
-export const productSearchApis = (status) => {
+export const productSearchApis = (status, key) => {
   const data = {
     productStatus: status,
+    searchKey: key,
   };
+  // console.log(data, "productSearch API");
   return (dispatch) => {
     dispatch(productSearchDataLoading("productSearch....", "productSearch"));
     client
@@ -922,6 +924,7 @@ export const productSearchApis = (status) => {
         if (response.status === 200) {
           // toast.info("Product search  successfully !!!");
           dispatch(productSearchDataSuccess(response?.data?.result));
+          dispatch(getAllProductListSuccess(response?.data?.result));
         } else throw new Error("");
       })
       .catch((err) => {
