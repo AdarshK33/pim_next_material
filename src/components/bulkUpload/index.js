@@ -30,6 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   bulkUploadApi,
   getBuilkDetailsListApi,
+  bulkExportApis,
 } from "../../../redux/actions/catalogServiceNew";
 import { uploadClient } from "../../../utils/axios";
 
@@ -50,11 +51,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "react-js-pagination";
 const BulkUpload = (props) => {
-  const { bulkData, loading } = useSelector((state) => {
+  const { bulkData, loading, bulkExport } = useSelector((state) => {
     return state.catalogServiceNewReducer;
   });
   const dispatch = useDispatch();
-  // console.log("ppppppppppp", bulkData);
+  console.log("bulkExport", bulkExport);
   const { user: { at = "" } = {}, loggedIn } = props.user;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -92,16 +93,6 @@ const BulkUpload = (props) => {
     //   });
   };
 
-  const tableData = [];
-
-  for (let i = 1; i <= 5; i++) {
-    tableData.push({
-      filename: `file${i} `,
-      UploadedBy: i + "/5" + "/2023",
-      UpdateAt: i + "/5" + "/2023",
-    });
-  }
-
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
@@ -118,6 +109,11 @@ const BulkUpload = (props) => {
   };
 
   /*-----------------Pagination------------------*/
+
+  const handleDownload = (data) => {
+    // window.open(data, "_blank");
+    dispatch(bulkExportApis(data));
+  };
 
   return (
     <>

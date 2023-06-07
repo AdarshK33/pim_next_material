@@ -53,6 +53,9 @@ import {
   PRODUCT_SEARCH_DATA_LOADING,
   PRODUCT_SEARCH_DATA_SUCCESS,
   PRODUCT_SEARCH_DATA_FAILURE,
+  BULK_EXPORT_DATA_LOADING,
+  BULK_EXPORT_DATA_SUCCESS,
+  BULK_EXPORT_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -376,6 +379,25 @@ export const productSearchDataSuccess = (data) => {
 export const productSearchDataFailure = (error) => {
   return {
     type: PRODUCT_SEARCH_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const bulkExportDataLoading = () => {
+  return {
+    type: BULK_EXPORT_DATA_LOADING,
+  };
+};
+
+export const bulkExportDataSuccess = (data) => {
+  return {
+    type: BULK_EXPORT_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const bulkExportDataFailure = (error) => {
+  return {
+    type: BULK_EXPORT_DATA_FAILURE,
     payload: error,
   };
 };
@@ -936,6 +958,39 @@ export const productSearchApis = (status, key) => {
         dispatch(
           productSearchDataFailure(err, "Something went wrong", "productSearch")
         );
+      });
+  };
+};
+
+export const bulkExportApis = (id) => {
+  let data = {
+    batchDetailsId: id,
+  };
+  return (dispatch) => {
+    dispatch(bulkExportDataLoading("EXPORT....", "EXPORT"));
+    client
+      .post("/api/catalogServiceNew/bulkExport", data)
+      .then((response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          toast.info("Product updated successfully !!!");
+
+          dispatch(
+            bulkExportDataSuccess(
+              response.data,
+              " status Successfully",
+              "status EXPORT"
+            )
+          );
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        toast.error("Export failed!!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/productUpdate",
+          err
+        );
+        dispatch(bulkExportDataFailure(err, "Something went wrong", " EXPORT"));
       });
   };
 };

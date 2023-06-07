@@ -323,8 +323,8 @@ const AllProducts = (props) => {
 
               <Box sx={{ maxWidth: 250 }}>
                 {catalogServiceNewReducer?.getAllProducts !== null &&
-                  Object.entries(catalogServiceNewReducer?.getAllProducts)
-                    .length && (
+                  catalogServiceNewReducer?.getAllProducts !== undefined &&
+                  (catalogServiceNewReducer?.getAllProducts).length !== 0 && (
                     <Autocomplete
                       freeSolo
                       id="free-solo-demo"

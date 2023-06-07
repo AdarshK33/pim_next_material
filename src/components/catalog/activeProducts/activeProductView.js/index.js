@@ -227,9 +227,9 @@ const ProductViewDetails = (props) => {
   const images = [
     {
       original:
-        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/2-1685701543077-.jpg",
+        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/logo_2_2022%20%281%29-1686159756837-.jpg",
       thumbnail:
-        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/RI/2-1685701543077-.jpg",
+        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/logo_2_2022%20%281%29-1686159756837-.jpg",
     },
   ];
 

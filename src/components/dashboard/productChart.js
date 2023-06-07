@@ -141,6 +141,7 @@ const ProductChart = () => {
                     // border: "5px solid green",
                     textAlign: "center",
                   }}
+                  className={styles.main_chart_dashboard}
                 >
                   <Chart
                     chartType="PieChart"

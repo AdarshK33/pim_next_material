@@ -1,3 +1,4 @@
+// http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/export/381
 import { catalogServiceNew } from "../../../utils/axios";
 import withSession from "../../../utils/session";
 
@@ -5,10 +6,10 @@ function handler(req, res) {
   const body = req.body;
   const { user: { at = "" } = {}, loggedIn } = req.session;
 
-  // https://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/export/9?filetype=JSON
+  console.log(body.batchDetailsId, "body.batchDetailsId");
   const config = {
     method: "post",
-    url: `/catalog/export/${body.channelId}?filetype=${body.filetype}`,
+    url: `/catalog/export/${body.batchDetailsId}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
@@ -19,22 +20,14 @@ function handler(req, res) {
   catalogServiceNew(config)
     .then((response) => {
       if (response.status === 200) {
-        // const csvData = new Blob([response], {
-        //   type: "text/csv;charset=utf-8;",
-        // });
-        // const csvURL = window.URL.createObjectURL(csvData);
-        // const tempLink = document.createElement("a");
-        // tempLink.href = csvURL;
-        // tempLink.setAttribute("download", "catalog.csv");
-        // tempLink.click();
         res.status(200).json(response.data);
-        // console.log("response.data.result", response.data);
+
         Promise.resolve();
       }
     })
     .catch((err) => {
       console.log(
-        "error caught in -> pages/api/catalogServiceNew/publishcatalog or active product csv download",
+        "error caught in -> pages/api/catalogServiceNew/bulkExport",
         err
       );
       if (err?.response) {
