@@ -16,6 +16,7 @@ import {
   Grid,
   Button,
 } from "@mui/material";
+import { Eye, Download } from "react-feather";
 
 import styles from "./bulk.module.css";
 import { useDropzone } from "react-dropzone";
@@ -156,7 +157,9 @@ const BulkUpload = (props) => {
                       <TableCell>CREATED AT</TableCell>
 
                       <TableCell>CREATED BY</TableCell>
-                      <TableCell align="right">UPDATED BY</TableCell>
+                      <TableCell>DOWNLOAD</TableCell>
+
+                      {/* <TableCell align="right">UPDATED BY</TableCell> */}
                       {/* <TableCell align="right">PRECEDENCE</TableCell> */}
                       {/* <TableCell align="right">STATUS</TableCell> */}
                       {/* <TableCell align="right">ACTION</TableCell> */}
@@ -211,12 +214,24 @@ const BulkUpload = (props) => {
                           <TableCell align="right">{row.fileName}</TableCell>
                           <TableCell align="right">{row.createdAt}</TableCell>
                           <TableCell align="right">{row.createdBy}</TableCell>
-                          <TableCell align="right">{row.updatedBy}</TableCell>
+                          {/* <TableCell align="right">{row.updatedBy}</TableCell> */}
                           {/* <TableCell align="right">{row.status}</TableCell> */}
 
                           {/* <TableCell align="right">
                             {row?.status === true ? "Active" : "In-Active"}
                           </TableCell> */}
+                          <div className="action_center product_Detials_Actions">
+                            <Download
+                              style={{
+                                textAlign: "right",
+                                fontSize: "xx-small",
+                                color: "#419794",
+                                marginLeft: "20px",
+                                padding: "1px",
+                              }}
+                              onClick={() => handleDownload(row.id)}
+                            />
+                          </div>
                         </TableRow>
                       </TableBody>
                     ))
