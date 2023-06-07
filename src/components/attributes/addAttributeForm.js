@@ -30,7 +30,7 @@ import {
 } from "../../../redux/actions/channel";
 
 function AddAttributeForm({ classModal, id }) {
-  console.log("classModal", classModal);
+  // console.log("classModal", classModal);
   const dispatch = useDispatch();
 
   const { loginReducer, catalogQueryReducer, loading } = useSelector(
@@ -40,14 +40,14 @@ function AddAttributeForm({ classModal, id }) {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("catalogQueryReducer", catalogQueryReducer);
+  // console.log("catalogQueryReducer", catalogQueryReducer);
 
   const dropdownOptions = catalogQueryReducer?.catagories?.map((item) => ({
     value: item.id,
     name: item.name,
   }));
 
-  console.log("cccccccccccccccc", dropdownOptions);
+  // console.log("cccccccccccccccc", dropdownOptions);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -86,7 +86,7 @@ function AddAttributeForm({ classModal, id }) {
     setCategory(e.target.value);
   };
 
-  console.log("name,active,description", name, active, description);
+  // console.log("name,active,description", name, active, description);
 
   const categoryValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -174,10 +174,10 @@ function AddAttributeForm({ classModal, id }) {
       (activeValidations() == true)
       // (categoryValidations() == true)
     ) {
-      console.log("inside the if");
+      // console.log("inside the if");
       return true;
     } else {
-      console.log("inside the else");
+      // console.log("inside the else");
       return false;
     }
   };

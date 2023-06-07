@@ -53,7 +53,7 @@ const BulkUpload = (props) => {
     return state.catalogServiceNewReducer;
   });
   const dispatch = useDispatch();
-  console.log("ppppppppppp", bulkData);
+  // console.log("ppppppppppp", bulkData);
   const { user: { at = "" } = {}, loggedIn } = props.user;
   const [currentPage, setCurrentPage] = useState(1);
 

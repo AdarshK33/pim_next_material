@@ -36,10 +36,10 @@ function CustomLoader() {
       catalogServiceNewReducer?.loading == true ||
       loginReducer?.loading == true
     ) {
-      console.log("hello  if loader called");
+      // console.log("hello  if loader called");
       setLoader(true);
     } else {
-      console.log("hello  else loader called");
+      // console.log("hello  else loader called");
 
       setLoader(false);
     }

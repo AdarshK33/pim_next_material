@@ -66,7 +66,7 @@ const AllProducts = (props) => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  console.log("productCount?", catalogServiceNewReducer);
+  // console.log("productCount?", catalogServiceNewReducer);
   // const tableData = [];
   // for (let i = 1; i <= 5; i++) {
   //   tableData.push({
@@ -222,7 +222,7 @@ const AllProducts = (props) => {
   };
 
   const searchHandler = (e, value) => {
-    console.log(value?.itemId, "hello e.target.value");
+    // console.log(value?.itemId, "hello e.target.value");
     setSearchKeyValue(value?.itemId);
   };
 

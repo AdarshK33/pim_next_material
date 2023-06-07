@@ -42,7 +42,7 @@ const ChannelAddAttributes = () => {
     return state.channelReducer;
   });
 
-  console.log("updateChannelAttribute", updateChannelAttribute);
+  // console.log("updateChannelAttribute", updateChannelAttribute);
   const { authorities } = useSelector((state) => state.loginReducer);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,7 +65,7 @@ const ChannelAddAttributes = () => {
   }, []);
 
   useEffect(() => {
-    console.log("check :>> ");
+    // console.log("check :>> ");
     if (updateChannelAttribute) {
       dispatch(channelAttributeApiList(router.query.channelName, 0, 5));
       dispatch(updateChannelAttributeSuccess()); //null
