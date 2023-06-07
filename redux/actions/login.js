@@ -33,6 +33,9 @@ import {
   NOTIFICATION_DATA_SUCCESS,
   NOTIFICATION_DATA_FAILURE,
   USER_AUTHORITIES,
+  GET_DASHBOARD_DATA_LOADING,
+  GET_DASHBOARD_DATA_SUCCESS,
+  GET_DASHBOARD_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -76,12 +79,12 @@ export const userEmail = (data) => {
   };
 };
 
-export const userAuthorities = data => {
+export const userAuthorities = (data) => {
   return {
     type: USER_AUTHORITIES,
     payload: data,
   };
-}
+};
 
 export const getUserDataLoading = () => {
   return {
@@ -249,6 +252,24 @@ export const getNoificationDataFailure = (error) => {
   };
 };
 
+export const getDashBoardDataLoading = () => {
+  return {
+    type: GET_DASHBOARD_DATA_LOADING,
+  };
+};
+export const getDashBoardDataSuccess = (data) => {
+  return {
+    type: GET_DASHBOARD_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getDashBoardDataFailure = (error) => {
+  return {
+    type: GET_DASHBOARD_DATA_FAILURE,
+    payload: error,
+  };
+};
+
 export const userLoginApi = (data) => {
   // console.log("hello  userLoginApi called",data)
   return (dispatch) => {
@@ -288,8 +309,10 @@ export const userLoginApi = (data) => {
               "LOGIN DETAILS"
             )
           );
-          console.log('userLoginApi authorities', response.data)
-          dispatch(userAuthorities(response.data.result.authorities))
+          console.log("userLoginApi authorities", response.data);
+          dispatch(userAuthorities(response.data.result.authorities));
+          // dispatch(getDashBoardApi());
+
           console.log(
             "response?.data?.result?.role",
             response?.data?.result?.role
@@ -540,6 +563,26 @@ export const getNotificationApi = () => {
         console.log("error caught in -> actions/login/getNoificationApi", err);
 
         dispatch(getNoificationDataFailure(err));
+      });
+  };
+};
+
+export const getDashBoardApi = () => {
+  return (dispatch) => {
+    dispatch(getDashBoardDataLoading("..DashBoard..", "DashBoard"));
+    client
+      .get("/api/login/dashBoard")
+      .then((response) => {
+        // console.log("hello api response",response.status)
+        //   console.log(response)
+        if (response?.status === 200) {
+          console.log("hello API  DashBoard SUCCESS2", response);
+          dispatch(getDashBoardDataSuccess(response.data));
+        }
+      })
+      .catch((err) => {
+        console.log("actions/login/ GET DashBoard =>FAILURE", err);
+        dispatch(getDashBoardDataFailure(err));
       });
   };
 };

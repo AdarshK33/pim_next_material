@@ -35,6 +35,9 @@ import {
   NOTIFICATION_DATA_SUCCESS,
   NOTIFICATION_DATA_FAILURE,
   USER_AUTHORITIES,
+  GET_DASHBOARD_DATA_LOADING,
+  GET_DASHBOARD_DATA_SUCCESS,
+  GET_DASHBOARD_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -57,7 +60,8 @@ const initialState = {
   notifyData: {}, //notification data
   // accessToken:{},
   // refreshToken:{}
-  authorities: ''
+  authorities: "",
+  dashBoardData: {},
 };
 const loginReducer = (state = initialState, action) => {
   // console.log("hello loginReducer called",action)
@@ -295,7 +299,26 @@ const loginReducer = (state = initialState, action) => {
     case USER_AUTHORITIES:
       return {
         ...state,
-        authorities: action.payload
+        authorities: action.payload,
+      };
+    case GET_DASHBOARD_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_DASHBOARD_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        dashBoardData: action.payload,
+        error: {},
+      };
+    case GET_DASHBOARD_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        dashBoardData: [],
+        error: action,
       };
 
     default:

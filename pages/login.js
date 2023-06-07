@@ -84,7 +84,7 @@ const Login = (user) => {
   }, [itemData]);
 
   useEffect(() => {
-    dispatch(getNotificationApi());
+    // dispatch(getNotificationApi());
     if (isLogin === 201 && userRole !== "ADMIN") {
       Router.push("/allProducts");
     } else if (isLogin === 201 && userRole === "ADMIN") {
