@@ -69,7 +69,7 @@ const initialState = {
   // refreshToken:{}
 };
 const catalogServiceNewReducer = (state = initialState, action) => {
-  console.log("hello search called", action);
+  // console.log("hello search called", action);
   switch (action.type) {
     case ATTRIBUTE_LIST_LOADING:
       return {

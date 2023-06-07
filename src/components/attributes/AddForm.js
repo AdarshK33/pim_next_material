@@ -36,14 +36,14 @@ function AddForm({ classModal }) {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("catalogQueryReducer", catalogQueryReducer);
+  // console.log("catalogQueryReducer", catalogQueryReducer);
 
   const dropdownOptions = catalogQueryReducer?.catagories?.map((item) => ({
     value: item.id,
     name: item.name,
   }));
 
-  console.log("cccccccccccccccc", dropdownOptions);
+  // console.log("cccccccccccccccc", dropdownOptions);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -188,7 +188,7 @@ function AddForm({ classModal }) {
         active: active,
         category: category,
       };
-      console.log("hello ADD infoData", data);
+      // console.log("hello ADD infoData", data);
 
       dispatch(createAttributeSetApi(data));
       setIsLoading(false);
@@ -220,8 +220,8 @@ function AddForm({ classModal }) {
               variant="standard"
               value={description}
               onChange={descHandler}
-            // multiline
-            // rows={3}
+              // multiline
+              // rows={3}
             />
           </Grid>
 

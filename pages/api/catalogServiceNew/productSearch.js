@@ -5,14 +5,27 @@ function handler(req, res) {
   const body = req.body;
   const { user: { at = "" } = {}, loggedIn } = req.session;
 
-  const config = {
-    method: "get",
-    url: `/catalog/search?productStatus=${body.productStatus}`,
-    headers: {
-      Authorization: `Bearer ${at}`,
-    },
-    // data: body,
-  };
+  let config;
+  if (body.productStatus && body.searchKey) {
+    //http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/search?productStatus=DRAFT&searchKey=ASPP
+    config = {
+      method: "get",
+      url: `/catalog/search?productStatus=${body.productStatus}&searchKey=${body.searchKey}`,
+      headers: {
+        Authorization: `Bearer ${at}`,
+      },
+      // data: body,
+    };
+  } else {
+    config = {
+      method: "get",
+      url: `/catalog/search?productStatus=${body.productStatus}`,
+      headers: {
+        Authorization: `Bearer ${at}`,
+      },
+      // data: body,
+    };
+  }
 
   catalogServiceNew(config)
     .then((response) => {

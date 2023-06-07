@@ -62,10 +62,10 @@ const ProductChart = () => {
     if (!dashBoardData?.dashboardResponses) {
       return;
     }
-    const convertedData = dashBoardData?.dashboardResponses.map((response) => [
-      response.attributeSetName,
-    ]);
-    setMasterData(convertedData);
+    // const convertedData = dashBoardData?.dashboardResponses.map((response) => [
+    //   response.attributeSetName,
+    // ]);
+    // setMasterData(convertedData);
 
     const dynamicData = dashBoardData?.dashboardResponses.map((response) => {
       return Object.entries(response).map(([key, value]) => {

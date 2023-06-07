@@ -57,7 +57,7 @@ const AllProducts = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [value, setValue] = useState(0);
   const [progress, setProgress] = React.useState(0);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchKeyValue, setSearchKeyValue] = useState("");
   const [searchAllObject, setSearchAllObject] = useState("");
   const [countState, setCountState] = useState("");
 
@@ -66,7 +66,7 @@ const AllProducts = (props) => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  console.log("productCount?", catalogServiceNewReducer);
+  // console.log("productCount?", catalogServiceNewReducer);
   // const tableData = [];
   // for (let i = 1; i <= 5; i++) {
   //   tableData.push({
@@ -105,21 +105,39 @@ const AllProducts = (props) => {
   };
 
   useEffect(() => {
-    if (value === 0) {
-      //default call
-      setCountState("DRAFT");
-      dispatch(getAllProductListApi(0, 10, "DRAFT"));
-      dispatch(productSearchApis("DRAFT"));
-    } else if (value === 1) {
-      setCountState("READY_FOR_REVIEW");
-      dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
-      dispatch(productSearchApis("READY_FOR_REVIEW"));
-    } else if (value === 2) {
-      setCountState("REVALIDATE");
-      dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
-      dispatch(productSearchApis("REVALIDATE"));
+    if (searchKeyValue) {
+      if (value === 0) {
+        //default call
+        setCountState("DRAFT");
+        // dispatch(getAllProductListApi(0, 10, "DRAFT"));
+        dispatch(productSearchApis("DRAFT", searchKeyValue));
+      } else if (value === 1) {
+        setCountState("READY_FOR_REVIEW");
+        // dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
+        dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
+      } else if (value === 2) {
+        setCountState("REVALIDATE");
+        // dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
+        dispatch(productSearchApis("REVALIDATE", searchKeyValue));
+      }
+    } else {
+      setSearchKeyValue();
+      if (value === 0) {
+        //default call
+        setCountState("DRAFT");
+        dispatch(getAllProductListApi(0, 10, "DRAFT"));
+        dispatch(productSearchApis("DRAFT", searchKeyValue));
+      } else if (value === 1) {
+        setCountState("READY_FOR_REVIEW");
+        dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
+        dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
+      } else if (value === 2) {
+        setCountState("REVALIDATE");
+        dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
+        dispatch(productSearchApis("REVALIDATE", searchKeyValue));
+      }
     }
-  }, [value]);
+  }, [value, searchKeyValue]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -204,17 +222,18 @@ const AllProducts = (props) => {
   };
 
   const searchHandler = (e, value) => {
-    console.log(value, "hello e.target.value");
-    setSearchValue(value);
+    // console.log(value?.itemId, "hello e.target.value");
+    setSearchKeyValue(value?.itemId);
   };
 
-  // const searchDataHandler = () => {
+  // const searchHandler = (e, searchKey) => {
+  //   setSearchKeyValue(searchKey);
   //   if (value === 0) {
-  //     dispatch(getAllProductListApi(0, 5, "DRAFT", searchValue));
+  //     dispatch(productSearchApis("DRAFT", searchKey));
   //   } else if (value === 1) {
-  //     dispatch(getAllProductListApi(0, 5, "READY_FOR_REVIEW", searchValue));
+  //     dispatch(productSearchApis("READY_FOR_REVIEW", searchKey));
   //   } else if (value === 2) {
-  //     dispatch(getAllProductListApi(0, 5, "REVALIDATE", searchValue));
+  //     dispatch(productSearchApis("REVALIDATE", searchKey));
   //   }
   // };
 
@@ -309,15 +328,18 @@ const AllProducts = (props) => {
                     <Autocomplete
                       freeSolo
                       id="free-solo-demo"
-                      options={catalogServiceNewReducer?.productSearch || ""}
+                      options={
+                        catalogServiceNewReducer?.productSearch?.content || ""
+                      }
                       getOptionLabel={(option) =>
-                        `${option.itemId ?? ""} / ${option.itemName ?? ""}`
+                        `${option.itemId ?? ""} /${option.itemName ?? ""}`
                       }
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           label="Id/Name.."
                           className={styles.input_search_product}
+                          disable={true}
                         />
                       )}
                       onChange={(event, value) => {
@@ -335,7 +357,7 @@ const AllProducts = (props) => {
                         const filteredOptions = options.filter((option) => {
                           const optionTitle =
                             (option.itemId ?? "") +
-                            " / " +
+                            " /" +
                             (option.itemName ?? "");
                           return optionTitle.toLowerCase().includes(inputValue);
                         });

@@ -70,7 +70,7 @@ const UpdateForm = ({ classModal }) => {
         },
       };
 
-      console.log("updateData", info);
+      // console.log("updateData", info);
 
       dispatch(updateChannelApi(info));
     }
@@ -140,8 +140,7 @@ const UpdateForm = ({ classModal }) => {
     <>
       <div className={styles.add_title}> Update Channel</div>
       {channelReducer?.loading ? <p>Loading...</p> : null}
-      {!channelReducer?.loading &&
-      channelReducer?.channelById ? (
+      {!channelReducer?.loading && channelReducer?.channelById ? (
         <form>
           <Grid container>
             <Grid item xs={12}>

@@ -29,7 +29,7 @@ const Notification = () => {
   const { userRole, notifyData, loading } = useSelector((state) => {
     return state.loginReducer;
   });
-  console.log("notifyData", notifyData);
+  // console.log("notifyData", notifyData);
 
   // console.log("extractedValue", extractedValue);
 
@@ -49,7 +49,7 @@ const Notification = () => {
     }
     // const obj = notifyData;
     const mappedArray = Object.entries(obj).map(([key, value]) => {
-      console.log("hello key", key, value);
+      // console.log("hello key", key, value);
       if (key) {
         return value;
       }
@@ -57,7 +57,7 @@ const Notification = () => {
     setArrayData(mappedArray);
   };
 
-  console.log("arrayData", arrayData[0]);
+  // console.log("arrayData", arrayData[0]);
   const handleClose4 = () => {
     setNotificationCount(0);
     setAnchorEl66(null);
