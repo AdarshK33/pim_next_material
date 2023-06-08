@@ -1,4 +1,11 @@
-import React from "react";
+import React, {
+  Fragment,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import Image from "next/image";
 import { Edit2, Bell, Search, Download } from "react-feather";
 import styles from "./dashboard.module.css";
@@ -30,11 +37,35 @@ const ProductAlert = () => {
   const dispatch = useDispatch();
   // const router = useRouter();
 
-  const { dashBoardData } = useSelector((state) => {
-    return state.loginReducer;
-  });
+  const { loading, dashBoardData, notifyData, userRole } = useSelector(
+    (state) => {
+      return state.loginReducer;
+    }
+  );
 
   const [expanded, setExpanded] = React.useState(false);
+  const [arrayData, setArrayData] = useState(0);
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    const extractedValue = Object.keys(notifyData)[0];
+    setNotificationCount(extractedValue);
+    const result = sectionAccordionSetUpRender(notifyData);
+  }, [notifyData]);
+
+  const sectionAccordionSetUpRender = (obj) => {
+    if (!obj) {
+      return;
+    }
+    // const obj = notifyData;
+    const mappedArray = Object.entries(obj).map(([key, value]) => {
+      // console.log("hello key", key, value);
+      if (key) {
+        return value;
+      }
+    });
+    setArrayData(mappedArray);
+  };
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -60,89 +91,54 @@ const ProductAlert = () => {
             onChange={handleChange("panel1")}
           >
             <Box sx={{ display: "flex", flexShrink: 0 }}>
-              <Typography sx={{ width: "5%", flexShrink: 0 }}>
-                <Bell width="30" height="25" />
-              </Typography>
+              {loading === false && notificationCount > 0 ? (
+                <>
+                  <Typography sx={{ width: "5%", flexShrink: 0 }}>
+                    <Bell width="30" height="25" color="red" />
+                    {/* <span className={styles.notify_number}>
+                      {notificationCount}
+                    </span> */}
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography sx={{ width: "5%", flexShrink: 0 }}>
+                    <Bell width="30" height="25" />
+                  </Typography>
+                </>
+              )}
+
               <Typography
                 sx={{ color: "#00000", fontSize: "18px", fontWeight: "600" }}
               >
                 Actions Pending & Recent Updates
               </Typography>
             </Box>
-            {/* <AccordionDetails>
-              <Typography className={styles.product_alert_dropdown_message}>
-                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-                feugiat. Aliquam eget maximus est, id dignissim quam.
-              </Typography>
-            </AccordionDetails> */}
           </Accordion>
-          <Accordion
-            expanded={expanded === "panel2"}
-            onChange={handleChange("panel2")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2bh-content"
-              id="panel2bh-header"
-            >
-              {/* <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                Users
-              </Typography> */}
-              <Typography sx={{ color: "text.secondary" }}>
-                18 Products are under review and waiting for Approval
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography className={styles.product_alert_dropdown_message}>
-                **No new message
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel3"}
-            onChange={handleChange("panel3")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3bh-content"
-              id="panel3bh-header"
-            >
-              {/* <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                Advanced settings
-              </Typography> */}
-              <Typography sx={{ color: "text.secondary" }}>
-                2 new products are under active now and waiting to push to
-                respective channels
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography className={styles.product_alert_dropdown_message}>
-                **No new message
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel4"}
-            onChange={handleChange("panel4")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel4bh-content"
-              id="panel4bh-header"
-            >
-              {/* <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                Personal data
-              </Typography> */}
-              <Typography sx={{ color: "text.secondary" }}>
-                11 products got removed from 2 channels
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography className={styles.product_alert_dropdown_message}>
-                **No new message
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
+
+          {arrayData &&
+            arrayData !== null &&
+            arrayData !== undefined &&
+            arrayData.length !== 0 &&
+            arrayData[0].map((alert, index) => (
+              <Accordion key={index}>
+                <AccordionSummary>
+                  {userRole === "ADMIN" ? (
+                    <Typography sx={{ color: "text.secondary" }}>
+                      Item ID {alert.getPimModelCode} has pending validation in
+                      attribute set {alert.getAttributeSet}.
+                    </Typography>
+                  ) : (
+                    <Typography>
+                      Item ID {alert.getPimModelCode} is pending validation
+                    </Typography>
+                  )}
+                  {/* <Typography sx={{ color: "text.secondary" }}>
+                    18 Products are under review and waiting for Approval
+                  </Typography> */}
+                </AccordionSummary>
+              </Accordion>
+            ))}
         </CardContent>
       </Card>
     </Grid>

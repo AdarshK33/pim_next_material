@@ -942,11 +942,15 @@ export const productSearchApis = (status, key) => {
     client
       .post("/api/catalogServiceNew/productSearch", data)
       .then(async (response) => {
-        // console.log("rrrrrr", response);
+        // console.log("rrrrrr", response?.data?.result.totalElements);
         if (response.status === 200) {
           // toast.info("Product search  successfully !!!");
           dispatch(productSearchDataSuccess(response?.data?.result));
-          dispatch(getAllProductListSuccess(response?.data?.result));
+
+          if (response?.data?.result?.totalElements == 1) {
+            // console.log("search successfully");
+            dispatch(getAllProductListSuccess(response?.data?.result));
+          }
         } else throw new Error("");
       })
       .catch((err) => {
