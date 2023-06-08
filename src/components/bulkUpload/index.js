@@ -153,6 +153,8 @@ const BulkUpload = (props) => {
                       <TableCell>CREATED AT</TableCell>
 
                       <TableCell>CREATED BY</TableCell>
+                      <TableCell>STATUS</TableCell>
+
                       <TableCell>DOWNLOAD</TableCell>
 
                       {/* <TableCell align="right">UPDATED BY</TableCell> */}
@@ -208,26 +210,54 @@ const BulkUpload = (props) => {
                             {i + 1 + indexOfFirstRecord}
                           </TableCell>
                           <TableCell align="right">{row.fileName}</TableCell>
-                          <TableCell align="right">{row.createdAt}</TableCell>
+                          <TableCell align="right">
+                            {
+                              new Date(row.createdAt)
+                                .toISOString()
+                                .split("T")[0]
+                            }{" "}
+                            {new Date(row.createdAt).toLocaleTimeString()}
+                          </TableCell>
                           <TableCell align="right">{row.createdBy}</TableCell>
+                          <TableCell align="right">{row.status}</TableCell>
+
                           {/* <TableCell align="right">{row.updatedBy}</TableCell> */}
                           {/* <TableCell align="right">{row.status}</TableCell> */}
 
                           {/* <TableCell align="right">
                             {row?.status === true ? "Active" : "In-Active"}
                           </TableCell> */}
-                          <div className="action_center product_Detials_Actions">
-                            <Download
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "#419794",
-                                marginLeft: "20px",
-                                padding: "1px",
-                              }}
-                              onClick={() => handleDownload(row.id)}
-                            />
-                          </div>
+                          {row.status === "PARTIALLY_SAVED" ? (
+                            <>
+                              <div className="action_center product_Detials_Actions">
+                                <Download
+                                  style={{
+                                    textAlign: "right",
+                                    fontSize: "xx-small",
+                                    color: "#419794",
+                                    marginLeft: "20px",
+                                    padding: "1px",
+                                  }}
+                                  onClick={() => handleDownload(row.id)}
+                                />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="action_center product_Detials_Actions">
+                                <Download
+                                  style={{
+                                    textAlign: "right",
+                                    fontSize: "xx-small",
+                                    color: "#979494",
+                                    marginLeft: "20px",
+                                    padding: "1px",
+                                  }}
+                                  // onClick={() => handleDownload(row.id)}
+                                />
+                              </div>
+                            </>
+                          )}
                         </TableRow>
                       </TableBody>
                     ))

@@ -66,7 +66,7 @@ const Login = (user) => {
 
   const submitHandler = () => {
     if (username === "" || password === "") {
-      alert("Plase Enter UserName and Password");
+      toast.error("Please enter UserName and Password");
     } else {
       let loginData = {
         email: username,
