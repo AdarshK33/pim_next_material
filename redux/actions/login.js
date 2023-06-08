@@ -555,7 +555,7 @@ export const getNotificationApi = () => {
     client
       .get("/api/login/notification")
       .then((response) => {
-        console.log("getNoificationDataSuccess", response);
+        // console.log("getNoificationDataSuccess", response);
         if (response?.status === 200) {
           dispatch(getNoificationDataSuccess(response.data));
         }

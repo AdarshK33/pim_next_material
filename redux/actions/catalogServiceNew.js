@@ -446,7 +446,7 @@ export const getAllProductListApi = (pageNo, pageSize, status, itemId) => {
     //   };
   };
 
-  console.log(data, "data here");
+  // console.log(data, "data here");
   return (dispatch) => {
     dispatch(getAllProductListLoading("ATTRIBUTE....", "ATTRIBUTE"));
     client
@@ -583,7 +583,7 @@ export const getCategoriesApi = () => {
     client
       .get("/api/catalogQuery/allCategories")
       .then((response) => {
-        console.log(" categories response=>", response);
+        // console.log(" categories response=>", response);
         dispatch(getCategoriesSuccess(response.data));
       })
       .catch((err) => {
