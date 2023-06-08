@@ -38,3 +38,6 @@
   font-size: 12px;
   font-family: 400;
 }
+.main_chart_dashboard div {
+  margin: auto !important;
+}

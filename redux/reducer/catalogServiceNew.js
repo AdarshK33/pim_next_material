@@ -45,6 +45,9 @@ import {
   PRODUCT_SEARCH_DATA_LOADING,
   PRODUCT_SEARCH_DATA_SUCCESS,
   PRODUCT_SEARCH_DATA_FAILURE,
+  BULK_EXPORT_DATA_LOADING,
+  BULK_EXPORT_DATA_SUCCESS,
+  BULK_EXPORT_DATA_FAILURE,
 } from "../types/types";
 
 const initialState = {
@@ -65,6 +68,7 @@ const initialState = {
   catagoriesAdd: {},
   mediaUpload: {},
   productSearch: [],
+  bulkExport: {},
 
   // refreshToken:{}
 };
@@ -372,6 +376,25 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         error: action,
       };
 
+    case BULK_EXPORT_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case BULK_EXPORT_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        bulkExport: action.payload,
+        error: {},
+      };
+    case BULK_EXPORT_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        bulkExport: [],
+        error: action,
+      };
     default:
       return state;
   }
