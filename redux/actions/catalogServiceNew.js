@@ -446,7 +446,7 @@ export const getAllProductListApi = (pageNo, pageSize, status, itemId) => {
     //   };
   };
 
-  // console.log(data, "data here");
+  console.log(data, "data here");
   return (dispatch) => {
     dispatch(getAllProductListLoading("ATTRIBUTE....", "ATTRIBUTE"));
     client
@@ -583,7 +583,7 @@ export const getCategoriesApi = () => {
     client
       .get("/api/catalogQuery/allCategories")
       .then((response) => {
-        // console.log(" categories response=>", response);
+        console.log(" categories response=>", response);
         dispatch(getCategoriesSuccess(response.data));
       })
       .catch((err) => {
@@ -942,21 +942,13 @@ export const productSearchApis = (status, key) => {
     client
       .post("/api/catalogServiceNew/productSearch", data)
       .then(async (response) => {
-        // console.log("rrrrrr", response);
+        // console.log("rrrrrr", response?.data?.result.totalElements);
         if (response.status === 200) {
           // toast.info("Product search  successfully !!!");
-          if (key && key == "" && key == null && key == undefined) {
-            // console.log(
-            //   status,
-            //   "hello productSearchDataSuccess",
-            //   response?.data?.result
-            // );
-            dispatch(productSearchDataSuccess(response?.data?.result));
-          } else {
-            // console.log(
-            //   "hello getAllProductListSuccess",
-            //   response?.data?.result
-            // );
+          dispatch(productSearchDataSuccess(response?.data?.result));
+
+          if (response?.data?.result?.totalElements == 1) {
+            // console.log("search successfully");
             dispatch(getAllProductListSuccess(response?.data?.result));
           }
         } else throw new Error("");
