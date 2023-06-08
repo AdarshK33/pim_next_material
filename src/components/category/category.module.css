@@ -16,9 +16,9 @@
   background-color: red;
 }
 .main_title {
-  font-size: 20px !important;
+  font-size: 24px !important;
   font-weight: 700 !important;
-  color: #399996;
+  color: #419794;
   width: 20% !important;
   padding-bottom: 5px;
   border-bottom: 2px solid #ffcf76;
@@ -50,7 +50,7 @@
 .add_title {
   font-size: 16px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: 25% !important;
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;
@@ -59,7 +59,7 @@
 .catergory_add_title {
   font-size: 16px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: 30% !important;
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;

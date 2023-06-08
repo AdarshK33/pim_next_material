@@ -16,15 +16,15 @@
 }
 
 .title_name {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   color: #419794;
 }
 
 .brand_title_name {
-  font-size: 20px;
+  font-size: 24px !important;
   font-weight: bold;
-  color: #399996;
+  color: #419794 !important;
   width: 20%;
   border-bottom: 2px solid #ffcf76;
 }
@@ -41,13 +41,6 @@
   justify-content: center;
   margin-top: 30px;
 }
-.main_title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #399996;
-  width: auto;
-  border-bottom: 2px solid #ffcf76;
-}
 
 .attribute_pagination {
   display: flex;
@@ -55,9 +48,9 @@
   margin-top: 30px;
 }
 .main_title {
-  font-size: 20px;
+  font-size: 24px !important;
   font-weight: bold;
-  color: #399996;
+  color: #419794 !important;
   width: 20%;
   border-bottom: 2px solid #ffcf76;
 }
@@ -69,7 +62,7 @@
 .add_title {
   font-size: 20px;
   font-weight: bold;
-  color: #399996;
+  color: #419794 !important;
   width: 50% !important;
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;

@@ -1,7 +1,7 @@
 .main_title {
   font-size: 20px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: auto;
   border-bottom: 2px solid #ffcf76;
 }
@@ -9,7 +9,7 @@
 .sub_title {
   font-size: 18px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: auto;
 }
 
@@ -21,7 +21,7 @@
 .add_title {
   font-size: 20px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: 100% !important;
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;
@@ -79,6 +79,6 @@
 
 .divider {
   width: 0.1%;
-  border: 1px solid #ADACAC;
+  border: 1px solid #adacac;
   margin-top: 1.5rem;
 }

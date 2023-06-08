@@ -22,9 +22,9 @@
 }
 
 .brand_title_name {
-  font-size: 20px;
+  font-size: 20px !important;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: 20%;
   border-bottom: 2px solid #ffcf76;
 }
@@ -44,7 +44,7 @@
 .main_title {
   font-size: 20px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: auto;
   border-bottom: 2px solid #ffcf76;
 }
@@ -57,7 +57,7 @@
 .main_title {
   font-size: 20px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: 20%;
   border-bottom: 2px solid #ffcf76;
 }
@@ -69,7 +69,7 @@
 .add_title {
   font-size: 20px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: 50% !important;
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;
@@ -85,9 +85,9 @@
 /* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<active Product view css>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
 .main_title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: auto;
   border-bottom: 2px solid #ffcf76;
 }
@@ -95,7 +95,7 @@
 .sub_title {
   font-size: 18px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: auto;
 }
 
@@ -107,7 +107,7 @@
 .add_title {
   font-size: 20px;
   font-weight: bold;
-  color: #399996;
+  color: #419794;
   width: 100% !important;
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;

@@ -94,16 +94,18 @@ th {
 
 .dropzone {
   width: 100%;
+  cursor: pointer;
 }
 
 .upload_blk {
-  top: 60px;
+  top: 45px;
   position: relative;
   display: table;
   align-items: center;
   margin: auto;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
+
 /* 
 ul .pagination {
   justify-content: center;
