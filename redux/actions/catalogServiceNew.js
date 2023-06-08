@@ -946,17 +946,17 @@ export const productSearchApis = (status, key) => {
         if (response.status === 200) {
           // toast.info("Product search  successfully !!!");
           if (key && key == "" && key == null && key == undefined) {
-            console.log(
-              status,
-              "hello productSearchDataSuccess",
-              response?.data?.result
-            );
+            // console.log(
+            //   status,
+            //   "hello productSearchDataSuccess",
+            //   response?.data?.result
+            // );
             dispatch(productSearchDataSuccess(response?.data?.result));
           } else {
-            console.log(
-              "hello getAllProductListSuccess",
-              response?.data?.result
-            );
+            // console.log(
+            //   "hello getAllProductListSuccess",
+            //   response?.data?.result
+            // );
             dispatch(getAllProductListSuccess(response?.data?.result));
           }
         } else throw new Error("");
