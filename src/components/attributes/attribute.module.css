@@ -5,9 +5,9 @@
 }
 
 .main_title {
-  font-size: 20px;
-  font-weight: bold !important;
-  color: #399996;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: #419794;
   width: 25%;
   border-bottom: 2px solid #ffcf76;
 }
@@ -15,8 +15,15 @@
 .main_Details_title {
   font-size: 20px;
   font-weight: bold !important;
-  color: #399996;
-  width: 35%;
+  color: #419794;
+  width: 25% !important;
+  border-bottom: 2px solid #ffcf76;
+}
+.main_Details_view_title {
+  font-size: 20px;
+  font-weight: bold !important;
+  color: #419794;
+  width: 32% !important;
   border-bottom: 2px solid #ffcf76;
 }
 
@@ -27,9 +34,9 @@
 
 .add_title {
   font-size: 20px;
-  font-weight: bold;
-  color: #399996;
-  width: 50% !important;
+  font-weight: 600;
+  color: #419794;
+  width: 35% !important;
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;
 }

@@ -16,7 +16,7 @@ import {
   Grid,
   Button,
 } from "@mui/material";
-import { Eye, Download } from "react-feather";
+import { Eye, Download, UploadCloud } from "react-feather";
 
 import styles from "./bulk.module.css";
 import { useDropzone } from "react-dropzone";
@@ -50,6 +50,7 @@ import Paper from "@mui/material/Paper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "react-js-pagination";
+
 const BulkUpload = (props) => {
   const { bulkData, loading, bulkExport } = useSelector((state) => {
     return state.catalogServiceNewReducer;
@@ -58,10 +59,44 @@ const BulkUpload = (props) => {
   console.log("bulkExport", bulkExport);
   const { user: { at = "" } = {}, loggedIn } = props.user;
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewDoc, setViewDoc] = useState();
 
   useEffect(() => {
     dispatch(getBuilkDetailsListApi(currentPage - 1, 10));
   }, []);
+
+  const download = function (data, file_Name) {
+    const blob = new Blob([data], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("href", url);
+    a.setAttribute("download", file_Name + "Download.csv");
+    a.click();
+  };
+
+  const csvmaker = function (data) {
+    let csvRows = [];
+    // const headers = Object.keys(data);
+    // csvRows.push(headers.join(","));
+    const values = Object.values(data).join("");
+    csvRows.push(values);
+    return csvRows.join("\n");
+  };
+
+  useEffect(() => {
+    if (
+      bulkExport &&
+      bulkExport !== null &&
+      bulkExport !== undefined &&
+      Object.keys(bulkExport).length &&
+      viewDoc
+    ) {
+      const csvdata = csvmaker(bulkExport);
+
+      download(csvdata, viewDoc);
+      setViewDoc("");
+    }
+  }, [bulkExport]);
 
   const onDrop = async (acceptedFiles) => {
     const formData = new FormData();
@@ -112,7 +147,6 @@ const BulkUpload = (props) => {
 
   const handleDownload = (data) => {
     // window.open(data, "_blank");
-    dispatch(bulkExportApis(data));
   };
 
   return (
@@ -134,9 +168,20 @@ const BulkUpload = (props) => {
                   >
                     <input {...getInputProps()} />
                     {}
-                    <Box className="upload_placeholder upload_blk">
-                      <Box></Box>
-                      <u className="">Upload Your Document</u>
+                    <Box className={`${styles.upload_placeholder} upload_blk`}>
+                      <Box>
+                        <UploadCloud
+                          fontSize="small"
+                          style={{
+                            fontSize: "xx-small",
+                            color: "#419794",
+                          }}
+                        />{" "}
+                        {/* Add the icon here */}
+                      </Box>
+                      <u className={styles.text_bulk_upload}>
+                        Upload Your Document
+                      </u>
                     </Box>
                   </Box>
                 )}
@@ -164,7 +209,7 @@ const BulkUpload = (props) => {
                     </TableRow>
                   </TableHead>
 
-                  {loading == true &&
+                  {/* {loading == true &&
                   currentRecords !== null &&
                   currentRecords !== undefined ? (
                     <TableBody>
@@ -195,9 +240,10 @@ const BulkUpload = (props) => {
                         </Grid>
                       </TableRow>
                     </TableBody>
-                  ) : currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
+                  ) : currentRecords && */}
+                  {currentRecords &&
+                  currentRecords !== null &&
+                  currentRecords.length > 0 ? (
                     currentRecords.map((row, i) => (
                       <TableBody>
                         <TableRow
@@ -238,7 +284,10 @@ const BulkUpload = (props) => {
                                     marginLeft: "20px",
                                     padding: "1px",
                                   }}
-                                  onClick={() => handleDownload(row.id)}
+                                  onClick={() => {
+                                    setViewDoc(row.fileName);
+                                    dispatch(bulkExportApis(row.id));
+                                  }}
                                 />
                               </div>
                             </>

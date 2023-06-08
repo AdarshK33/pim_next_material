@@ -5,10 +5,10 @@ import withSession from "../../../utils/session";
 function handler(req, res) {
   const body = req.body;
   const { user: { at = "" } = {}, loggedIn } = req.session;
-
+  // https://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/export/382
   console.log(body.batchDetailsId, "body.batchDetailsId");
   const config = {
-    method: "post",
+    method: "get",
     url: `/catalog/export/382`,
     // ${body.batchDetailsId}
     headers: {

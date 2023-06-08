@@ -20,7 +20,7 @@ import Paper from "@mui/material/Paper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "react-js-pagination";
-import { Eye } from "react-feather";
+import { Eye, Image } from "react-feather";
 
 const Media = (props) => {
   const { loading, mediaData } = useSelector((state) => {
@@ -159,9 +159,20 @@ const Media = (props) => {
                     >
                       <input {...getInputProps()} />
                       {}
-                      <Box className="upload_placeholder upload_blk">
-                        <Box></Box>
-                        <u className="">Upload Image</u>
+                      <Box
+                        className={`${styles.upload_placeholder} upload_blk`}
+                      >
+                        <Box>
+                          <Image
+                            fontSize="small"
+                            style={{
+                              fontSize: "xx-small",
+                              color: "#419794",
+                            }}
+                          />{" "}
+                          {/* Add the icon here */}
+                        </Box>
+                        <u className={styles.text_bulk_upload}>Upload Image</u>
                       </Box>
                     </Box>
                   )}
@@ -177,9 +188,20 @@ const Media = (props) => {
                     >
                       <input {...getInputProps()} />
                       {}
-                      <Box className="upload_placeholder upload_blk">
-                        <Box></Box>
-                        <u className="">Upload Image</u>
+                      <Box
+                        className={`${styles.upload_placeholder} upload_blk`}
+                      >
+                        <Box>
+                          <Image
+                            fontSize="small"
+                            style={{
+                              fontSize: "xx-small",
+                              color: "#419794",
+                            }}
+                          />{" "}
+                          {/* Add the icon here */}
+                        </Box>
+                        <u className={styles.text_bulk_upload}>Upload Image</u>
                       </Box>
                     </Box>
                   )}

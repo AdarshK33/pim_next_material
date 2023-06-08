@@ -66,7 +66,10 @@ const AttributeSetDetails = () => {
         <Grid item xs={12} lg={12}>
           <Card sx={{ p: 5 }}>
             <Grid container spacing={2} justifyContent="space-between">
-              <Typography variant="h2" className={styles.main_Details_title}>
+              <Typography
+                variant="h2"
+                className={styles.main_Details_view_title}
+              >
                 {attributeSetName} Attributes
               </Typography>
 
