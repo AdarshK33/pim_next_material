@@ -945,8 +945,20 @@ export const productSearchApis = (status, key) => {
         // console.log("rrrrrr", response);
         if (response.status === 200) {
           // toast.info("Product search  successfully !!!");
-          dispatch(productSearchDataSuccess(response?.data?.result));
-          dispatch(getAllProductListSuccess(response?.data?.result));
+          if (key && key == "" && key == null && key == undefined) {
+            console.log(
+              status,
+              "hello productSearchDataSuccess",
+              response?.data?.result
+            );
+            dispatch(productSearchDataSuccess(response?.data?.result));
+          } else {
+            console.log(
+              "hello getAllProductListSuccess",
+              response?.data?.result
+            );
+            dispatch(getAllProductListSuccess(response?.data?.result));
+          }
         } else throw new Error("");
       })
       .catch((err) => {

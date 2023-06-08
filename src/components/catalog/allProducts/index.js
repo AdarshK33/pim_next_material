@@ -66,7 +66,14 @@ const AllProducts = (props) => {
   const { catalogServiceNewReducer } = useSelector((state) => {
     return state;
   });
-  // console.log("productCount?", catalogServiceNewReducer);
+  console.log(
+    "catalogServiceNewReducer?.getAllProducts?.content?",
+    catalogServiceNewReducer?.getAllProducts?.content
+  );
+  console.log(
+    "catalogServiceNewReducer?.productSearch?.content?",
+    catalogServiceNewReducer?.productSearch?.content
+  );
   // const tableData = [];
   // for (let i = 1; i <= 5; i++) {
   //   tableData.push({
