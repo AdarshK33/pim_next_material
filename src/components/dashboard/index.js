@@ -31,7 +31,6 @@ const DashBoard = () => {
         <Card>
           <ProductChart />
         </Card>
-
         <ProductGraph />
         <ProductAlert />
       </Box>

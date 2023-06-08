@@ -9,11 +9,12 @@ function handler(req, res) {
   console.log(body.batchDetailsId, "body.batchDetailsId");
   const config = {
     method: "post",
-    url: `/catalog/export/${body.batchDetailsId}`,
+    url: `/catalog/export/382`,
+    // ${body.batchDetailsId}
     headers: {
       Authorization: `Bearer ${at}`,
     },
-    data: body.selectedItemIds,
+    // data: body,
   };
 
   // console.log("resss", config);

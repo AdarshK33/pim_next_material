@@ -964,7 +964,7 @@ export const productSearchApis = (status, key) => {
 
 export const bulkExportApis = (id) => {
   let data = {
-    batchDetailsId: id,
+    batchDetailsId: 382,
   };
   return (dispatch) => {
     dispatch(bulkExportDataLoading("EXPORT....", "EXPORT"));
@@ -973,7 +973,7 @@ export const bulkExportApis = (id) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
-          toast.info("Product updated successfully !!!");
+          toast.info("Export successfully !!!");
 
           dispatch(
             bulkExportDataSuccess(
@@ -987,7 +987,7 @@ export const bulkExportApis = (id) => {
       .catch((err) => {
         toast.error("Export failed!!!");
         console.log(
-          "error caught in -> actions/catalogServiceNew/productUpdate",
+          "error caught in -> actions/catalogServiceNew/bulkExportApis",
           err
         );
         dispatch(bulkExportDataFailure(err, "Something went wrong", " EXPORT"));
