@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { Edit2, Eye } from "react-feather";
 
 import {
@@ -34,6 +31,7 @@ import {
 import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
+import { getRoleApi } from "../../../redux/actions/login";
 
 const Attributes = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
@@ -43,7 +41,7 @@ const Attributes = () => {
   const { catagories, loading } = useSelector(
     (state) => state.catalogQueryReducer
   );
-  const { authorities } = useSelector(state => state.loginReducer)
+  const { authorities } = useSelector((state) => state.loginReducer);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -54,6 +52,7 @@ const Attributes = () => {
 
   useEffect(() => {
     dispatch(getCategoriesApi());
+    dispatch(getRoleApi());
 
     if (categoryId) {
       dispatch(getAttributeListApi(categoryId, currentPage - 1, 10));
@@ -101,7 +100,6 @@ const Attributes = () => {
     setCategoryId(e.target.value);
   };
 
-
   return (
     <>
       <Grid container>
@@ -120,7 +118,7 @@ const Attributes = () => {
                     color="success"
                     component="label"
                     onClick={() => setShowAttributeAddForm(true)}
-                    disabled={authorities?.ATTRIBUTES == 'r' ? true : false}
+                    disabled={authorities?.ATTRIBUTES == "r" ? true : false}
                   >
                     ADD NEW
                   </Button>
@@ -187,16 +185,15 @@ const Attributes = () => {
                           <TableCell align="right">DESCRIPTION</TableCell>
                           <TableCell align="right">PRIORITY SEQUENCE</TableCell>
                           <TableCell align="right">ATTRIBUTES</TableCell>
-                          {
-                            authorities?.ATTRIBUTES == 'w' &&
+                          {authorities?.ATTRIBUTES == "w" && (
                             <TableCell align="right">EDIT</TableCell>
-                          }
+                          )}
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {currentRecords &&
-                          currentRecords !== null &&
-                          currentRecords.length > 0 ? (
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
                           currentRecords.map((row, i) => (
                             <TableRow
                               key={row.name}
@@ -231,8 +228,7 @@ const Attributes = () => {
                                 </div>
                               </TableCell>
 
-                              {
-                                authorities?.ATTRIBUTES == 'w' &&
+                              {authorities?.ATTRIBUTES == "w" && (
                                 <TableCell align="right">
                                   <div className="action_center">
                                     <Edit2
@@ -245,7 +241,7 @@ const Attributes = () => {
                                     />
                                   </div>
                                 </TableCell>
-                              }
+                              )}
                             </TableRow>
                           ))
                         ) : (
@@ -269,7 +265,6 @@ const Attributes = () => {
                       onChange={handlePaginationChange}
                     />
                   </div>
-
                 </CardContent>
               </>
             )}

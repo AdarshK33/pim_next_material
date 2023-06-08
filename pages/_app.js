@@ -16,7 +16,11 @@ import { client } from "../utils/axios";
 import { userAuthorities, userRole } from "../redux/actions/login";
 import { useDispatch } from "react-redux";
 import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
-import { getNotificationApi, getDashBoardApi } from "../redux/actions/login";
+import {
+  getNotificationApi,
+  getDashBoardApi,
+  getRoleApi,
+} from "../redux/actions/login";
 import { getChannelListApi } from "../redux/actions/channel";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -54,6 +58,7 @@ function MyApp(props) {
     dispatch(getCategoriesApi());
     dispatch(getNotificationApi());
     dispatch(getDashBoardApi());
+    dispatch(getRoleApi());
 
     dispatch(getChannelListApi(0, 1000));
   }, []);
