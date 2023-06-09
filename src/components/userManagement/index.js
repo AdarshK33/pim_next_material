@@ -107,7 +107,7 @@ const UserManagement = () => {
                     color="success"
                     component="label"
                     onClick={() => setShowUserAddForm(true)}
-                    disabled={authorities?.USERS == 'r' ? true : false}
+                    disabled={authorities?.USERS == "r" ? true : false}
                   >
                     Add New
                   </Button>
@@ -147,20 +147,19 @@ const UserManagement = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>#</TableCell>
-                      <TableCell align="right">EMAIL</TableCell>
-                      <TableCell align="right">ROLE</TableCell>
+                      <TableCell align="start">EMAIL</TableCell>
+                      <TableCell align="start">ROLE</TableCell>
 
                       <TableCell align="right">STATUS</TableCell>
-                      {
-                        authorities?.USERS == 'w' &&
-                        <TableCell align="right">EDIT</TableCell>
-                      }
+                      {authorities?.USERS == "w" && (
+                        <TableCell align="center">EDIT</TableCell>
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {currentRecords &&
-                      currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
                       currentRecords.map((row, i) => (
                         <TableRow
                           key={row.name}
@@ -171,22 +170,21 @@ const UserManagement = () => {
                           <TableCell component="th" scope="row">
                             {i + 1 + indexOfFirstRecord}
                           </TableCell>
-                          <TableCell align="right">{row.email}</TableCell>
-                          <TableCell align="right">{row.roleName}</TableCell>
+                          <TableCell align="start">{row.email}</TableCell>
+                          <TableCell align="start">{row.roleName}</TableCell>
                           <TableCell align="right">{row.status}</TableCell>
-                          {
-                            authorities?.USERS == 'w' &&
+                          {authorities?.USERS == "w" && (
                             <div className="action_center">
                               <Edit2
                                 style={{
-                                  textAlign: "right",
+                                  textAlign: "center",
                                   fontSize: "xx-small",
                                   color: "#419794",
                                 }}
                                 onClick={() => handleEdit(row.userId)}
                               />
                             </div>
-                          }
+                          )}
                           <CustomModal
                             openModal={showUserUpdateForm}
                             closeModal={() => setShowUserUpdateForm(false)}

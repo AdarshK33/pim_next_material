@@ -102,12 +102,12 @@ const Channels = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>#</TableCell>
-                      <TableCell align="right">NAME</TableCell>
-                      <TableCell align="right">DESCRIPTION</TableCell>
-                      <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">ATTRIBUTES </TableCell>
+                      <TableCell align="start">NAME</TableCell>
+                      <TableCell align="start">DESCRIPTION</TableCell>
+                      <TableCell align="center">STATUS</TableCell>
+                      <TableCell align="center">ATTRIBUTES </TableCell>
                       {authorities?.CHANNELS == "w" && (
-                        <TableCell align="right">EDIT</TableCell>
+                        <TableCell align="center">EDIT</TableCell>
                       )}
                     </TableRow>
                   </TableHead>
@@ -125,9 +125,9 @@ const Channels = () => {
                           <TableCell component="th" scope="row">
                             {i + 1 + indexOfFirstRecord}
                           </TableCell>
-                          <TableCell align="right">{row.channelName}</TableCell>
-                          <TableCell align="right">{row.description}</TableCell>
-                          <TableCell align="right">
+                          <TableCell align="start">{row.channelName}</TableCell>
+                          <TableCell align="start">{row.description}</TableCell>
+                          <TableCell align="center">
                             {row.status === true ? "Active" : "In-Active"}
                           </TableCell>
                           <TableCell align="right">
@@ -145,7 +145,7 @@ const Channels = () => {
                             </div>
                           </TableCell>
                           {authorities?.CHANNELS == "w" && (
-                            <TableCell align="right">
+                            <TableCell align="center">
                               <div className={`action_center `}>
                                 <Edit2
                                   style={{

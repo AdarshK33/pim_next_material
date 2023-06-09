@@ -25,8 +25,10 @@ import {
   Grid,
 } from "@mui/material";
 import loginReducer from "../../../redux/reducer/loginReducer";
+import { Chart } from "react-google-charts";
 
-const Chart = dynamic(() => import("react-google-charts"), { ssr: false });
+// const Chart = dynamic(() => import("react-google-charts"), { ssr: false });
+// const Chart = dynamic(() => import("react-google-charts"));
 
 const ProductChart = () => {
   const dispatch = useDispatch();
@@ -55,8 +57,11 @@ const ProductChart = () => {
     pieHole: 0.4,
     is3D: false,
     legend: "none",
-    colors: ["#419794", "#D9D9D9", "#FDB834"],
+    colors: ["#419794", "#fd7439", "#99b6f8"],
   };
+
+  // title: "Ready for review",
+  //       color: "#FD4539",
 
   useEffect(() => {
     if (!dashBoardData?.dashboardResponses) {

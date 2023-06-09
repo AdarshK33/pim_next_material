@@ -182,11 +182,13 @@ const Attributes = () => {
                           <TableCell>#</TableCell>
                           <TableCell>NAME</TableCell>
                           <TableCell>ROLE</TableCell>
-                          <TableCell align="right">DESCRIPTION</TableCell>
-                          <TableCell align="right">PRIORITY SEQUENCE</TableCell>
-                          <TableCell align="right">ATTRIBUTES</TableCell>
+                          <TableCell align="start">DESCRIPTION</TableCell>
+                          <TableCell align="center">
+                            PRIORITY SEQUENCE
+                          </TableCell>
+                          <TableCell align="center">ATTRIBUTES</TableCell>
                           {authorities?.ATTRIBUTES == "w" && (
-                            <TableCell align="right">EDIT</TableCell>
+                            <TableCell align="center">EDIT</TableCell>
                           )}
                         </TableRow>
                       </TableHead>
@@ -206,12 +208,12 @@ const Attributes = () => {
                               <TableCell component="th" scope="row">
                                 {i + 1 + indexOfFirstRecord}
                               </TableCell>
-                              <TableCell align="right">{row.name}</TableCell>
-                              <TableCell align="right">{row.role}</TableCell>
-                              <TableCell align="right">
+                              <TableCell align="start">{row.name}</TableCell>
+                              <TableCell align="start">{row.role}</TableCell>
+                              <TableCell align="start">
                                 {row.description}
                               </TableCell>
-                              <TableCell align="right">
+                              <TableCell align="center">
                                 {row.precedence}
                               </TableCell>
 
@@ -228,7 +230,7 @@ const Attributes = () => {
                                 </div>
                               </TableCell>
 
-                              {authorities?.ATTRIBUTES == "w" && (
+                              {authorities?.ATTRIBUTES == "w" ? (
                                 <TableCell align="right">
                                   <div className="action_center">
                                     <Edit2
@@ -237,10 +239,25 @@ const Attributes = () => {
                                         fontSize: "10px",
                                         color: "#419794",
                                       }}
-                                      onClick={() => handleEdit(row.userId)}
+                                      // onClick={() => handleEdit(row.id)}
+                                      // update pop is missing
                                     />
                                   </div>
                                 </TableCell>
+                              ) : (
+                                <>
+                                  <TableCell align="right">
+                                    <div className="action_center">
+                                      <Edit2
+                                        style={{
+                                          textAlign: "right",
+                                          fontSize: "10px",
+                                        }}
+                                        // onClick={() => handleEdit(row.userId)}
+                                      />
+                                    </div>
+                                  </TableCell>
+                                </>
                               )}
                             </TableRow>
                           ))

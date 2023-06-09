@@ -415,12 +415,12 @@ const AllProducts = (props) => {
                   <Table style={{ margin: "10px 0" }}>
                     <TableHead>
                       <TableRow>
-                        <TableCell>ITEM ID</TableCell>
-                        <TableCell>NAME</TableCell>
-                        <TableCell>CATEGORY</TableCell>
+                        <TableCell align="start">ITEM ID</TableCell>
+                        <TableCell align="start">NAME</TableCell>
+                        <TableCell align="start">CATEGORY</TableCell>
                         <TableCell>FORMATION</TableCell>
-                        <TableCell>STATUS</TableCell>
-                        <TableCell>DETAILS</TableCell>
+                        <TableCell align="right">STATUS</TableCell>
+                        <TableCell align="center">DETAILS</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -467,16 +467,18 @@ const AllProducts = (props) => {
                               },
                             }}
                           >
-                            <TableCell component="th" scope="row">
+                            <TableCell component="th" scope="row" align="start">
                               {row.itemId}
                             </TableCell>
-                            <TableCell>{row.itemName}</TableCell>
-                            <TableCell>{row.category}</TableCell>
+                            <TableCell align="start">{row.itemName}</TableCell>
+                            <TableCell align="start">{row.category}</TableCell>
                             <TableCell>
                               {" "}
                               <LinearProgressWithLabel value={row.formation} />
                             </TableCell>
-                            <TableCell>{row.productStatus}</TableCell>
+                            <TableCell align="right">
+                              {row.productStatus}
+                            </TableCell>
                             <div className="action_center product_Detials_Actions">
                               {/* <Image
                               className="px-2"
@@ -488,7 +490,7 @@ const AllProducts = (props) => {
                             /> */}
                               <Eye
                                 style={{
-                                  textAlign: "right",
+                                  textAlign: "center",
                                   fontSize: "xx-small",
                                   color: "#419794",
                                 }}
@@ -539,7 +541,7 @@ const AllProducts = (props) => {
                         <TableCell>CATEGORY</TableCell>
                         <TableCell>FORMATION</TableCell>
                         <TableCell>STATUS</TableCell>
-                        <TableCell>DETAILS</TableCell>
+                        <TableCell align="center">DETAILS</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -654,8 +656,8 @@ const AllProducts = (props) => {
                         <TableCell>NAME</TableCell>
                         <TableCell>CATEGORY</TableCell>
                         {/* <TableCell>FORMATION</TableCell> */}
-                        <TableCell>STATUS</TableCell>
-                        <TableCell>DETAILS</TableCell>
+                        <TableCell align="center">STATUS</TableCell>
+                        <TableCell align="center">DETAILS</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -711,7 +713,7 @@ const AllProducts = (props) => {
                             {" "}
                             {/* <LinearProgressWithLabel value={row.formation} /> */}
 
-                            <TableCell style={{ color: "red" }}>
+                            <TableCell style={{ color: "red" }} align="center">
                               {row.productStatus}
                             </TableCell>
                             <div className="action_center product_Detials_Actions">

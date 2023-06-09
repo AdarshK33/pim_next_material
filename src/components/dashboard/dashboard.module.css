@@ -4,7 +4,7 @@
 .partially_completed {
   width: 20px;
   height: 20px;
-  background-color: #d9d9d9;
+  background-color: #fd7439;
   margin-right: 5px;
 }
 .data_completed {
@@ -17,7 +17,7 @@
 .no_data_completed {
   width: 20px;
   height: 20px;
-  background-color: #fdb834;
+  background-color: #99b6f8 !important;
   margin-right: 5px;
 }
 .text_data {
