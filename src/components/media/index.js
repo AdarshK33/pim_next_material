@@ -228,10 +228,10 @@ const Media = (props) => {
                     <TableHead>
                       <TableRow>
                         <TableCell>#</TableCell>
-                        <TableCell>FILE NAME</TableCell>
-                        <TableCell>CREATED AT</TableCell>
-                        <TableCell>CREATED BY</TableCell>
-                        <TableCell align="right">UPDATED BY</TableCell>
+                        <TableCell align="start">FILE NAME</TableCell>
+                        <TableCell align="start">CREATED AT</TableCell>
+                        <TableCell align="start">CREATED BY</TableCell>
+                        <TableCell align="start">UPDATED BY</TableCell>
                         <TableCell align="right">VIEW IMAGE</TableCell>
                       </TableRow>
                     </TableHead>
@@ -249,9 +249,9 @@ const Media = (props) => {
                             <TableCell component="th" scope="row">
                               {i + 1 + indexOfFirstRecord}
                             </TableCell>
-                            <TableCell align="right">{row.name}</TableCell>
-                            <TableCell align="right">{row.createdAt}</TableCell>
-                            <TableCell align="right">{row.createdBy}</TableCell>
+                            <TableCell align="start">{row.name}</TableCell>
+                            <TableCell align="start">{row.createdAt}</TableCell>
+                            <TableCell align="start">{row.createdBy}</TableCell>
                             <TableCell align="right">{row.updatedBy}</TableCell>
                             <div className="action_center product_Detials_Actions">
                               <Eye

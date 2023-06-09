@@ -67,3 +67,10 @@
   border-bottom: 2px solid #ffcf76;
   margin-bottom: 16px;
 }
+
+.role_based_Text_Field {
+  margin-bottom: 10px !important;
+}
+.role_name_heading {
+  color: #419794 !important;
+}

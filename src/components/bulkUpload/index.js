@@ -194,13 +194,13 @@ const BulkUpload = (props) => {
                   <TableHead>
                     <TableRow>
                       <TableCell>#</TableCell>
-                      <TableCell>FILE NAME</TableCell>
-                      <TableCell>CREATED AT</TableCell>
+                      <TableCell align="start">FILE NAME</TableCell>
+                      <TableCell align="start">CREATED AT</TableCell>
 
-                      <TableCell>CREATED BY</TableCell>
-                      <TableCell>STATUS</TableCell>
+                      <TableCell align="start">CREATED BY</TableCell>
+                      <TableCell align="start">STATUS</TableCell>
 
-                      <TableCell>DOWNLOAD</TableCell>
+                      <TableCell align="center">DOWNLOAD</TableCell>
 
                       {/* <TableCell align="right">UPDATED BY</TableCell> */}
                       {/* <TableCell align="right">PRECEDENCE</TableCell> */}
@@ -255,8 +255,8 @@ const BulkUpload = (props) => {
                           <TableCell component="th" scope="row">
                             {i + 1 + indexOfFirstRecord}
                           </TableCell>
-                          <TableCell align="right">{row.fileName}</TableCell>
-                          <TableCell align="right">
+                          <TableCell align="start">{row.fileName}</TableCell>
+                          <TableCell align="start">
                             {
                               new Date(row.createdAt)
                                 .toISOString()
@@ -264,8 +264,8 @@ const BulkUpload = (props) => {
                             }{" "}
                             {new Date(row.createdAt).toLocaleTimeString()}
                           </TableCell>
-                          <TableCell align="right">{row.createdBy}</TableCell>
-                          <TableCell align="right">{row.status}</TableCell>
+                          <TableCell align="start">{row.createdBy}</TableCell>
+                          <TableCell align="start">{row.status}</TableCell>
 
                           {/* <TableCell align="right">{row.updatedBy}</TableCell> */}
                           {/* <TableCell align="right">{row.status}</TableCell> */}

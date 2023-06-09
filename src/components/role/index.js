@@ -21,33 +21,29 @@ import { getRolePrivilegeApi } from "../../../redux/actions/login";
 import { useDispatch, useSelector } from "react-redux";
 import AddForm from "./AddForm";
 import CustomModal from "../../common/customModal";
+
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+
 const Role = () => {
+  const { loginReducer } = useSelector((state) => {
+    return state;
+  });
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [focusedIndex, setFocusedIndex] = useState(null);
   const [showUserAddForm, setShowUserAddForm] = useState(false);
+  const [expanded, setExpanded] = React.useState(true);
 
-  useEffect(() => {
-    dispatch(getRolePrivilegeApi());
-  }, []);
-
-  const StyledTableHead = styled(TableHead)({
-    "& th": {
-      textAlign: "left !important",
-    },
-    "& td": {
-      textAlign: "left !important",
-    },
+  const StyledContainer = styled("div")({
+    display: "flex",
+    flexWrap: "wrap",
   });
-  const StyledTableBody = styled(TableBody)({
-    "& th": {
-      textAlign: "left !important",
-    },
-    "& td": {
-      textAlign: "left !important",
-    },
-  });
-
   const AllPrivileges = styled("div")(({ focused }) => ({
     padding: "8px",
     margin: "7px",
@@ -57,36 +53,63 @@ const Role = () => {
     ...(focused && { borderColor: "#419794" }),
   }));
 
+  useEffect(() => {
+    dispatch(getRolePrivilegeApi());
+  }, []);
+
   const handlePrivileges = (index) => {
     setFocusedIndex(index);
   };
 
-  const { loginReducer } = useSelector((state) => {
-    return state;
-  });
-
-  const tableData = [];
-
-  for (let i = 1; i <= 2; i++) {
-    tableData.push({
-      sku: "ADMIN",
+  const sectionAccordionSetUpRender = () => {
+    if (!loginReducer.rolePrivilege) {
+      return;
+    }
+    const obj = loginReducer.rolePrivilege;
+    return Object.entries(obj).map(([key, value]) => {
+      // console.log("hello 1", key);
+      if (key) {
+        return AccordionSetUp(key, value);
+      }
     });
-  }
-
-  const recordPerPage = 5;
-  //   const totalRecords = userGet.totalElements;
-  const pageRange = 5;
-  const indexOfLastRecord = currentPage * recordPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = tableData;
-
-  const handlePaginationChange = (event, value) => {
-    setCurrentPage(value);
   };
-  const [age, setAge] = useState("");
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const AccordionSetUp = (key, value) => {
+    return (
+      <>
+        <Accordion expanded={expanded}>
+          <AccordionSummary id="panel2a-header">
+            <Typography className={styles.role_name_heading}>
+              NAME OF ROLE :
+            </Typography>
+            {"  "}&nbsp;
+            {key}
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <Typography className={styles.role_name_heading}>
+              PRIVILEGES
+            </Typography>
+            <StyledContainer>
+              {Object.values(loginReducer.rolePrivilege[key]).map(
+                (item, index) => (
+                  <AllPrivileges
+                    key={index}
+                    focused={index === focusedIndex}
+                    onClick={() => handlePrivileges(index)}
+                    onFocus={() => handlePrivileges(index)}
+                    onBlur={() => setFocusedIndex(null)}
+                    tabIndex={index}
+                  >
+                    {item}
+                  </AllPrivileges>
+                )
+              )}
+            </StyledContainer>
+          </AccordionDetails>
+        </Accordion>
+      </>
+    );
   };
 
   return (
@@ -117,114 +140,7 @@ const Role = () => {
                 }
               /> */}
             </Grid>
-            <CardContent>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <StyledTableHead>
-                    <TableRow>
-                      <TableCell>NAME OF ROLE</TableCell>
-                      <TableCell sx={{ paddingLeft: 3 }}>PRIVILEGES</TableCell>
-                    </TableRow>
-                  </StyledTableHead>
-                  {/* <TableBody>
-                    {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
-                      currentRecords.map((row, i) => (
-                        <TableRow
-                        //   key={row.name}
-                        //   sx={{
-                        //     "&:last-child td, &:last-child th": { border: 0 },
-                        //   }}
-                        >
-                          <TableCell align="right">{row.sku}</TableCell>
-                          <TableCell>
-                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                              <InputLabel id="demo-simple-select-readonly-label">
-                                Privileges
-                              </InputLabel>
-                              <Select
-                                labelId="demo-simple-select-readonly-label"
-                                id="demo-simple-select-readonly"
-                                value={age}
-                                label="Privileges"
-                                onChange={handleChange}
-                                // inputProps={{ readOnly: true }}
-                              >
-                                <MenuItem value={10}>category_read</MenuItem>
-                              </Select>
-                            </FormControl>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={12}>No Record Found</TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody> */}
-
-                  <StyledTableBody>
-                    {Object.keys(loginReducer.rolePrivilege).length > 0 ? (
-                      Object.keys(loginReducer.rolePrivilege).map((row, i) => (
-                        <TableRow
-                        //   key={row.name}
-                        //   sx={{
-                        //     "&:last-child td, &:last-child th": { border: 0 },
-                        //   }}
-                        >
-                          <TableCell align="right">{row}</TableCell>
-                          <TableCell>
-                            <FormControl
-                              sx={{
-                                m: 1,
-                                minWidth: 120,
-                                display: "flex",
-                                flexDirection: "row",
-                                flexWrap: "wrap",
-                              }}
-                            >
-                              {/* <InputLabel id="demo-simple-select-readonly-label">
-                                Privileges
-                              </InputLabel> */}
-                              {Object.values(
-                                loginReducer.rolePrivilege[row]
-                              ).map((item, index) => (
-                                <AllPrivileges
-                                  key={index}
-                                  focused={index === focusedIndex}
-                                  onClick={() => handlePrivileges(index)}
-                                  onFocus={() => handlePrivileges(index)}
-                                  onBlur={() => setFocusedIndex(null)}
-                                  tabIndex="0"
-                                >
-                                  {item}
-                                </AllPrivileges>
-                              ))}
-                            </FormControl>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={12}>No Record Found</TableCell>
-                      </TableRow>
-                    )}
-                  </StyledTableBody>
-                </Table>
-              </TableContainer>
-              {/* <Stack spacing={2}>
-                <div className={styles.category_pagination}>
-                  <Pagination
-                    count={Math.ceil(totalRecords / recordPerPage)}
-                    page={currentPage}
-                    showFirstButton
-                    showLastButton
-                    onChange={handlePaginationChange}
-                  />
-                </div>
-              </Stack> */}
-            </CardContent>
+            <CardContent>{sectionAccordionSetUpRender()}</CardContent>
           </Card>
         </Grid>
       </Grid>

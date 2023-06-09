@@ -272,11 +272,11 @@ const ActiveProducts = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>#</TableCell>
-                      <TableCell align="right">ITEM ID</TableCell>
-                      <TableCell align="right">NAME</TableCell>
-                      <TableCell align="right">CATEGORY</TableCell>
-                      <TableCell align="right">STATUS</TableCell>
-                      <TableCell align="right">DETAILS</TableCell>
+                      <TableCell align="start">ITEM ID</TableCell>
+                      <TableCell align="start">NAME</TableCell>
+                      <TableCell align="start">CATEGORY</TableCell>
+                      <TableCell align="center">STATUS</TableCell>
+                      <TableCell align="center">DETAILS</TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -345,10 +345,10 @@ const ActiveProducts = () => {
                               }
                             />
                           </TableCell>
-                          <TableCell align="right">{row.itemId}</TableCell>
-                          <TableCell align="right">{row.itemName}</TableCell>
-                          <TableCell align="right">{row.category}</TableCell>
-                          <TableCell align="right">
+                          <TableCell align="start">{row.itemId}</TableCell>
+                          <TableCell align="start">{row.itemName}</TableCell>
+                          <TableCell align="start">{row.category}</TableCell>
+                          <TableCell align="center">
                             {row.productStatus}
                           </TableCell>
                           <div className="action_center Active_Product_Detials_Actions">

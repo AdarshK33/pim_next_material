@@ -117,8 +117,8 @@ const AttributeSetDetails = () => {
                         <TableCell>#</TableCell>
 
                         <TableCell>DISPLAY NAME</TableCell>
-                        <TableCell align="right">DESCRIPTION</TableCell>
-                        <TableCell align="right">MANDATORY</TableCell>
+                        <TableCell align="center">DESCRIPTION</TableCell>
+                        <TableCell align="center">MANDATORY</TableCell>
 
                         <TableCell align="right">STATUS</TableCell>
                       </TableRow>
@@ -137,12 +137,12 @@ const AttributeSetDetails = () => {
                             <TableCell component="th" scope="row">
                               {i + 1 + indexOfFirstRecord}
                             </TableCell>
-                            <TableCell align="right">{row.keyName}</TableCell>
-                            <TableCell align="right">
+                            <TableCell align="start">{row.keyName}</TableCell>
+                            <TableCell align="center">
                               {row.description}
                             </TableCell>
 
-                            <TableCell align="right">
+                            <TableCell align="center">
                               {row.mandatory}
                               {row?.mandatory === true ? "Yes" : "No"}
                             </TableCell>
