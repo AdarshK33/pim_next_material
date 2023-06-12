@@ -3,12 +3,12 @@ import withSession from "../../../utils/session";
 
 function handler(req, res) {
   const body = req.body;
-  const id = body.userId;
+  const id = body.attribute_set_id;
   const { user: { at = "" } = {}, loggedIn } = req.session;
 
   const config = {
     method: "get",
-    url: `/auth/userId/${id}`,
+    url: `/catalog/attribute_set/${id}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },

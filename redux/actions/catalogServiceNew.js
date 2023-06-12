@@ -1043,7 +1043,7 @@ export const bulkExportApis = (id) => {
 
 export const getByAttributeSetApis = (id) => {
   let data = {
-    batchDetailsId: 382,
+    attribute_set_id: id,
   };
   return (dispatch) => {
     dispatch(getByAttributeSetDataLoading("..GET BY ID..", "GET BY ID"));
@@ -1053,7 +1053,7 @@ export const getByAttributeSetApis = (id) => {
         if (response.status === 200) {
           dispatch(
             getByAttributeSetDataSuccess(
-              response.data,
+              response?.data?.result,
               " status Successfully",
               "status getByAttributeSet"
             )
@@ -1093,7 +1093,6 @@ export const updateAttributeSetApis = (data) => {
               "status UPDATE"
             )
           );
-          // dispatch(getCategoriesListApi());
         } else throw new Error("");
       })
       .catch((err) => {

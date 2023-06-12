@@ -75,6 +75,8 @@ const initialState = {
   mediaUpload: {},
   productSearch: [],
   bulkExport: {},
+  attribute_set_get_by_id: {},
+  attribute_set_update: {},
 
   // refreshToken:{}
 };
@@ -399,6 +401,44 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         bulkExport: [],
+        error: action,
+      };
+    case ATTRIBUTE_SET_UPDATE_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ATTRIBUTE_SET_UPDATE_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        attribute_set_update: action.payload,
+        error: {},
+      };
+    case ATTRIBUTE_SET_UPDATE_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        attribute_set_update: [],
+        error: action,
+      };
+    case ATTRIBUTE_SET_GET_BY_ID_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ATTRIBUTE_SET_GET_BY_ID_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        attribute_set_get_by_id: action.payload,
+        error: {},
+      };
+    case ATTRIBUTE_SET_GET_BY_ID_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        attribute_set_get_by_id: [],
         error: action,
       };
     default:

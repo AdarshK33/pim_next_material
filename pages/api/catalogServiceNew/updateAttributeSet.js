@@ -3,14 +3,14 @@ import withSession from "../../../utils/session";
 
 function handler(req, res) {
   const body = req.body;
-  const id = body.category_id;
+  const id = body.attribute_set_id;
 
-  console.log("update adarsh", body.category_id, body.payload);
+  // console.log("updateadarsh", body.attribute_set_id, body.payload);
 
   const { user: { at = "" } = {}, loggedIn } = req.session;
   const config = {
     method: "patch",
-    url: `/catalog/category/${id}`,
+    url: `/catalog/attribute_set/${id}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
