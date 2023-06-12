@@ -110,7 +110,9 @@ const ProductChart = () => {
     <>
       <Grid container>
         {chartData &&
-          chartData.length &&
+          chartData !== null &&
+          chartData !== undefined &&
+          chartData.length !== 0 &&
           chartData.map((blog, index) => (
             <Grid
               key={index}

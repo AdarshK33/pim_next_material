@@ -123,7 +123,7 @@ const Media = (props) => {
             <Box sx={{ maxWidth: 150 }} style={{ margin: "10px" }}>
               {catalogServiceNewReducer?.getAllProducts !== null &&
                 Object.entries(catalogServiceNewReducer?.getAllProducts)
-                  .length && (
+                  .length !== 0 && (
                   <Autocomplete
                     id="free-solo-demo"
                     freeSolo
