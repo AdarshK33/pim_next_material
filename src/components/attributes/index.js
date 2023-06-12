@@ -23,15 +23,20 @@ import Paper from "@mui/material/Paper";
 import styles from "./attribute.module.css";
 import CustomModal from "../../common/customModal";
 import AddForm from "./AddForm.js";
+import UpdateForm from "./updateForm.js";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAttributeListApi,
+  getByAttributeSetApis,
   getAttributeSetDetailsListApi,
 } from "../../../redux/actions/catalogServiceNew";
 import { getCategoriesApi } from "../../../redux/actions/catalogServiceNew";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import { getRoleApi } from "../../../redux/actions/login";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Attributes = () => {
   const { catalogServiceNewReducer } = useSelector((state) => {
@@ -47,6 +52,8 @@ const Attributes = () => {
   const dispatch = useDispatch();
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
+  const [showAttributeUpdateForm, setShowAttributeUpdateForm] = useState(false);
+
   const [categoryId, setCategoryId] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -187,9 +194,9 @@ const Attributes = () => {
                             PRIORITY SEQUENCE
                           </TableCell>
                           <TableCell align="center">ATTRIBUTES</TableCell>
-                          {authorities?.ATTRIBUTES == "w" && (
-                            <TableCell align="center">EDIT</TableCell>
-                          )}
+                          {/* {authorities?.ATTRIBUTES == "w" && ( */}
+                          <TableCell align="center">EDIT</TableCell>
+                          {/* // )} */}
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -239,10 +246,29 @@ const Attributes = () => {
                                         fontSize: "10px",
                                         color: "#419794",
                                       }}
-                                      // onClick={() => handleEdit(row.id)}
+                                      onClick={() => {
+                                        setShowAttributeUpdateForm(true);
+                                        dispatch(getByAttributeSetApis(row.id));
+                                      }}
+
                                       // update pop is missing
                                     />
                                   </div>
+                                  <CustomModal
+                                    openModal={showAttributeUpdateForm}
+                                    closeModal={() =>
+                                      setShowAttributeUpdateForm(
+                                        !showAttributeUpdateForm
+                                      )
+                                    }
+                                    body={
+                                      <UpdateForm
+                                        classModal={() => {
+                                          setShowAttributeUpdateForm(false);
+                                        }}
+                                      />
+                                    }
+                                  />
                                 </TableCell>
                               ) : (
                                 <>
@@ -288,6 +314,7 @@ const Attributes = () => {
           </Card>
         </Grid>
       </Grid>
+      <ToastContainer />
     </>
   );
 };
