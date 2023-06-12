@@ -241,7 +241,7 @@ const Sidebar = ({ onSidebarClose, isSidebarOpen }) => {
           },
           {
             title: "USERS",
-            href: "/userManagement",
+            href: "/userDetails",
           },
         ],
       });
@@ -268,7 +268,7 @@ const Sidebar = ({ onSidebarClose, isSidebarOpen }) => {
         list: [
           {
             title: "USERS",
-            href: "/userManagement",
+            href: "/userDetails",
           },
         ],
       });

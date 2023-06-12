@@ -56,6 +56,12 @@ import {
   BULK_EXPORT_DATA_LOADING,
   BULK_EXPORT_DATA_SUCCESS,
   BULK_EXPORT_DATA_FAILURE,
+  ATTRIBUTE_SET_UPDATE_DATA_LOADING,
+  ATTRIBUTE_SET_UPDATE_DATA_SUCCESS,
+  ATTRIBUTE_SET_UPDATE_DATA_FAILURE,
+  ATTRIBUTE_SET_GET_BY_ID_DATA_LOADING,
+  ATTRIBUTE_SET_GET_BY_ID_DATA_SUCCESS,
+  ATTRIBUTE_SET_GET_BY_ID_DATA_FAILURE,
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -398,6 +404,42 @@ export const bulkExportDataSuccess = (data) => {
 export const bulkExportDataFailure = (error) => {
   return {
     type: BULK_EXPORT_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const getByAttributeSetDataLoading = () => {
+  return {
+    type: ATTRIBUTE_SET_GET_BY_ID_DATA_LOADING,
+  };
+};
+export const getByAttributeSetDataSuccess = (data) => {
+  return {
+    type: ATTRIBUTE_SET_GET_BY_ID_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const getByAttributeSetDataFailure = (error) => {
+  return {
+    type: ATTRIBUTE_SET_GET_BY_ID_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+export const attributeSetUpdateDataLoading = () => {
+  return {
+    type: ATTRIBUTE_SET_UPDATE_DATA_LOADING,
+  };
+};
+export const attributeSetUpdateDataSuccess = (data) => {
+  return {
+    type: ATTRIBUTE_SET_UPDATE_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const attributeSetUpdateDataFailure = (error) => {
+  return {
+    type: ATTRIBUTE_SET_UPDATE_DATA_FAILURE,
     payload: error,
   };
 };
@@ -995,6 +1037,78 @@ export const bulkExportApis = (id) => {
           err
         );
         dispatch(bulkExportDataFailure(err, "Something went wrong", " EXPORT"));
+      });
+  };
+};
+
+export const getByAttributeSetApis = (id) => {
+  let data = {
+    batchDetailsId: 382,
+  };
+  return (dispatch) => {
+    dispatch(getByAttributeSetDataLoading("..GET BY ID..", "GET BY ID"));
+    client
+      .post("/api/catalogServiceNew/getByAttributeSet", data)
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(
+            getByAttributeSetDataSuccess(
+              response.data,
+              " status Successfully",
+              "status getByAttributeSet"
+            )
+          );
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        console.log(
+          "error caught in -> actions/catalogServiceNew/getByAttributeSetApis",
+          err
+        );
+        dispatch(
+          getByAttributeSetDataFailure(
+            err,
+            "Something went wrong",
+            " getByAttributeSet"
+          )
+        );
+      });
+  };
+};
+
+export const updateAttributeSetApis = (data) => {
+  return (dispatch) => {
+    dispatch(attributeSetUpdateDataLoading("UPDATE....", "UPDATE"));
+    client
+      .post("/api/catalogServiceNew/updateAttributeSet", data)
+      .then(async (response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          toast.info("AttributeSet updated successfully !!!");
+
+          dispatch(
+            attributeSetUpdateDataSuccess(
+              response.data,
+              " status Successfully",
+              "status UPDATE"
+            )
+          );
+          // dispatch(getCategoriesListApi());
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        toast.error("AttributeSet updated failed !!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/updateAttributeSetApis",
+          err
+        );
+        dispatch(
+          attributeSetUpdateDataFailure(
+            err,
+            "Something went wrong",
+            "AttributeSet UPDATE"
+          )
+        );
       });
   };
 };

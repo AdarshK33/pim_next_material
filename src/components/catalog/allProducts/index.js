@@ -438,7 +438,7 @@ const AllProducts = (props) => {
                               container
                               style={{
                                 position: "relative",
-                                left: "370px",
+                                left: "390px",
                               }}
                             >
                               <Grid
@@ -559,7 +559,7 @@ const AllProducts = (props) => {
                               container
                               style={{
                                 position: "relative",
-                                left: "370px",
+                                left: "390px",
                               }}
                             >
                               <Grid
@@ -675,7 +675,7 @@ const AllProducts = (props) => {
                               container
                               style={{
                                 position: "relative",
-                                left: "370px",
+                                left: "390px",
                               }}
                             >
                               <Grid
