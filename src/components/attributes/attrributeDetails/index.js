@@ -70,7 +70,9 @@ const AttributeSetDetails = () => {
                 variant="h2"
                 className={styles.main_Details_view_title}
               >
-                {attributeSetName} Attributes
+                {attributeSetName?.charAt(0).toUpperCase() +
+                  attributeSetName.slice(1).toLowerCase()}
+                {""} Attributes
               </Typography>
 
               <Button

@@ -24,6 +24,14 @@ export const getServerSideProps = withIronSessionSsr(
           },
         };
       }
+      if (req?.session?.user?.role !== "ADMIN") {
+        return {
+          redirect: {
+            destination: "/allProducts",
+            permanent: false,
+          },
+        };
+      }
 
       return {
         props: {

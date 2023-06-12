@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import user1 from "../../../assets/images/backgrounds/u2.jpg";
@@ -32,7 +32,7 @@ import { Chart } from "react-google-charts";
 
 const ProductChart = () => {
   const dispatch = useDispatch();
-  // const router = useRouter();
+  const router = useRouter();
   const { dashBoardData } = useSelector((state) => {
     return state.loginReducer;
   });
@@ -102,6 +102,10 @@ const ProductChart = () => {
   //     title: "ONLINE MASTER",
   //   },
   // ];
+  function handleFormation() {
+    console.log("hello allProducts");
+    router.push(`/allProducts`);
+  }
   return (
     <>
       <Grid container>
@@ -147,6 +151,7 @@ const ProductChart = () => {
                     textAlign: "center",
                   }}
                   className={styles.main_chart_dashboard}
+                  onClick={(e) => handleFormation(e)}
                 >
                   <Chart
                     chartType="PieChart"

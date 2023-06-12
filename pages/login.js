@@ -88,7 +88,7 @@ const Login = (user) => {
     if (isLogin === 201 && userRole !== "ADMIN") {
       Router.push("/allProducts");
     } else if (isLogin === 201 && userRole === "ADMIN") {
-      Router.push("/userManagement");
+      Router.push("/userDetails");
     }
   }, [isLogin, userRole, user]);
 
@@ -220,7 +220,7 @@ export const getServerSideProps = withIronSessionSsr(
     if (user) {
       return {
         redirect: {
-          destination: "/userManagement",
+          destination: "/userDetails",
           permanent: false,
         },
       };
