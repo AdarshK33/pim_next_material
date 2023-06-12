@@ -41,6 +41,15 @@
   margin-bottom: 16px;
 }
 
+.update_title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #419794;
+  width: 45% !important;
+  border-bottom: 2px solid #ffcf76;
+  margin-bottom: 16px;
+}
+
 .div_Actions {
   display: flex;
   justify-content: center;

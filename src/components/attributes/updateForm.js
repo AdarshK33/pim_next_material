@@ -256,7 +256,7 @@ function UpdateForm({ classModal }) {
   };
   return (
     <>
-      <div className={styles.add_title}> Update Attribute Set</div>
+      <div className={styles.update_title}> Update Attribute Set</div>
       {loading ? <p>Loading...</p> : null}
       {!loading && attribute_set_get_by_id?.name ? (
         <form>
