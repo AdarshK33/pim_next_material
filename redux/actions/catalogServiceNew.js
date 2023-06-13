@@ -1010,7 +1010,7 @@ export const productSearchApis = (status, key) => {
 
 export const bulkExportApis = (id) => {
   let data = {
-    batchDetailsId: 382,
+    batchDetailsId: id,
   };
   return (dispatch) => {
     dispatch(bulkExportDataLoading("EXPORT....", "EXPORT"));

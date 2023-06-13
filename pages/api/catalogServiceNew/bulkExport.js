@@ -9,7 +9,7 @@ function handler(req, res) {
   console.log(body.batchDetailsId, "body.batchDetailsId");
   const config = {
     method: "get",
-    url: `/catalog/export/382`,
+    url: `/catalog/export/${body.batchDetailsId}`,
     // ${body.batchDetailsId}
     headers: {
       Authorization: `Bearer ${at}`,
