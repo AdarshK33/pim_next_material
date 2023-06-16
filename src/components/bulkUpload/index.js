@@ -262,7 +262,8 @@ const BulkUpload = (props) => {
                                 .toISOString()
                                 .split("T")[0]
                             }{" "}
-                            {new Date(row.createdAt).toLocaleTimeString()}
+                            {/* {new Date(row.createdAt).toLocaleTimeString()} */}
+                            {new Date(row.createdAt+"Z").toLocaleTimeString()}
                           </TableCell>
                           <TableCell align="start">{row.createdBy}</TableCell>
                           <TableCell align="start">{row.status}</TableCell>
