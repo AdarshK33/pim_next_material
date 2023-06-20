@@ -167,7 +167,7 @@ const BulkUpload = (props) => {
                     className="dropzone col-2 p-3 text-end align-self-center d-flex"
                   >
                     <input {...getInputProps()} />
-                    {}
+                    { }
                     <Box className={`${styles.upload_placeholder} upload_blk`}>
                       <Box>
                         <UploadCloud
@@ -242,8 +242,8 @@ const BulkUpload = (props) => {
                     </TableBody>
                   ) : currentRecords && */}
                   {currentRecords &&
-                  currentRecords !== null &&
-                  currentRecords.length > 0 ? (
+                    currentRecords !== null &&
+                    currentRecords.length > 0 ? (
                     currentRecords.map((row, i) => (
                       <TableBody>
                         <TableRow
@@ -263,7 +263,7 @@ const BulkUpload = (props) => {
                                 .split("T")[0]
                             }{" "}
                             {/* {new Date(row.createdAt).toLocaleTimeString()} */}
-                            {new Date(row.createdAt+"Z").toLocaleTimeString()}
+                            {new Date(row.createdAt + "Z").toLocaleTimeString()}
                           </TableCell>
                           <TableCell align="start">{row.createdBy}</TableCell>
                           <TableCell align="start">{row.status}</TableCell>
@@ -303,7 +303,7 @@ const BulkUpload = (props) => {
                                     marginLeft: "20px",
                                     padding: "1px",
                                   }}
-                                  // onClick={() => handleDownload(row.id)}
+                                // onClick={() => handleDownload(row.id)}
                                 />
                               </div>
                             </>

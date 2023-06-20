@@ -101,7 +101,7 @@ const Attributes = () => {
       query: { attributeSet: id, attributeSetName: name },
     });
 
-    dispatch(getAttributeSetDetailsListApi(id, 0, 10));
+    dispatch(getAttributeSetDetailsListApi(id, '', 0, 10));
   }
   const categoryHandler = (e) => {
     setCategoryId(e.target.value);
@@ -201,8 +201,8 @@ const Attributes = () => {
                       </TableHead>
                       <TableBody>
                         {currentRecords &&
-                        currentRecords !== null &&
-                        currentRecords.length > 0 ? (
+                          currentRecords !== null &&
+                          currentRecords.length > 0 ? (
                           currentRecords.map((row, i) => (
                             <TableRow
                               key={row.name}
@@ -251,7 +251,7 @@ const Attributes = () => {
                                         dispatch(getByAttributeSetApis(row.id));
                                       }}
 
-                                      // update pop is missing
+                                    // update pop is missing
                                     />
                                   </div>
                                   <CustomModal
@@ -279,7 +279,7 @@ const Attributes = () => {
                                           textAlign: "right",
                                           fontSize: "10px",
                                         }}
-                                        // onClick={() => handleEdit(row.userId)}
+                                      // onClick={() => handleEdit(row.userId)}
                                       />
                                     </div>
                                   </TableCell>

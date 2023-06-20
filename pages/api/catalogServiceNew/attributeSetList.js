@@ -15,8 +15,8 @@ function handler(req, res) {
   const config = {
     method: "get",
     // url: `/catalog/attributes/${body.Id}?pageNo=${body.pageNo}&pageSize=${body.pageSize}`,
-    url: `/catalog/attributes/${body.id}?pageNo=${body.pageNo}&pageSize=10`,
-
+    url: `/catalog/attributes/${body.id}?searchAttribute=${body.searchAttribute}&pageNo=${body.pageNo}&pageSize=10`,
+    // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes/60?searchAttribute=online&pageNo=0&pageSize=10
     headers: {
       Authorization: `Bearer ${at}`,
     },

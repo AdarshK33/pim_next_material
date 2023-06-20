@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Button, CardContent, Typography, Card } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAttributeSetDetailsListApi } from "../../../../redux/actions/catalogServiceNew";
 import CustomModal from "../../../common/customModal";
 import AddAttributeForm from "../addAttributeForm";
+import { Search } from "react-feather";
+
 
 const AttributeSetDetails = () => {
   const router = useRouter();
@@ -29,6 +31,11 @@ const AttributeSetDetails = () => {
   const [showAttributeAddForm, setShowAttributeAddForm] = useState(false);
   const [showAttributeEditForm, setShowAttributeEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState(0);
+
+
+  const [focus, setFocus] = useState(false)
+  const [borderFocus, setBorderFocus] = useState(false)
   const tableData = [];
   for (let i = 1; i <= 5; i++) {
     tableData.push({
@@ -39,6 +46,13 @@ const AttributeSetDetails = () => {
       productStatus: "Draft",
     });
   }
+  useEffect(() => {
+
+    dispatch(
+      getAttributeSetDetailsListApi(router.query.attributeSet, '', 0, 10)
+    )
+
+  }, []);
 
   //   /*-----------------Pagination------------------*/
 
@@ -53,11 +67,42 @@ const AttributeSetDetails = () => {
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
     dispatch(
-      getAttributeSetDetailsListApi(router.query.attributeSet, value - 1, 10)
+      getAttributeSetDetailsListApi(router.query.attributeSet, "", value - 1, 10)
     );
   };
 
   /*-----------------Pagination------------------*/
+
+  const handleFocus = (e) => {
+    setFocus(true)
+    setBorderFocus(true)
+  }
+  const handleFocusOut = (e) => {
+    if (e.target.value === "") setFocus(false)
+    setBorderFocus(false)
+  }
+  const getSearchKey = (e) => {
+    console.log(e, "hello search")
+    setSearch(e.length)
+    dispatch(
+      getAttributeSetDetailsListApi(router.query.attributeSet, e, 0, 10)
+    )
+    if (e.length === 0) {
+      dispatch(
+
+        getAttributeSetDetailsListApi(router.query.attributeSet, '', 0, 10)
+      )
+    }
+  }
+  // useEffect(() => {
+  //   setCurrentPage(0);
+  //   if (search === 0) {
+  //     dispatch(
+
+  //       getAttributeSetDetailsListApi(router.query.attributeSet, '', 0, 10)
+  //     )
+  //   }
+  // }, [search]);
 
   return (
     <>
@@ -98,84 +143,86 @@ const AttributeSetDetails = () => {
                 }
               />
             </Grid>
-            {loading === true ? (
-              <div
-                className="loader-box loader"
-                style={{ width: "100% !important" }}
-              >
-                <div className="loader">
-                  <div className="line bg-primary"></div>
-                  <div className="line bg-primary"></div>
-                  <div className="line bg-primary"></div>
-                  <div className="line bg-primary"></div>
-                </div>
+
+            <div className="search_custom_container">
+              <div className="search_custom_textField" style={borderFocus ? { border: "2px solid  #419794" } : { border: "1px solid #C2C2C2" }}>
+
+                <Search
+
+                  className="search-icon_attribute mr-1"
+                  style={{ color: "#313131", cursor: "pointer" }}
+
+                />
+                <p className={focus ? 'search_custom_focusp' : 'search_custom_nonfocusp'} style={borderFocus ? { color: "#419794" } : { color: "#C2C2C2" }}>Search</p>
+                <input type="text" name="search" onFocus={handleFocus} onBlur={handleFocusOut} onChange={e => getSearchKey(e.target.value)} autocomplete="off" />
               </div>
-            ) : (
-              <CardContent>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>#</TableCell>
+            </div>
 
-                        <TableCell>DISPLAY NAME</TableCell>
-                        <TableCell align="center">DESCRIPTION</TableCell>
-                        <TableCell align="center">MANDATORY</TableCell>
+            <CardContent>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      {/* <TableCell>#</TableCell> */}
 
-                        <TableCell align="right">STATUS</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {currentRecords &&
+                      <TableCell>DISPLAY NAME</TableCell>
+                      <TableCell align="center">DESCRIPTION</TableCell>
+                      <TableCell align="center">MANDATORY</TableCell>
+
+                      <TableCell align="right">STATUS</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {currentRecords &&
                       currentRecords !== null &&
                       currentRecords.length > 0 ? (
-                        currentRecords.map((row, i) => (
-                          <TableRow
-                            key={row.name}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {i + 1 + indexOfFirstRecord}
-                            </TableCell>
-                            <TableCell align="start">{row.keyName}</TableCell>
-                            <TableCell align="center">
-                              {row.description}
-                            </TableCell>
+                      currentRecords.map((row, i) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          {/* <TableCell component="th" scope="row">
+                            {i + 1 + indexOfFirstRecord}
+                          </TableCell> */}
+                          <TableCell align="start">{row.keyName}</TableCell>
+                          <TableCell align="center">
+                            {row.description}
+                          </TableCell>
 
-                            <TableCell align="center">
-                              {row.mandatory}
-                              {row?.mandatory === true ? "Yes" : "No"}
-                            </TableCell>
-                            <TableCell align="right">
-                              {row?.active === true ? "Active" : "In-Active"}
-                            </TableCell>
-                          </TableRow>
-                        ))
-                      ) : (
-                        <TableRow>
-                          <TableCell colSpan={12}>No Record Found</TableCell>
+                          <TableCell align="center">
+                            {row.mandatory}
+                            {row?.mandatory === true ? "Yes" : "No"}
+                          </TableCell>
+                          <TableCell align="right">
+                            {row?.active === true ? "Active" : "In-Active"}
+                          </TableCell>
                         </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <div className={styles.attribute_pagination}>
-                  <Pagination
-                    itemClass="page-item"
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    firstPageText="First"
-                    lastPageText="Last"
-                    onChange={handlePaginationChange}
-                  />
-                </div>
-              </CardContent>
-            )}
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={12}>No Record Found</TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <div className={styles.attribute_pagination}>
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={currentPage}
+                  itemsCountPerPage={recordPerPage}
+                  totalItemsCount={totalRecords}
+                  pageRangeDisplayed={pageRange}
+                  firstPageText="First"
+                  lastPageText="Last"
+                  onChange={handlePaginationChange}
+                />
+              </div>
+            </CardContent>
+
           </Card>
         </Grid>
       </Grid>

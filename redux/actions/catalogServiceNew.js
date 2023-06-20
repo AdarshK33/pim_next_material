@@ -837,9 +837,10 @@ export const productUpdateApis = (data) => {
   };
 };
 
-export const getAttributeSetDetailsListApi = (Id, pageNo, pageSize) => {
+export const getAttributeSetDetailsListApi = (Id, searchKey, pageNo, pageSize) => {
   const data = {
     id: Id,
+    searchAttribute: searchKey,
     pageNo: pageNo,
     pageSize: pageSize,
   };
