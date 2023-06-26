@@ -14,16 +14,17 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getCategoriesApi,
-  getCategoriesListApi,
+  getOnlineCategoriesApi,
   addCategoryApi,
+  addOnlineCategoryApi,
   updateCategoryApis,
+  updateOnlineCategoryApis,
 } from "../../../redux/actions/catalogServiceNew";
 
-const Category = () => {
+const OnlineCategory = () => {
   const dispatch = useDispatch();
 
-  const { categoryList } = useSelector(
+  const { onlineCategory } = useSelector(
     (state) => state.catalogServiceNewReducer
   );
   const { authorities } = useSelector((state) => state.loginReducer);
@@ -39,8 +40,8 @@ const Category = () => {
   const [descError, setDescError] = useState(false);
 
   useEffect(() => {
-    dispatch(getCategoriesApi());
-    dispatch(getCategoriesListApi());
+    dispatch(getOnlineCategoriesApi());
+
   }, []);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const Category = () => {
       }
 
       let parentObj = findNestedCategoryById(
-        categoryList,
+        onlineCategory,
         selectedNodeId?.parentCategoryId
       );
 
@@ -82,7 +83,7 @@ const Category = () => {
     );
   };
   const handleNodeSelect = (event, nodeId) => {
-    setSelectedNodeId(findNestedCategoryById(categoryList, nodeId));
+    setSelectedNodeId(findNestedCategoryById(onlineCategory, nodeId));
 
     setShowAddForm(false);
     setNameError(false);
@@ -123,7 +124,7 @@ const Category = () => {
           // precedence:
         };
 
-        dispatch(addCategoryApi(addParentInfo));
+        dispatch(addOnlineCategoryApi(addParentInfo));
       }
       if (selectedNodeId && showAddForm == false) {
         // update will call
@@ -135,7 +136,7 @@ const Category = () => {
           },
           category_id: selectedNodeId.id,
         };
-        dispatch(updateCategoryApis(info));
+        dispatch(updateOnlineCategoryApis(info));
       }
       if (selectedNodeId && showAddForm == true) {
         // set sub category  will call
@@ -151,7 +152,7 @@ const Category = () => {
             slug: "string", // now empty sending
             precedence: 1,
           };
-          dispatch(addCategoryApi(addSubParentInfo));
+          dispatch(addOnlineCategoryApi(addSubParentInfo));
         } else {
           // create who have one sub category  will call
 
@@ -164,7 +165,7 @@ const Category = () => {
             slug: "string", // now empty sending
             precedence: 1,
           };
-          dispatch(addCategoryApi(addSubParentInfo));
+          dispatch(addOnlineCategoryApi(addSubParentInfo));
         }
       }
     }
@@ -241,7 +242,7 @@ const Category = () => {
         <Grid container spacing={2}>
           <Grid container spacing={2} justifyContent="space-between">
             <Typography variant="h5" className={styles.main_title}>
-              Categories
+              Online Categories
             </Typography>
 
             <Box>
@@ -274,7 +275,7 @@ const Category = () => {
                     }}
                     onNodeSelect={handleNodeSelect}
                   >
-                    {renderTree(categoryList)}
+                    {renderTree(onlineCategory)}
                   </TreeView>
                 </Grid>
               </CardContent>
@@ -287,19 +288,19 @@ const Category = () => {
                 {selectedNodeId && showAddForm ? (
                   <>
                     <div className={styles.catergory_add_title}>
-                      Add Sub Category
+                      Add Sub Online Category
                     </div>
                   </>
                 ) : selectedNodeId && !showAddForm ? (
                   <>
                     <div className={styles.catergory_add_title}>
-                      Update Category
+                      Update Online Category
                     </div>
                   </>
                 ) : (
                   <>
                     <div className={styles.catergory_add_title}>
-                      Add Category
+                      Add Online Category
                     </div>
                   </>
                 )}
@@ -421,4 +422,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default OnlineCategory;

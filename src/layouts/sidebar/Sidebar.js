@@ -197,6 +197,10 @@ const Sidebar = ({ onSidebarClose, isSidebarOpen }) => {
             title: "ATTRIBUTES MAPPING",
             href: "/channelAttributes",
           },
+          {
+            title: "ONLINE CATEGORIES",
+            href: "/onlineCategory",
+          },
         ],
       });
     }
@@ -210,6 +214,10 @@ const Sidebar = ({ onSidebarClose, isSidebarOpen }) => {
           {
             title: "CHANNELS",
             href: "/channels",
+          },
+          {
+            title: "ONLINE CATEGORIES",
+            href: "/onlineCategory",
           },
         ],
       });
@@ -329,8 +337,8 @@ const Sidebar = ({ onSidebarClose, isSidebarOpen }) => {
                             className={styles.text_menu}
                           />
                           {submenuOpen &&
-                          menuitem.title === selectedMenu &&
-                          menuitem.list ? (
+                            menuitem.title === selectedMenu &&
+                            menuitem.list ? (
                             <>
                               <ChevronDown
                                 icon="chevron-down"

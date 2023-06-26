@@ -2,19 +2,13 @@ import { catalogServiceNew } from "../../../utils/axios";
 import withSession from "../../../utils/session";
 
 function handler(req, res) {
-  const body = req.body;
-  const id = body.category_id;
-
-  // console.log("update adarsh", body.category_id, body.payload);
-
   const { user: { at = "" } = {}, loggedIn } = req.session;
   const config = {
-    method: "patch",
-    url: `/catalog/category/${id}`,
+    method: "get",
+    url: "/catalog/all_online_categories",
     headers: {
       Authorization: `Bearer ${at}`,
     },
-    data: body.payload,
   };
   catalogServiceNew(config)
     .then((response) => {
@@ -25,7 +19,7 @@ function handler(req, res) {
     })
     .catch((err) => {
       console.log(
-        "error caught in -> pages/api/catalogServiceNew/category",
+        "error caught in -> pages/api/catalogServiceNew/onlineCategoryList",
         err
       );
       if (err?.response) {
