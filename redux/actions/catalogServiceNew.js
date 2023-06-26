@@ -62,6 +62,15 @@ import {
   ATTRIBUTE_SET_GET_BY_ID_DATA_LOADING,
   ATTRIBUTE_SET_GET_BY_ID_DATA_SUCCESS,
   ATTRIBUTE_SET_GET_BY_ID_DATA_FAILURE,
+  CREATE_ONLINE_CATEGORY_DATA_LOADING,
+  CREATE_ONLINE_CATEGORY_DATA_SUCCESS,
+  CREATE_ONLINE_CATEGORY_DATA_FAILURE,
+  UPDATE_ONLINE_CATEGORY_DATA_LOADING,
+  UPDATE_ONLINE_CATEGORY_DATA_SUCCESS,
+  UPDATE_ONLINE_CATEGORY_DATA_FAILURE,
+  ONLINE_CATEGORY_DATA_LOADING,
+  ONLINE_CATEGORY_DATA_SUCCESS,
+  ONLINE_CATEGORY_DATA_FAILURE
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -443,6 +452,67 @@ export const attributeSetUpdateDataFailure = (error) => {
     payload: error,
   };
 };
+
+
+
+
+
+export const onlineCategoryListingLoading = () => {
+  return {
+    type: ONLINE_CATEGORY_DATA_LOADING,
+  };
+};
+export const onlineCategoryListingSuccess = (data) => {
+  return {
+    type: ONLINE_CATEGORY_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const onlineCategoryListingFailure = (error) => {
+  return {
+    type: ONLINE_CATEGORY_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+
+export const onlineCategoryUpdateLoading = () => {
+  return {
+    type: UPDATE_ONLINE_CATEGORY_DATA_LOADING,
+  };
+};
+export const onlineCategoryUpdateSuccess = (data) => {
+  return {
+    type: UPDATE_ONLINE_CATEGORY_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const onlineCategoryUpdateFailure = (error) => {
+  return {
+    type: UPDATE_ONLINE_CATEGORY_DATA_FAILURE,
+    payload: error,
+  };
+};
+
+
+export const onlineCategoryCreateLoading = () => {
+  return {
+    type: CREATE_ONLINE_CATEGORY_DATA_LOADING,
+  };
+};
+export const onlineCategoryCreateSuccess = (data) => {
+  return {
+    type: CREATE_ONLINE_CATEGORY_DATA_SUCCESS,
+    payload: data,
+  };
+};
+export const onlineCategoryCreateFailure = (error) => {
+  return {
+    type: CREATE_ONLINE_CATEGORY_DATA_FAILURE,
+    payload: error,
+  };
+};
+
 
 export const getAttributeListApi = (id, pageNo, pageSize) => {
   const data = {
@@ -1112,3 +1182,82 @@ export const updateAttributeSetApis = (data) => {
       });
   };
 };
+
+
+export const getOnlineCategoriesApi = () => {
+  return (dispatch) => {
+    dispatch(onlineCategoryListingLoading("Categories....", "Loading!"));
+    client
+      .get("/api/catalogServiceNew/onlineCategoryList")
+      .then((response) => {
+        // console.log(" categories response=>", response);
+        dispatch(onlineCategoryListingSuccess(response.data));
+      })
+      .catch((err) => {
+        // toast.error("User Data Not Found!!!");
+        console.log("error caught in -> error caught in -> actions/catalogServiceNew/getOnlineCategoriesApi ", err);
+        dispatch(onlineCategoryListingFailure(err));
+      });
+  };
+};
+
+export const addOnlineCategoryApi = (data) => {
+  console.log("hello   called", data);
+  return (dispatch) => {
+    dispatch(onlineCategoryCreateLoading("Categories....", "Loading!"));
+    client
+      .post("/api/catalogServiceNew/addOnlineCategory", data)
+
+      .then(async (response) => {
+        // console.log(" csdxfsdf", response);
+        dispatch(onlineCategoryCreateSuccess(response.data));
+
+        toast.info("Online category added successfully !!!");
+        dispatch(getOnlineCategoriesApi());
+      })
+      .catch((err) => {
+        toast.error("Online category  failed!!!");
+
+        dispatch(onlineCategoryCreateFailure(err));
+      });
+  };
+};
+
+
+export const updateOnlineCategoryApis = (data) => {
+  return (dispatch) => {
+    dispatch(onlineCategoryUpdateLoading("STATUS....", "STATUS"));
+    client
+      .post("/api/catalogServiceNew/updateOnlineCategory", data)
+      .then(async (response) => {
+        // console.log("rrrrrr",response)
+        if (response.status === 200) {
+          toast.info("Category updated successfully !!!");
+
+          dispatch(
+            onlineCategoryUpdateSuccess(
+              response.data,
+              " status Successfully",
+              "status UPDATE"
+            )
+          );
+          dispatch(getOnlineCategoriesApi());
+        } else throw new Error("");
+      })
+      .catch((err) => {
+        toast.error("Online category updated failed !!!");
+        console.log(
+          "error caught in -> actions/catalogServiceNew/categoryUpdate",
+          err
+        );
+        dispatch(
+          onlineCategoryUpdateFailure(
+            err,
+            "Something went wrong",
+            "Online category UPDATE"
+          )
+        );
+      });
+  };
+};
+

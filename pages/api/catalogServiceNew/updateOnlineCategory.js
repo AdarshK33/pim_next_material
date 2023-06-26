@@ -10,7 +10,7 @@ function handler(req, res) {
   const { user: { at = "" } = {}, loggedIn } = req.session;
   const config = {
     method: "patch",
-    url: `/catalog/category/${id}`,
+    url: `/catalog/OnlineCategory/${id}`,
     headers: {
       Authorization: `Bearer ${at}`,
     },
@@ -25,7 +25,7 @@ function handler(req, res) {
     })
     .catch((err) => {
       console.log(
-        "error caught in -> pages/api/catalogServiceNew/category",
+        "error caught in -> pages/api/catalogServiceNew/update OnlineCategory",
         err
       );
       if (err?.response) {

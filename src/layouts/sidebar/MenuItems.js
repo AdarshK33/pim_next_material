@@ -75,6 +75,10 @@ const Menuitems = [
         title: "ATTRIBUTES MAPPING",
         href: "/channelAttributes",
       },
+      {
+        title: "ONLINE CATEGORIES",
+        href: "/onlineCategory",
+      },
     ],
   },
   {

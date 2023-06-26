@@ -54,6 +54,15 @@ import {
   ATTRIBUTE_SET_GET_BY_ID_DATA_LOADING,
   ATTRIBUTE_SET_GET_BY_ID_DATA_SUCCESS,
   ATTRIBUTE_SET_GET_BY_ID_DATA_FAILURE,
+  CREATE_ONLINE_CATEGORY_DATA_LOADING,
+  CREATE_ONLINE_CATEGORY_DATA_SUCCESS,
+  CREATE_ONLINE_CATEGORY_DATA_FAILURE,
+  UPDATE_ONLINE_CATEGORY_DATA_LOADING,
+  UPDATE_ONLINE_CATEGORY_DATA_SUCCESS,
+  UPDATE_ONLINE_CATEGORY_DATA_FAILURE,
+  ONLINE_CATEGORY_DATA_LOADING,
+  ONLINE_CATEGORY_DATA_SUCCESS,
+  ONLINE_CATEGORY_DATA_FAILURE
 } from "../types/types";
 
 const initialState = {
@@ -77,6 +86,9 @@ const initialState = {
   bulkExport: {},
   attribute_set_get_by_id: {},
   attribute_set_update: {},
+  onlineCategory: {},
+  onlineCategoryCreated: {},
+  onlineCategoryUpdated: {},
 
   // refreshToken:{}
 };
@@ -441,9 +453,70 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         attribute_set_get_by_id: [],
         error: action,
       };
+    case CREATE_ONLINE_CATEGORY_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_ONLINE_CATEGORY_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        onlineCategoryCreated: action.payload,
+        error: {},
+      };
+    case CREATE_ONLINE_CATEGORY_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        onlineCategoryCreated: [],
+        error: action,
+      };
+    case UPDATE_ONLINE_CATEGORY_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_ONLINE_CATEGORY_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        onlineCategoryUpdated: action.payload,
+        error: {},
+      };
+    case UPDATE_ONLINE_CATEGORY_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        onlineCategoryUpdated: [],
+        error: action,
+      };
+    case ONLINE_CATEGORY_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ONLINE_CATEGORY_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        onlineCategory: action.payload,
+        error: {},
+      };
+    case ONLINE_CATEGORY_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        onlineCategory: [],
+        error: action,
+      };
     default:
       return state;
   }
 };
+
+
+
+
 
 export default catalogServiceNewReducer;
