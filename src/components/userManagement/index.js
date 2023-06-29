@@ -158,8 +158,8 @@ const UserManagement = () => {
                   </TableHead>
                   <TableBody>
                     {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
+                      currentRecords !== null &&
+                      currentRecords.length > 0 ? (
                       currentRecords.map((row, i) => (
                         <TableRow
                           key={row.name}
@@ -225,4 +225,6 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+
+export default React.memo(UserManagement);
+

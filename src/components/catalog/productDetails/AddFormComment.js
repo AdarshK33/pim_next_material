@@ -73,4 +73,5 @@ const AddFormComment = ({ classModal, valueData }) => {
   );
 };
 
-export default AddFormComment;
+export default React.memo(AddFormComment);
+

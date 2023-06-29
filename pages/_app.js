@@ -54,13 +54,31 @@ function MyApp(props) {
       });
   }, []);
 
-  useEffect(() => {
-    dispatch(getCategoriesApi());
-    dispatch(getNotificationApi());
-    dispatch(getDashBoardApi());
-    dispatch(getRoleApi());
+  // useEffect(() => {
+  //   dispatch(getCategoriesApi());
+  //   dispatch(getNotificationApi());
+  //   dispatch(getDashBoardApi());
+  //   dispatch(getRoleApi());
 
-    dispatch(getChannelListApi(0, 1000));
+  //   dispatch(getChannelListApi(0, 1000));
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await Promise.all([
+          dispatch(getCategoriesApi()),
+          dispatch(getNotificationApi()),
+          dispatch(getDashBoardApi()),
+          dispatch(getRoleApi()),
+          dispatch(getChannelListApi(0, 1000))
+        ]);
+      } catch (error) {
+        console.log(error)
+      }
+    };
+
+    fetchData();
   }, []);
   // useeffect and dispatch called -init
   // client to server call - use : api/userApi
@@ -84,40 +102,6 @@ function MyApp(props) {
   );
 }
 
-// export const getServerSideProps = withIronSessionSsr(
-//   async function getServerSideProps({ req }) {
-//     try {
-//       const user = req?.session?.user || null;
-//       console.log("hello app", user);
-//       if (!user) {
-//         return {
-//           redirect: {
-//             destination: "/login",
-//             permanent: false,
-//           },
-//         };
-//       }
-
-//       return {
-//         props: {
-//           user: req?.session?.user || null,
-//         },
-//       };
-//     } catch (error) {
-//       console.error(error);
-//       throw error;
-//     }
-//   },
-//   {
-//     cookieName: "PIMSESSION",
-//     password: "760848aa-c385-4321-ba49-75201fa0de80",
-//     cookieOptions: {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production" ? true : false,
-//       maxAge: 60 * 2,
-//     },
-//   }
-// );
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,

@@ -469,4 +469,4 @@ const ChannelAttributes = () => {
   );
 };
 
-export default ChannelAttributes;
+export default React.memo(ChannelAttributes);

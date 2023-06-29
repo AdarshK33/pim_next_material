@@ -240,8 +240,8 @@ function AddAttributeForm({ classModal, id }) {
               variant="standard"
               value={description}
               onChange={descHandler}
-              // multiline
-              // rows={3}
+            // multiline
+            // rows={3}
             />
           </Grid>
           <Grid item xs={6}>
@@ -290,4 +290,4 @@ function AddAttributeForm({ classModal, id }) {
   );
 }
 
-export default AddAttributeForm;
+export default React.memo(AddAttributeForm);

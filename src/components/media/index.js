@@ -150,7 +150,7 @@ const Media = (props) => {
               <Box className="dropZone-container">
                 <Dropzone
                   onDrop={onDrop}
-                  // accept={{ "image/*": [".png", ".jpg", ".jpeg"] }}
+                // accept={{ "image/*": [".png", ".jpg", ".jpeg"] }}
                 >
                   {({ getRootProps, getInputProps }) => (
                     <Box
@@ -158,7 +158,7 @@ const Media = (props) => {
                       className="dropzone col-2 p-3 text-end align-self-center d-flex"
                     >
                       <input {...getInputProps()} />
-                      {}
+                      { }
                       <Box
                         className={`${styles.upload_placeholder} upload_blk`}
                       >
@@ -187,7 +187,7 @@ const Media = (props) => {
                       className="dropzone col-2 p-3 text-end align-self-center d-flex"
                     >
                       <input {...getInputProps()} />
-                      {}
+                      { }
                       <Box
                         className={`${styles.upload_placeholder} upload_blk`}
                       >
@@ -237,8 +237,8 @@ const Media = (props) => {
                     </TableHead>
                     <TableBody>
                       {currentRecords &&
-                      currentRecords !== null &&
-                      currentRecords.length > 0 ? (
+                        currentRecords !== null &&
+                        currentRecords.length > 0 ? (
                         currentRecords.map((row, i) => (
                           <TableRow
                             key={row.name}
@@ -298,4 +298,4 @@ const Media = (props) => {
   );
 };
 
-export default Media;
+export default React.memo(Media);

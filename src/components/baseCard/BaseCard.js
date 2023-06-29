@@ -20,4 +20,5 @@ const BaseCard = (props) => {
   );
 };
 
-export default BaseCard;
+export default React.memo(BaseCard);
+

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./dashboard.module.css";
 import ProductCard from "./productCard";
 import ProductChart from "./productChart";
-import ProductGraph from "./productGraph";
+// import ProductGraph from "./productGraph";
 import ProductAlert from "./productAlert";
 
 import {
@@ -31,11 +31,13 @@ const DashBoard = () => {
         <Card>
           <ProductChart />
         </Card>
-        <ProductGraph />
+        {/* <ProductGraph /> */}
         <ProductAlert />
       </Box>
     </>
   );
 };
 
-export default DashBoard;
+
+export default React.memo(DashBoard);
+

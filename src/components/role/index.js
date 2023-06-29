@@ -148,4 +148,5 @@ const Role = () => {
   );
 };
 
-export default Role;
+export default React.memo(Role);
+

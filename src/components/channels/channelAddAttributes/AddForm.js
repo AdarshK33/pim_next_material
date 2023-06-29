@@ -160,4 +160,5 @@ function AddForm({ classModal, dataID }) {
   );
 }
 
-export default AddForm;
+export default React.memo(AddForm);
+

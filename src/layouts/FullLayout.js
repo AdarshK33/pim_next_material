@@ -94,4 +94,4 @@ const FullLayout = ({ children }) => {
   );
 };
 
-export default FullLayout;
+export default React.memo(FullLayout);

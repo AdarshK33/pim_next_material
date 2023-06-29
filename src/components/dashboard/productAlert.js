@@ -145,4 +145,4 @@ const ProductAlert = () => {
   );
 };
 
-export default ProductAlert;
+export default React.memo(ProductAlert);

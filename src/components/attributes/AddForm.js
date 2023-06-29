@@ -220,8 +220,8 @@ function AddForm({ classModal }) {
               variant="standard"
               value={description}
               onChange={descHandler}
-              // multiline
-              // rows={3}
+            // multiline
+            // rows={3}
             />
           </Grid>
 
@@ -354,4 +354,5 @@ function AddForm({ classModal }) {
   );
 }
 
-export default AddForm;
+export default React.memo(AddForm);
+

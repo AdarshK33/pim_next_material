@@ -649,4 +649,6 @@ const ProductViewDetails = (props) => {
   );
 };
 
-export default ProductViewDetails;
+
+export default React.memo(ProductViewDetails);
+
