@@ -344,4 +344,6 @@ const BulkUpload = (props) => {
   );
 };
 
-export default BulkUpload;
+
+export default React.memo(BulkUpload);
+

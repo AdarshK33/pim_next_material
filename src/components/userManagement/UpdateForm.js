@@ -250,4 +250,4 @@ function UpdateForm({ classModal }) {
   );
 }
 
-export default UpdateForm;
+export default React.memo(UpdateForm);

@@ -230,4 +230,4 @@ const AttributeSetDetails = () => {
   );
 };
 
-export default AttributeSetDetails;
+export default React.memo(AttributeSetDetails);

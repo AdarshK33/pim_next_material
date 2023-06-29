@@ -161,7 +161,7 @@ const ProductChart = () => {
                     height="200px"
                     data={blog}
                     options={options}
-                    // style={{ border: ".6px solid red" }}
+                  // style={{ border: ".6px solid red" }}
                   />
                 </Box>
               </Box>
@@ -208,4 +208,6 @@ const ProductChart = () => {
   );
 };
 
-export default ProductChart;
+
+export default React.memo(ProductChart);
+

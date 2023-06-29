@@ -150,4 +150,5 @@ const ProductGraph = () => {
   );
 };
 
-export default ProductGraph;
+export default React.memo(ProductGraph);
+

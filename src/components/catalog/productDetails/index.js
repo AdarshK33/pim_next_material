@@ -364,4 +364,5 @@ const ProductDetails = (props) => {
   );
 };
 
-export default ProductDetails;
+export default React.memo(ProductDetails);
+

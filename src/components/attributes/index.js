@@ -319,4 +319,4 @@ const Attributes = () => {
   );
 };
 
-export default Attributes;
+export default React.memo(Attributes);

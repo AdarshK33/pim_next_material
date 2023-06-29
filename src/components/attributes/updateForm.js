@@ -286,8 +286,8 @@ function UpdateForm({ classModal }) {
                 variant="standard"
                 value={description}
                 onChange={descHandler}
-                // multiline
-                // rows={3}
+              // multiline
+              // rows={3}
               />
 
               {descError ? (
@@ -389,4 +389,5 @@ function UpdateForm({ classModal }) {
   );
 }
 
-export default UpdateForm;
+export default React.memo(UpdateForm);
+

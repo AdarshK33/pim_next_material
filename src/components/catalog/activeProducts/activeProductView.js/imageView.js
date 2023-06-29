@@ -28,4 +28,7 @@ const ThumbnailSlider = ({ images }) => {
   );
 };
 
-export default ThumbnailSlider;
+
+
+export default React.memo(ThumbnailSlider);
+

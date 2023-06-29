@@ -214,7 +214,7 @@ const ChannelAddAttributes = () => {
                       color="success"
                       component="label"
                       onClick={updateEnableHandler}
-                      // disabled={}
+                    // disabled={}
                     >
                       Edit
                     </Button>
@@ -227,7 +227,7 @@ const ChannelAddAttributes = () => {
                       component="label"
                       className={styles.buttonAdd_channelAtt}
                       onClick={updateCancelHandler}
-                      // disabled={}
+                    // disabled={}
                     >
                       Cancel
                     </Button>
@@ -323,4 +323,5 @@ const ChannelAddAttributes = () => {
   );
 };
 
-export default ChannelAddAttributes;
+
+export default React.memo(ChannelAddAttributes);

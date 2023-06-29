@@ -281,8 +281,8 @@ const ActiveProducts = () => {
                   </TableHead>
 
                   {catalogServiceNewReducer?.loading == true &&
-                  currentRecords !== null &&
-                  currentRecords !== undefined ? (
+                    currentRecords !== null &&
+                    currentRecords !== undefined ? (
                     <TableBody>
                       <TableRow
                         key="row"
@@ -413,4 +413,4 @@ const ActiveProducts = () => {
   );
 };
 
-export default ActiveProducts;
+export default React.memo(ActiveProducts);

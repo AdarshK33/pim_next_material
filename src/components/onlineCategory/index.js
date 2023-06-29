@@ -422,4 +422,5 @@ const OnlineCategory = () => {
   );
 };
 
-export default OnlineCategory;
+export default React.memo(OnlineCategory);
+

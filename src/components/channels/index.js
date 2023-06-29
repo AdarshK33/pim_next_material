@@ -113,8 +113,8 @@ const Channels = () => {
                   </TableHead>
                   <TableBody>
                     {currentRecords &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 ? (
+                      currentRecords !== null &&
+                      currentRecords.length > 0 ? (
                       currentRecords.map((row, i) => (
                         <TableRow
                           key={row.name}
@@ -205,4 +205,6 @@ const Channels = () => {
   );
 };
 
-export default Channels;
+
+export default React.memo(Channels);
+

@@ -162,4 +162,4 @@ const AddFormRevalidate = ({
   );
 };
 
-export default AddFormRevalidate;
+export default React.memo(AddFormRevalidate);

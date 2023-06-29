@@ -458,4 +458,4 @@ Sidebar.propTypes = {
   isSidebarOpen: PropTypes.bool,
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

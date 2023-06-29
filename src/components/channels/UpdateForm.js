@@ -169,8 +169,8 @@ const UpdateForm = ({ classModal }) => {
                 variant="standard"
                 value={desc}
                 onChange={descHandler}
-                // multiline
-                // rows={3}
+              // multiline
+              // rows={3}
               />
               {descError ? (
                 <p style={{ color: "red" }}>** Please choose description</p>
@@ -235,4 +235,4 @@ const UpdateForm = ({ classModal }) => {
   );
 };
 
-export default UpdateForm;
+export default React.memo(UpdateForm);

@@ -96,4 +96,6 @@ Link.propTypes = {
   role: PropTypes.string,
 };
 
-export default Link;
+
+export default React.memo(Link);
+

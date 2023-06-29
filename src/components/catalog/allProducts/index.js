@@ -61,6 +61,9 @@ const AllProducts = (props) => {
   const [searchAllObject, setSearchAllObject] = useState("");
   const [countState, setCountState] = useState("");
 
+
+  const isFirstRender = useRef(true);
+  const isElseBlockExecuted = useRef(false);
   // console.log("hello countState", countState);
 
   const { catalogServiceNewReducer } = useSelector((state) => {
@@ -111,35 +114,80 @@ const AllProducts = (props) => {
     setValue((prevValue) => prevValue + 1);
   };
 
+  // useEffect(() => {
+
+  //   if (searchKeyValue) {
+  //     console.log("hello 1 searchKeyValue", searchKeyValue)
+  //     if (value === 0) {
+  //       console.log("hello 2  value === 0")
+  //       //default call
+  //       setCountState("DRAFT");
+  //       // dispatch(getAllProductListApi(0, 10, "DRAFT"));
+  //       dispatch(productSearchApis("DRAFT", searchKeyValue));
+  //     } else if (value === 1) {
+  //       setCountState("READY_FOR_REVIEW");
+  //       // dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
+  //       dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
+  //     } else if (value === 2) {
+  //       setCountState("REVALIDATE");
+  //       // dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
+  //       dispatch(productSearchApis("REVALIDATE", searchKeyValue));
+  //     }
+  //   }
+  //   else {
+  //     console.log("hello 3 else", searchKeyValue)
+
+  //     setSearchKeyValue();
+  //     console.log("hello 4 else searchKeyValue null", searchKeyValue)
+
+  //     if (value === 0) {
+  //       //default call
+  //       console.log("hello 5 else Value 0 ", searchKeyValue)
+
+  //       //setCountState("DRAFT");
+  //       dispatch(getAllProductListApi(0, 10, "DRAFT"));
+  //       dispatch(productSearchApis("DRAFT", searchKeyValue));
+  //     } else if (value === 1) {
+  //       //setCountState("READY_FOR_REVIEW");
+  //       dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
+  //       dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
+  //     } else if (value === 2) {
+  //       //setCountState("REVALIDATE");
+  //       dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
+  //       dispatch(productSearchApis("REVALIDATE", searchKeyValue));
+  //     }
+  //   }
+  // }, [value, searchKeyValue]);
+
+
+
   useEffect(() => {
     if (searchKeyValue) {
+      console.log("hello 1 searchKeyValue", searchKeyValue)
       if (value === 0) {
-        //default call
+        console.log("hello 2  value === 0")
         setCountState("DRAFT");
-        // dispatch(getAllProductListApi(0, 10, "DRAFT"));
         dispatch(productSearchApis("DRAFT", searchKeyValue));
       } else if (value === 1) {
         setCountState("READY_FOR_REVIEW");
-        // dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
         dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
       } else if (value === 2) {
         setCountState("REVALIDATE");
-        // dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
         dispatch(productSearchApis("REVALIDATE", searchKeyValue));
       }
     } else {
-      setSearchKeyValue();
+      console.log("hello 3 else", searchKeyValue)
+      if (searchKeyValue) {
+        setSearchKeyValue()
+      }
       if (value === 0) {
-        //default call
-        setCountState("DRAFT");
+        console.log("hello 5 else Value 0 ", searchKeyValue)
         dispatch(getAllProductListApi(0, 10, "DRAFT"));
         dispatch(productSearchApis("DRAFT", searchKeyValue));
       } else if (value === 1) {
-        setCountState("READY_FOR_REVIEW");
         dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
         dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
       } else if (value === 2) {
-        setCountState("REVALIDATE");
         dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
         dispatch(productSearchApis("REVALIDATE", searchKeyValue));
       }
@@ -380,30 +428,27 @@ const AllProducts = (props) => {
 
                 <Tabs value={value} onChange={handleChange}>
                   <Tab
-                    label={`${tabLabels[0]}  ${
-                      countState === "DRAFT"
-                        ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
-                        : ""
-                    }`}
+                    label={`${tabLabels[0]}  ${countState === "DRAFT"
+                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      : ""
+                      }`}
                     className={styles.tab}
                   />
                   {/* {role === "ADMIN" && ( */}
                   <Tab
-                    label={`${tabLabels[1]} ${
-                      countState === "READY_FOR_REVIEW"
-                        ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
-                        : ""
-                    }`}
+                    label={`${tabLabels[1]} ${countState === "READY_FOR_REVIEW"
+                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      : ""
+                      }`}
                     className={styles.tab}
                   />
                   {/* )} */}
 
                   <Tab
-                    label={`${tabLabels[2]} ${
-                      countState === "REVALIDATE"
-                        ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
-                        : ""
-                    }`}
+                    label={`${tabLabels[2]} ${countState === "REVALIDATE"
+                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      : ""
+                      }`}
                     className={styles.tab}
                   />
                 </Tabs>
@@ -425,8 +470,8 @@ const AllProducts = (props) => {
                     </TableHead>
                     <TableBody>
                       {catalogServiceNewReducer?.loading == true &&
-                      currentRecords !== null &&
-                      currentRecords !== undefined ? (
+                        currentRecords !== null &&
+                        currentRecords !== undefined ? (
                         <TableBody>
                           <TableRow
                             key="row"
@@ -546,8 +591,8 @@ const AllProducts = (props) => {
                     </TableHead>
                     <TableBody>
                       {catalogServiceNewReducer?.loading == true &&
-                      currentRecords !== null &&
-                      currentRecords !== undefined ? (
+                        currentRecords !== null &&
+                        currentRecords !== undefined ? (
                         <TableBody>
                           <TableRow
                             key="row"
@@ -662,8 +707,8 @@ const AllProducts = (props) => {
                     </TableHead>
                     <TableBody>
                       {catalogServiceNewReducer?.loading == true &&
-                      currentRecords !== null &&
-                      currentRecords !== undefined ? (
+                        currentRecords !== null &&
+                        currentRecords !== undefined ? (
                         <TableBody>
                           <TableRow
                             key="row"
@@ -773,4 +818,5 @@ const AllProducts = (props) => {
   );
 };
 
-export default AllProducts;
+export default React.memo(AllProducts);
+

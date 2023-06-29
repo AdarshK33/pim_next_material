@@ -1,3 +1,5 @@
+
+
 const typography = {
   fontStyle: "normal",
   fontFamily: "Montserrat",
@@ -49,4 +51,5 @@ const typography = {
   },
 };
 
-export default typography;
+export default (typography);
+
