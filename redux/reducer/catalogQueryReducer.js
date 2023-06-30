@@ -17,6 +17,7 @@ import {
   ATTRIBUTE_SET_DETAILS_DATA_LOADING,
   ATTRIBUTE_SET_DETAILS_DATA_SUCCESS,
   ATTRIBUTE_SET_DETAILS_DATA_FAILURE,
+  //***********************************************   use catelogServiceNew .js   *************************************************//
 } from "../types/types";
 
 const initialState = {

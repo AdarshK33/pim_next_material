@@ -13,8 +13,8 @@ import withRedux from "next-redux-wrapper";
 import { mainStore } from "../redux/store";
 // import { withIronSessionSsr } from "iron-session/next";
 import { client } from "../utils/axios";
-import { userAuthorities, userRole } from "../redux/actions/login";
-import { useDispatch } from "react-redux";
+import { userAuthorities, userRole, isLoggedIn } from "../redux/actions/login";
+import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
 import {
   getNotificationApi,
@@ -33,13 +33,24 @@ function MyApp(props) {
     pageProps,
     // user,
   } = props;
-
+  const { isLoggedin } = useSelector((state) => state.loginReducer);
+  console.log(isLoggedin, "isLoggedin")
   useEffect(() => {
     client
       .post("api/userApi")
       .then((response) => {
-        console.log("MyApp => useEffect => response =>", response);
-        console.log("testing response", response?.data?.role);
+        console.log("hello MyApp => useEffect => response =>", response);
+        console.log("hello testing response", response?.data?.role);
+        console.log("hello  response", response?.data?.isLoggedIn);
+
+
+        dispatch(
+          isLoggedIn(
+            response?.data?.isLoggedIn,
+            "Login isLoggedIn saved Successfully",
+            "LOGIN DETAILS"
+          )
+        );
         dispatch(
           userRole(
             response?.data?.role,
@@ -54,38 +65,41 @@ function MyApp(props) {
       });
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(getCategoriesApi());
-  //   dispatch(getNotificationApi());
-  //   dispatch(getDashBoardApi());
-  //   dispatch(getRoleApi());
-
-  //   dispatch(getChannelListApi(0, 1000));
-  // }, []);
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await Promise.all([
-          dispatch(getCategoriesApi()),
-          dispatch(getNotificationApi()),
-          dispatch(getDashBoardApi()),
-          dispatch(getRoleApi()),
-          dispatch(getChannelListApi(0, 1000))
-        ]);
-      } catch (error) {
-        console.log(error)
-      }
-    };
+    //// dispatch(getCategoriesApi());
+    dispatch(getNotificationApi());
+    // dispatch(getDashBoardApi());
+    // dispatch(getRoleApi());
 
-    fetchData();
+    // dispatch(getChannelListApi(0, 1000));
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       await Promise.all([
+  //         dispatch(getCategoriesApi()),
+  //         dispatch(getNotificationApi()),
+  //         dispatch(getDashBoardApi()),
+  //         dispatch(getRoleApi()),
+  //         dispatch(getChannelListApi(0, 1000))
+  //       ]);
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   };
+
+  //   if (isLoggedin === true) {
+  //     fetchData();
+  //   }
+  // }, [isLoggedin === true]);
   // useeffect and dispatch called -init
   // client to server call - use : api/userApi
   // get the response in client side
   // store the response in redux - loginReducer
 
   // console.log("hello user", user);
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>

@@ -19,7 +19,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import styles from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { userLoginApi, getNotificationApi } from "../redux/actions/login";
+import { userLoginApi, getNotificationApi, myProfileAPi } from "../redux/actions/login";
 import { withIronSessionSsr } from "iron-session/next";
 import Router from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -31,7 +31,7 @@ import Image from "next/image";
 
 const Login = (user) => {
   const dispatch = useDispatch();
-  const { loginReducer } = useSelector((state) => {
+  const { isLoggedin } = useSelector((state) => {
     return state.loginReducer;
   });
 
@@ -78,19 +78,22 @@ const Login = (user) => {
 
   useEffect(() => {
     if (itemData) {
-      console.log("itemData", itemData);
+      // console.log("itemData", itemData);
       dispatch(userLoginApi(itemData));
     }
   }, [itemData]);
 
   useEffect(() => {
     // dispatch(getNotificationApi());
-    if (isLogin === 201 && userRole !== "ADMIN") {
+    if (userRole !== "ADMIN") {
       Router.push("/allProducts");
-    } else if (isLogin === 201 && userRole === "ADMIN") {
-      Router.push("/userDetails");
+
+    } else if (userRole === "ADMIN") {
+      Router.push("/dashboard");
+
     }
-  }, [isLogin, userRole, user]);
+
+  }, [isLoggedin === true]);
 
   return (
     <>
@@ -220,7 +223,7 @@ export const getServerSideProps = withIronSessionSsr(
     if (user) {
       return {
         redirect: {
-          destination: "/userDetails",
+          destination: "/dashboard",
           permanent: false,
         },
       };

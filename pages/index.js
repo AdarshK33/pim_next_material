@@ -22,7 +22,7 @@ export const getServerSideProps = withIronSessionSsr(
       if (user) {
         return {
           redirect: {
-            destination: "/userDetails",
+            destination: "/dashboard",
             permanent: false,
           },
         };

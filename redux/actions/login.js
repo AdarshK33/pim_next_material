@@ -36,11 +36,20 @@ import {
   GET_DASHBOARD_DATA_LOADING,
   GET_DASHBOARD_DATA_SUCCESS,
   GET_DASHBOARD_DATA_FAILURE,
+  ISLOGGEDIN
 } from "../types/types";
 
 import { client } from "../../utils/axios";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
+
+export const isLoggedIn = (data) => {
+  console.log("data", data)
+  return {
+    type: ISLOGGEDIN,
+    payload: data,
+  };
+};
 
 export const userLoginLoading = () => {
   return {
@@ -311,8 +320,11 @@ export const userLoginApi = (data) => {
           );
           console.log("userLoginApi authorities", response.data);
           dispatch(userAuthorities(response.data.result.authorities));
-          dispatch(getDashBoardApi());
-          dispatch(getNotificationApi());
+          // dispatch(getDashBoardApi());
+          // dispatch(getNotificationApi());
+          dispatch(myProfileAPi());
+
+
 
           console.log(
             "response?.data?.result?.role",
@@ -440,6 +452,13 @@ export const myProfileAPi = () => {
         console.log(
           "<<<<<<<<<<<<<<<<<<My Profile>>>>>>>>>>>>>>>>>>>>>>>",
           response
+        );
+        dispatch(
+          isLoggedIn(
+            response?.data?.isLoggedIn,
+            "Login isLoggedIn saved Successfully",
+            "LOGIN DETAILS"
+          )
         );
         dispatch(
           getUserDetailDataSuccess(
