@@ -38,6 +38,7 @@ import {
   GET_DASHBOARD_DATA_LOADING,
   GET_DASHBOARD_DATA_SUCCESS,
   GET_DASHBOARD_DATA_FAILURE,
+  ISLOGGEDIN
 } from "../types/types";
 
 const initialState = {
@@ -62,10 +63,18 @@ const initialState = {
   // refreshToken:{}
   authorities: "",
   dashBoardData: {},
+  isLoggedin: {}
 };
 const loginReducer = (state = initialState, action) => {
-  // console.log("hello loginReducer called",action)
+  console.log("hello loginReducer called", action.payload)
   switch (action.type) {
+
+    case ISLOGGEDIN:
+      return {
+        ...state,
+        isLoggedin: action.payload,
+        error: {},
+      };
     case USER_LOGIN_LOADING:
       return {
         ...state,

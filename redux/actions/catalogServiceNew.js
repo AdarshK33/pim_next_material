@@ -693,14 +693,18 @@ export const getCategoriesApi = () => {
   return (dispatch) => {
     dispatch(getCategoriesLoading("Categories....", "Loading!"));
     client
-      .get("/api/catalogQuery/allCategories")
+      .get("/api/catalogServiceNew/dropdownCategories")
       .then((response) => {
         console.log(" categories response=>", response);
         dispatch(getCategoriesSuccess(response.data));
       })
       .catch((err) => {
         // toast.error("User Data Not Found!!!");
-        console.log("error caught in -> api/v1/catalog/category", err);
+        console.log(
+          "error caught in -> actions/catalogServiceNew/getCategoriesApi",
+          err
+        );
+        // console.log("error caught in -> api/v1/catalog/category", err);
         dispatch(getCategoriesFailure(err));
       });
   };

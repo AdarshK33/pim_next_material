@@ -39,7 +39,7 @@ const Category = () => {
   const [descError, setDescError] = useState(false);
 
   useEffect(() => {
-    dispatch(getCategoriesApi());
+    // dispatch(getCategoriesApi()); //dropdown api
     dispatch(getCategoriesListApi());
   }, []);
 

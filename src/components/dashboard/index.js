@@ -4,6 +4,12 @@ import ProductCard from "./productCard";
 import ProductChart from "./productChart";
 // import ProductGraph from "./productGraph";
 import ProductAlert from "./productAlert";
+import { useDispatch, useSelector } from "react-redux";
+import {
+
+  getDashBoardApi,
+
+} from "../../../redux/actions/login";
 
 import {
   IconButton,
@@ -23,7 +29,14 @@ import {
 } from "@mui/material";
 // const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
+
 const DashBoard = () => {
+  let dispatch = useDispatch();
+  useEffect(() => {
+
+    dispatch(getDashBoardApi());
+
+  }, []);
   return (
     <>
       <Box className={styles.bg_color}>

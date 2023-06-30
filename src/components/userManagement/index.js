@@ -52,15 +52,15 @@ const UserManagement = () => {
     setRole(e.target.value);
   };
 
-  const tableData = [];
+  // const tableData = [];
 
-  for (let i = 1; i <= 5; i++) {
-    tableData.push({
-      email: "demo@gmail.com" + i,
-      sku: "ADMIN" + i,
-      brand: "Nike" + i,
-    });
-  }
+  // for (let i = 1; i <= 5; i++) {
+  //   tableData.push({
+  //     email: "demo@gmail.com" + i,
+  //     sku: "ADMIN" + i,
+  //     brand: "Nike" + i,
+  //   });
+  // }
 
   const recordPerPage = 10;
   const totalRecords = userGet.totalElements;
