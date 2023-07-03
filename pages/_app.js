@@ -67,7 +67,7 @@ function MyApp(props) {
 
   useEffect(() => {
     //// dispatch(getCategoriesApi());
-    dispatch(getNotificationApi());
+    // dispatch(getNotificationApi());
     // dispatch(getDashBoardApi());
     // dispatch(getRoleApi());
 

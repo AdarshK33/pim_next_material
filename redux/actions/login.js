@@ -318,24 +318,32 @@ export const userLoginApi = (data) => {
               "LOGIN DETAILS"
             )
           );
-          console.log("userLoginApi authorities", response.data);
-          dispatch(userAuthorities(response.data.result.authorities));
+          // console.log("userLoginApi authorities", response.data);
+          dispatch(userAuthorities(response?.data?.result?.authorities));
           // dispatch(getDashBoardApi());
-          // dispatch(getNotificationApi());
+          dispatch(getNotificationApi());
           dispatch(myProfileAPi());
 
-
-
-          console.log(
-            "response?.data?.result?.role",
-            response?.data?.result?.role
-          );
+          // console.log(
+          //   "response?.data?.result?.role",
+          //   response?.data?.result?.role
+          // );
 
           // navigate('/dashboard/dashboard');
         } else throw new Error("");
       })
       .catch((err) => {
-        toast.error("User Not Found!!!");
+        const { status = {} } = err?.response;
+        if (status == 502) {
+          toast.error("Bad gateway !!!");
+        }
+        if (status == 401) {
+          toast.error("Please enter correct user name and password");
+        }
+        else {
+          toast.error("User not found!!!");
+        }
+
         console.log("error caught in -> actions/login", err);
         dispatch(userLoginFailure(err, "Something went wrong", "LOGIN POST"));
       });
