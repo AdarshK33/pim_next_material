@@ -91,6 +91,7 @@ const AllProducts = (props) => {
 
   const recordPerPage = 10;
   const totalRecords = catalogServiceNewReducer?.getAllProducts.totalElements;
+  // console.log(catalogServiceNewReducer?.getAllProducts?.totalElements, "catalogServiceNewReducer totalElements")
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
@@ -181,13 +182,16 @@ const AllProducts = (props) => {
         setSearchKeyValue()
       }
       if (value === 0) {
+        setCountState("DRAFT");
         console.log("hello 5 else Value 0 ", searchKeyValue)
         dispatch(getAllProductListApi(0, 10, "DRAFT"));
         dispatch(productSearchApis("DRAFT", searchKeyValue));
       } else if (value === 1) {
+        setCountState("READY_FOR_REVIEW");
         dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
         dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
       } else if (value === 2) {
+        setCountState("REVALIDATE");
         dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
         dispatch(productSearchApis("REVALIDATE", searchKeyValue));
       }
