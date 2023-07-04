@@ -167,9 +167,9 @@ const AllProducts = (props) => {
 
   useEffect(() => {
     if (searchKeyValue) {
-      // console.log("hello 1 searchKeyValue", searchKeyValue)
+      console.log("hello 1 searchKeyValue", searchKeyValue)
       if (value === 0) {
-        // console.log("hello 2  value === 0")
+        console.log("hello 2  value === 0")
         setCountState("DRAFT");
         dispatch(productSearchApis("DRAFT", searchKeyValue));
       } else if (value === 1) {
@@ -180,7 +180,7 @@ const AllProducts = (props) => {
         dispatch(productSearchApis("REVALIDATE", searchKeyValue));
       }
     } else {
-      // console.log("hello 3 else", searchKeyValue)
+      console.log("hello 3 else", searchKeyValue)
       if (searchKeyValue) {
         setSearchKeyValue()
       }
