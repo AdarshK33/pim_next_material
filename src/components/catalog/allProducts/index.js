@@ -62,6 +62,9 @@ const AllProducts = (props) => {
   const [countState, setCountState] = useState("");
 
 
+  const [focus, setFocus] = useState(false)
+  const [borderFocus, setBorderFocus] = useState(false)
+
   const isFirstRender = useRef(true);
   const isElseBlockExecuted = useRef(false);
   // console.log("hello countState", countState);
@@ -183,17 +186,17 @@ const AllProducts = (props) => {
       }
       if (value === 0) {
         setCountState("DRAFT");
-        console.log("hello 5 else Value 0 ", searchKeyValue)
+        // console.log("hello 5 else Value 0 ", searchKeyValue)
         dispatch(getAllProductListApi(0, 10, "DRAFT"));
-        dispatch(productSearchApis("DRAFT", searchKeyValue));
+        // dispatch(productSearchApis("DRAFT", searchKeyValue));
       } else if (value === 1) {
         setCountState("READY_FOR_REVIEW");
         dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
-        dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
+        // dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
       } else if (value === 2) {
         setCountState("REVALIDATE");
         dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
-        dispatch(productSearchApis("REVALIDATE", searchKeyValue));
+        // dispatch(productSearchApis("REVALIDATE", searchKeyValue));
       }
     }
   }, [value, searchKeyValue]);
@@ -284,6 +287,29 @@ const AllProducts = (props) => {
     // console.log(value?.itemId, "hello e.target.value");
     setSearchKeyValue(value?.itemId);
   };
+
+  const handleFocus = (e) => {
+    setFocus(true)
+    setBorderFocus(true)
+  }
+  const handleFocusOut = (e) => {
+    if (e.target.value === "") setFocus(false)
+    setBorderFocus(false)
+  }
+
+  const getSearchKey = (e) => {
+    if (e.length >= 3) {
+      console.log(e, "hello 1 search")
+      setSearchKeyValue(e)
+    }
+    else if (e.length == 0) {
+      console.log(e, "hello 2 search")
+      setSearchKeyValue()
+
+    }
+
+
+  }
 
   // const searchHandler = (e, searchKey) => {
   //   setSearchKeyValue(searchKey);
@@ -426,6 +452,22 @@ const AllProducts = (props) => {
                     />
                   )}
               </Box> */}
+
+
+              <div className="search_custom_container">
+                <div className="search_custom_textField" style={borderFocus ? { border: "2px solid  #419794" } : { border: "1px solid #C2C2C2" }}>
+
+                  <Search
+
+                    className="search-icon_attribute mr-1"
+                    style={{ color: "#313131", cursor: "pointer" }}
+
+                  />
+                  <p className={focus ? 'search_custom_focusp' : 'search_custom_nonfocusp'} style={borderFocus ? { color: "#419794" } : { color: "#C2C2C2" }}>Search</p>
+                  <input type="text" name="search" onFocus={handleFocus} onBlur={handleFocusOut} onChange={e => getSearchKey(e.target.value)} autocomplete="off" />
+                </div>
+              </div>
+
 
               <Box sx={{ maxWidth: 1200 }}>
                 {/* <Container maxWidth="xl"> */}
