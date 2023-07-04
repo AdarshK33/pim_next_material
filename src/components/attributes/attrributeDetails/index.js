@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Grid, Button, CardContent, Typography, Card } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,7 +11,7 @@ import styles from "../attribute.module.css";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { getAttributeSetDetailsListApi } from "../../../../redux/actions/catalogServiceNew";
+import { getAttributeSetDetailsListApi, getAttributeSetDetailsSearchApi } from "../../../../redux/actions/catalogServiceNew";
 import CustomModal from "../../../common/customModal";
 import AddAttributeForm from "../addAttributeForm";
 import { Search } from "react-feather";
@@ -36,39 +36,49 @@ const AttributeSetDetails = () => {
 
   const [focus, setFocus] = useState(false)
   const [borderFocus, setBorderFocus] = useState(false)
-  const tableData = [];
-  for (let i = 1; i <= 5; i++) {
-    tableData.push({
-      itemId: "DTE000" + i,
-      itemName: "Dolo 650mg",
-      category: "PHARMA",
-      formation: "20%",
-      productStatus: "Draft",
-    });
-  }
+  // const tableData = [];
+  // for (let i = 1; i <= 5; i++) {
+  //   tableData.push({
+  //     itemId: "DTE000" + i,
+  //     itemName: "Dolo 650mg",
+  //     category: "PHARMA",
+  //     formation: "20%",
+  //     productStatus: "Draft",
+  //   });
+  // }
+  //  console.log(catalogServiceNewReducer?.attributeSetData, "catalogServiceNewReducer?.attributeSetData")
   useEffect(() => {
+    if (router.query.attributeSet) {
+      dispatch(
+        getAttributeSetDetailsListApi(router.query.attributeSet, 0, 10)
+      )
+    }
 
-    dispatch(
-      getAttributeSetDetailsListApi(router.query.attributeSet, '', 0, 10)
-    )
+  }, [router.query.attributeSet]);
 
-  }, []);
 
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
   const totalRecords =
-    catalogServiceNewReducer?.attributeSetData?.totalElements;
+    catalogServiceNewReducer?.attributeDetailsData?.totalElements;
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = catalogServiceNewReducer?.attributeSetData?.content;
+  const currentRecords = catalogServiceNewReducer?.attributeDetailsData?.content;
 
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
-    dispatch(
-      getAttributeSetDetailsListApi(router.query.attributeSet, "", value - 1, 10)
-    );
+    if (search.length == 0) {
+      dispatch(
+        getAttributeSetDetailsListApi(router.query.attributeSet, value - 1, 10)
+      );
+    }
+    else {
+      dispatch(
+        getAttributeSetDetailsSearchApi(router.query.attributeSet, search, value - 1, 10)
+      )
+    }
   };
 
   /*-----------------Pagination------------------*/
@@ -83,14 +93,15 @@ const AttributeSetDetails = () => {
   }
   const getSearchKey = (e) => {
     console.log(e, "hello search")
-    setSearch(e.length)
+
+    setSearch(e)
+    setCurrentPage(1)
     dispatch(
-      getAttributeSetDetailsListApi(router.query.attributeSet, e, 0, 10)
+      getAttributeSetDetailsSearchApi(router.query.attributeSet, e, 0, 10)
     )
     if (e.length === 0) {
       dispatch(
-
-        getAttributeSetDetailsListApi(router.query.attributeSet, '', 0, 10)
+        getAttributeSetDetailsListApi(router.query.attributeSet, 0, 10)
       )
     }
   }
@@ -115,9 +126,10 @@ const AttributeSetDetails = () => {
                 variant="h2"
                 className={styles.main_Details_view_title}
               >
-                {attributeSetName?.charAt(0).toUpperCase() +
+                {/* {attributeSetName?.charAt(0).toUpperCase() +
                   attributeSetName.slice(1).toLowerCase()}
-                {""} Attributes
+                {""} Attributes */}
+                {attributeSetName} Attributes
               </Typography>
 
               <Button

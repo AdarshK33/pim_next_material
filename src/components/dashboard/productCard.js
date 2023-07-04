@@ -31,32 +31,32 @@ const ProductCard = () => {
   useEffect(() => {
     const DummiyData = [
       {
-        value: dashBoardData?.productStatusCounts?.DRAFT,
+        value: dashBoardData?.statusCount?.DRAFT,
         title: "Draft",
 
         color: "#FDBA39",
         textShadow: "1px 2px 1px #FDBA39",
       },
       {
-        value: dashBoardData?.productStatusCounts?.READY_FOR_REVIEW,
+        value: dashBoardData?.statusCount?.READY_FOR_REVIEW,
         title: "Ready for review",
         color: "#FD4539",
         textShadow: "1px 2px 1px #FDBA39",
       },
       {
-        value: dashBoardData?.productStatusCounts?.ACTIVATED,
+        value: dashBoardData?.statusCount?.ACTIVATED,
         title: "Active",
         color: "#419794",
         textShadow: "1px 2px 1px #419794",
       },
       {
-        value: dashBoardData?.productStatusCounts?.REVALIDATE,
+        value: dashBoardData?.statusCount?.REVALIDATE,
         title: "Revalidate",
         color: "#838585",
         textShadow: "1px 2px 1px #838585",
       },
       {
-        value: dashBoardData?.productStatusCounts?.BLOCKED,
+        value: dashBoardData?.statusCount?.BLOCKED,
         title: "In Active",
         color: "#838585",
         textShadow: "1px 2px 1px #838585",

@@ -44,13 +44,13 @@ const ProductChart = () => {
 
   const data = [
     ["attributeSetName", "Ax master"],
-    ["Partially_Completed", 11],
-    ["Fully_Completed", 12],
-    ["No_Data", 10],
+    ["completed", 12],
+    ["partiallyCompleted", 11],
+    ["noData", 10],
   ];
   // console.log("dashBoardData :>> ", dashBoardData);
 
-  // console.log("data :>> ", data);
+
 
   const options = {
     // title: [{ text: "Ax master" }],
@@ -60,11 +60,9 @@ const ProductChart = () => {
     colors: ["#419794", "#fd7439", "#99b6f8"],
   };
 
-  // title: "Ready for review",
-  //       color: "#FD4539",
 
   useEffect(() => {
-    if (!dashBoardData?.dashboardResponses) {
+    if (!dashBoardData?.productAttributeSetCount) {
       return;
     }
     // const convertedData = dashBoardData?.dashboardResponses.map((response) => [
@@ -72,9 +70,9 @@ const ProductChart = () => {
     // ]);
     // setMasterData(convertedData);
 
-    const dynamicData = dashBoardData?.dashboardResponses.map((response) => {
+    const dynamicData = dashBoardData?.productAttributeSetCount.map((response) => {
       return Object.entries(response).map(([key, value]) => {
-        if (key === "attributeSetName") {
+        if (key === "attributeSet") {
           return [key, value];
         } else {
           return [key, value];
@@ -85,23 +83,7 @@ const ProductChart = () => {
   }, [dashBoardData]);
   // console.log(chartData, "chartData");
 
-  // const DummiyData = [
-  //   {
-  //     title: "AX MASTER",
-  //   },
-  //   {
-  //     title: "KEYMED MASTER",
-  //   },
-  //   {
-  //     title: "HIPER MASTER",
-  //   },
-  //   {
-  //     title: "R_DRUGS",
-  //   },
-  //   {
-  //     title: "ONLINE MASTER",
-  //   },
-  // ];
+
   function handleFormation() {
     console.log("hello allProducts");
     router.push(`/allProducts`);
@@ -144,7 +126,7 @@ const ProductChart = () => {
                       fontWeight: "600",
                     }}
                   >
-                    {blog.find(([key]) => key === "attributeSetName")[1]}
+                    {blog.find(([key]) => key === "attributeSet")[1]}
                   </Typography>
                 </Box>
                 <Box

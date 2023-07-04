@@ -90,7 +90,8 @@ const AllProducts = (props) => {
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
-  const totalRecords = catalogServiceNewReducer?.getAllProducts.totalElements;
+  const totalRecords = catalogServiceNewReducer?.getAllProducts.totalElements ?? 0;
+  // console.log(catalogServiceNewReducer?.getAllProducts?.totalElements, "catalogServiceNewReducer totalElements")
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
@@ -181,13 +182,16 @@ const AllProducts = (props) => {
         setSearchKeyValue()
       }
       if (value === 0) {
+        setCountState("DRAFT");
         console.log("hello 5 else Value 0 ", searchKeyValue)
         dispatch(getAllProductListApi(0, 10, "DRAFT"));
         dispatch(productSearchApis("DRAFT", searchKeyValue));
       } else if (value === 1) {
+        setCountState("READY_FOR_REVIEW");
         dispatch(getAllProductListApi(0, 10, "READY_FOR_REVIEW"));
         dispatch(productSearchApis("READY_FOR_REVIEW", searchKeyValue));
       } else if (value === 2) {
+        setCountState("REVALIDATE");
         dispatch(getAllProductListApi(0, 10, "REVALIDATE"));
         dispatch(productSearchApis("REVALIDATE", searchKeyValue));
       }
@@ -376,7 +380,7 @@ const AllProducts = (props) => {
                 </div>
               </Stack> */}
 
-              <Box sx={{ maxWidth: 250 }}>
+              {/* <Box sx={{ maxWidth: 250 }}>
                 {catalogServiceNewReducer?.getAllProducts !== null &&
                   catalogServiceNewReducer?.getAllProducts !== undefined &&
                   (catalogServiceNewReducer?.getAllProducts).length !== 0 && (
@@ -421,7 +425,7 @@ const AllProducts = (props) => {
                       }}
                     />
                   )}
-              </Box>
+              </Box> */}
 
               <Box sx={{ maxWidth: 1200 }}>
                 {/* <Container maxWidth="xl"> */}
@@ -429,7 +433,7 @@ const AllProducts = (props) => {
                 <Tabs value={value} onChange={handleChange}>
                   <Tab
                     label={`${tabLabels[0]}  ${countState === "DRAFT"
-                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      ? `(${totalRecords})`
                       : ""
                       }`}
                     className={styles.tab}
@@ -437,7 +441,7 @@ const AllProducts = (props) => {
                   {/* {role === "ADMIN" && ( */}
                   <Tab
                     label={`${tabLabels[1]} ${countState === "READY_FOR_REVIEW"
-                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      ? `(${totalRecords})`
                       : ""
                       }`}
                     className={styles.tab}
@@ -446,7 +450,7 @@ const AllProducts = (props) => {
 
                   <Tab
                     label={`${tabLabels[2]} ${countState === "REVALIDATE"
-                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      ? `(${totalRecords})`
                       : ""
                       }`}
                     className={styles.tab}
