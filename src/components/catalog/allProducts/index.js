@@ -380,7 +380,7 @@ const AllProducts = (props) => {
                 </div>
               </Stack> */}
 
-              <Box sx={{ maxWidth: 250 }}>
+              {/* <Box sx={{ maxWidth: 250 }}>
                 {catalogServiceNewReducer?.getAllProducts !== null &&
                   catalogServiceNewReducer?.getAllProducts !== undefined &&
                   (catalogServiceNewReducer?.getAllProducts).length !== 0 && (
@@ -425,7 +425,7 @@ const AllProducts = (props) => {
                       }}
                     />
                   )}
-              </Box>
+              </Box> */}
 
               <Box sx={{ maxWidth: 1200 }}>
                 {/* <Container maxWidth="xl"> */}
