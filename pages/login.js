@@ -93,7 +93,7 @@ const Login = (user) => {
 
     }
 
-  }, [isLoggedin === true]);
+  }, [isLoggedin === true], isLogin);
 
   return (
     <>

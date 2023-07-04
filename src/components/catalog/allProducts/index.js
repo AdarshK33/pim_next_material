@@ -90,7 +90,7 @@ const AllProducts = (props) => {
   //   /*-----------------Pagination------------------*/
 
   const recordPerPage = 10;
-  const totalRecords = catalogServiceNewReducer?.getAllProducts.totalElements;
+  const totalRecords = catalogServiceNewReducer?.getAllProducts.totalElements ?? 0;
   // console.log(catalogServiceNewReducer?.getAllProducts?.totalElements, "catalogServiceNewReducer totalElements")
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
@@ -433,7 +433,7 @@ const AllProducts = (props) => {
                 <Tabs value={value} onChange={handleChange}>
                   <Tab
                     label={`${tabLabels[0]}  ${countState === "DRAFT"
-                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      ? `(${totalRecords})`
                       : ""
                       }`}
                     className={styles.tab}
@@ -441,7 +441,7 @@ const AllProducts = (props) => {
                   {/* {role === "ADMIN" && ( */}
                   <Tab
                     label={`${tabLabels[1]} ${countState === "READY_FOR_REVIEW"
-                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      ? `(${totalRecords})`
                       : ""
                       }`}
                     className={styles.tab}
@@ -450,7 +450,7 @@ const AllProducts = (props) => {
 
                   <Tab
                     label={`${tabLabels[2]} ${countState === "REVALIDATE"
-                      ? `(${catalogServiceNewReducer?.getAllProducts.totalElements})`
+                      ? `(${totalRecords})`
                       : ""
                       }`}
                     className={styles.tab}

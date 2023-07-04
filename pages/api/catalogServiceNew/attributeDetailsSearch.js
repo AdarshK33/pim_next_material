@@ -3,20 +3,12 @@ import withSession from "../../../utils/session";
 
 function handler(req, res) {
   const body = req.body;
-  // const sku = body.pageNumber
-  // const sku2 = body.pageSize
-
   const { user: { at = "" } = {}, loggedIn } = req.session;
-
-  //   http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes_set?page_No=0&page_size=10
-  // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes_set?page_No=0&page_size=5
-
-  // /catalog/attributes/1?pageNo=0&pageSize=10
   const config = {
     method: "get",
-    // url: `/catalog/attributes/${body.Id}?pageNo=${body.pageNo}&pageSize=${body.pageSize}`,
-    url: `/catalog/attributes/${body.id}?searchAttribute=${body.searchAttribute}&pageNo=${body.pageNo}&pageSize=10`,
-    // http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes/60?searchAttribute=online&pageNo=0&pageSize=10
+
+    url: `/catalog/attributes/search/${body.id}?search=${body.search}&pageNo=${body.pageNo}&pageSize=10`,
+    //http://catalogservice-apis.theretailinsightsdemos.com/api/v1/catalog/attributes/search/58?search=abc&pageNo=0&pageSize=10
     headers: {
       Authorization: `Bearer ${at}`,
     },
@@ -32,7 +24,7 @@ function handler(req, res) {
     })
     .catch((err) => {
       console.log(
-        "error caught in -> pages/api/catalogServiceNew/attributeSetList.js",
+        "error caught in -> pages/api/catalogServiceNew/attribute details search.js",
         err
       );
       if (err?.response?.data) {

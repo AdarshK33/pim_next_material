@@ -62,7 +62,9 @@ import {
   UPDATE_ONLINE_CATEGORY_DATA_FAILURE,
   ONLINE_CATEGORY_DATA_LOADING,
   ONLINE_CATEGORY_DATA_SUCCESS,
-  ONLINE_CATEGORY_DATA_FAILURE
+  ONLINE_CATEGORY_DATA_FAILURE,
+  ATTRIBUTE_SEARCH_DATA_LOADING,
+  ATTRIBUTE_SEARCH_DATA_FAILURE
 } from "../types/types";
 
 const initialState = {
@@ -75,7 +77,7 @@ const initialState = {
   publishProduct: [],
   createAttributeSet: {},
   productUpdate: {},
-  attributeSetData: {},
+  attributeDetailsData: {},
   bulkData: {},
   mediaData: {},
   categoryList: {},
@@ -265,18 +267,30 @@ const catalogServiceNewReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case ATTRIBUTE_SEARCH_DATA_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
     case ATTRIBUTE_SET_DETAILS_DATA_SUCCESS:
       return {
         ...state,
         loading: false,
-        attributeSetData: action.payload,
+        attributeDetailsData: action.payload,
         error: {},
       };
     case ATTRIBUTE_SET_DETAILS_DATA_FAILURE:
       return {
         ...state,
         loading: false,
-        attributeSetData: [],
+        attributeDetailsData: [],
+        error: action,
+      };
+    case ATTRIBUTE_SEARCH_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        attributeDetailsData: [],
         error: action,
       };
     case BULK_LIST_DATA_LOADING:

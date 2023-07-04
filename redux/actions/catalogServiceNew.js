@@ -70,7 +70,9 @@ import {
   UPDATE_ONLINE_CATEGORY_DATA_FAILURE,
   ONLINE_CATEGORY_DATA_LOADING,
   ONLINE_CATEGORY_DATA_SUCCESS,
-  ONLINE_CATEGORY_DATA_FAILURE
+  ONLINE_CATEGORY_DATA_FAILURE,
+  ATTRIBUTE_SEARCH_DATA_LOADING,
+  ATTRIBUTE_SEARCH_DATA_FAILURE
 } from "../types/types";
 
 import { client } from "../../utils/axios";
@@ -453,6 +455,17 @@ export const attributeSetUpdateDataFailure = (error) => {
   };
 };
 
+export const attributeSetDetailSearchLoading = () => {
+  return {
+    type: ATTRIBUTE_SEARCH_DATA_LOADING,
+  };
+};
+export const attributeSetDetailSearchFailure = (error) => {
+  return {
+    type: ATTRIBUTE_SEARCH_DATA_FAILURE,
+    payload: error,
+  };
+};
 
 
 
@@ -911,17 +924,16 @@ export const productUpdateApis = (data) => {
   };
 };
 
-export const getAttributeSetDetailsListApi = (Id, searchKey, pageNo, pageSize) => {
+export const getAttributeSetDetailsListApi = (Id, pageNo, pageSize) => {
   const data = {
     id: Id,
-    searchAttribute: searchKey,
     pageNo: pageNo,
     pageSize: pageSize,
   };
   return (dispatch) => {
     dispatch(attributeSetDetailListLoading("ATTRIBUTE....", "ATTRIBUTE"));
     client
-      .post("/api/catalogServiceNew/attributeSetList", data)
+      .post("/api/catalogServiceNew/attributeDetailsList", data)
       .then((response) => {
         // console.log(" getAttributeListApi response", response);
 
@@ -936,6 +948,35 @@ export const getAttributeSetDetailsListApi = (Id, searchKey, pageNo, pageSize) =
           err
         );
         dispatch(attributeSetDetailListFailure(err));
+      });
+  };
+};
+
+export const getAttributeSetDetailsSearchApi = (Id, search, pageNo, pageSize) => {
+  const data = {
+    id: Id,
+    search: search,
+    pageNo: pageNo,
+    pageSize: pageSize,
+  };
+  return (dispatch) => {
+    dispatch(attributeSetDetailSearchLoading("ATTRIBUTE....", "ATTRIBUTE"));
+    client
+      .post("/api/catalogServiceNew/attributeDetailsSearch", data)
+      .then((response) => {
+        // console.log(" getAttributeSetDetailsSearchApi response", response);
+
+        if (response?.data.statusCode === 200) {
+          // console.log("API SUCCESS2", response.data);
+          dispatch(attributeSetDetailListSuccess(response.data.result));
+        }
+      })
+      .catch((err) => {
+        console.log(
+          "actions/catalogServiceNew/GET ATTRIBUTE SEARCH =>FAILURE",
+          err
+        );
+        dispatch(attributeSetDetailSearchFailure(err));
       });
   };
 };

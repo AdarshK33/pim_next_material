@@ -101,7 +101,7 @@ const Attributes = () => {
       query: { attributeSet: id, attributeSetName: name },
     });
 
-    dispatch(getAttributeSetDetailsListApi(id, '', 0, 10));
+    // dispatch(getAttributeSetDetailsListApi(id, 0, 10));
   }
   const categoryHandler = (e) => {
     setCategoryId(e.target.value);
