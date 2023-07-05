@@ -69,15 +69,16 @@ const AttributeSetDetails = () => {
 
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
-    if (search.length == 0) {
-      dispatch(
-        getAttributeSetDetailsListApi(router.query.attributeSet, value - 1, 10)
-      );
-    }
-    else {
+    if (search) {
       dispatch(
         getAttributeSetDetailsSearchApi(router.query.attributeSet, search, value - 1, 10)
       )
+    }
+    else {
+      dispatch(
+        getAttributeSetDetailsListApi(router.query.attributeSet, value - 1, 10)
+      );
+
     }
   };
 
@@ -96,9 +97,11 @@ const AttributeSetDetails = () => {
 
     setSearch(e)
     setCurrentPage(1)
-    dispatch(
-      getAttributeSetDetailsSearchApi(router.query.attributeSet, e, 0, 10)
-    )
+    if (e) {
+      dispatch(
+        getAttributeSetDetailsSearchApi(router.query.attributeSet, e, 0, 10)
+      )
+    }
     if (e.length === 0) {
       dispatch(
         getAttributeSetDetailsListApi(router.query.attributeSet, 0, 10)
