@@ -96,9 +96,14 @@ const Attributes = () => {
   /*-----------------Pagination------------------*/
 
   function handleEdit(id, name) {
+
+    let nameCheck = name?.charAt(0).toUpperCase() +
+      name?.slice(1).toLowerCase()
+
+
     router.push({
       pathname: "/attributeSet",
-      query: { attributeSet: id, attributeSetName: name },
+      query: { attributeSet: id, attributeSetName: nameCheck },
     });
 
     // dispatch(getAttributeSetDetailsListApi(id, 0, 10));
