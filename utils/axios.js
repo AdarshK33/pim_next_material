@@ -10,6 +10,7 @@ let token;
 const uploadClient = axios.create({
   // timeout: 1000 * 20,
   headers: {
+    accept: "*/*",
     "Content-Type": "multipart/form-data",
   },
 });
