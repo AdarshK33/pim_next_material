@@ -19,6 +19,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  InputLabel,
   ListItemIcon,
 } from "@mui/material";
 
@@ -66,15 +67,20 @@ const ProductViewDetails = (props) => {
   const [objectId, setObjectId] = useState("");
 
   const [stateInput, setStateInput] = useState();
-  const [stateAxDetails, setAXStateDetails] = useState();
-  const [stateKeyDetails, setKeyStateDetails] = useState();
+  const [manufaturererNameDetails, setManufaturererNameDetails] = useState();
+  const [descriptionDetails, setDescription] = useState();
 
-  const [stateHiDetails, setHiStateDetails] = useState();
+  const [directionForUse, setDirectionForUse] = useState();
 
-  const [stateRdDetails, setRdStateDetails] = useState();
+  const [keyBenefits, setKeyBenefits] = useState();
 
-  const [stateOnDetails, setOnStateDetails] = useState();
+
+  const [keyIngredient, setKeyIngredient] = useState();
   const [stateImageDetails, setImageDetails] = useState();
+  const [stateSafety_InformationDetails, setSafety_InformationDetails] = useState();
+
+
+
 
   const [checkUpdate, setcheckUpdate] = useState(false);
   const [updateApiCall, setCallApi] = useState(false);
@@ -119,56 +125,103 @@ const ProductViewDetails = (props) => {
     }
     // mapping the master.modelAttributes for input field
     const obj = productPimCodeData?.productDetails;
-    const inputAxState = [];
-    const inputKeyState = [];
-    const inputRdState = [];
-    const inputHiState = [];
-    const inputOnState = [];
+
+
+
+
+
+    const inputDescription = [];
+    const inputBenefits = [];
+    const inputDirectionForUse = [];
+    const inputManufacturerName = [];
+    const inputSafety_InformationState = [];
+    const inputKeyIngredient = [];
 
     Object.entries(obj).map(([key, value]) => {
       // console.log(value, "kkkkkkkkkkkkkkkk");
       if (value.attributeSet == "AX MASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "MANUFACTURER NAME") {
-            inputAxState.push(val.value);
+            inputManufacturerName.push(val.value);
           }
         });
       }
-      if (value.attributeSet == "KEYMEDMASTER") {
+      if (value.attributeSet === "ONLINEMASTER") {
         value?.attributes.forEach((val) => {
-          if (val.keyName == "ITEM ID") {
-            inputKeyState.push(val.value);
-          }
-        });
-      }
-      if (value.attributeSet == "R_DRUGS") {
-        value?.attributes.forEach((val) => {
-          if (val.keyName == "COMPOSITION") {
-            inputRdState.push(val.value);
-          }
-        });
-      }
-      if (value.attributeSet == "HIPAR") {
-        value?.attributes.forEach((val) => {
-          if (val.keyName == "ITEM ID") {
-            inputHiState.push(val.value);
+          if (val.keyName === "Product Information") {
+            const Description = val.value.replace(/;p/g, "").replace(/;/g, "").replace("/p", ".")
+            inputDescription.push(Description);
           }
         });
       }
       if (value.attributeSet == "ONLINEMASTER") {
         value?.attributes.forEach((val) => {
-          if (val.keyName == "status") {
-            inputOnState.push(val.value);
+          if (val.keyName == "Key Benefits/Uses") {
+
+            const Benefits = val.value.split(";;;");
+
+            const filteredItems = Benefits
+              .filter((item) => item !== ";ul" && item !== ";/;;")
+              .map((item) => item.replace(/\/$/, '')
+                .replace(/\/;;$/, '')
+                .replace(/;/g, '.')
+              );
+            // console.log(filteredItems, "filteredItems");
+            inputBenefits.push(filteredItems);
+
+          }
+        });
+      }
+      if (value.attributeSet == "ONLINEMASTER") {
+        value?.attributes.forEach((val) => {
+          if (val.keyName == "Direction for use/Dosage") {
+            const Direction = val.value.split(";;;");
+
+            const filteredItems = Direction
+              .filter((item) => item !== ";ul" && item !== ";/;;")
+              .map((item) => item.replace(/\/$/, '')
+                .replace(/\/;;$/, '')
+                .replace(/;/g, '.')
+              );
+            // console.log(filteredItems, "filteredItems");
+
+            inputDirectionForUse.push(filteredItems);
+          }
+        });
+      }
+      if (value.attributeSet == "ONLINEMASTER") {
+        value?.attributes.forEach((val) => {
+          if (val.keyName == "Safety Information") {
+            const Safety_Information = val.value.split(";;;");
+
+            const filteredItems = Safety_Information
+              .filter((item) => item !== ";ul" && item !== ";/;;")
+              .map((item) => item.replace(/\/$/, '')
+                .replace(/\/;;$/, '')
+                .replace(/;/g, '.')
+              );
+            // console.log(filteredItems, "filteredItems");
+
+            inputSafety_InformationState.push(filteredItems);
+          }
+        });
+      }
+      if (value.attributeSet == "ONLINEMASTER") {
+        value?.attributes.forEach((val) => {
+          if (val.keyName == "Key Ingredient") {
+            inputKeyIngredient.push(val.value);
           }
         });
       }
     });
 
-    setAXStateDetails(inputAxState);
-    setKeyStateDetails(inputKeyState);
-    setRdStateDetails(inputRdState);
-    setHiStateDetails(inputHiState);
-    setOnStateDetails(inputOnState);
+    setManufaturererNameDetails(inputManufacturerName);
+    setDescription(inputDescription);
+    setKeyBenefits(inputBenefits);
+    setDirectionForUse(inputDirectionForUse);
+    setKeyIngredient(inputKeyIngredient);
+    setSafety_InformationDetails(inputSafety_InformationState);
+
   }, [productPimCodeData]);
 
   // useEffect(() => {
@@ -211,16 +264,55 @@ const ProductViewDetails = (props) => {
     return (
       <>
         <Grid md={4} key={index} className={styles.role_based_Text_Field}>
-          <TextField
-            id="outlined-basic"
-            label={sectionItem.displayName}
-            variant="standard"
-            name={sectionItem.keyName}
-            value={getInputValue(sectionItem.keyName)}
+
+          <>
+            <InputLabel htmlFor="outlined-basic"
+
+              style={{
+
+                fontSize: '.75rem',
+
+
+              }}
+            >{sectionItem.displayName}</InputLabel>
+
+            <TextField
+              className={styles.input_active_master}
+              style={{
+                cursor: 'pointer'
+
+              }}
+              id="outlined-basic"
+              variant="standard"
+              name={sectionItem.keyName}
+              value={getInputValue(sectionItem.keyName).trim() || "---"}
+              InputProps={{ disableUnderline: true, readOnly: true }}
             // onChange={inputChangeHandler}
-            disabled={sectionItem.accessRole !== role ? true : false}
-          />
-        </Grid>
+            // disabled={sectionItem.accessRole !== role ? true : false}
+            />
+
+            {/* <div
+              style={{
+                cursor: 'pointer',
+                // border: '1px solid #ccc',
+                // borderRadius: '4px',
+                // padding: '8px',
+                //backgroundColor: '#f9f9f9',
+                // textAlign: 'center',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                width: "330px"
+              }}
+            >
+              {getInputValue(sectionItem.keyName).trim() || '---'}
+            </div> */}
+          </>
+        </Grid >
+
+
+
+
       </>
     );
   };
@@ -269,7 +361,7 @@ const ProductViewDetails = (props) => {
                           Manufacturer/Marketer
                         </h3>
                         <h3 className={styles.manufacturerDetailData}>
-                          {stateAxDetails}
+                          {manufaturererNameDetails}
                         </h3>
                       </Box>
 
@@ -278,17 +370,17 @@ const ProductViewDetails = (props) => {
                           Contry Of Origin
                         </h3>
                         <h3 className={styles.manufacturerDetailData}>
-                          APEX LABORATORIES PVT LTD
+                          INDIA
                         </h3>
                       </Box>
-                      <Box>
+                      {/* <Box>
                         <h3 className={styles.manufacturerDetailHead}>
                           Manufacturer/Marketer Address
                         </h3>
                         <h3 className={styles.manufacturerDetailData}>
-                          {stateOnDetails}
+                          {}
                         </h3>
-                      </Box>
+                      </Box> */}
                     </Box>
 
                     <Box>
@@ -296,15 +388,9 @@ const ProductViewDetails = (props) => {
                         Description
                       </h3>
                       <h3 className={styles.manufacturerDetailData}>
-                        Give your body a nutritional boost with the multivitamin
-                        and multimineral Zincovit Tablet that is specially
-                        formulated to support the overall body functioning. The
-                        essential vitamins and minerals support the healthy
-                        functioning of the heart, nervous system, immune system,
-                        etc. It also has Grape Seed extracts that are loaded
-                        with antioxidant properties and help in reducing the
-                        cell damage caused by free radicals....
-                        <a className={styles.read_more_href}>READ MORE</a>
+                        {descriptionDetails}
+
+                        {/* <a className={styles.read_more_href}>READ MORE</a> */}
                       </h3>
                     </Box>
                   </Grid>
@@ -330,75 +416,37 @@ const ProductViewDetails = (props) => {
                           variant="h3"
                           className={styles.manufacturerDetailHead}
                         >
-                          Medicinal Benefits
+                          Key Uses/ Benefits
                         </Typography>
                       </Box>
 
+
+
                       <List>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Helps in strengthening immunity system of the body
-                            so that it can fight against infections
-                          </ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Good for a speedy recovery after surgery and
-                            pregnancy
-                          </ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Maintains a healthy metabolism and improves appetite
-                          </ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Has a balanced nutrional (vitamins and minerals)
-                            dose that helps reduce body fatigue
-                          </ListItemText>
-                        </ListItem>
+                        {keyBenefits && keyBenefits[0].map((item, index) => (
+                          <ListItem key={index}>
+                            <ListItemIcon key={index}>
+                              <StopCircle
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "Black ",
+                                  padding: "8px",
+                                }}
+                              />
+                            </ListItemIcon>
+                            <ListItemText>
+                              {item}
+                            </ListItemText>
+                          </ListItem>
+                        ))
+
+                        }
+
+
+
                       </List>
+
                     </Box>
                   </Box>
                   <Box className={styles.divider}></Box>
@@ -420,38 +468,28 @@ const ProductViewDetails = (props) => {
                         </Typography>
                       </Box>
                       <List>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Helps in strengthening immunity system of the body
-                            so that it can fight against infections
-                          </ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Replenishes the body's needs for essential vitamins
-                            and minerals
-                          </ListItemText>
-                        </ListItem>
+
+
+                        {directionForUse && directionForUse[0].map((item, index) => (
+                          <ListItem key={index}>
+                            <ListItemIcon key={index}>
+                              <StopCircle
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "Black ",
+                                  padding: "8px",
+                                }}
+                              />
+                            </ListItemIcon>
+                            <ListItemText>
+                              {item}
+                            </ListItemText>
+                          </ListItem>
+                        ))
+
+                        }
+
                       </List>
                     </Box>
 
@@ -473,98 +511,25 @@ const ProductViewDetails = (props) => {
                       </Box>
 
                       <List>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>{stateRdDetails}</ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Helps in strengthening immunity system of the body
-                            so that it can fight against infections
-                          </ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Replenishes the body's needs for essential vitamins
-                            and minerals
-                          </ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Good for a speedy recovery after surgery and
-                            pregnancy
-                          </ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Maintains a healthy metabolism and improves appetite
-                          </ListItemText>
-                        </ListItem>
-                        <ListItem>
-                          <ListItemIcon>
-                            <StopCircle
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "Black ",
-                                padding: "8px",
-                              }}
-                            />
-                          </ListItemIcon>
-                          <ListItemText>
-                            Has a balanced nutritional (vitamins and minerals)
-                            dose that helps reduce body fatigue
-                          </ListItemText>
-                        </ListItem>
+                        {stateSafety_InformationDetails && stateSafety_InformationDetails[0].map((item, index) => (
+                          <ListItem key={index}>
+                            <ListItemIcon key={index}>
+                              <StopCircle
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "Black ",
+                                  padding: "8px",
+                                }}
+                              />
+                            </ListItemIcon>
+                            <ListItemText>
+                              {item}
+                            </ListItemText>
+                          </ListItem>
+                        ))
+
+                        }
                       </List>
                     </Box>
                   </Box>
@@ -588,12 +553,8 @@ const ProductViewDetails = (props) => {
                       </Typography>
                     </Box>
                     <h3 className={styles.manufacturerDetailData}>
-                      Sugar, Microcrystalline Cellulose (460(i)), Vitamins, Talc
-                      (553(iii)), Grape Seed Extract, Calcium Carbonate
-                      (170(i)), Stabilizer (468), Minerals, Binders (1401, 1202,
-                      1201), Silicon Dioxide (551), Disodium EDTA, Permitted
-                      Symbiotic Food Colour(214), Coating Agents (901, 462).
-                      ..... <a className={styles.read_more_href}>READ MORE</a>
+                      {keyIngredient}
+                      {/* ..... <a className={styles.read_more_href}>READ MORE</a> */}
                     </h3>
                   </Box>
                 </Box>
