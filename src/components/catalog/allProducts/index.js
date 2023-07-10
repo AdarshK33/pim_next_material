@@ -48,6 +48,10 @@ import {
   productSearchApis,
 } from "../../../../redux/actions/catalogServiceNew";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  userLoginSuccess
+
+} from "../../../../redux/actions/login";
 
 const AllProducts = (props) => {
   const { user: { role = "" } = {}, loggedIn } = props.user;
@@ -166,6 +170,8 @@ const AllProducts = (props) => {
 
 
   useEffect(() => {
+
+    dispatch(userLoginSuccess(0));
     if (searchKeyValue) {
       console.log("hello 1 searchKeyValue", searchKeyValue)
       if (value === 0) {
