@@ -84,16 +84,13 @@ const Login = (user) => {
   }, [itemData]);
 
   useEffect(() => {
-    // dispatch(getNotificationApi());
     if (userRole !== "ADMIN") {
       Router.push("/allProducts");
 
     } else if (userRole === "ADMIN") {
       Router.push("/dashboard");
-
     }
-
-  }, [isLoggedin === true], isLogin);
+  }, [isLogin]);
 
   return (
     <>
