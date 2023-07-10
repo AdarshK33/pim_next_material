@@ -202,4 +202,9 @@
   font-size: 14px;
 }
 
+
+.input_active_master div input{
+  font-size: 14px !important;
+  padding-top: 1px;
+}
 /* <<<<<<<<<<<<<<<<<<<<<<>>>>end                                       >>>>>>>>>>>>>>>>>>>>>>>>>> */
