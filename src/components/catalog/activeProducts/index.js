@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./activeProducts.module.css";
 import Image from "next/image";
-import edit from "../../../../assets/icons/edit.svg";
-import lens from "../../../../assets/icons/lens.svg";
 import { Edit2, Eye, Search, Download } from "react-feather";
+import ProductStatusForm from "./ProductStatusForm";
+import CustomModal from "../../../common/customModal";
 
 import {
   Grid,
@@ -49,6 +49,15 @@ const ActiveProducts = () => {
   const router = useRouter();
 
   const dispatch = useDispatch();
+  const [showRevalidateAddForm, setShowRevalidateAddForm] = useState(false);
+  const [attributeSetIdForm, setAttributeSetId] = useState();
+  const [pimModelCode, setPimCodetId] = useState();
+  const [statusAPICalled, setSatusAPICalled] = useState(false);
+
+
+
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItemIds, setSelectedItemIds] = useState([]);
   // console.log("selectedItemIds", selectedItemIds);
@@ -89,6 +98,16 @@ const ActiveProducts = () => {
     dispatch(getAllProductListApi(0, 10, "ACTIVATED"));
     dispatch(getChannelListApi(0, 1000));
   }, []);
+
+
+  useEffect(() => {
+    if (statusAPICalled) {
+      dispatch(getAllProductListApi(0, 10, "ACTIVATED"));
+      dispatch(getChannelListApi(0, 1000));
+    }
+  }, [statusAPICalled]);
+
+
 
   const handlePaginationChange = (value) => {
     setCurrentPage(value);
@@ -277,6 +296,7 @@ const ActiveProducts = () => {
                       <TableCell align="start">CATEGORY</TableCell>
                       <TableCell align="center">STATUS</TableCell>
                       <TableCell align="center">DETAILS</TableCell>
+                      <TableCell align="center">EDIT</TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -351,8 +371,9 @@ const ActiveProducts = () => {
                           <TableCell align="center">
                             {row.productStatus}
                           </TableCell>
-                          <div className="action_center Active_Product_Detials_Actions">
-                            {/* <Image
+                          <TableCell align="center">
+                            <div className="action_center Active_Product_Detials_Actions">
+                              {/* <Image
                               className="px-2 "
                               src={lens}
                               alt="lens"
@@ -361,15 +382,48 @@ const ActiveProducts = () => {
                               onClick={() => handleEdit(row.itemId)}
                               // onClick={() => setShowUserUpdateForm(true)}
                             /> */}
-                            <Eye
-                              style={{
-                                textAlign: "right",
-                                fontSize: "xx-small",
-                                color: "#419794",
-                              }}
-                              onClick={() => handleEdit(row.itemId, row.itemName)}
-                            />
-                          </div>
+                              <Eye
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "#419794",
+                                }}
+                                onClick={() => handleEdit(row.itemId, row.itemName)}
+                              />
+                            </div>
+                          </TableCell>
+                          <TableCell align="center">
+
+
+                            <div className="action_center Active_Product_Detials_Actions">
+                              <Edit2
+                                style={{
+                                  textAlign: "right",
+                                  fontSize: "xx-small",
+                                  color: "#419794",
+                                }}
+                                onClick={() => {
+                                  setShowRevalidateAddForm(true);
+                                  setSatusAPICalled(false)
+                                  setAttributeSetId(row.formation);
+                                  setPimCodetId(row.itemId);
+
+                                }}
+                              />
+                              <CustomModal
+                                openModal={showRevalidateAddForm}
+                                closeModal={() => setShowRevalidateAddForm(false)}
+                                body={
+                                  <ProductStatusForm
+                                    classModal={() => setShowRevalidateAddForm(false)}
+                                    attributeSetIdData={attributeSetIdForm}
+                                    pimModelCode={pimModelCode}
+                                    statusApiCalled={() => setSatusAPICalled(true)}
+                                  />
+                                }
+                              />
+                            </div>
+                          </TableCell>
                         </TableRow>
                       </TableBody>
                     ))
