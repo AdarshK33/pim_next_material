@@ -324,7 +324,7 @@ const ProductDetails = (props) => {
               <Typography variant="h2" className={styles.main_title}>
                 Product Details - {router.query.PimCodeId}
               </Typography>
-              {role === "ADMIN" && router.query.tab == "Ready-for-review" ? (
+              {role === "ADMIN" && router.query.tab == "Ready-for-review" || router.query.tab == "Draft" ? (
                 <Button
                   variant="outlined"
                   color="success"

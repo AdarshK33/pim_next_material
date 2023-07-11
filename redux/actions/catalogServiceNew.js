@@ -830,8 +830,19 @@ export const statusChangedApis = (info) => {
       .then((response) => {
         // console.log("rrrrrr",response)
         if (response.status === 200) {
-          toast.info("Product Activated Successfully !!!");
+          if (info?.status === "DRAFT") {
+            toast.info("Product drafted successfully !!!");
+          }
+          if (info?.status === "READY_FOR_REVIEW") {
+            toast.info("Product ready for review successfully !!!");
+          }
 
+          if (info?.status === "ACTIVATED") {
+            toast.info("Product activated successfully !!!");
+          }
+          if (info?.status === "REVALIDATE") {
+            toast.info("Product revalidated successfully !!!");
+          }
           dispatch(
             statusDataSuccess(
               response.data,
@@ -842,7 +853,7 @@ export const statusChangedApis = (info) => {
         } else throw new Error("");
       })
       .catch((err) => {
-        toast.error("Status Failed!!!");
+        toast.error("Status failed!!!");
         console.log(
           "error caught in -> actions/catalogServiceNew/revalidateApis",
           err
@@ -853,6 +864,7 @@ export const statusChangedApis = (info) => {
       });
   };
 };
+
 
 export const getCatalogPublishApi = (filetype, selectedItemIds, channelId) => {
   const data = {

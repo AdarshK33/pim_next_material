@@ -260,59 +260,85 @@ const ProductViewDetails = (props) => {
     });
   };
 
+  // const inputAllMasterRender = (sectionItem, index) => {
+  //   return (
+  //     <>
+  //       <Grid md={4} key={index} className={styles.role_based_Text_Field}>
+
+  //         <>
+  //           <InputLabel htmlFor="outlined-basic"
+
+  //             style={{
+
+  //               fontSize: '.75rem',
+
+
+  //             }}
+  //           >{sectionItem.displayName}</InputLabel>
+
+  //           <TextField
+  //             className={styles.input_active_master}
+  //             style={{
+  //               cursor: 'pointer'
+  //             }}
+  //             id="outlined-basic"
+  //             variant="standard"
+  //             name={sectionItem.keyName}
+  //             value={getInputValue(sectionItem.keyName)?.trim() || "---"}
+  //             InputProps={{ disableUnderline: true, readOnly: true }}
+  //           // onChange={inputChangeHandler}
+  //           // disabled={sectionItem.accessRole !== role ? true : false}
+  //           />
+
+  //           {/* <div
+  //             style={{
+  //               cursor: 'pointer',
+  //               // border: '1px solid #ccc',
+  //               // borderRadius: '4px',
+  //               // padding: '8px',
+  //               //backgroundColor: '#f9f9f9',
+  //               // textAlign: 'center',
+  //               overflow: 'hidden',
+  //               textOverflow: 'ellipsis',
+  //               whiteSpace: 'nowrap',
+  //               width: "330px"
+  //             }}
+  //           >
+  //             {getInputValue(sectionItem.keyName).trim() || '---'}
+  //           </div> */}
+  //         </>
+  //       </Grid >
+
+
+
+
+  //     </>
+  //   );
+  // };
+
   const inputAllMasterRender = (sectionItem, index) => {
+    const inputValue = getInputValue(sectionItem.keyName)?.trim();
+
+    if (!inputValue) {
+      return null; // Don't render anything if the value is empty
+    }
+
     return (
       <>
         <Grid md={4} key={index} className={styles.role_based_Text_Field}>
-
-          <>
-            <InputLabel htmlFor="outlined-basic"
-
-              style={{
-
-                fontSize: '.75rem',
-
-
-              }}
-            >{sectionItem.displayName}</InputLabel>
-
-            <TextField
-              className={styles.input_active_master}
-              style={{
-                cursor: 'pointer'
-
-              }}
-              id="outlined-basic"
-              variant="standard"
-              name={sectionItem.keyName}
-              value={getInputValue(sectionItem.keyName).trim() || "---"}
-              InputProps={{ disableUnderline: true, readOnly: true }}
-            // onChange={inputChangeHandler}
-            // disabled={sectionItem.accessRole !== role ? true : false}
-            />
-
-            {/* <div
-              style={{
-                cursor: 'pointer',
-                // border: '1px solid #ccc',
-                // borderRadius: '4px',
-                // padding: '8px',
-                //backgroundColor: '#f9f9f9',
-                // textAlign: 'center',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                width: "330px"
-              }}
-            >
-              {getInputValue(sectionItem.keyName).trim() || '---'}
-            </div> */}
-          </>
+          <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+            {sectionItem.displayName}
+          </InputLabel>
+          <TextField
+            className={styles.input_active_master}
+            style={{ cursor: 'pointer' }}
+            id="outlined-basic"
+            variant="standard"
+            name={sectionItem.keyName}
+            value={inputValue}
+            InputProps={{ disableUnderline: true, readOnly: true }}
+          />
         </Grid >
-
-
-
-
       </>
     );
   };
@@ -382,182 +408,213 @@ const ProductViewDetails = (props) => {
                         </h3>
                       </Box> */}
                     </Box>
+                    {keyBenefits &&
+                      keyBenefits !== null &&
+                      keyBenefits !== undefined &&
+                      keyBenefits.length !== 0 &&
 
-                    <Box>
-                      <h3 className={styles.manufacturerDetailHead}>
-                        Description
-                      </h3>
-                      <h3 className={styles.manufacturerDetailData}>
-                        {descriptionDetails}
+                      <Box>
+                        <h3 className={styles.manufacturerDetailHead}>
+                          Description
+                        </h3>
+                        <h3 className={styles.manufacturerDetailData}>
+                          {descriptionDetails}
 
-                        {/* <a className={styles.read_more_href}>READ MORE</a> */}
-                      </h3>
-                    </Box>
+                          {/* <a className={styles.read_more_href}>READ MORE</a> */}
+                        </h3>
+                      </Box>
+                    }
                   </Grid>
                 </Grid>
-                <Box
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box style={{ width: "49%", marginTop: "15px" }}>
-                    <Box className={styles.right_box_details}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Image
-                          className="px-2 "
-                          src={benefits}
-                          alt="lens"
-                          width={30}
-                          height={30}
-                        />
-                        <Typography
-                          variant="h3"
-                          className={styles.manufacturerDetailHead}
-                        >
-                          Key Uses/ Benefits
-                        </Typography>
+                {keyBenefits &&
+                  keyBenefits !== null &&
+                  keyBenefits !== undefined &&
+                  keyBenefits.length !== 0 &&
+                  <Box
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box style={{ width: "49%", marginTop: "15px" }}>
+                      <Box className={styles.right_box_details}>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Image
+                            className="px-2 "
+                            src={benefits}
+                            alt="lens"
+                            width={30}
+                            height={30}
+                          />
+                          <Typography
+                            variant="h3"
+                            className={styles.manufacturerDetailHead}
+                          >
+                            Key Uses/ Benefits
+                          </Typography>
+                        </Box>
+
+
+
+                        <List>
+                          {
+                            keyBenefits &&
+                            keyBenefits !== null &&
+                            keyBenefits !== undefined &&
+                            keyBenefits.length !== 0
+                            && keyBenefits[0].map((item, index) => (
+                              <ListItem key={index}>
+                                <ListItemIcon key={index}>
+                                  <StopCircle
+                                    style={{
+                                      textAlign: "right",
+                                      fontSize: "xx-small",
+                                      color: "Black ",
+                                      padding: "8px",
+                                    }}
+                                  />
+                                </ListItemIcon>
+                                <ListItemText>
+                                  {item}
+                                </ListItemText>
+                              </ListItem>
+                            ))
+
+                          }
+
+
+
+                        </List>
+
+                      </Box>
+                    </Box>
+                    <Box className={styles.divider}></Box>
+                    <Box style={{ width: "49%", marginTop: "15px" }}>
+                      <Box className={styles.right_box_details}>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Image
+                            className="px-2 "
+                            src={instructions}
+                            alt="lens"
+                            width={30}
+                            height={30}
+                          />
+                          <Typography
+                            variant="h3"
+                            className={styles.manufacturerDetailHead}
+                          >
+                            Directions for use
+                          </Typography>
+                        </Box>
+                        <List>
+
+
+                          {
+                            directionForUse &&
+                            directionForUse !== null &&
+                            directionForUse !== undefined &&
+                            directionForUse.length !== 0
+
+                            && directionForUse[0].map((item, index) => (
+                              <ListItem key={index}>
+                                <ListItemIcon key={index}>
+                                  <StopCircle
+                                    style={{
+                                      textAlign: "right",
+                                      fontSize: "xx-small",
+                                      color: "Black ",
+                                      padding: "8px",
+                                    }}
+                                  />
+                                </ListItemIcon>
+                                <ListItemText>
+                                  {item}
+                                </ListItemText>
+                              </ListItem>
+                            ))
+
+                          }
+
+                        </List>
                       </Box>
 
+                      <Box className={styles.right_box_details}>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Image
+                            className="px-2 "
+                            src={protection}
+                            alt="lens"
+                            width={30}
+                            height={30}
+                          />
+                          <Typography
+                            variant="h3"
+                            className={styles.manufacturerDetailHead}
+                          >
+                            Safety Information
+                          </Typography>
+                        </Box>
 
+                        <List>
+                          {
+                            stateSafety_InformationDetails &&
+                            stateSafety_InformationDetails !== null &&
+                            stateSafety_InformationDetails !== undefined &&
+                            stateSafety_InformationDetails.length !== 0
 
-                      <List>
-                        {keyBenefits && keyBenefits[0].map((item, index) => (
-                          <ListItem key={index}>
-                            <ListItemIcon key={index}>
-                              <StopCircle
-                                style={{
-                                  textAlign: "right",
-                                  fontSize: "xx-small",
-                                  color: "Black ",
-                                  padding: "8px",
-                                }}
-                              />
-                            </ListItemIcon>
-                            <ListItemText>
-                              {item}
-                            </ListItemText>
-                          </ListItem>
-                        ))
+                            && stateSafety_InformationDetails[0].map((item, index) => (
+                              <ListItem key={index}>
+                                <ListItemIcon key={index}>
+                                  <StopCircle
+                                    style={{
+                                      textAlign: "right",
+                                      fontSize: "xx-small",
+                                      color: "Black ",
+                                      padding: "8px",
+                                    }}
+                                  />
+                                </ListItemIcon>
+                                <ListItemText>
+                                  {item}
+                                </ListItemText>
+                              </ListItem>
+                            ))
 
-                        }
-
-
-
-                      </List>
-
+                          }
+                        </List>
+                      </Box>
                     </Box>
                   </Box>
-                  <Box className={styles.divider}></Box>
-                  <Box style={{ width: "49%", marginTop: "15px" }}>
-                    <Box className={styles.right_box_details}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Image
-                          className="px-2 "
-                          src={instructions}
-                          alt="lens"
-                          width={30}
-                          height={30}
-                        />
-                        <Typography
-                          variant="h3"
-                          className={styles.manufacturerDetailHead}
-                        >
-                          Directions for use
-                        </Typography>
-                      </Box>
-                      <List>
-
-
-                        {directionForUse && directionForUse[0].map((item, index) => (
-                          <ListItem key={index}>
-                            <ListItemIcon key={index}>
-                              <StopCircle
-                                style={{
-                                  textAlign: "right",
-                                  fontSize: "xx-small",
-                                  color: "Black ",
-                                  padding: "8px",
-                                }}
-                              />
-                            </ListItemIcon>
-                            <ListItemText>
-                              {item}
-                            </ListItemText>
-                          </ListItem>
-                        ))
-
-                        }
-
-                      </List>
-                    </Box>
-
-                    <Box className={styles.right_box_details}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Image
-                          className="px-2 "
-                          src={protection}
-                          alt="lens"
-                          width={30}
-                          height={30}
-                        />
-                        <Typography
-                          variant="h3"
-                          className={styles.manufacturerDetailHead}
-                        >
-                          Safety Information
-                        </Typography>
-                      </Box>
-
-                      <List>
-                        {stateSafety_InformationDetails && stateSafety_InformationDetails[0].map((item, index) => (
-                          <ListItem key={index}>
-                            <ListItemIcon key={index}>
-                              <StopCircle
-                                style={{
-                                  textAlign: "right",
-                                  fontSize: "xx-small",
-                                  color: "Black ",
-                                  padding: "8px",
-                                }}
-                              />
-                            </ListItemIcon>
-                            <ListItemText>
-                              {item}
-                            </ListItemText>
-                          </ListItem>
-                        ))
-
-                        }
-                      </List>
-                    </Box>
-                  </Box>
-                </Box>
-
-                <Box>
+                }
+                {keyBenefits &&
+                  keyBenefits !== null &&
+                  keyBenefits !== undefined &&
+                  keyBenefits.length !== 0 &&
                   <Box>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Image
-                        className="px-2 "
-                        src={honey}
-                        alt="lens"
-                        width={30}
-                        height={30}
-                      />
-                      <Typography
-                        variant="h3"
-                        className={styles.manufacturerDetailHead}
-                      >
-                        Key Ingredients
-                      </Typography>
+                    <Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Image
+                          className="px-2 "
+                          src={honey}
+                          alt="lens"
+                          width={30}
+                          height={30}
+                        />
+                        <Typography
+                          variant="h3"
+                          className={styles.manufacturerDetailHead}
+                        >
+                          Key Ingredients
+                        </Typography>
+                      </Box>
+                      <h3 className={styles.manufacturerDetailData}>
+                        {keyIngredient}
+                        {/* ..... <a className={styles.read_more_href}>READ MORE</a> */}
+                      </h3>
                     </Box>
-                    <h3 className={styles.manufacturerDetailData}>
-                      {keyIngredient}
-                      {/* ..... <a className={styles.read_more_href}>READ MORE</a> */}
-                    </h3>
                   </Box>
-                </Box>
+                }
               </Box>
             </Box>
 
