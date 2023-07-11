@@ -25,7 +25,7 @@ import { useRouter } from "next/router";
 
 const ProductStatusForm = ({
   classModal,
-  attributeSetIdData,
+  formation,
   pimModelCode,
   statusApiCalled,
 }) => {
@@ -61,7 +61,7 @@ const ProductStatusForm = ({
 
   return (
     <>
-      {attributeSetIdData < 100 ? (
+      {formation < 100 ? (
         <>
           <Alert severity="info">
             Do you want the product status set to be draft  ?

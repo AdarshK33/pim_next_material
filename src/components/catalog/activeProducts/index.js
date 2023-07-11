@@ -50,7 +50,7 @@ const ActiveProducts = () => {
 
   const dispatch = useDispatch();
   const [showRevalidateAddForm, setShowRevalidateAddForm] = useState(false);
-  const [attributeSetIdForm, setAttributeSetId] = useState();
+  const [formationData, setFormation] = useState();
   const [pimModelCode, setPimCodetId] = useState();
   const [statusAPICalled, setSatusAPICalled] = useState(false);
 
@@ -405,7 +405,7 @@ const ActiveProducts = () => {
                                 onClick={() => {
                                   setShowRevalidateAddForm(true);
                                   setSatusAPICalled(false)
-                                  setAttributeSetId(row.formation);
+                                  setFormation(row.formation);
                                   setPimCodetId(row.itemId);
 
                                 }}
@@ -416,7 +416,7 @@ const ActiveProducts = () => {
                                 body={
                                   <ProductStatusForm
                                     classModal={() => setShowRevalidateAddForm(false)}
-                                    attributeSetIdData={attributeSetIdForm}
+                                    formation={formationData}
                                     pimModelCode={pimModelCode}
                                     statusApiCalled={() => setSatusAPICalled(true)}
                                   />
