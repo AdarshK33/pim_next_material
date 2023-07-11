@@ -99,10 +99,10 @@ const ActiveProducts = () => {
     setChannel(event.target.value);
   };
 
-  function handleEdit(PimCodeId) {
+  function handleEdit(PimCodeId, ProductName) {
     router.push({
       pathname: "/productView",
-      query: { PimCodeId: PimCodeId, ActiveProduct: "Active%Products" },
+      query: { PimCodeId: PimCodeId, ActiveProduct: ProductName },
     });
 
     dispatch(productDetailsApi(PimCodeId));
@@ -367,7 +367,7 @@ const ActiveProducts = () => {
                                 fontSize: "xx-small",
                                 color: "#419794",
                               }}
-                              onClick={() => handleEdit(row.itemId)}
+                              onClick={() => handleEdit(row.itemId, row.itemName)}
                             />
                           </div>
                         </TableRow>
