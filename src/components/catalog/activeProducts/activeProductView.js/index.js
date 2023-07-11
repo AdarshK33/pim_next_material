@@ -353,7 +353,7 @@ const ProductViewDetails = (props) => {
                   </Grid>
                   <Grid item xs={8}>
                     <h2 className={styles.pimCodeId}>
-                      {router.query.PimCodeId}
+                      {router.query.ActiveProduct}
                     </h2>
                     <Box>
                       <Box>
