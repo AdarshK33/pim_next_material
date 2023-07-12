@@ -32,7 +32,7 @@ const ProductStatusForm = ({
   const dispatch = useDispatch();
 
   const router = useRouter();
-  console.log("rrrrrrrrrrrrrrrr", pimModelCode);
+  // console.log("rrrrrrrrrrrrrrrr", pimModelCode);
 
   const submitHandlerDraft = (e) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ const ProductStatusForm = ({
       {formation < 100 ? (
         <>
           <Alert severity="info">
-            Do you want the product status set to be draft  ?
+            Do you want to move the product to its previous status?
           </Alert>
           <Grid
             container
@@ -89,7 +89,7 @@ const ProductStatusForm = ({
 
       ) : (<>
         <Alert severity="warning">
-          Do you want the product status set to be ready for review  ?
+          Do you want to move the product to its previous status?
         </Alert>
         <Grid
           container
