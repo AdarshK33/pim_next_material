@@ -72,7 +72,7 @@ const handler = async (req, res) => {
         );
         if (err?.response) {
           const { status = {} } = err?.response;
-          res.status(status).json(err.response.data.error + " " + status);
+          res.status(status).json(err.response.data);
         } else res.status(500).json({ message: "something went wrong" });
         Promise.reject(err);
       });

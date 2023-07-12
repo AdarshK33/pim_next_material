@@ -615,18 +615,9 @@ export const bulkUploadApi = (data) => {
       .catch((err) => {
         console.log(
           "error caught in -> actions/catalogServiceNew/BulkUploadApi",
-          err
+          err.response
         );
-        const { status = {} } = err?.response;
-        if (status == 409) {
-          toast.error("File already exists !!!");
-        }
-        if (status == 404) {
-          toast.error("Access denied to upload file !!!");
-        } else {
-          toast.error("Bulk file upload failed !!!");
-        }
-
+        toast.error(`${err?.response.data.detail}`)
         dispatch(
           bulkUploadDataFailure(err, "Something went wrong", "BulkUploadApi")
         );
