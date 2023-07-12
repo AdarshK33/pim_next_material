@@ -17,7 +17,7 @@ import {
 import {
   statusChangedApis,
 } from "../../../../redux/actions/catalogServiceNew";
-// import styles from "../productDetails/productDetials.module.css";
+import styles from "./activeProducts.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -69,13 +69,15 @@ const ProductStatusForm = ({
           <Grid
             container
             justifyContent="space-evenly"
-          // className={styles.addButton}
+            // className={styles.addButton}
+            className={styles.alert_button_active_product}
           >
             <Button onClick={classModal} variant="outlined" color="secondary">
               No
             </Button>
 
             <Button
+
               variant="outlined"
               onClick={submitHandlerDraft}
               type="submit"
@@ -94,13 +96,15 @@ const ProductStatusForm = ({
         <Grid
           container
           justifyContent="space-evenly"
-        // className={styles.addButton}
+          // className={styles.addButton}
+          className={styles.alert_button_active_product}
         >
           <Button onClick={classModal} variant="outlined" color="secondary">
             No
           </Button>
 
           <Button
+
             variant="outlined"
             onClick={submitHandlerReadyForReview}
             type="submit"
