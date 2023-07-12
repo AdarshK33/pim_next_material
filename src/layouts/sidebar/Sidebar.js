@@ -367,11 +367,11 @@ const Sidebar = ({ onSidebarClose, isSidebarOpen }) => {
                         unmountOnExit
                       >
                         <List component="div" disablePadding>
-                          {menuitem.list.map((submenu, index) => {
+                          {menuitem.list.map((submenu, index2) => {
                             return (
                               <NextLink href={submenu.href}>
                                 <ListItem
-                                  key={index}
+                                  key={index2}
                                   button
                                   className={styles.nesteds}
                                   sx={{
