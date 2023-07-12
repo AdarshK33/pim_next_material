@@ -19,7 +19,7 @@ function handler(req, res) {
     },
     data: data,
   };
-  console.log("saq", config);
+  // console.log("saq", config);
 
   catalogServiceNew(config)
     .then((response) => {

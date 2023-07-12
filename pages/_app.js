@@ -34,14 +34,14 @@ function MyApp(props) {
     // user,
   } = props;
   const { isLoggedin } = useSelector((state) => state.loginReducer);
-  console.log(isLoggedin, "isLoggedin")
+  // console.log(isLoggedin, "isLoggedin")
   useEffect(() => {
     client
       .post("api/userApi")
       .then((response) => {
-        console.log("hello MyApp => useEffect => response =>", response);
-        console.log("hello testing response", response?.data?.role);
-        console.log("hello  response", response?.data?.isLoggedIn);
+        // console.log("hello MyApp => useEffect => response =>", response);
+        // console.log("hello testing response", response?.data?.role);
+        // console.log("hello  response", response?.data?.isLoggedIn);
 
 
         dispatch(

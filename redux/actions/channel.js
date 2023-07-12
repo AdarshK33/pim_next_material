@@ -357,7 +357,7 @@ export const channelAttributeApiList = (
 };
 
 export const channelMappingApi = (channel, data) => {
-  console.log("data inside mapping", channel, data);
+  // console.log("data inside mapping", channel, data);
   const dataObj = {
     channelName: channel,
     attributesData: data,
@@ -407,12 +407,12 @@ export const createChannelAttributesApi = (info) => {
 };
 
 export const addmasterAttributeApi = (id, item) => {
-  console.log("item in addmasterattribute", id, item);
+  // console.log("item in addmasterattribute", id, item);
   const data = {
     id: id,
     item: item,
   };
-  console.log("data in addMasterAttribute", data);
+  // console.log("data in addMasterAttribute", data);
   return (dispatch) => {
     dispatch(addMasterAttributeLoading("...Attributes", "Masters"));
     client

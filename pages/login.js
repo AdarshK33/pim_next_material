@@ -38,7 +38,7 @@ const Login = (user) => {
   const { isLogin, userRole } = useSelector((state) => {
     return state.loginReducer;
   });
-  console.log('lllllllllllllllllllll', user)
+  // console.log('lllllllllllllllllllll', user)
 
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
@@ -225,7 +225,7 @@ export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
     const user = await req?.session?.user;
 
-    console.log("hello login", user);
+    // console.log("hello login", user);
 
     if (user.role === 'ADMIN') {
       return {

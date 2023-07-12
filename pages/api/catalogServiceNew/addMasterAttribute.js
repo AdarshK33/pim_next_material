@@ -19,7 +19,7 @@ function handler(req, res) {
     // console.log("helo config", config);
     catalogServiceNew(config)
         .then((response) => {
-            console.log("res1", response);
+            // console.log("res1", response);
             if (response) {
                 res.status(200).json(response.data);
                 Promise.resolve();

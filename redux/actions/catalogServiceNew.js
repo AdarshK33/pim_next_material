@@ -571,7 +571,7 @@ export const getAllProductListApi = (pageNo, pageSize, status, itemId) => {
     //   };
   };
 
-  console.log(data, "data here");
+  // console.log(data, "data here");
   return (dispatch) => {
     dispatch(getAllProductListLoading("ATTRIBUTE....", "ATTRIBUTE"));
     client
@@ -598,7 +598,7 @@ export const bulkUploadApi = (data) => {
   //   formData: formData,
   //   configData: configData,
   // };
-  console.log("hello   called", data);
+  // console.log("hello   called", data);
   return (dispatch) => {
     dispatch(bulkUploadDataLoading("BULK....", "UPLOAD"));
     uploadClient
@@ -606,7 +606,7 @@ export const bulkUploadApi = (data) => {
       .then((response) => {
         toast.info("Bulk file uploaded successfully !!!");
 
-        console.log("---------bulkUpload------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        // console.log("---------bulkUpload------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
         dispatch(
           bulkUploadDataSuccess("bulkUpload Successfully", "bulkUpload ")
         ); // } else throw new Error("");
@@ -639,7 +639,7 @@ export const mediaUploadApi = (data) => {
   //   // pim_code: pim_code,
   //   formData: formData,
   // };
-  console.log("hello mediaUploadApi called", data);
+  // console.log("hello mediaUploadApi called", data);
   return (dispatch) => {
     dispatch(mediaUploadDataLoading("BULK....", "UPLOAD"));
     uploadClient
@@ -647,7 +647,7 @@ export const mediaUploadApi = (data) => {
       .then((response) => {
         toast.info("Media file uploaded successfully !!!");
 
-        console.log("---------mediaUpload------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
+        // console.log("---------mediaUpload------", response); // result = true; // if (response.status === 200) { // toast.info("User Create Successfully !!!"); // console.log("user ==>", response.data.result);
         dispatch(
           mediaUploadDataSuccess(
             "Media Upload Successfully",
@@ -708,7 +708,7 @@ export const getCategoriesApi = () => {
     client
       .get("/api/catalogServiceNew/dropdownCategories")
       .then((response) => {
-        console.log(" categories response=>", response);
+        // console.log(" categories response=>", response);
         dispatch(getCategoriesSuccess(response.data));
       })
       .catch((err) => {
@@ -738,7 +738,7 @@ export const createAttributeSetApi = (info) => {
     client
       .post("/api/catalogServiceNew/createAttribute", data)
       .then((response) => {
-        console.log("---------create attribute------", response);
+        // console.log("---------create attribute------", response);
         dispatch(createAttributeSetSuccess(response.data.result)); // } else throw new Error("");
       })
       .catch((err) => {
@@ -753,7 +753,7 @@ export const createAttributeSetApi = (info) => {
   };
 };
 export const addCategoryApi = (data) => {
-  console.log("hello   called", data);
+  // console.log("hello   called", data);
   return (dispatch) => {
     dispatch(addCategoryLoading("Categories....", "Loading!"));
     client
@@ -879,7 +879,7 @@ export const getCatalogPublishApi = (filetype, selectedItemIds, channelId) => {
       .then((response) => {
         toast.info("Publish Successfully !!!");
         dispatch(publishCatalogSuccess(response.data, "PUBLISH SUCCESS"));
-        console.log("responsefrom", response);
+        // console.log("responsefrom", response);
       })
       .catch((err) => {
         toast.error("Publish Failed !!!");
@@ -1003,10 +1003,10 @@ export const getBuilkDetailsListApi = (pageNo, pageSize) => {
     client
       .post("/api/catalogServiceNew/getBulkUpload", data)
       .then((response) => {
-        console.log(" bulkDetailListLoading response", response);
+        // console.log(" bulkDetailListLoading response", response);
 
         if (response?.status === 200) {
-          console.log("hello API SUCCESS2", response.data);
+          // console.log("hello API SUCCESS2", response.data);
           dispatch(bulkDetailListSuccess(response.data));
         }
       })
@@ -1031,15 +1031,19 @@ export const getMediaListingApi = (pageNo, pageSize, modelCode) => {
     client
       .post("/api/catalogServiceNew/getMedia", data)
       .then((response) => {
-        console.log(" mediaListLoading response", response);
+        // console.log(" mediaListLoading response", response);
 
         if (response?.status === 200) {
-          console.log("mediaListingSuccess", response.data);
+          // console.log("mediaListingSuccess", response.data);
           dispatch(mediaListingSuccess(response.data));
         }
       })
       .catch((err) => {
-        console.log("mediaListingFailure", err);
+        console.log(
+          "error caught in -> redux/actions/catalogServiceNew/getMediaListingApi",
+          err
+        );
+        // console.log("mediaListingFailure", err);
         dispatch(mediaListingFailure(err));
       });
   };
@@ -1259,7 +1263,7 @@ export const getOnlineCategoriesApi = () => {
 };
 
 export const addOnlineCategoryApi = (data) => {
-  console.log("hello   called", data);
+  // console.log("hello   called", data);
   return (dispatch) => {
     dispatch(onlineCategoryCreateLoading("Categories....", "Loading!"));
     client
