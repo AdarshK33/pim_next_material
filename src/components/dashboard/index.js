@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 
   getDashBoardApi,
-  userLoginSuccess
-
+  userLoginSuccess,
+  getNotificationApi
 } from "../../../redux/actions/login";
 
 import {
@@ -36,6 +36,7 @@ const DashBoard = () => {
   useEffect(() => {
     dispatch(userLoginSuccess(0))
     dispatch(getDashBoardApi());
+    dispatch(getNotificationApi())
 
   }, []);
   return (
