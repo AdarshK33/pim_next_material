@@ -38,7 +38,7 @@ const Login = (user) => {
   const { isLogin, userRole } = useSelector((state) => {
     return state.loginReducer;
   });
-  // console.log('testing isLogin', isLogin, userRole)
+  console.log('lllllllllllllllllllll', user)
 
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
@@ -84,13 +84,23 @@ const Login = (user) => {
   }, [itemData]);
 
   useEffect(() => {
-    if (userRole !== "ADMIN") {
-      Router.push("/allProducts");
+    if (
+      userRole !== "" &&
+      userRole !== undefined &&
+      userRole.length !== 0 &&
+      isLogin !== "" &&
+      isLogin !== undefined &&
+      isLogin.length !== 0
 
-    } else if (userRole === "ADMIN") {
-      Router.push("/dashboard");
+    ) {
+      if (userRole !== "ADMIN") {
+        Router.push("/allProducts");
+
+      } else if (userRole === "ADMIN") {
+        Router.push("/dashboard");
+      }
     }
-  }, [isLogin]);
+  }, [isLogin, userRole]);
 
   return (
     <>
@@ -215,12 +225,20 @@ export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
     const user = await req?.session?.user;
 
-    // console.log("hello login", user);
+    console.log("hello login", user);
 
-    if (user) {
+    if (user.role === 'ADMIN') {
       return {
         redirect: {
           destination: "/dashboard",
+          permanent: false,
+        },
+      };
+    }
+    if (user.role !== 'ADMIN') {
+      return {
+        redirect: {
+          destination: "/allProducts",
           permanent: false,
         },
       };
