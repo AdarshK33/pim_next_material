@@ -44,7 +44,7 @@ import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 
 export const isLoggedIn = (data) => {
-  console.log("data", data)
+  // console.log("data", data)
   return {
     type: ISLOGGEDIN,
     payload: data,
@@ -436,7 +436,7 @@ export const getRolePrivilegeApi = () => {
       .get("/api/login/rolesPrivilege")
       .then((response) => {
         if (response?.status === 200) {
-          console.log("getRolesPrivilegeSuccess", response);
+          // console.log("getRolesPrivilegeSuccess", response);
           dispatch(getRolesPrivilegeSuccess(response.data));
         }
       })
@@ -457,10 +457,10 @@ export const myProfileAPi = () => {
     client
       .get("/api/userApi")
       .then((response) => {
-        console.log(
-          "<<<<<<<<<<<<<<<<<<My Profile>>>>>>>>>>>>>>>>>>>>>>>",
-          response
-        );
+        // console.log(
+        //   "<<<<<<<<<<<<<<<<<<My Profile>>>>>>>>>>>>>>>>>>>>>>>",
+        //   response
+        // );
         dispatch(
           isLoggedIn(
             response?.data?.isLoggedIn,
@@ -604,7 +604,7 @@ export const getDashBoardApi = () => {
         // console.log("hello api response",response.status)
         //   console.log(response)
         if (response?.status === 200) {
-          console.log("hello API  DashBoard SUCCESS2", response);
+          // console.log("hello API  DashBoard SUCCESS2", response);
           dispatch(getDashBoardDataSuccess(response.data));
         }
       })

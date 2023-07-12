@@ -15,9 +15,9 @@ const handler = async (req, res) => {
   const { user: { at = "" } = {}, loggedIn } = req.session;
 
   const { body } = req;
-  console.log("body here", body);
+  // console.log("body here", body);
   const form = new formidable.IncomingForm();
-  console.log("form :>> ", form);
+  // console.log("form :>> ", form);
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
@@ -57,7 +57,7 @@ const handler = async (req, res) => {
         },
       })
       .then((response) => {
-        console.log(response, "res here");
+        // console.log(response, "res here");
         res.status(200).json(response.data.result);
         // toast.info("Bulk File uploaded Successfully !!!");
       })

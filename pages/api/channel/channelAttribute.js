@@ -7,7 +7,7 @@ function handler(req, res) {
   const pageNo = body.pageNo;
   const pageSize = body.pageSize;
   const { user: { at = "" } = {}, loggedIn } = req.session;
-  console.log("channelFilter", channelFilter, pageNo, pageSize)
+  // console.log("channelFilter", channelFilter, pageNo, pageSize)
   const config = {
     method: "get",
     // url:`/ct/channel/mapping/${channelFilter}?pageNo=${pageNo}&pageSize=${pageSize}`,

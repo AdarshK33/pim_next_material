@@ -17,7 +17,7 @@ import {
 import {
   statusChangedApis,
 } from "../../../../redux/actions/catalogServiceNew";
-// import styles from "../productDetails/productDetials.module.css";
+import styles from "./activeProducts.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -32,7 +32,7 @@ const ProductStatusForm = ({
   const dispatch = useDispatch();
 
   const router = useRouter();
-  console.log("rrrrrrrrrrrrrrrr", pimModelCode);
+  // console.log("rrrrrrrrrrrrrrrr", pimModelCode);
 
   const submitHandlerDraft = (e) => {
     e.preventDefault();
@@ -64,18 +64,20 @@ const ProductStatusForm = ({
       {formation < 100 ? (
         <>
           <Alert severity="info">
-            Do you want the product status set to be draft  ?
+            Do you want to move the product to its previous status?
           </Alert>
           <Grid
             container
             justifyContent="space-evenly"
-          // className={styles.addButton}
+            // className={styles.addButton}
+            className={styles.alert_button_active_product}
           >
             <Button onClick={classModal} variant="outlined" color="secondary">
               No
             </Button>
 
             <Button
+
               variant="outlined"
               onClick={submitHandlerDraft}
               type="submit"
@@ -89,18 +91,20 @@ const ProductStatusForm = ({
 
       ) : (<>
         <Alert severity="warning">
-          Do you want the product status set to be ready for review  ?
+          Do you want to move the product to its previous status?
         </Alert>
         <Grid
           container
           justifyContent="space-evenly"
-        // className={styles.addButton}
+          // className={styles.addButton}
+          className={styles.alert_button_active_product}
         >
           <Button onClick={classModal} variant="outlined" color="secondary">
             No
           </Button>
 
           <Button
+
             variant="outlined"
             onClick={submitHandlerReadyForReview}
             type="submit"

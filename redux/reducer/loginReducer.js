@@ -66,7 +66,7 @@ const initialState = {
   isLoggedin: {}
 };
 const loginReducer = (state = initialState, action) => {
-  console.log("hello loginReducer called", action.payload)
+  // console.log("hello loginReducer called", action.payload)
   switch (action.type) {
 
     case ISLOGGEDIN:
