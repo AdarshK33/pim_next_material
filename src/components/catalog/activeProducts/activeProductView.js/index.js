@@ -3,6 +3,7 @@ import styles from "../activeProducts.module.css";
 import { StopCircle, Eye } from "react-feather";
 import Image from "next/image";
 
+
 import benefits from "../../../../../assets/icons/benefit.svg";
 import honey from "../../../../../assets/icons/honey.svg";
 import instructions from "../../../../../assets/icons/instructions.svg";
@@ -47,6 +48,7 @@ import { styled } from "@mui/material/styles";
 
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 const ProductViewDetails = (props) => {
+  var he = require('he');
   const { user: { role = "" } = {}, loggedIn } = props.user;
   const { productPimCodeData } = useSelector((state) => {
     return state.catalogServiceNewReducer;
@@ -149,7 +151,15 @@ const ProductViewDetails = (props) => {
       if (value.attributeSet === "ONLINEMASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName === "Product Information") {
-            const Description = val.value.replace(/;p/g, "").replace(/;/g, "").replace("/p", ".")
+            const decodedValue = he.decode(val.value);
+            const Description = decodedValue
+              .replace(/;p/g, "")
+              .replace(/;/g, "")
+              .replace("/p", ".")
+              .replace(/\/$/, '')
+              .replace(/\/;;$/, '')
+              .replace(/<[^>]+>/g, '') // Remove HTML tags
+              .replace(/[^\w\s]/g, '') // Remove symbols
             inputDescription.push(Description);
           }
         });
@@ -159,12 +169,13 @@ const ProductViewDetails = (props) => {
           if (val.keyName == "Key Benefits/Uses") {
 
             const Benefits = val.value.split(";;;");
-
             const filteredItems = Benefits
               .filter((item) => item !== ";ul" && item !== ";/;;")
-              .map((item) => item.replace(/\/$/, '')
+              .map((item) => he.decode(item)
+                .replace(/\/$/, '')
                 .replace(/\/;;$/, '')
-                .replace(/;/g, '.')
+                .replace(/<[^>]+>/g, '') // Remove HTML tags
+                .replace(/[^\w\s]/g, '') // Remove symbols
               );
             // console.log(filteredItems, "filteredItems");
             inputBenefits.push(filteredItems);
@@ -179,10 +190,13 @@ const ProductViewDetails = (props) => {
 
             const filteredItems = Direction
               .filter((item) => item !== ";ul" && item !== ";/;;")
-              .map((item) => item.replace(/\/$/, '')
+              .map((item) => he.decode(item)
+                .replace(/\/$/, '')
                 .replace(/\/;;$/, '')
-                .replace(/;/g, '.')
+                .replace(/<[^>]+>/g, '') // Remove HTML tags
+                .replace(/[^\w\s]/g, '') // Remove symbols
               );
+
             // console.log(filteredItems, "filteredItems");
 
             inputDirectionForUse.push(filteredItems);
@@ -194,12 +208,17 @@ const ProductViewDetails = (props) => {
           if (val.keyName == "Safety Information") {
             const Safety_Information = val.value.split(";;;");
 
+
+
             const filteredItems = Safety_Information
               .filter((item) => item !== ";ul" && item !== ";/;;")
-              .map((item) => item.replace(/\/$/, '')
+              .map((item) => he.decode(item)
+                .replace(/\/$/, '')
                 .replace(/\/;;$/, '')
-                .replace(/;/g, '.')
+                .replace(/<[^>]+>/g, '') // Remove HTML tags
+                .replace(/[^\w\s]/g, '') // Remove symbols
               );
+
             // console.log(filteredItems, "filteredItems");
 
             inputSafety_InformationState.push(filteredItems);
@@ -209,7 +228,16 @@ const ProductViewDetails = (props) => {
       if (value.attributeSet == "ONLINEMASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "Key Ingredient") {
-            inputKeyIngredient.push(val.value);
+            const decodedValue = he.decode(val.value);
+            const KeyngredientDecodedValue = decodedValue
+              .replace(/;p/g, "")
+              .replace(/;/g, "")
+              .replace("/p", ".")
+              .replace(/\/$/, '')
+              .replace(/\/;;$/, '')
+              .replace(/<[^>]+>/g, '') // Remove HTML tags
+              .replace(/[^\w\s]/g, '') // Remove symbols
+            inputKeyIngredient.push(KeyngredientDecodedValue);
           }
         });
       }
