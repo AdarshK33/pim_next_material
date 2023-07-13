@@ -250,7 +250,20 @@ const Media = (props) => {
                               {i + 1 + indexOfFirstRecord}
                             </TableCell>
                             <TableCell align="start">{row.name}</TableCell>
-                            <TableCell align="start">{row.createdAt}</TableCell>
+                            <TableCell align="start">
+
+                              {
+                                new Date(row.createdAt)
+                                  .toISOString()
+                                  .split("T")[0]
+                              }{" "}
+                              {/* {new Date(row.createdAt).toLocaleTimeString()} */}
+                              {new Date(row.createdAt + "Z").toLocaleTimeString()}
+
+
+                            </TableCell>
+
+
                             <TableCell align="start">{row.createdBy}</TableCell>
                             <TableCell align="right">{row.updatedBy}</TableCell>
                             <div className="action_center product_Detials_Actions">
