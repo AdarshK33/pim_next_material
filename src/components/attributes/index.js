@@ -22,13 +22,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styles from "./attribute.module.css";
 import dynamic from 'next/dynamic'
-const CustomModal = dynamic(() => import('../../common/customModal'))
-const AddForm = dynamic(() => import('./addForm.js'))
-const UpdateForm = dynamic(() => import('./updateForm.js'))
+// const CustomModal = dynamic(() => import('../../common/customModal'))
+// const AddForm = dynamic(() => import('./addForm.js'))
+// const UpdateForm = dynamic(() => import('./updateForm.js'))
 
-// import CustomModal from "../../common/customModal";
-// import AddForm from "./AddForm.js";
-// import UpdateForm from "./updateForm.js";
+import CustomModal from "../../common/customModal";
+import AddForm from "./AddForm.js";
+import UpdateForm from "./updateForm.js";
 
 import { useDispatch, useSelector } from "react-redux";
 import {

@@ -3,15 +3,15 @@ import styles from "./dashboard.module.css";
 
 import dynamic from 'next/dynamic'
 
-const ProductCard = dynamic(() => import('./ProductCard'), { ssr: false })
-const ProductChart = dynamic(() => import('./ProductChart'), { ssr: false })
-const ProductAlert = dynamic(() => import('./ProductAlert'), { ssr: false })
+// const ProductCard = dynamic(() => import('./ProductCard'), { ssr: false })
+// const ProductChart = dynamic(() => import('./ProductChart'), { ssr: false })
+// const ProductAlert = dynamic(() => import('./ProductAlert'), { ssr: false })
 
 
-// import ProductCard from "./productCard";
-// import ProductChart from "./productChart";
-// // import ProductGraph from "./productGraph";
-// import ProductAlert from "./productAlert";
+import ProductCard from "./productCard";
+import ProductChart from "./productChart";
+// import ProductGraph from "./productGraph";
+import ProductAlert from "./productAlert";
 import { useDispatch, useSelector } from "react-redux";
 import {
 

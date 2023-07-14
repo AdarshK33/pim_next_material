@@ -15,17 +15,18 @@ import {
   getChannelListApi,
   channelAttributeApiList,
 } from "../../../redux/actions/channel";
-import dynamic from 'next/dynamic'
-const CustomModal = dynamic(() => import('../../common/customModal'))
-const AddForm = dynamic(() => import('./AddForm'))
-const UpdateForm = dynamic(() => import('./UpdateForm'))
+// import dynamic from 'next/dynamic'
+// const CustomModal = dynamic(() => import('../../common/customModal'))
+// const AddForm = dynamic(() => import('./AddForm'))
+// const UpdateForm = dynamic(() => import('./UpdateForm'))
 
 
-// import CustomModal from "../../common/customModal";
-// import AddForm from "./AddForm";
+import CustomModal from "../../common/customModal";
+import AddForm from "./AddForm";
+import UpdateForm from "./UpdateForm.js";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
-// import UpdateForm from "./UpdateForm.js";
+
 import { getChannelByIdApi } from "../../../redux/actions/channel";
 
 const Channels = () => {

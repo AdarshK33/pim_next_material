@@ -22,14 +22,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "react-js-pagination";
-import dynamic from 'next/dynamic'
-const CustomModal = dynamic(() => import('../../common/customModal'))
-const AddForm = dynamic(() => import('./AddForm'))
-const UpdateForm = dynamic(() => import('./UpdateForm'))
+// import dynamic from 'next/dynamic'
+// const CustomModal = dynamic(() => import('../../common/customModal'))
+// const AddForm = dynamic(() => import('./AddForm'))
+// const UpdateForm = dynamic(() => import('./UpdateForm'))
 
-// import CustomModal from "../../common/customModal";
-// import AddForm from "./AddForm.js";
-// import UpdateForm from "./UpdateForm.js";
+import CustomModal from "../../common/customModal";
+import AddForm from "./AddForm.js";
+import UpdateForm from "./UpdateForm.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getRoleApi,
