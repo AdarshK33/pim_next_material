@@ -25,7 +25,7 @@ import Pagination from "react-js-pagination";
 import dynamic from 'next/dynamic'
 const CustomModal = dynamic(() => import('../../common/customModal'))
 const AddForm = dynamic(() => import('./AddForm'))
-const UpdateForm = dynamic(() => import('.UpdateForm'))
+const UpdateForm = dynamic(() => import('./UpdateForm'))
 
 // import CustomModal from "../../common/customModal";
 // import AddForm from "./AddForm.js";

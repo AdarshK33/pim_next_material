@@ -409,9 +409,9 @@ const Sidebar = ({ onSidebarClose, isSidebarOpen }) => {
           </List>
         </div>
       </Box>
-      {/* <div className="copyright_block">
+      <div className="copyright_block">
         <p className="copyright_txt">All copyrights reserved, 2023 @ APOLLO</p>
-      // </div> */}
+      </div>
       {/* Its working  */}
     </Box>
   );
