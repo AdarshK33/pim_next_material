@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styles from "./dashboard.module.css";
-import ProductCard from "./productCard";
-import ProductChart from "./productChart";
-// import ProductGraph from "./productGraph";
-import ProductAlert from "./productAlert";
+
+import dynamic from 'next/dynamic'
+
+const ProductCard = dynamic(() => import('./ProductCard'))
+const ProductChart = dynamic(() => import('./ProductChart'))
+const ProductAlert = dynamic(() => import('./ProductAlert'))
+
+
+// import ProductCard from "./productCard";
+// import ProductChart from "./productChart";
+// // import ProductGraph from "./productGraph";
+// import ProductAlert from "./productAlert";
 import { useDispatch, useSelector } from "react-redux";
 import {
 

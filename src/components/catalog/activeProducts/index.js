@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./activeProducts.module.css";
 import Image from "next/image";
 import { Edit2, Eye, Search, Download } from "react-feather";
-import ProductStatusForm from "./ProductStatusForm";
-import CustomModal from "../../../common/customModal";
+// import ProductStatusForm from "./ProductStatusForm";
+// import CustomModal from "../../../common/customModal";
+import dynamic from 'next/dynamic'
+const CustomModal = dynamic(() => import('../../../common/customModal'))
+const ProductStatusForm = dynamic(() => import('./productStatusForm'))
 
 import {
   Grid,

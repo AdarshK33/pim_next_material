@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import dynamic from 'next/dynamic'
 import { Grid, Button, CardContent, Typography, Card } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,8 +13,10 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { getAttributeSetDetailsListApi, getAttributeSetDetailsSearchApi } from "../../../../redux/actions/catalogServiceNew";
-import CustomModal from "../../../common/customModal";
-import AddAttributeForm from "../addAttributeForm";
+const CustomModal = dynamic(() => import('../../../common/customModal'))
+const AddAttributeForm = dynamic(() => import('../addAttributeForm'))
+// import CustomModal from "../../../common/customModal";
+// import AddAttributeForm from "../addAttributeForm";
 import { Search } from "react-feather";
 
 
