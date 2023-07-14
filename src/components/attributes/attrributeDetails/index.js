@@ -13,10 +13,10 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { getAttributeSetDetailsListApi, getAttributeSetDetailsSearchApi } from "../../../../redux/actions/catalogServiceNew";
-const CustomModal = dynamic(() => import('../../../common/customModal'))
-const AddAttributeForm = dynamic(() => import('../addAttributeForm'))
-// import CustomModal from "../../../common/customModal";
-// import AddAttributeForm from "../addAttributeForm";
+// const CustomModal = dynamic(() => import('../../../common/customModal'))
+// const AddAttributeForm = dynamic(() => import('../addAttributeForm'))
+import CustomModal from "../../../common/customModal";
+import AddAttributeForm from "../addAttributeForm";
 import { Search } from "react-feather";
 
 
