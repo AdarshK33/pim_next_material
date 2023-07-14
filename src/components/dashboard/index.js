@@ -3,9 +3,9 @@ import styles from "./dashboard.module.css";
 
 import dynamic from 'next/dynamic'
 
-const ProductCard = dynamic(() => import('./ProductCard'))
-const ProductChart = dynamic(() => import('./ProductChart'))
-const ProductAlert = dynamic(() => import('./ProductAlert'))
+const ProductCard = dynamic(() => import('./ProductCard'), { ssr: false })
+const ProductChart = dynamic(() => import('./ProductChart'), { ssr: false })
+const ProductAlert = dynamic(() => import('./ProductAlert'), { ssr: false })
 
 
 // import ProductCard from "./productCard";
