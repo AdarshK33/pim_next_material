@@ -12,9 +12,13 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import CustomModal from "../../../common/customModal";
-import AddFormRevalidate from "./AddFormRevalidate";
-import AddFormComment from "./AddFormComment";
+import dynamic from 'next/dynamic'
+const CustomModal = dynamic(() => import('../../../common/customModal'))
+const AddFormRevalidate = dynamic(() => import('./AddFormRevalidate'))
+
+// import CustomModal from "../../../common/customModal";
+// import AddFormRevalidate from "./AddFormRevalidate";
+// import AddFormComment from "./AddFormComment";
 
 import {
   productDetailsApi,
