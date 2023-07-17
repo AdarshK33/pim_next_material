@@ -483,13 +483,8 @@ export const myProfileAPi = () => {
           )
         );
 
-        dispatch(
-          userEmail(
-            response?.data?.email,
-            "User email saved Successfully",
-            "User DETAILS"
-          )
-        );
+        dispatch(userEmail(response?.data?.email, "User email saved Successfully", "User DETAILS"));
+        dispatch(userAuthorities(response.data.authorities));
       })
       .catch((err) => {
         console.log("error caught in -> actions/login/myProfileAPi", err);

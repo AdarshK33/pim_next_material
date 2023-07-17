@@ -13,7 +13,7 @@ import withRedux from "next-redux-wrapper";
 import { mainStore } from "../redux/store";
 // import { withIronSessionSsr } from "iron-session/next";
 import { client } from "../utils/axios";
-import { userAuthorities, userRole, isLoggedIn } from "../redux/actions/login";
+import { userAuthorities, userRole, isLoggedIn, myProfileAPi } from "../redux/actions/login";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
 import {
@@ -35,41 +35,42 @@ function MyApp(props) {
   } = props;
   const { isLoggedin } = useSelector((state) => state.loginReducer);
   // console.log(isLoggedin, "isLoggedin")
-  useEffect(() => {
-    client
-      .post("api/userApi")
-      .then((response) => {
-        // console.log("hello MyApp => useEffect => response =>", response);
-        // console.log("hello testing response", response?.data?.role);
-        // console.log("hello  response", response?.data?.isLoggedIn);
+  // useEffect(() => {
+  //   client
+  //     .post("api/userApi")
+  //     .then((response) => {
+  //       // console.log("hello MyApp => useEffect => response =>", response);
+  //       // console.log("hello testing response", response?.data?.role);
+  //       // console.log("hello  response", response?.data?.isLoggedIn);
 
 
-        dispatch(
-          isLoggedIn(
-            response?.data?.isLoggedIn,
-            "Login isLoggedIn saved Successfully",
-            "LOGIN DETAILS"
-          )
-        );
-        dispatch(
-          userRole(
-            response?.data?.role,
-            "Login role saved Successfully",
-            "LOGIN DETAILS"
-          )
-        );
-        dispatch(userAuthorities(response.data.authorities));
-      })
-      .catch((err) => {
-        console.log("err in catch", err);
-      });
-  }, []);
+  //       dispatch(
+  //         isLoggedIn(
+  //           response?.data?.isLoggedIn,
+  //           "Login isLoggedIn saved Successfully",
+  //           "LOGIN DETAILS"
+  //         )
+  //       );
+  //       dispatch(
+  //         userRole(
+  //           response?.data?.role,
+  //           "Login role saved Successfully",
+  //           "LOGIN DETAILS"
+  //         )
+  //       );
+  //       dispatch(userAuthorities(response.data.authorities));
+  //     })
+  //     .catch((err) => {
+  //       console.log("err in catch", err);
+  //     });
+  // }, []);
 
   useEffect(() => {
     //// dispatch(getCategoriesApi());
     // dispatch(getNotificationApi());
     // dispatch(getDashBoardApi());
     // dispatch(getRoleApi());
+    dispatch(myProfileAPi());
 
     // dispatch(getChannelListApi(0, 1000));
   }, []);
