@@ -30,8 +30,8 @@
 }
 
 .add_button_text {
-  font-weight: bold;
-  font-family: Gill-heavy;
+  font-weight: 700;
+  font-family: "Montserrat";
   background-color: var(--white);
   box-shadow: none;
 }

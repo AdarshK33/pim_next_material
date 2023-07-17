@@ -10,7 +10,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 // import edit from "../../../../assets/icons/edit.svg";
 // import edit from "../../../../assets/icons/big-search-lens.svg";
 
-import lens from "../../../../assets/icons/lens.svg";
+// import lens from "../../../../assets/icons/lens.svg";
 import { Edit2, Eye, Search, Download } from "react-feather";
 
 import Image from "next/image";

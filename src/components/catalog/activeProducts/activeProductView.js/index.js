@@ -167,61 +167,118 @@ const ProductViewDetails = (props) => {
       if (value.attributeSet == "ONLINEMASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "Key Benefits/Uses") {
+            const checkData = val.value.match(";;;")
+            // console.log(checkData, "hello checkData")
 
-            const Benefits = val.value.split(";;;");
-            const filteredItems = Benefits
-              .filter((item) => item !== ";ul" && item !== ";/;;")
-              .map((item) => he.decode(item)
-                .replace(/\/$/, '')
-                .replace(/\/;;$/, '')
-                .replace(/<[^>]+>/g, '') // Remove HTML tags
-                .replace(/[^\w\s]/g, '') // Remove symbols
-              );
-            // console.log(filteredItems, "filteredItems");
-            inputBenefits.push(filteredItems);
+            if (checkData) {
+              const Benefits = val.value.split(";;;");
+              const filteredItems = Benefits
+                .filter((item) => item !== ";ul" && item !== ";/;;")
+                .map((item) => he.decode(item)
+                  .replace(/\/$/, '')
+                  .replace(/\/;;$/, '')
+                  .replace(/<[^>]+>/g, '') // Remove HTML tags
+                  .replace(/[^\w\s]/g, '') // Remove symbols
+                );
+              // console.log(filteredItems, "filteredItems");
+              inputBenefits.push(filteredItems);
+            }
+            else {
+              const Benefits = val.value.split(";;;");
+              const filteredItems = Benefits
+                .filter((item) => item !== ";ul" && item !== ";/;;")
+                .map((item) => he.decode(item)
+                );
 
+              const combinedBenefits = filteredItems.join('');
+              const benefitsData = combinedBenefits?.split('</li><li>');
+
+              // Remove the opening and closing <ul> tags and the <li> tags from the first and last items
+              benefitsData[0] = benefitsData[0].replace('<ul><li>', '');
+              benefitsData[benefitsData.length - 1] = benefitsData[benefitsData.length - 1].replace('</li></ul>', '');
+
+
+              inputBenefits.push(benefitsData);
+            }
           }
         });
       }
       if (value.attributeSet == "ONLINEMASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "Direction for use/Dosage") {
-            const Direction = val.value.split(";;;");
+            const checkData = val.value.match(";;;")
+            if (checkData) {
+              const Benefits = val.value.split(";;;");
+              const filteredItems = Benefits
+                .filter((item) => item !== ";ul" && item !== ";/;;")
+                .map((item) => he.decode(item)
+                  .replace(/\/$/, '')
+                  .replace(/\/;;$/, '')
+                  .replace(/<[^>]+>/g, '') // Remove HTML tags
+                  .replace(/[^\w\s]/g, '') // Remove symbols
+                );
+              // console.log(filteredItems, "filteredItems");
+              inputDirectionForUse.push(filteredItems);
+            }
+            else {
+              const Benefits = val.value.split(";;;");
+              const filteredItems = Benefits
+                .filter((item) => item !== ";ul" && item !== ";/;;")
+                .map((item) => he.decode(item)
+                );
 
-            const filteredItems = Direction
-              .filter((item) => item !== ";ul" && item !== ";/;;")
-              .map((item) => he.decode(item)
-                .replace(/\/$/, '')
-                .replace(/\/;;$/, '')
-                .replace(/<[^>]+>/g, '') // Remove HTML tags
-                .replace(/[^\w\s]/g, '') // Remove symbols
-              );
+              const combinedBenefits = filteredItems.join('');
+              const benefitsData = combinedBenefits?.split('</li><li>');
 
-            // console.log(filteredItems, "filteredItems");
+              // Remove the opening and closing <ul> tags and the <li> tags from the first and last items
+              benefitsData[0] = benefitsData[0].replace('<ul><li>', '');
+              benefitsData[benefitsData.length - 1] = benefitsData[benefitsData.length - 1].replace('</li></ul>', '');
 
-            inputDirectionForUse.push(filteredItems);
+
+              inputDirectionForUse.push(benefitsData);
+            }
+
+
           }
         });
       }
       if (value.attributeSet == "ONLINEMASTER") {
         value?.attributes.forEach((val) => {
           if (val.keyName == "Safety Information") {
-            const Safety_Information = val.value.split(";;;");
+
+            const checkData = val.value.match(";;;")
+            if (checkData) {
+              const Benefits = val.value.split(";;;");
+              const filteredItems = Benefits
+                .filter((item) => item !== ";ul" && item !== ";/;;")
+                .map((item) => he.decode(item)
+                  .replace(/\/$/, '')
+                  .replace(/\/;;$/, '')
+                  .replace(/<[^>]+>/g, '') // Remove HTML tags
+                  .replace(/[^\w\s]/g, '') // Remove symbols
+                );
+              // console.log(filteredItems, "filteredItems");
+              inputSafety_InformationState.push(filteredItems);
+            }
+            else {
+              const Benefits = val.value.split(";;;");
+              const filteredItems = Benefits
+                .filter((item) => item !== ";ul" && item !== ";/;;")
+                .map((item) => he.decode(item)
+                );
+
+              const combinedBenefits = filteredItems.join('');
+              const benefitsData = combinedBenefits?.split('</li><li>');
+
+              // Remove the opening and closing <ul> tags and the <li> tags from the first and last items
+              benefitsData[0] = benefitsData[0].replace('<ul><li>', '');
+              benefitsData[benefitsData.length - 1] = benefitsData[benefitsData.length - 1].replace('</li></ul>', '');
 
 
+              inputSafety_InformationState.push(benefitsData);
+            }
 
-            const filteredItems = Safety_Information
-              .filter((item) => item !== ";ul" && item !== ";/;;")
-              .map((item) => he.decode(item)
-                .replace(/\/$/, '')
-                .replace(/\/;;$/, '')
-                .replace(/<[^>]+>/g, '') // Remove HTML tags
-                .replace(/[^\w\s]/g, '') // Remove symbols
-              );
 
-            // console.log(filteredItems, "filteredItems");
-
-            inputSafety_InformationState.push(filteredItems);
           }
         });
       }

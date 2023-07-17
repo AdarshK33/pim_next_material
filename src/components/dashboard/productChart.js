@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import user1 from "../../../assets/images/backgrounds/u2.jpg";
-import user2 from "../../../assets/images/backgrounds/u3.jpg";
-import user3 from "../../../assets/images/backgrounds/u4.jpg";
 import styles from "./dashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
