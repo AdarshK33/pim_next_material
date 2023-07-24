@@ -1,16 +1,63 @@
 import React, { useState } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import ReactImageMagnify from "react-image-magnify";
 
-const ThumbnailSlider = ({ images }) => {
+const CombinedImageDisplay = ({ images }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [magnifiedImageLeft, setMagnifiedImageLeft] = useState(0);
 
-  const handleThumbnailClick = (index) => {
+  const handleSlide = (currentIndex) => {
+    setSelectedImageIndex(currentIndex);
+  };
+
+  const handleThumbnailMouseEnter = (index, event) => {
+    const thumbnailRect = event.target.getBoundingClientRect();
+    const imageGalleryRect = event.currentTarget.getBoundingClientRect();
+    const left =
+      thumbnailRect.left - imageGalleryRect.left - imageGalleryRect.width;
+
+    setMagnifiedImageLeft(left);
     setSelectedImageIndex(index);
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", position: "relative" }}>
+      {/* ReactImageMagnify */}
+      <div
+        style={{
+          position: "absolute",
+          left: magnifiedImageLeft,
+          zIndex: "1500",
+          transition: "left 0.2s ease-in-out",
+        }}
+      >
+        <ReactImageMagnify
+          {...{
+            smallImage: {
+              // alt: images[selectedImageIndex].alt,
+              isFluidWidth: true,
+              src: images[selectedImageIndex].original,
+            },
+            largeImage: {
+              src: images[selectedImageIndex].original,
+              width: 1000,
+              height: 480,
+            },
+            enlargedImageContainerStyle: {
+              zIndex: "1500",
+              // left: "-100%",
+
+            },
+            enlargedImageContainerDimensions: {
+              width: "100%",
+              height: "100%",
+            },
+          }}
+        />
+      </div>
+
+      {/* ImageGallery */}
       <ImageGallery
         items={images}
         showNav={false}
@@ -18,17 +65,11 @@ const ThumbnailSlider = ({ images }) => {
         showFullscreenButton={false}
         autoPlay={false}
         slideInterval={2000}
-        startIndex={selectedImageIndex}
-        onSlide={handleThumbnailClick}
+        onSlide={handleSlide}
+        onMouseOverThumbnail={handleThumbnailMouseEnter}
       />
-      {/* <div style={{ display: "flex", justifyContent: "center" }}>
-        {carouselThumbnails}
-      </div> */}
     </div>
   );
 };
 
-
-
-export default React.memo(ThumbnailSlider);
-
+export default CombinedImageDisplay;
