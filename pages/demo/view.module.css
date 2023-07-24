@@ -1,0 +1,93 @@
+
+.manufacturerDetailData {
+    font-size: 14px !important;
+    font-weight: 400;
+    padding-left: 15px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+  }
+  
+  .manufacturerDetailHead {
+    padding-left: 15px;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    margin-bottom: 5px !important;
+    color: #419794;
+  }
+  .pimCodeId {
+    color: #494949;
+    font-size: 20px;
+    font-weight: 600;
+    /* padding-left: 15px; */
+    margin-top: 0px !important;
+  }
+  .channel_published{
+    padding-top: 10px;
+  }
+  .channel_published p{
+   color:   #000000;
+   font-weight: 600;
+   font-size: 16px;
+   margin-bottom: 0px
+  }
+  .divider {
+    width: 0.1%;
+    border: 1px solid #adacac;
+    margin-top: 1.5rem;
+  }
+  .channel_box{
+    padding: 20px !important;
+  }
+  .channel_logo{
+    text-align: center;
+  }
+  .channel_text{
+    text-align: center;
+    font-size: 14px;
+    color: #000000;
+  }
+  .channel_last_published{
+    text-align: center;
+    font-size: 10px;
+    font-style: italic;
+    color: #000000;
+  }
+  .channel_price{
+    text-align: center;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .attribute_mapping p{
+    color:   #000000;
+   font-weight: 600;
+   font-size: 16px;
+   margin-bottom: 0px !important;
+  }
+.first_info{
+  font-size: 13px;
+}
+.second_info{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+
+}
+.uses_info{
+  font-size: 13px;
+
+}
+.uses_main_header{
+  font-weight: 600 !important;
+  color: #000000;
+}
+.uses_main_text{
+  margin-top: 2px !important;
+}
+.list_li{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.list_li_text span{
+  font-size: 13px !important;
+}
