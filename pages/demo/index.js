@@ -348,7 +348,7 @@ const index = (user) => {
                             id="outlined-basic"
                             variant="standard"
                             name="Display Name"
-                            value={""}
+                            value={"Tablets"}
                         // InputProps={{ disableUnderline: true, readOnly: true }}
                         />
                     </Grid >
@@ -362,7 +362,7 @@ const index = (user) => {
                             id="outlined-basic"
                             variant="standard"
                             name="Category Name"
-                            value={""}
+                            value={"pharma"}
                         // InputProps={{ disableUnderline: true, readOnly: true }}
                         />
                     </Grid >
@@ -377,7 +377,7 @@ const index = (user) => {
                             id="outlined-basic"
                             variant="standard"
                             name="Brand Name"
-                            value={""}
+                            value={"Apollo"}
                         // InputProps={{ disableUnderline: true, readOnly: true }}
                         />
                     </Grid >
@@ -392,7 +392,7 @@ const index = (user) => {
                             id="outlined-basic"
                             variant="standard"
                             name="Manufature Name"
-                            value={""}
+                            value={"pvt ltd"}
                         // InputProps={{ disableUnderline: true, readOnly: true }}
                         />
                     </Grid >
