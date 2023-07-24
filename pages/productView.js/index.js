@@ -1,5 +1,5 @@
 import React from "react";
-import ProductViewDetails from "../../src/components/catalog/activeProducts/activeProductView.js";
+import ProductViewDetails from "../../src/components/catalog/activeProducts/activeProductView/index.js";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOption } from "../../utils/session";
 const index = (user) => {
