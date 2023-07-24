@@ -338,7 +338,7 @@ const index = (user) => {
         return (
             <>
                 <Grid container>
-                    <Grid md={4} key={index} className={styles.role_based_Text_Field}>
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
                         <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
                             {`Display Name`}
                         </InputLabel>
@@ -352,7 +352,7 @@ const index = (user) => {
                         // InputProps={{ disableUnderline: true, readOnly: true }}
                         />
                     </Grid >
-                    <Grid md={4} key={index} className={styles.role_based_Text_Field}>
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
                         <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
                             {`Category Name`}
                         </InputLabel>
@@ -367,7 +367,7 @@ const index = (user) => {
                         />
                     </Grid >
 
-                    <Grid md={4} key={index} className={styles.role_based_Text_Field}>
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
                         <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
                             {`Brand Name`}
                         </InputLabel>
@@ -382,7 +382,7 @@ const index = (user) => {
                         />
                     </Grid >
 
-                    <Grid md={4} key={index} className={styles.role_based_Text_Field}>
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
                         <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
                             {`Manufature Name`}
                         </InputLabel>
@@ -396,9 +396,9 @@ const index = (user) => {
                         // InputProps={{ disableUnderline: true, readOnly: true }}
                         />
                     </Grid >
-                    <Grid md={4} key={index} className={styles.role_based_Text_Field}>
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
                         <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
-                            {`price`}
+                            {`Price`}
                         </InputLabel>
                         <TextField
                             className={styles.input_active_master}
@@ -410,7 +410,7 @@ const index = (user) => {
                         // InputProps={{ disableUnderline: true, readOnly: true }}
                         />
                     </Grid >
-                    <Grid md={4} key={index} className={styles.role_based_Text_Field}>
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
                         <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
                             {`Tax`}
                         </InputLabel>
@@ -421,6 +421,35 @@ const index = (user) => {
                             variant="standard"
                             name="Tax"
                             value={"$2"}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Package Size`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="price"
+                            value={"20"}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Package Type`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="Tax"
+                            value={"Black"}
                         // InputProps={{ disableUnderline: true, readOnly: true }}
                         />
                     </Grid >
