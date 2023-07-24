@@ -334,6 +334,129 @@ const index = (user) => {
             </>
         )
     }
+    const axMasterRender = () => {
+        return (
+            <>
+                <Grid container>
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Display Name`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="Display Name"
+                            value={""}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Category Name`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="Category Name"
+                            value={""}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Brand Name`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="Brand Name"
+                            value={""}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Manufature Name`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="Manufature Name"
+                            value={""}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Price`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="price"
+                            value={"$12"}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Tax`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="Tax"
+                            value={"$2"}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Package Size`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="price"
+                            value={"20"}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+                    <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                        <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                            {`Package Type`}
+                        </InputLabel>
+                        <TextField
+                            className={styles.input_active_master}
+                            style={{ cursor: 'pointer' }}
+                            id="outlined-basic"
+                            variant="standard"
+                            name="Tax"
+                            value={"Black"}
+                        // InputProps={{ disableUnderline: true, readOnly: true }}
+                        />
+                    </Grid >
+                </Grid>
+            </>
+        )
+    }
 
     return (
         <>
@@ -558,7 +681,7 @@ const index = (user) => {
                                         </TabList>
                                     </Box>
                                     <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
-                                        <TabPanel value="1">Ax master input field</TabPanel>
+                                        <TabPanel value="1">{axMasterRender()}</TabPanel>
                                         <TabPanel value="2">Keymed master  input field</TabPanel>
                                         <TabPanel value="3">Hiper master  input field</TabPanel>
                                         <TabPanel value="4">Online master input field</TabPanel>
