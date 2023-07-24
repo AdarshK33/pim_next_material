@@ -40,7 +40,7 @@ import beingsick from "../../assets/icons/beingsick.svg";
 
 
 import prescription from "../../assets/icons/prescription.svg";
-import ThumbnailSlider from "../../src/components/catalog/activeProducts/activeProductView/imageView";
+import CombinedImageDisplay from "./zoom";
 
 
 const index = (user) => {
@@ -470,7 +470,7 @@ const index = (user) => {
                                         Combiflam Tablet 15's
                                     </h2>
                                     <Grid container spacing={1}>
-                                        <Grid item xs={6}>
+                                        <Grid item md={6}>
                                             <Box display="flex" alignItems="center">
                                                 <Image
                                                     className="px-2 "
@@ -494,7 +494,7 @@ const index = (user) => {
 
 
                                         </Grid>
-                                        <Grid item xs={6}>
+                                        <Grid item md={6}>
                                             <Box display="flex" alignItems="center">
                                                 <Image
                                                     className="px-2 "
@@ -509,7 +509,7 @@ const index = (user) => {
                                                         Prescription
                                                     </p>
                                                     <p className={styles.manufacturerDetailData}>
-                                                        IBUPROFEN-400MG + PARACETAMOL-325MG
+                                                        Required
                                                     </p>
                                                 </Box>
                                             </Box>
@@ -520,7 +520,7 @@ const index = (user) => {
 
                                     <Grid container spacing={1}>
 
-                                        <Grid item xs={6}>
+                                        <Grid item md={6}>
                                             <Box display="flex" alignItems="center">
                                                 <Image
                                                     className="px-2 "
@@ -532,7 +532,7 @@ const index = (user) => {
                                                 />
                                                 <Box>
                                                     <p className={styles.manufacturerDetailHead}>
-                                                        Compostion
+                                                        Manufacturer/Marketer
                                                     </p>
                                                     <p className={styles.manufacturerDetailData}>
                                                         IBUPROFEN-400MG + PARACETAMOL-325MG
@@ -542,7 +542,7 @@ const index = (user) => {
 
 
                                         </Grid>
-                                        <Grid item xs={6}>
+                                        <Grid item md={6}>
                                             <Box display="flex" alignItems="center">
                                                 <Image
                                                     className="px-2 "
@@ -557,7 +557,7 @@ const index = (user) => {
                                                         Consume Type
                                                     </p>
                                                     <p className={styles.manufacturerDetailData}>
-                                                        IBUPROFEN-400MG + PARACETAMOL-325MG
+                                                        ORAL
                                                     </p>
                                                 </Box>
                                             </Box>
@@ -653,7 +653,7 @@ const index = (user) => {
                                         <ThumbnailSlider images={stateImageDetails} />
                                     ) : ( */}
                                     <>
-                                        <ThumbnailSlider images={images} />
+                                        <CombinedImageDisplay images={images} />
                                     </>
                                     {/* )} */}
 

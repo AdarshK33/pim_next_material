@@ -8,7 +8,7 @@ import benefits from "../../../../../assets/icons/benefit.svg";
 import honey from "../../../../../assets/icons/honey.svg";
 import instructions from "../../../../../assets/icons/instructions.svg";
 import protection from "../../../../../assets/icons/protection.svg";
-import ThumbnailSlider from "./imageView";
+import CombinedImageDisplay from "./imageView";
 import {
   Grid,
   Button,
@@ -455,10 +455,10 @@ const ProductViewDetails = (props) => {
                 <Grid container spacing={2}>
                   <Grid item xs={4}>
                     {stateImageDetails && stateImageDetails.length ? (
-                      <ThumbnailSlider images={stateImageDetails} />
+                      <CombinedImageDisplay images={stateImageDetails} />
                     ) : (
                       <>
-                        <ThumbnailSlider images={images} />
+                        <CombinedImageDisplay images={images} />
                       </>
                     )}
                   </Grid>
