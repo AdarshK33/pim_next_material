@@ -532,7 +532,7 @@ const index = (user) => {
                                                 />
                                                 <Box>
                                                     <p className={styles.manufacturerDetailHead}>
-                                                        Manufacturer/Marketer
+                                                        composition
                                                     </p>
                                                     <p className={styles.manufacturerDetailData}>
                                                         IBUPROFEN-400MG + PARACETAMOL-325MG
