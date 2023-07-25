@@ -799,24 +799,30 @@ const ActiveProductView = (user) => {
     }
 
     const FaqItem = ({ question, answer }) => {
+        const cleanedAnswer = answer.replace(/<\/?div>/g, '');
         return (
             <div>
                 <h5>{question}</h5>
-                <p className={styles.answer}>{answer.replace(/<\/div>/g, '')}</p>
+                <p className={styles.answer}>{cleanedAnswer}</p>
             </div>
         )
     }
 
 
     const Faqs = ({ data }) => {
-        console.log(data, "dddddddddddddddd")
+        // console.log(data, "dddddddddddddddd")
         return (
             <>
 
 
-                {data[0].map((faq, index) => (
-                    <FaqItem key={index} question={faq.question} answer={faq.answer.replace(/<\/div>/g, '')} />
-                ))}
+                {
+                    data &&
+                    data !== null &&
+                    data !== undefined &&
+                    data.length !== 0 &&
+                    data[0].map((faq, index) => (
+                        <FaqItem key={index} question={faq.question} answer={faq.answer.replace(/<\/div>/g, '')} />
+                    ))}
 
             </>
         )
