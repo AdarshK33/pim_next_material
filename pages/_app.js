@@ -13,7 +13,7 @@ import withRedux from "next-redux-wrapper";
 import { mainStore } from "../redux/store";
 // import { withIronSessionSsr } from "iron-session/next";
 import { client } from "../utils/axios";
-import { userAuthorities, userRole, isLoggedIn, myProfileAPi } from "../redux/actions/login";
+import { userAuthorities, userRole, isLoggedIn, myProfileApi } from "../redux/actions/login";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesApi } from "../redux/actions/catalogServiceNew";
 import {
@@ -70,7 +70,7 @@ function MyApp(props) {
     // dispatch(getNotificationApi());
     // dispatch(getDashBoardApi());
     // dispatch(getRoleApi());
-    dispatch(myProfileAPi());
+    dispatch(myProfileApi());
 
     // dispatch(getChannelListApi(0, 1000));
   }, []);
