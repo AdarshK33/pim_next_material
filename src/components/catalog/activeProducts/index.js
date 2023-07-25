@@ -68,7 +68,7 @@ const ActiveProducts = () => {
   const [viewDoc, setViewDoc] = useState();
   const [channel, setChannel] = useState("");
 
-  const { catalogServiceNewReducer, channelReducer } = useSelector((state) => {
+  const { catalogServiceNewReducer, channelReducer, loginReducer } = useSelector((state) => {
     return state;
   });
   const { publishProduct } = useSelector((state) => {
@@ -76,6 +76,7 @@ const ActiveProducts = () => {
   });
   // console.log("channel", channel);
   console.log("publishProduct", publishProduct);
+
 
   const channelOptions = channelReducer?.channelGet?.content?.map((item) => ({
     value: item.channelId,
@@ -397,35 +398,58 @@ const ActiveProducts = () => {
                           </TableCell>
                           <TableCell align="center">
 
+                            {loginReducer?.userRole == "ADMIN" ? (
+                              <>
+                                <div className="action_center Active_Product_Detials_Actions">
+                                  <Edit2
+                                    style={{
+                                      textAlign: "right",
+                                      fontSize: "xx-small",
+                                      color: "#419794",
+                                    }}
+                                    onClick={() => {
+                                      setShowRevalidateAddForm(true);
+                                      setSatusAPICalled(false)
+                                      setFormation(row.formation);
+                                      setPimCodetId(row.itemId);
 
-                            <div className="action_center Active_Product_Detials_Actions">
-                              <Edit2
-                                style={{
-                                  textAlign: "right",
-                                  fontSize: "xx-small",
-                                  color: "#419794",
-                                }}
-                                onClick={() => {
-                                  setShowRevalidateAddForm(true);
-                                  setSatusAPICalled(false)
-                                  setFormation(row.formation);
-                                  setPimCodetId(row.itemId);
-
-                                }}
-                              />
-                              <CustomModal
-                                openModal={showRevalidateAddForm}
-                                closeModal={() => setShowRevalidateAddForm(false)}
-                                body={
-                                  <ProductStatusForm
-                                    classModal={() => setShowRevalidateAddForm(false)}
-                                    formation={formationData}
-                                    pimModelCode={pimModelCode}
-                                    statusApiCalled={() => setSatusAPICalled(true)}
+                                    }}
                                   />
-                                }
-                              />
-                            </div>
+                                  <CustomModal
+                                    openModal={showRevalidateAddForm}
+                                    closeModal={() => setShowRevalidateAddForm(false)}
+                                    body={
+                                      <ProductStatusForm
+                                        classModal={() => setShowRevalidateAddForm(false)}
+                                        formation={formationData}
+                                        pimModelCode={pimModelCode}
+                                        statusApiCalled={() => setSatusAPICalled(true)}
+                                      />
+                                    }
+                                  />
+                                </div>
+                              </>
+                            ) : (<>
+                              <div className="action_center Active_Product_Detials_Actions">
+                                <Edit2
+                                  style={{
+                                    textAlign: "right",
+                                    fontSize: "xx-small",
+                                    color: "#000000",
+                                  }}
+                                // onClick={() => {
+                                //   setShowRevalidateAddForm(true);
+                                //   setSatusAPICalled(false)
+                                //   setFormation(row.formation);
+                                //   setPimCodetId(row.itemId);
+
+                                // }}
+                                />
+
+                              </div>
+                            </>)
+                            }
+
                           </TableCell>
                         </TableRow>
                       </TableBody>

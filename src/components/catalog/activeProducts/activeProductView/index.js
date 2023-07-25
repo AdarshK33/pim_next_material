@@ -1,757 +1,1168 @@
+
 import React, { useEffect, useState } from "react";
-import styles from "../activeProducts.module.css";
-import { StopCircle, Eye } from "react-feather";
 import Image from "next/image";
-
-
-import benefits from "../../../../../assets/icons/benefit.svg";
-import honey from "../../../../../assets/icons/honey.svg";
-import instructions from "../../../../../assets/icons/instructions.svg";
-import protection from "../../../../../assets/icons/protection.svg";
-import CombinedImageDisplay from "./imageView";
-import {
-  Grid,
-  Button,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  List,
-  ListItem,
-  ListItemText,
-  InputLabel,
-  ListItemIcon,
-} from "@mui/material";
-
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import CustomModal from "../../../../common/customModal";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-
-import {
-  productDetailsApi,
-  statusChangedApis,
-  productUpdateApis,
-} from "../../../../../redux/actions/catalogServiceNew";
-import { useDispatch, useSelector } from "react-redux";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { StopCircle, Eye } from "react-feather";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    productDetailsApi,
+    statusChangedApis,
+    productUpdateApis,
+} from "../../../../../redux/actions/catalogServiceNew";
+import {
+    Grid,
+    Button,
+    Box,
+    Card,
+    CardContent,
+    Typography,
+    TextField,
+    List,
+    ListItem,
+    ListItemText,
+    InputLabel,
+    ListItemIcon,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-const ProductViewDetails = (props) => {
-  var he = require('he');
-  const { user: { role = "" } = {}, loggedIn } = props.user;
-  const { productPimCodeData } = useSelector((state) => {
-    return state.catalogServiceNewReducer;
-  });
-  const { authorities } = useSelector((state) => {
-    return state.loginReducer;
-  });
+import styles from "./view.module.css";
+// import protection from "../../../../../assets/icons/protection.svg";
 
-  const router = useRouter();
-
-  const dispatch = useDispatch();
-
-  const [showRevalidateAddForm, setShowRevalidateAddForm] = useState(false);
-  const [attributeSetIdForm, setAttributeSetId] = useState(false);
-  const [commentAPICalled, setCommentAPICalled] = useState(false);
-  const [value, setValue] = React.useState(0);
-
-  const [objectId, setObjectId] = useState("");
-
-  const [stateInput, setStateInput] = useState();
-  const [manufaturererNameDetails, setManufaturererNameDetails] = useState();
-  const [descriptionDetails, setDescription] = useState();
-
-  const [directionForUse, setDirectionForUse] = useState();
-
-  const [keyBenefits, setKeyBenefits] = useState();
+import manufature from "../../../../../assets/icons/manufature.svg";
+import compotion from "../../../../../assets/icons/compotion.svg";
+import consume from "../../../../../assets/icons/consume.svg";
+import amazon from "../../../../../assets/icons/amazon.svg";
+import bhel from "../../../../../assets/icons/bhel.svg";
+import apollo from "../../../../../assets/icons/logo_2_2022.svg";
+import iconpills from "../../../../../assets/icons/iconpills.svg";
+import iconfill from "../../../../../assets/icons/iconfill.svg";
+import beingsick from "../../../../../assets/icons/beingsick.svg";
 
 
-  const [keyIngredient, setKeyIngredient] = useState();
-  const [stateImageDetails, setImageDetails] = useState();
-  const [stateSafety_InformationDetails, setSafety_InformationDetails] = useState();
+import prescription from "../../../../../assets/icons/prescription.svg";
+import CombinedImageDisplay from "./zoom";
+import { useRouter } from "next/router";
 
 
 
-
-  const [checkUpdate, setcheckUpdate] = useState(false);
-  const [updateApiCall, setCallApi] = useState(false);
-
-  useEffect(() => {
-    dispatch(productDetailsApi(router.query.PimCodeId));
-  }, []);
-
-  console.log(productPimCodeData, "hello productPimCodeData");
-  console.log(stateImageDetails, "hello stateImageDetails");
-
-  // console.log(stateDetails, "hello stateDetails");
-
-  useEffect(() => {
-    if (
-      !productPimCodeData?.productDetails &&
-      !productPimCodeData?.mediaDetails
-    ) {
-      return;
-    }
-    // mapping the master.modelAttributes for input field
-    const obj = productPimCodeData?.productDetails;
-    const inputState = new Object();
-    Object.entries(obj).map(([key, value]) => {
-      value?.attributes.forEach((val) => {
-        inputState[val.keyName] = val.value;
-      });
+const ActiveProductView = (user) => {
+    const { productPimCodeData } = useSelector((state) => {
+        return state.catalogServiceNewReducer;
+    });
+    const { authorities } = useSelector((state) => {
+        return state.loginReducer;
     });
 
-    const images = productPimCodeData?.mediaDetails.map((item) => ({
-      original: item.completeUrl,
-      thumbnail: item.completeUrl,
+    var he = require('he');
+
+    const router = useRouter();
+
+    const dispatch = useDispatch();
+
+    const [value, setValue] = React.useState("1");
+    const [attributeValue, setAttributeValue] = React.useState(0);
+
+    const [stateInput, setStateInput] = useState();
+    const [manufaturererNameDetails, setManufaturererNameDetails] = useState();
+    const [consumeType, setConsumeType] = useState();
+
+    const [descriptionDetails, setDescription] = useState();
+
+    const [directionForUse, setDirectionForUse] = useState();
+
+    const [keyBenefits, setKeyBenefits] = useState();
+    const [hiperUsesData, setHiperUsesData] = useState();
+    const [onlineUsesData, setOnlineUsesData] = useState();
+
+
+    console.log(keyBenefits, "keyBenefits")
+
+
+    const [hiperDirectionOfUse, setHiperDirectionOfUse] = useState();
+
+    console.log(hiperDirectionOfUse, "hiperDirectionOfUse")
+
+
+
+
+    const [keyIngredient, setKeyIngredient] = useState();
+    const [stateImageDetails, setImageDetails] = useState();
+    const [stateSafety_InformationDetails, setSafety_InformationDetails] = useState();
+    const [is_prescription_required, set_Is_Prescription_Required] = useState();
+    const [hiparSideEffets, setHiparSideEffets] = useState();
+    const [hiparDrugsWarning, setHiparDrugsWarning] = useState();
+    const [hiparPatientCounselling, setHiparPatientCounselling] = useState();
+
+
+
+
+    console.log(stateSafety_InformationDetails, "stateSafety_InformationDetails")
+
+
+
+
+    console.log(productPimCodeData, "hello productPimCodeData");
+    console.log(stateImageDetails, "hello stateImageDetails");
+
+    const handleChange = (event, newValue) => {
+        //tab
+        setValue(newValue);
+    };
+    const handleChangeAttribute = (event, newValue) => {
+        //tab
+        setAttributeValue(newValue);
+    };
+
+
+    const StyledTab = styled(Tab)(({ theme }) => ({
+        position: 'relative',
+        color: theme.palette.primary.black,
+        fontWeight: 700,
+        border: `2px solid ${theme.palette.divider}`, // Bottom border for the tab
+        borderBottom: `1px solid black`,
+        '&.Mui-selected': {
+            color: theme.palette.primary.main,
+            borderBottom: `0px solid white`,
+        },
+        '&.Mui-selected::before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            border: `0px solid ${theme.palette.primary.main}`, // Top border for the selected tab
+        },
+        '&.Mui-selected::after': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            border: `0px solid ${theme.palette.primary.main}`, // Bottom border for the selected tab
+        },
+        marginRight: theme.spacing(2),
     }));
 
-    setStateInput(inputState);
-    setImageDetails(images);
-  }, [productPimCodeData]);
+    // const StyledTab = styled(Tab)(({ theme }) => ({
+    //     position: 'relative',
+    //     color: theme.palette.text.secondary,
+    //     border: `2px solid ${theme.palette.divider}`, // Bottom border for the tab
+    //     borderBottom: `0px solid ${theme.palette.divider}`,
+    //     '&:not(.Mui-selected)': {
+    //         backgroundColor: '#f0f0f0', // Replace this with the desired background color for inactive tabs
+    //     },
+    //     '&.Mui-selected': {
+    //         color: theme.palette.primary.main,
+    //         backgroundColor: '#ffffff', // Replace this with the desired background color for the selected tab
+    //     },
+    //     '&.Mui-selected::before': {
+    //         content: '""',
+    //         display: 'block',
+    //         position: 'absolute',
+    //         top: 0,
+    //         left: 0,
+    //         width: '100%',
+    //         // border: `0px solid ${theme.palette.primary.main}`, // Top border for the selected tab
+    //     },
+    //     '&.Mui-selected::after': {
+    //         content: '""',
+    //         display: 'block',
+    //         position: 'absolute',
+    //         bottom: 0,
+    //         left: '50%', // Adjusted to center the line between two tabs
+    //         width: '1px', // Width of the border line
+    //         height: 'calc(100% - 4px)', // Height of the border line (minus 4px to account for the 2px border on each tab)
+    //         backgroundColor: theme.palette.divider, // Color of the border line
+    //         transform: 'translateX(-50%)', // To center the line properly
+    //     },
+    //     marginRight: theme.spacing(2),
+    // }));
 
-  useEffect(() => {
-    if (!productPimCodeData?.productDetails) {
-      return;
+
+    useEffect(() => {
+        dispatch(productDetailsApi(router.query.PimCodeId));
+    }, []);
+    useEffect(() => {
+        if (
+            !productPimCodeData?.productDetails &&
+            !productPimCodeData?.mediaDetails
+        ) {
+            return;
+        }
+        // mapping the master.modelAttributes for input field
+        const obj = productPimCodeData?.productDetails;
+        const inputState = new Object();
+        Object.entries(obj).map(([key, value]) => {
+            value?.attributes.forEach((val) => {
+                inputState[val.keyName] = val.value;
+            });
+        });
+
+        const images = productPimCodeData?.mediaDetails.map((item) => ({
+            original: item.completeUrl,
+            thumbnail: item.completeUrl,
+        }));
+
+        setStateInput(inputState);
+        setImageDetails(images);//image set
+    }, [productPimCodeData]);
+
+    useEffect(() => {
+        if (!productPimCodeData?.productDetails) {
+            return;
+        }
+        // mapping the master.modelAttributes for input field
+        const obj = productPimCodeData?.productDetails;
+
+
+        const inputDescription = [];
+        const inputBenefits = [];
+        const inputDirectionForUse = [];
+        const inputManufacturerName = [];
+        const inputSafety_InformationState = [];
+        const inputKeyIngredient = [];
+        const inputConsumeType = [];
+        const isPrescriptionRequired = [];
+        const hiperUses = []
+        const hiper_direction_of_use = []
+        const inputUses = []
+        const hipar_side_effets = [];
+        const hipar_drugs_warning = [];
+        const hipar_patient_counselling = [];
+
+
+
+
+
+
+
+
+
+        Object.entries(obj).map(([key, value]) => {
+            // console.log(value, "kkkkkkkkkkkkkkkk");
+            if (value.attributeSet == "AX MASTER") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "MANUFACTURER NAME") {
+                        inputManufacturerName.push(val.value);
+                    }
+                });
+            }
+
+            if (value.attributeSet == "ONLINEMASTER") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "is_prescription_required") {
+                        isPrescriptionRequired.push(val.value);
+                    }
+                });
+            }
+
+
+            if (value.attributeSet == "ONLINEMASTER") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "Medicine Type") {
+                        inputConsumeType.push(val.value);
+                    }
+                });
+            }
+
+            if (value.attributeSet === "ONLINEMASTER") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName === "Product Information") {
+                        const Benefits = val?.value.split("<br>");
+
+                        inputDescription.push(Benefits);
+                    }
+                });
+            }
+            if (value.attributeSet === "ONLINEMASTER") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName === "Uses") {
+                        const Uses = val?.value.split("<br>");
+
+                        inputUses.push(Uses);
+                    }
+                });
+            }
+
+
+            if (value.attributeSet === "ONLINEMASTER") {
+                // console.log("ONLINEMASTER  ")
+                value?.attributes.forEach((val) => {
+                    // console.log("ONLINEMASTER  ", val.keyName)
+
+                    if (val.keyName == "Key Benefits/Uses") {
+                        const Uses = val?.value.split("<br>");
+
+                        inputBenefits.push(Uses);
+                    }
+                });
+            }
+            if (value.attributeSet === "ONLINEMASTER") {
+                // console.log("ONLINEMASTER  ")
+                value?.attributes.forEach((val) => {
+                    // console.log("ONLINEMASTER  ", val.keyName)
+
+                    if (val.keyName == "Key Ingredient") {
+
+
+                        inputKeyIngredient.push(val.value);
+                    }
+                });
+            }
+
+
+
+            if (value.attributeSet == "HIPAR") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "HOW TO USE") {
+                        hiper_direction_of_use.push(val.value);
+                    }
+                });
+            }
+            if (value.attributeSet == "ONLINEMASTER") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "Safety Information") {
+                        function parseFaqs(rawData) {
+                            // Regular expressions to match questions and answers
+                            const faqRegex = /<h2>(.*?)<\/h2>.*?<div>(.*?)<\/div>/gs;
+
+                            // Extracting questions and answers using the regular expression
+                            const faqsData = [];
+                            let match;
+                            while ((match = faqRegex.exec(rawData)) !== null) {
+                                const question = match[1].trim();
+                                const answer = match[2].trim();
+                                faqsData.push({ question, answer });
+                            }
+
+                            return faqsData;
+                        }
+                        const faqsData = parseFaqs(val?.value);
+                        inputSafety_InformationState.push(faqsData)
+                    }
+                });
+            }
+
+
+            if (value.attributeSet == "HIPAR") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "SIDE EFFECTS") {
+                        const Benefits = val?.value.split("<br>");
+                        hipar_side_effets.push(Benefits);
+                    }
+                });
+            }
+
+            if (value.attributeSet == "HIPAR") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "DRUGS WARNINGS") {
+                        const Benefits = val?.value.split("<br>");
+                        hipar_drugs_warning.push(Benefits);
+                    }
+                });
+            }
+
+
+            if (value.attributeSet == "HIPAR") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "PATIENT COUNSELLING") {
+                        const Benefits = val?.value.split("<br>");
+                        hipar_patient_counselling.push(Benefits);
+                    }
+                });
+            }
+
+
+        });
+
+        setManufaturererNameDetails(inputManufacturerName);
+        set_Is_Prescription_Required(isPrescriptionRequired)
+        setConsumeType(inputConsumeType);
+        setDescription(inputDescription);
+        setKeyBenefits(inputBenefits);
+        setDirectionForUse(inputDirectionForUse);
+        setKeyIngredient(inputKeyIngredient);
+        setSafety_InformationDetails(inputSafety_InformationState);
+        setHiperUsesData(hiperUses);
+        setHiperDirectionOfUse(hiper_direction_of_use);
+        setOnlineUsesData(inputUses);
+        setHiparSideEffets(hipar_side_effets)
+        setHiparDrugsWarning(hipar_drugs_warning)
+        setHiparPatientCounselling(hipar_patient_counselling)
+
+
+
+
+
+
+
+
+
+
+
+    }, [productPimCodeData]);
+
+
+    const images = [
+        {
+            original:
+                "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/logo_2_2022%20%281%29-1686159756837-.jpg",
+            thumbnail:
+                "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/logo_2_2022%20%281%29-1686159756837-.jpg",
+        },
+    ];
+
+
+
+    const inputChangeHandler = (e) => {
+        setStateInput({
+            ...stateInput,
+            [e.target.name]: e.target.value,
+        });
+        setcheckUpdate(true);
+    };
+
+    const getInputValue = (keyName) => {
+        try {
+            return stateInput[keyName];
+        } catch (error) {
+            return "";
+        }
+    };
+
+    const sectionAllMasterRender = (value) => {
+        if (!value) {
+            return;
+        }
+        return value.map((val, index) => {
+            return inputAllMasterRender(val, index);
+        });
+    };
+    const inputAllMasterRender = (sectionItem, index) => {
+        const inputValue = getInputValue(sectionItem.keyName)?.trim();
+
+        if (!inputValue) {
+            return null; // Don't render anything if the value is empty
+        }
+
+        return (
+            <>
+                <Grid md={3} key={index} className={styles.role_based_Text_Field}>
+                    <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
+                        {sectionItem.displayName}
+                    </InputLabel>
+                    <TextField
+                        className={styles.input_active_master}
+                        style={{ cursor: 'pointer' }}
+                        id="outlined-basic"
+                        variant="standard"
+                        name={sectionItem.keyName}
+                        value={inputValue}
+                        InputProps={{ disableUnderline: true, readOnly: true }}
+                    />
+                </Grid >
+            </>
+        );
+    };
+
+
+    const aboutRender = () => {
+        return (
+            <>
+                <Box>
+                    <Grid container spacing={1}>
+                        <Grid item md={2}>
+
+                            <Box>
+                                <Image
+                                    className="px-2 "
+                                    src={iconpills}
+                                    alt="iconpills"
+                                    width={120}
+                                    height={120}
+
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item md={10}>
+                            {
+                                descriptionDetails &&
+
+                                descriptionDetails !== null &&
+                                descriptionDetails !== undefined &&
+                                descriptionDetails.length !== 0 &&
+                                descriptionDetails.map((item, index) => (
+                                    <>
+                                        <p key={index} className={styles.first_info}>
+                                            {item[0]}
+                                        </p>
+                                        <Box className={styles.second_info}>
+                                            {item[1]}
+                                        </Box>
+                                    </>
+
+                                ))}
+
+
+
+                            {/* <Box className={styles.first_info}>
+                                {descriptionDetails}
+                            </Box>
+                            <Box className={styles.second_info}>
+                                {descriptionDetails}
+                            </Box> */}
+
+
+                        </Grid>
+
+                    </Grid>
+                    <Grid container spacing={1}>
+                        <Grid item md={2}>
+
+                            <Box>
+                                <Image
+                                    className="px-2 "
+                                    src={iconfill}
+                                    alt="iconfill"
+                                    width={120}
+                                    height={120}
+
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item md={10}>
+                            <Box className={styles.uses_info}>
+
+
+                                {onlineUsesData &&
+                                    onlineUsesData !== null &&
+                                    onlineUsesData !== undefined &&
+                                    onlineUsesData.length !== 0 &&
+                                    <>
+                                        <Typography variant="h7" className={styles.uses_main_header}>
+                                            Uses of  {router?.query?.ActiveProduct?.charAt(0).toUpperCase() +
+                                                router?.query?.ActiveProduct.slice(1).toLowerCase()}
+                                        </Typography>
+                                        <p className={styles.uses_main_text}>
+                                            {/* Uses of {router.query?.ActiveProduct?.charAt(0).toUpperCase() +
+                                        router.query?.ActiveProduct.slice(1).toLowerCase()}
+                                         */}
+                                            {onlineUsesData}
+                                        </p>
+                                    </>
+
+                                }
+
+
+
+                                {
+                                    keyBenefits &&
+                                    keyBenefits !== null &&
+                                    keyBenefits !== undefined &&
+                                    keyBenefits.length !== 0 &&
+                                    <>
+                                        <Typography variant="h7" className={styles.uses_main_header}>
+                                            Medical Benefits
+                                        </Typography>
+                                        {
+                                            keyBenefits &&
+
+                                            keyBenefits !== null &&
+                                            keyBenefits !== undefined &&
+                                            keyBenefits.length !== 0 &&
+                                            keyBenefits.map((item, index) => (
+                                                <>
+                                                    <p key={index} className={styles.keyBenefits_info}>
+                                                        {item[0]}
+                                                    </p>
+                                                    <Box className={styles.second_info}>
+                                                        {item[1]}
+                                                    </Box>
+                                                </>
+
+                                            ))}
+
+                                    </>
+
+                                }
+
+
+                                {hiperDirectionOfUse &&
+                                    hiperDirectionOfUse !== null &&
+                                    hiperDirectionOfUse !== undefined &&
+                                    hiperDirectionOfUse.length !== 0 &&
+                                    <>
+                                        <Typography variant="h7" className={styles.uses_main_header}>
+                                            Direction of use
+                                        </Typography>
+
+                                        <p className={styles.uses_main_text}>
+
+                                            {hiperDirectionOfUse}
+                                        </p>
+                                    </>
+                                }
+                                <Typography variant="h7" className={styles.uses_main_header}>
+                                    Storage
+                                </Typography>
+
+                                <p className={styles.uses_main_text}>
+
+                                    Store in a cool and dry place away from sunlight.
+                                </p>
+
+                            </Box>
+
+
+
+                        </Grid>
+
+                    </Grid>
+                    <Grid container spacing={1}>
+                        <Grid item md={2}>
+
+                            <Box>
+                                <Image
+                                    className="px-2 "
+                                    src={beingsick}
+                                    alt="beingsick"
+                                    width={120}
+                                    height={120}
+
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item md={10}>
+                            <Box className={styles.uses_info}>
+                                <Typography variant="h7" className={styles.uses_main_header}>
+                                    Side Effects of Combiflam Tablet 20's
+                                </Typography>
+
+                                {
+                                    hiparSideEffets &&
+                                    hiparSideEffets !== null &&
+                                    hiparSideEffets !== undefined &&
+                                    hiparSideEffets.length !== 0
+
+                                    && hiparSideEffets[0].map((item, index) => (
+                                        <ListItem key={index} className={styles.list_li}>
+                                            <ListItemIcon key={index}>
+                                                <StopCircle
+                                                    style={{
+                                                        textAlign: "right",
+                                                        fontSize: "xx-small",
+                                                        color: "Black ",
+                                                        padding: "8px",
+                                                    }}
+                                                />
+                                            </ListItemIcon>
+
+                                            <ListItemText className={styles.list_li_text}>
+                                                {item}
+                                            </ListItemText>
+                                        </ListItem>
+                                    ))
+
+                                }
+
+
+                            </Box>
+
+
+
+                        </Grid>
+
+                    </Grid>
+                </Box >
+            </>
+        )
     }
-    // mapping the master.modelAttributes for input field
-    const obj = productPimCodeData?.productDetails;
 
 
 
+    const precautionsRender = () => {
+        return (
+            <>
+                <Box>
+                    <Grid container spacing={1}>
+                        <Grid item md={2}>
+
+                            <Box>
+                                <Image
+                                    className="px-2 "
+                                    src={iconpills}
+                                    alt="iconpills"
+                                    width={120}
+                                    height={120}
+
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item md={10}>
+                            {
+                                hiparDrugsWarning &&
+
+                                hiparDrugsWarning !== null &&
+                                hiparDrugsWarning !== undefined &&
+                                hiparDrugsWarning.length !== 0 &&
+                                hiparDrugsWarning.map((item, index) => (
+                                    <>
+                                        <p key={index} className={styles.first_info}>
+                                            {item[0]}
+                                        </p>
+                                        <Box className={styles.second_info}>
+                                            {item[1]}
+                                        </Box>
+                                    </>
+
+                                ))}
 
 
-    const inputDescription = [];
-    const inputBenefits = [];
-    const inputDirectionForUse = [];
-    const inputManufacturerName = [];
-    const inputSafety_InformationState = [];
-    const inputKeyIngredient = [];
 
-    Object.entries(obj).map(([key, value]) => {
-      // console.log(value, "kkkkkkkkkkkkkkkk");
-      if (value.attributeSet == "AX MASTER") {
-        value?.attributes.forEach((val) => {
-          if (val.keyName == "MANUFACTURER NAME") {
-            inputManufacturerName.push(val.value);
-          }
-        });
-      }
-      if (value.attributeSet === "ONLINEMASTER") {
-        value?.attributes.forEach((val) => {
-          if (val.keyName === "Product Information") {
-            const decodedValue = he.decode(val.value);
-            const Description = decodedValue
-              .replace(/;p/g, "")
-              .replace(/;/g, "")
-              .replace("/p", ".")
-              .replace(/\/$/, '')
-              .replace(/\/;;$/, '')
-              .replace(/<[^>]+>/g, '') // Remove HTML tags
-              .replace(/[^\w\s]/g, '') // Remove symbols
-            inputDescription.push(Description);
-          }
-        });
-      }
-      if (value.attributeSet == "ONLINEMASTER") {
-        value?.attributes.forEach((val) => {
-          if (val.keyName == "Key Benefits/Uses") {
-            const checkData = val.value.match(";;;")
-            // console.log(checkData, "hello checkData")
-
-            if (checkData) {
-              const Benefits = val.value.split(";;;");
-              const filteredItems = Benefits
-                .filter((item) => item !== ";ul" && item !== ";/;;")
-                .map((item) => he.decode(item)
-                  .replace(/\/$/, '')
-                  .replace(/\/;;$/, '')
-                  .replace(/<[^>]+>/g, '') // Remove HTML tags
-                  .replace(/[^\w\s]/g, '') // Remove symbols
-                );
-              // console.log(filteredItems, "filteredItems");
-              inputBenefits.push(filteredItems);
-            }
-            else {
-              const Benefits = val.value.split(";;;");
-              const filteredItems = Benefits
-                .filter((item) => item !== ";ul" && item !== ";/;;")
-                .map((item) => he.decode(item)
-                );
-
-              const combinedBenefits = filteredItems.join('');
-              const benefitsData = combinedBenefits?.split('</li><li>');
-
-              // Remove the opening and closing <ul> tags and the <li> tags from the first and last items
-              benefitsData[0] = benefitsData[0].replace('<ul><li>', '');
-              benefitsData[benefitsData.length - 1] = benefitsData[benefitsData.length - 1].replace('</li></ul>', '');
+                            {/* <Box className={styles.first_info}>
+                                {descriptionDetails}
+                            </Box>
+                            <Box className={styles.second_info}>
+                                {descriptionDetails}
+                            </Box> */}
 
 
-              inputBenefits.push(benefitsData);
-            }
-          }
-        });
-      }
-      if (value.attributeSet == "ONLINEMASTER") {
-        value?.attributes.forEach((val) => {
-          if (val.keyName == "Direction for use/Dosage") {
-            const checkData = val.value.match(";;;")
-            if (checkData) {
-              const Benefits = val.value.split(";;;");
-              const filteredItems = Benefits
-                .filter((item) => item !== ";ul" && item !== ";/;;")
-                .map((item) => he.decode(item)
-                  .replace(/\/$/, '')
-                  .replace(/\/;;$/, '')
-                  .replace(/<[^>]+>/g, '') // Remove HTML tags
-                  .replace(/[^\w\s]/g, '') // Remove symbols
-                );
-              // console.log(filteredItems, "filteredItems");
-              inputDirectionForUse.push(filteredItems);
-            }
-            else {
-              const Benefits = val.value.split(";;;");
-              const filteredItems = Benefits
-                .filter((item) => item !== ";ul" && item !== ";/;;")
-                .map((item) => he.decode(item)
-                );
+                        </Grid>
 
-              const combinedBenefits = filteredItems.join('');
-              const benefitsData = combinedBenefits?.split('</li><li>');
+                    </Grid>
 
-              // Remove the opening and closing <ul> tags and the <li> tags from the first and last items
-              benefitsData[0] = benefitsData[0].replace('<ul><li>', '');
-              benefitsData[benefitsData.length - 1] = benefitsData[benefitsData.length - 1].replace('</li></ul>', '');
-
-
-              inputDirectionForUse.push(benefitsData);
-            }
-
-
-          }
-        });
-      }
-      if (value.attributeSet == "ONLINEMASTER") {
-        value?.attributes.forEach((val) => {
-          if (val.keyName == "Safety Information") {
-
-            const checkData = val.value.match(";;;")
-            if (checkData) {
-              const Benefits = val.value.split(";;;");
-              const filteredItems = Benefits
-                .filter((item) => item !== ";ul" && item !== ";/;;")
-                .map((item) => he.decode(item)
-                  .replace(/\/$/, '')
-                  .replace(/\/;;$/, '')
-                  .replace(/<[^>]+>/g, '') // Remove HTML tags
-                  .replace(/[^\w\s]/g, '') // Remove symbols
-                );
-              // console.log(filteredItems, "filteredItems");
-              inputSafety_InformationState.push(filteredItems);
-            }
-            else {
-              const Benefits = val.value.split(";;;");
-              const filteredItems = Benefits
-                .filter((item) => item !== ";ul" && item !== ";/;;")
-                .map((item) => he.decode(item)
-                );
-
-              const combinedBenefits = filteredItems.join('');
-              const benefitsData = combinedBenefits?.split('</li><li>');
-
-              // Remove the opening and closing <ul> tags and the <li> tags from the first and last items
-              benefitsData[0] = benefitsData[0].replace('<ul><li>', '');
-              benefitsData[benefitsData.length - 1] = benefitsData[benefitsData.length - 1].replace('</li></ul>', '');
-
-
-              inputSafety_InformationState.push(benefitsData);
-            }
-
-
-          }
-        });
-      }
-      if (value.attributeSet == "ONLINEMASTER") {
-        value?.attributes.forEach((val) => {
-          if (val.keyName == "Key Ingredient") {
-            const decodedValue = he.decode(val.value);
-            const KeyngredientDecodedValue = decodedValue
-              .replace(/;p/g, "")
-              .replace(/;/g, "")
-              .replace("/p", ".")
-              .replace(/\/$/, '')
-              .replace(/\/;;$/, '')
-              .replace(/<[^>]+>/g, '') // Remove HTML tags
-              .replace(/[^\w\s]/g, '') // Remove symbols
-            inputKeyIngredient.push(KeyngredientDecodedValue);
-          }
-        });
-      }
-    });
-
-    setManufaturererNameDetails(inputManufacturerName);
-    setDescription(inputDescription);
-    setKeyBenefits(inputBenefits);
-    setDirectionForUse(inputDirectionForUse);
-    setKeyIngredient(inputKeyIngredient);
-    setSafety_InformationDetails(inputSafety_InformationState);
-
-  }, [productPimCodeData]);
-
-  // useEffect(() => {
-  //   if (!productPimCodeData?.mediaDetails) {
-  //     return;
-
-  // }, [productPimCodeData]);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    console.log(newValue, "newValue");
-  };
-
-  const inputChangeHandler = (e) => {
-    setStateInput({
-      ...stateInput,
-      [e.target.name]: e.target.value,
-    });
-    setcheckUpdate(true);
-  };
-
-  const getInputValue = (keyName) => {
-    try {
-      return stateInput[keyName];
-    } catch (error) {
-      return "";
+                </Box >
+            </>
+        )
     }
-  };
 
-  const sectionAllMasterRender = (value) => {
-    if (!value) {
-      return;
+    const diseaseRender = () => {
+        return (
+            <>
+                <Box>
+                    <Grid container spacing={1}>
+                        <Grid item md={2}>
+
+                            <Box>
+                                <Image
+                                    className="px-2 "
+                                    src={iconpills}
+                                    alt="iconpills"
+                                    width={120}
+                                    height={120}
+
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item md={10}>
+                            {
+                                hiparPatientCounselling &&
+
+                                hiparPatientCounselling !== null &&
+                                hiparPatientCounselling !== undefined &&
+                                hiparPatientCounselling.length !== 0 &&
+                                hiparPatientCounselling.map((item, index) => (
+                                    <>
+                                        <p key={index} className={styles.first_info}>
+                                            {item[0]}
+                                        </p>
+                                        <Box className={styles.second_info}>
+                                            {item[1]}
+                                        </Box>
+                                    </>
+
+                                ))}
+
+
+
+                            {/* <Box className={styles.first_info}>
+                                {descriptionDetails}
+                            </Box>
+                            <Box className={styles.second_info}>
+                                {descriptionDetails}
+                            </Box> */}
+
+
+                        </Grid>
+
+                    </Grid>
+
+                </Box >
+            </>
+        )
     }
-    return value.map((val, index) => {
-      return inputAllMasterRender(val, index);
-    });
-  };
 
-  // const inputAllMasterRender = (sectionItem, index) => {
-  //   return (
-  //     <>
-  //       <Grid md={4} key={index} className={styles.role_based_Text_Field}>
-
-  //         <>
-  //           <InputLabel htmlFor="outlined-basic"
-
-  //             style={{
-
-  //               fontSize: '.75rem',
-
-
-  //             }}
-  //           >{sectionItem.displayName}</InputLabel>
-
-  //           <TextField
-  //             className={styles.input_active_master}
-  //             style={{
-  //               cursor: 'pointer'
-  //             }}
-  //             id="outlined-basic"
-  //             variant="standard"
-  //             name={sectionItem.keyName}
-  //             value={getInputValue(sectionItem.keyName)?.trim() || "---"}
-  //             InputProps={{ disableUnderline: true, readOnly: true }}
-  //           // onChange={inputChangeHandler}
-  //           // disabled={sectionItem.accessRole !== role ? true : false}
-  //           />
-
-  //           {/* <div
-  //             style={{
-  //               cursor: 'pointer',
-  //               // border: '1px solid #ccc',
-  //               // borderRadius: '4px',
-  //               // padding: '8px',
-  //               //backgroundColor: '#f9f9f9',
-  //               // textAlign: 'center',
-  //               overflow: 'hidden',
-  //               textOverflow: 'ellipsis',
-  //               whiteSpace: 'nowrap',
-  //               width: "330px"
-  //             }}
-  //           >
-  //             {getInputValue(sectionItem.keyName).trim() || '---'}
-  //           </div> */}
-  //         </>
-  //       </Grid >
-
-
-
-
-  //     </>
-  //   );
-  // };
-
-  const inputAllMasterRender = (sectionItem, index) => {
-    const inputValue = getInputValue(sectionItem.keyName)?.trim();
-
-    if (!inputValue) {
-      return null; // Don't render anything if the value is empty
+    const FaqItem = ({ question, answer }) => {
+        return (
+            <div>
+                <h5>{question}</h5>
+                <p className={styles.answer}>{answer.replace(/<\/div>/g, '')}</p>
+            </div>
+        )
     }
+
+
+    const Faqs = ({ data }) => {
+        console.log(data, "dddddddddddddddd")
+        return (
+            <>
+
+
+                {data[0].map((faq, index) => (
+                    <FaqItem key={index} question={faq.question} answer={faq.answer.replace(/<\/div>/g, '')} />
+                ))}
+
+            </>
+        )
+    }
+
+    // const faqRender = () => {
+    //     return (
+    //         <>
+    //             <Box>
+
+    //                 hello
+    //                 <Faqs data={stateSafety_InformationDetails} />
+    //             </Box>
+    //         </>
+    //     )
+    // }
+
+    const faqRender = () => {
+        return (
+            <>
+                <Box>
+                    <Grid container spacing={1}>
+                        <Grid item md={2}>
+
+                            <Box>
+                                <Image
+                                    className="px-2 "
+                                    src={iconpills}
+                                    alt="iconpills"
+                                    width={120}
+                                    height={120}
+
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item md={10}>
+
+
+
+                            <Faqs data={stateSafety_InformationDetails} />
+
+
+                        </Grid>
+
+                    </Grid>
+
+                </Box >
+            </>
+        )
+    }
+
+
 
     return (
-      <>
-        <Grid md={4} key={index} className={styles.role_based_Text_Field}>
-          <InputLabel htmlFor="outlined-basic" style={{ fontSize: '.75rem' }}>
-            {sectionItem.displayName}
-          </InputLabel>
-          <TextField
-            className={styles.input_active_master}
-            style={{ cursor: 'pointer' }}
-            id="outlined-basic"
-            variant="standard"
-            name={sectionItem.keyName}
-            value={inputValue}
-            InputProps={{ disableUnderline: true, readOnly: true }}
-          />
-        </Grid >
-      </>
-    );
-  };
-  const images = [
-    {
-      original:
-        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/logo_2_2022%20%281%29-1686159756837-.jpg",
-      thumbnail:
-        "https://ri-brands-pim.s3.ap-south-1.amazonaws.com/sync/OMEZ01/logo_2_2022%20%281%29-1686159756837-.jpg",
-    },
-  ];
+        <>
+            <Grid container>
+                <Grid item xs={12} lg={12}>
+                    <Card sx={{ p: 3 }}>
+                        <Box>
+                            <Grid container spacing={2}>
+                                <Grid item xs={8}>
+                                    <h2 className={styles.pimCodeId}>
+                                        {router.query.ActiveProduct}
+                                    </h2>
+                                    <Grid container spacing={1}>
+                                        <Grid item md={6}>
+                                            <Box display="flex" alignItems="center">
 
-  return (
-    <>
-      <Grid container>
-        {/* ------------------------- row 1 ------------------------- */}
-        <Grid item xs={12} lg={12}>
-          {/* view */}
+                                                <Image
+                                                    className="px-2 "
+                                                    src={manufature}
+                                                    alt="manufacture"
+                                                    width={70}
+                                                    height={70}
 
-          <Card sx={{ p: 5 }}>
-            <Box>
-              <Grid container spacing={2} justifyContent="space-between">
-                {/* <h1 className={styles.productDetailTitle}>
-                  {router.query.PimCodeId}
-                </h1> */}
-              </Grid>
+                                                />
+                                                <Box>
+                                                    <p className={styles.manufacturerDetailHead}>
+                                                        Manufacturer/Marketer
+                                                    </p>
+                                                    <p className={styles.manufacturerDetailData}>
 
-              <Box>
-                <Grid container spacing={2}>
-                  <Grid item xs={4}>
-                    {stateImageDetails && stateImageDetails.length ? (
-                      <CombinedImageDisplay images={stateImageDetails} />
-                    ) : (
-                      <>
-                        <CombinedImageDisplay images={images} />
-                      </>
-                    )}
-                  </Grid>
-                  <Grid item xs={8}>
-                    <h2 className={styles.pimCodeId}>
-                      {router.query.ActiveProduct}
-                    </h2>
-                    <Box>
-                      <Box>
-                        <h3 className={styles.manufacturerDetailHead}>
-                          Manufacturer/Marketer
-                        </h3>
-                        <h3 className={styles.manufacturerDetailData}>
-                          {manufaturererNameDetails}
-                        </h3>
-                      </Box>
+                                                        {manufaturererNameDetails}
 
-                      <Box>
-                        <h3 className={styles.manufacturerDetailHead}>
-                          Contry Of Origin
-                        </h3>
-                        <h3 className={styles.manufacturerDetailData}>
-                          INDIA
-                        </h3>
-                      </Box>
-                      {/* <Box>
-                        <h3 className={styles.manufacturerDetailHead}>
-                          Manufacturer/Marketer Address
-                        </h3>
-                        <h3 className={styles.manufacturerDetailData}>
-                          {}
-                        </h3>
-                      </Box> */}
-                    </Box>
-                    {keyBenefits &&
-                      keyBenefits !== null &&
-                      keyBenefits !== undefined &&
-                      keyBenefits.length !== 0 &&
+                                                    </p>
+                                                </Box>
+                                            </Box>
 
-                      <Box>
-                        <h3 className={styles.manufacturerDetailHead}>
-                          Description
-                        </h3>
-                        <h3 className={styles.manufacturerDetailData}>
-                          {descriptionDetails}
 
-                          {/* <a className={styles.read_more_href}>READ MORE</a> */}
-                        </h3>
-                      </Box>
-                    }
-                  </Grid>
+                                        </Grid>
+                                        <Grid item md={6}>
+                                            <Box display="flex" alignItems="center">
+                                                <Image
+                                                    className="px-2 "
+                                                    src={prescription}
+                                                    alt="manufacture"
+                                                    width={70}
+                                                    height={70}
+
+                                                />
+                                                <Box>
+                                                    <p className={styles.manufacturerDetailHead}>
+                                                        Prescription
+                                                    </p>
+                                                    <p className={styles.manufacturerDetailData}>
+                                                        {is_prescription_required == 0 ? "Not required" : "Required"}
+                                                    </p>
+                                                </Box>
+                                            </Box>
+
+
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid container spacing={1}>
+
+                                        {keyIngredient &&
+
+                                            keyIngredient &&
+                                            keyIngredient !== null &&
+                                            keyIngredient !== undefined &&
+                                            Object.keys(keyIngredient).length !== 0 &&
+
+                                            <Grid item md={6}>
+                                                <Box display="flex" alignItems="center">
+                                                    <Image
+                                                        className="px-2 "
+                                                        src={compotion}
+                                                        alt="compotion"
+                                                        width={70}
+                                                        height={70}
+
+                                                    />
+                                                    <Box>
+                                                        <p className={styles.manufacturerDetailHead}>
+                                                            Composition
+                                                        </p>
+                                                        <p className={styles.manufacturerDetailData}>
+                                                            {keyIngredient}
+                                                        </p>
+                                                    </Box>
+                                                </Box>
+
+
+                                            </Grid>
+                                        }
+                                        {
+                                            consumeType &&
+                                            consumeType !== null &&
+                                            consumeType !== undefined &&
+                                            consumeType.length !== 0 &&
+                                            <Grid item md={6}>
+
+                                                <Box display="flex" alignItems="center">
+                                                    <Image
+                                                        className="px-2 "
+                                                        src={consume}
+                                                        alt="manufacture"
+                                                        width={70}
+                                                        height={70}
+
+                                                    />
+                                                    <Box>
+                                                        <p className={styles.manufacturerDetailHead}>
+                                                            Consume Type
+                                                        </p>
+                                                        <p className={styles.manufacturerDetailData}>
+                                                            {/* {typeof consumeType} */}
+                                                            {consumeType}
+                                                            {/* {consumeType.length == 1 ? consumeType?.trim() : 'NA'} */}
+                                                        </p>
+                                                    </Box>
+                                                </Box>
+
+
+                                            </Grid>
+                                        }
+                                    </Grid>
+                                    <Box className={styles.channel_published}>
+                                        <p>
+                                            Channels Published :
+                                        </p>
+
+                                        <hr></hr>
+                                    </Box>
+                                    <Box>
+                                        <Grid container spacing={1}>
+
+                                            <Grid item xs={3.3} className={styles.channel_box}>
+                                                <Box className={styles.channel_logo}>
+
+                                                    <Image
+                                                        className="px-2 "
+                                                        src={apollo}
+                                                        alt="apollo"
+                                                        width={40}
+                                                        height={40}
+                                                    />
+                                                </Box>
+
+                                                <p className={styles.channel_text}>
+                                                    Apollo Web
+                                                </p>
+                                                <p className={styles.channel_last_published}>
+                                                    Last Published : 12th July 2023
+                                                </p>
+                                                <p className={styles.channel_price}>
+
+                                                    <span>&#8377;</span>44
+                                                </p>
+                                            </Grid>
+                                            <p className={styles.divider}>
+                                            </p>
+                                            <Grid item xs={3.3} className={styles.channel_box}>
+                                                <Box className={styles.channel_logo}>
+                                                    <Image
+                                                        className="px-2 "
+                                                        src={bhel}
+                                                        alt="bhel"
+                                                        width={30}
+                                                        height={30}
+                                                    />
+                                                </Box>
+                                                <p className={styles.channel_text}>
+                                                    Bhel
+                                                </p>
+                                                <p className={styles.channel_last_published}>
+                                                    Last Published : 12th July 2023
+                                                </p>
+                                                <p className={styles.channel_price}>
+                                                    <span>&#8377;</span>40
+                                                </p>
+
+                                            </Grid>
+                                            <p className={styles.divider}>
+
+                                            </p>
+                                            <Grid item xs={3.3} className={styles.channel_box}>
+                                                <Box className={styles.channel_logo}>
+                                                    <Image
+                                                        className="px-2 "
+                                                        src={amazon}
+                                                        alt="amazon"
+                                                        width={30}
+                                                        height={30}
+                                                    />
+                                                </Box>
+                                                <p className={styles.channel_text}>
+                                                    Amazon
+                                                </p>
+                                                <p className={styles.channel_last_published}>
+                                                    Last Published : 12th July 2023
+                                                </p>
+                                                <p className={styles.channel_price}>
+                                                    <span>&#8377;</span>45
+                                                </p>
+                                            </Grid>
+                                        </Grid>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={4}>
+
+                                    {stateImageDetails && stateImageDetails.length ? (
+                                        <CombinedImageDisplay images={stateImageDetails} />
+                                    ) : (
+                                        <>
+                                            <CombinedImageDisplay images={images} />
+                                        </>
+                                    )}
+
+                                </Grid>
+
+                            </Grid>
+
+                        </Box>
+
+                        <Box sx={{ marginTop: "2rem" }}>
+                            <Box sx={{ width: '100%', typography: 'body1', border: 1, borderTop: 0, borderColor: 'divider' }}>
+                                <TabContext value={value}>
+                                    <Box >
+                                        <TabList onChange={handleChange} aria-label="lab API tabs example" >
+                                            <StyledTab label={`About ${router?.query?.ActiveProduct?.charAt(0).toUpperCase() +
+                                                router?.query?.ActiveProduct?.slice(1).toLowerCase()}`} value="1" />
+                                            <StyledTab label="In-Depth Precautions and Warning" value="2" />
+                                            <StyledTab label="Disease/Condition Glossary" value="3" />
+                                            <StyledTab label="FAQ’s" value="4" />
+                                        </TabList>
+                                    </Box>
+                                    <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
+                                        <TabPanel value="1">{aboutRender()}</TabPanel>
+                                        <TabPanel value="2">{precautionsRender()}</TabPanel>
+                                        <TabPanel value="3">{diseaseRender()}</TabPanel>
+                                        <TabPanel value="4">{faqRender()}</TabPanel>
+                                    </Box>
+                                </TabContext>
+                            </Box>
+                        </Box>
+                        <Box className={styles.attribute_mapping}>
+                            <p>
+                                Attribute Mapping :
+                            </p>
+
+                            <hr></hr>
+                        </Box>
+                        <Box sx={{ marginTop: '2rem', }} >
+                            <Box sx={{ width: '100%', typography: 'body1', border: 1, borderTop: 0, borderColor: 'divider' }}>
+                                <TabContext value={attributeValue}>
+                                    <Box>
+                                        <TabList onChange={handleChangeAttribute} aria-label="lab API tabs example">
+
+                                            {productPimCodeData?.productDetails !== null &&
+                                                productPimCodeData?.productDetails !== undefined &&
+                                                Object.keys(productPimCodeData?.productDetails).length &&
+                                                productPimCodeData?.productDetails.map((tab, index) => (
+                                                    <StyledTab label={
+                                                        tab?.attributeSet?.charAt(0).toUpperCase() +
+                                                        tab?.attributeSet.slice(1).toLowerCase()
+                                                    }
+                                                        value={index}
+                                                        key={index} />
+                                                ))}
+
+                                        </TabList>
+                                    </Box>
+                                    <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
+                                        {productPimCodeData?.productDetails !== null &&
+                                            productPimCodeData?.productDetails !== undefined &&
+                                            Object.keys(productPimCodeData?.productDetails).length &&
+                                            productPimCodeData?.productDetails.map((item, i) => (
+                                                <TabPanel value={i}>
+                                                    <Grid container>
+                                                        {sectionAllMasterRender(item.attributes)}
+                                                    </Grid>
+                                                </TabPanel>
+                                            ))}
+                                    </Box>
+                                </TabContext>
+                            </Box>
+                        </Box>
+                    </Card>
                 </Grid>
-                {keyBenefits &&
-                  keyBenefits !== null &&
-                  keyBenefits !== undefined &&
-                  keyBenefits.length !== 0 &&
-                  <Box
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Box style={{ width: "49%", marginTop: "15px" }}>
-                      <Box className={styles.right_box_details}>
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Image
-                            className="px-2 "
-                            src={benefits}
-                            alt="lens"
-                            width={30}
-                            height={30}
-                          />
-                          <Typography
-                            variant="h3"
-                            className={styles.manufacturerDetailHead}
-                          >
-                            Key Uses/ Benefits
-                          </Typography>
-                        </Box>
-
-
-
-                        <List>
-                          {
-                            keyBenefits &&
-                            keyBenefits !== null &&
-                            keyBenefits !== undefined &&
-                            keyBenefits.length !== 0
-                            && keyBenefits[0].map((item, index) => (
-                              <ListItem key={index}>
-                                <ListItemIcon key={index}>
-                                  <StopCircle
-                                    style={{
-                                      textAlign: "right",
-                                      fontSize: "xx-small",
-                                      color: "Black ",
-                                      padding: "8px",
-                                    }}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText>
-                                  {item}
-                                </ListItemText>
-                              </ListItem>
-                            ))
-
-                          }
-
-
-
-                        </List>
-
-                      </Box>
-                    </Box>
-                    <Box className={styles.divider}></Box>
-                    <Box style={{ width: "49%", marginTop: "15px" }}>
-                      <Box className={styles.right_box_details}>
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Image
-                            className="px-2 "
-                            src={instructions}
-                            alt="lens"
-                            width={30}
-                            height={30}
-                          />
-                          <Typography
-                            variant="h3"
-                            className={styles.manufacturerDetailHead}
-                          >
-                            Directions for use
-                          </Typography>
-                        </Box>
-                        <List>
-
-
-                          {
-                            directionForUse &&
-                            directionForUse !== null &&
-                            directionForUse !== undefined &&
-                            directionForUse.length !== 0
-
-                            && directionForUse[0].map((item, index) => (
-                              <ListItem key={index}>
-                                <ListItemIcon key={index}>
-                                  <StopCircle
-                                    style={{
-                                      textAlign: "right",
-                                      fontSize: "xx-small",
-                                      color: "Black ",
-                                      padding: "8px",
-                                    }}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText>
-                                  {item}
-                                </ListItemText>
-                              </ListItem>
-                            ))
-
-                          }
-
-                        </List>
-                      </Box>
-
-                      <Box className={styles.right_box_details}>
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Image
-                            className="px-2 "
-                            src={protection}
-                            alt="lens"
-                            width={30}
-                            height={30}
-                          />
-                          <Typography
-                            variant="h3"
-                            className={styles.manufacturerDetailHead}
-                          >
-                            Safety Information
-                          </Typography>
-                        </Box>
-
-                        <List>
-                          {
-                            stateSafety_InformationDetails &&
-                            stateSafety_InformationDetails !== null &&
-                            stateSafety_InformationDetails !== undefined &&
-                            stateSafety_InformationDetails.length !== 0
-
-                            && stateSafety_InformationDetails[0].map((item, index) => (
-                              <ListItem key={index}>
-                                <ListItemIcon key={index}>
-                                  <StopCircle
-                                    style={{
-                                      textAlign: "right",
-                                      fontSize: "xx-small",
-                                      color: "Black ",
-                                      padding: "8px",
-                                    }}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText>
-                                  {item}
-                                </ListItemText>
-                              </ListItem>
-                            ))
-
-                          }
-                        </List>
-                      </Box>
-                    </Box>
-                  </Box>
-                }
-                {keyBenefits &&
-                  keyBenefits !== null &&
-                  keyBenefits !== undefined &&
-                  keyBenefits.length !== 0 &&
-                  <Box>
-                    <Box>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Image
-                          className="px-2 "
-                          src={honey}
-                          alt="lens"
-                          width={30}
-                          height={30}
-                        />
-                        <Typography
-                          variant="h3"
-                          className={styles.manufacturerDetailHead}
-                        >
-                          Key Ingredients
-                        </Typography>
-                      </Box>
-                      <h3 className={styles.manufacturerDetailData}>
-                        {keyIngredient}
-                        {/* ..... <a className={styles.read_more_href}>READ MORE</a> */}
-                      </h3>
-                    </Box>
-                  </Box>
-                }
-              </Box>
-            </Box>
-
-            {/* details */}
-
-            <Box sx={{ width: "100%", typography: "body1" }}>
-              <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                  <TabList
-                    onChange={handleChange}
-                    aria-label="lab API tabs example"
-                  >
-                    {productPimCodeData?.productDetails !== null &&
-                      productPimCodeData?.productDetails !== undefined &&
-                      Object.keys(productPimCodeData?.productDetails).length &&
-                      productPimCodeData?.productDetails.map((tab, index) => (
-                        <Tab
-                          label={
-                            tab?.attributeSet?.charAt(0).toUpperCase() +
-                            tab?.attributeSet.slice(1).toLowerCase()
-                          }
-                          value={index}
-                          key={index}
-                          className={styles.tab_active_master}
-                        />
-                      ))}
-
-                    {/* <Tab label="Item One" value="1" /> */}
-                    {/* <Tab label="Item Two" value="2" />
-                    <Tab label="Item Three" value="3" /> */}
-                  </TabList>
-                </Box>
-                {productPimCodeData?.productDetails !== null &&
-                  productPimCodeData?.productDetails !== undefined &&
-                  Object.keys(productPimCodeData?.productDetails).length &&
-                  productPimCodeData?.productDetails.map((item, i) => (
-                    <TabPanel value={i}>
-                      <Grid container>
-                        {sectionAllMasterRender(item.attributes)}
-                      </Grid>
-                    </TabPanel>
-                  ))}
-              </TabContext>
-            </Box>
-          </Card>
-        </Grid>
-      </Grid>
-      <ToastContainer />
-    </>
-  );
+            </Grid>
+            <ToastContainer />
+        </>
+    );
 };
 
-
-export default React.memo(ProductViewDetails);
+export default ActiveProductView;
 

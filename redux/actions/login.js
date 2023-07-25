@@ -322,7 +322,7 @@ export const userLoginApi = (data) => {
           dispatch(userAuthorities(response?.data?.result?.authorities));
           // dispatch(getDashBoardApi());
           dispatch(getNotificationApi());
-          dispatch(myProfileAPi());
+          dispatch(myProfileApi());
 
           // console.log(
           //   "response?.data?.result?.role",
@@ -451,7 +451,7 @@ export const getRolePrivilegeApi = () => {
   };
 };
 
-export const myProfileAPi = () => {
+export const myProfileApi = () => {
   return (dispatch) => {
     dispatch(getUserDetailDataLoading("MY PROFILE....", "PROFILE"));
     client
@@ -487,7 +487,7 @@ export const myProfileAPi = () => {
         dispatch(userAuthorities(response.data.authorities));
       })
       .catch((err) => {
-        console.log("error caught in -> actions/login/myProfileAPi", err);
+        console.log("error caught in -> actions/login/myProfileApi", err);
         dispatch(getUserDetailDataFailure(err));
       });
   };
