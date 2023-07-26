@@ -32,6 +32,7 @@ const Header = ({
         borderRadius: "10px",
         borderRadius: "10px",
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+        zIndex: 200,
       }}
       sx={sx}
       position={position}

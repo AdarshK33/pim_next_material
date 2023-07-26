@@ -28,7 +28,7 @@ const CombinedImageDisplay = ({ images }) => {
                 style={{
                     position: "absolute",
                     left: magnifiedImageLeft,
-                    zIndex: "1500",
+                    zIndex: "100",
                     transition: "left 0.2s ease-in-out",
                 }}
             >

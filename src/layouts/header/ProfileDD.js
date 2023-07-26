@@ -102,16 +102,27 @@ const ProfileDD = () => {
           },
         }}
       >
-        <Box>
-          <Box p={2}>
+        <Box
+
+          style={{
+            zIndex: 3000,
+          }}
+        >
+          <Box p={2}
+
+
+
+          >
             <Link to="/" onClick={() => dispatch(logoutApi())}>
               <Button
                 sx={{
                   borderRadius: "8px",
                   transition: "all 0.2s",
+
                   "&:hover": {
                     transform: "scale(1.05)",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+
                   },
                 }}
                 fullWidth
