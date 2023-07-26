@@ -493,21 +493,38 @@ const ActiveProductView = (user) => {
                         <Grid item md={10}>
                             {
                                 descriptionDetails &&
-
                                 descriptionDetails !== null &&
                                 descriptionDetails !== undefined &&
                                 descriptionDetails.length !== 0 &&
-                                descriptionDetails.map((item, index) => (
-                                    <>
-                                        <p key={index} className={styles.first_info}>
-                                            {item[0]}
-                                        </p>
-                                        <Box className={styles.second_info}>
-                                            {item[1]}
-                                        </Box>
-                                    </>
+                                descriptionDetails.map((item, outerIndex) => (
+                                    <React.Fragment key={outerIndex}>
+                                        {
+                                            Array.isArray(outerIndex) ? (
+                                                outerIndex.map((index) => (
+                                                    <React.Fragment key={index}>
+                                                        <p className={styles.first_info}>
+                                                            {item[index]} {/* Accessing the first element at inner index */}
+                                                        </p>
+                                                        <Box className={styles.second_info}>
+                                                            {item[index + 1]} {/* Accessing the second element at inner index + 1 */}
+                                                        </Box>
+                                                    </React.Fragment>
+                                                ))
+                                            ) : (
+                                                <>
+                                                    <p className={styles.first_info}>
+                                                        {item[outerIndex]} {/* Accessing the first element at outer index */}
+                                                    </p>
+                                                    <Box className={styles.second_info}>
+                                                        {item[outerIndex + 1]} {/* Accessing the second element at outer index + 1 */}
+                                                    </Box>
+                                                </>
+                                            )
+                                        }
+                                    </React.Fragment>
+                                ))
+                            }
 
-                                ))}
 
 
 
@@ -561,6 +578,8 @@ const ActiveProductView = (user) => {
 
 
 
+
+
                                 {
                                     keyBenefits &&
                                     keyBenefits !== null &&
@@ -570,7 +589,7 @@ const ActiveProductView = (user) => {
                                         <Typography variant="h7" className={styles.uses_main_header}>
                                             Medical Benefits
                                         </Typography>
-                                        {
+                                        {/* {
                                             keyBenefits &&
 
                                             keyBenefits !== null &&
@@ -586,7 +605,42 @@ const ActiveProductView = (user) => {
                                                     </Box>
                                                 </>
 
-                                            ))}
+                                            ))} */}
+
+                                        {
+                                            keyBenefits &&
+                                            keyBenefits !== null &&
+                                            keyBenefits !== undefined &&
+                                            keyBenefits.length !== 0 &&
+                                            keyBenefits.map((item, outerIndex) => (
+                                                <React.Fragment key={outerIndex}>
+                                                    {
+                                                        Array.isArray(outerIndex) ? (
+                                                            outerIndex.map((index) => (
+                                                                <React.Fragment key={index}>
+                                                                    <p className={styles.keyBenefits_info}>
+                                                                        {item[index]} {/* Accessing the first element at inner index */}
+                                                                    </p>
+                                                                    <Box className={styles.second_info}>
+                                                                        {item[index + 1]} {/* Accessing the second element at inner index + 1 */}
+                                                                    </Box>
+                                                                </React.Fragment>
+                                                            ))
+                                                        ) : (
+                                                            <>
+                                                                <p className={styles.keyBenefits_info}>
+                                                                    {item[outerIndex]} {/* Accessing the first element at outer index */}
+                                                                </p>
+                                                                <Box className={styles.second_info}>
+                                                                    {item[outerIndex + 1]} {/* Accessing the second element at outer index + 1 */}
+                                                                </Box>
+                                                            </>
+                                                        )
+                                                    }
+                                                </React.Fragment>
+                                            ))
+                                        }
+
 
                                     </>
 
@@ -761,7 +815,7 @@ const ActiveProductView = (user) => {
                             </Box>
                         </Grid>
                         <Grid item md={10}>
-                            {
+                            {/* {
                                 hiparPatientCounselling &&
 
                                 hiparPatientCounselling !== null &&
@@ -777,17 +831,44 @@ const ActiveProductView = (user) => {
                                         </Box>
                                     </>
 
-                                ))}
+                                ))} */}
 
 
 
-                            {/* <Box className={styles.first_info}>
-                                {descriptionDetails}
-                            </Box>
-                            <Box className={styles.second_info}>
-                                {descriptionDetails}
-                            </Box> */}
 
+                            {
+                                hiparPatientCounselling &&
+                                hiparPatientCounselling !== null &&
+                                hiparPatientCounselling !== undefined &&
+                                hiparPatientCounselling.length !== 0 &&
+                                hiparPatientCounselling.map((item, outerIndex) => (
+                                    <React.Fragment key={outerIndex}>
+                                        {
+                                            Array.isArray(outerIndex) ? (
+                                                outerIndex.map((index) => (
+                                                    <React.Fragment key={index}>
+                                                        <p className={styles.first_info}>
+                                                            {item[index]} {/* Accessing the first element at inner index */}
+                                                        </p>
+                                                        <Box className={styles.second_info}>
+                                                            {item[index + 1]} {/* Accessing the second element at inner index + 1 */}
+                                                        </Box>
+                                                    </React.Fragment>
+                                                ))
+                                            ) : (
+                                                <>
+                                                    <p className={styles.first_info}>
+                                                        {item[outerIndex]} {/* Accessing the first element at outer index */}
+                                                    </p>
+                                                    <Box className={styles.second_info}>
+                                                        {item[outerIndex + 1]} {/* Accessing the second element at outer index + 1 */}
+                                                    </Box>
+                                                </>
+                                            )
+                                        }
+                                    </React.Fragment>
+                                ))
+                            }
 
                         </Grid>
 
@@ -813,8 +894,6 @@ const ActiveProductView = (user) => {
         // console.log(data, "dddddddddddddddd")
         return (
             <>
-
-
                 {
                     data &&
                     data !== null &&
