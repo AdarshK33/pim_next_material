@@ -96,6 +96,8 @@ const ActiveProductView = (user) => {
     const [hiparSideEffets, setHiparSideEffets] = useState();
     const [hiparDrugsWarning, setHiparDrugsWarning] = useState();
     const [hiparPatientCounselling, setHiparPatientCounselling] = useState();
+    const [hiparStorageData, setHiparStorage] = useState();
+
 
 
 
@@ -235,6 +237,9 @@ const ActiveProductView = (user) => {
         const hipar_side_effets = [];
         const hipar_drugs_warning = [];
         const hipar_patient_counselling = [];
+        const hipar_storage = [];
+
+
 
 
 
@@ -378,6 +383,15 @@ const ActiveProductView = (user) => {
                 });
             }
 
+            if (value.attributeSet == "HIPAR") {
+                value?.attributes.forEach((val) => {
+                    if (val.keyName == "STORAGE") {
+                        const Benefits = val?.value.split("<br>");
+                        hipar_storage.push(Benefits);
+                    }
+                });
+            }
+
 
         });
 
@@ -395,6 +409,9 @@ const ActiveProductView = (user) => {
         setHiparSideEffets(hipar_side_effets)
         setHiparDrugsWarning(hipar_drugs_warning)
         setHiparPatientCounselling(hipar_patient_counselling)
+        setHiparStorage(hipar_storage)
+
+
 
 
 
@@ -662,14 +679,54 @@ const ActiveProductView = (user) => {
                                         </p>
                                     </>
                                 }
-                                <Typography variant="h7" className={styles.uses_main_header}>
-                                    Storage
-                                </Typography>
 
-                                <p className={styles.uses_main_text}>
+                                {hiparStorageData &&
+                                    hiparStorageData !== null &&
+                                    hiparStorageData !== undefined &&
+                                    hiparStorageData.length !== 0 &&
+                                    <Typography variant="h7" className={styles.uses_main_header}>
+                                        Storage
+                                    </Typography>
+                                }
 
-                                    Store in a cool and dry place away from sunlight.
-                                </p>
+                                {/* <p className={styles.uses_main_text}>
+
+                                    {hiparStorageData}
+                                </p> */}
+
+                                {
+                                    hiparStorageData &&
+                                    hiparStorageData !== null &&
+                                    hiparStorageData !== undefined &&
+                                    hiparStorageData.length !== 0 &&
+                                    hiparStorageData.map((item, outerIndex) => (
+                                        <React.Fragment key={outerIndex}>
+                                            {
+                                                Array.isArray(outerIndex) ? (
+                                                    outerIndex.map((index) => (
+                                                        <React.Fragment key={index}>
+                                                            <p className={styles.keyBenefits_info}>
+                                                                {item[index]} {/* Accessing the first element at inner index */}
+                                                            </p>
+                                                            <Box className={styles.second_info}>
+                                                                {item[index + 1]} {/* Accessing the second element at inner index + 1 */}
+                                                            </Box>
+                                                        </React.Fragment>
+                                                    ))
+                                                ) : (
+                                                    <>
+                                                        <p className={styles.keyBenefits_info}>
+                                                            {item[outerIndex]} {/* Accessing the first element at outer index */}
+                                                        </p>
+                                                        <Box className={styles.second_info}>
+                                                            {item[outerIndex + 1]} {/* Accessing the second element at outer index + 1 */}
+                                                        </Box>
+                                                    </>
+                                                )
+                                            }
+                                        </React.Fragment>
+                                    ))
+                                }
 
                             </Box>
 
@@ -694,10 +751,16 @@ const ActiveProductView = (user) => {
                         </Grid>
                         <Grid item md={10}>
                             <Box className={styles.uses_info}>
-                                <Typography variant="h7" className={styles.uses_main_header}>
-                                    Side Effects of Combiflam Tablet 20's
-                                </Typography>
-
+                                {
+                                    hiparSideEffets &&
+                                    hiparSideEffets !== null &&
+                                    hiparSideEffets !== undefined &&
+                                    hiparSideEffets.length !== 0 &&
+                                    < Typography variant="h7" className={styles.uses_main_header}>
+                                        Side Effects of {router?.query?.ActiveProduct?.charAt(0).toUpperCase() +
+                                            router?.query?.ActiveProduct.slice(1).toLowerCase()}
+                                    </Typography>
+                                }
                                 {
                                     hiparSideEffets &&
                                     hiparSideEffets !== null &&
@@ -907,17 +970,7 @@ const ActiveProductView = (user) => {
         )
     }
 
-    // const faqRender = () => {
-    //     return (
-    //         <>
-    //             <Box>
 
-    //                 hello
-    //                 <Faqs data={stateSafety_InformationDetails} />
-    //             </Box>
-    //         </>
-    //     )
-    // }
 
     const faqRender = () => {
         return (
@@ -939,11 +992,14 @@ const ActiveProductView = (user) => {
                         </Grid>
                         <Grid item md={10}>
 
+                            {
+                                stateSafety_InformationDetails &&
+                                stateSafety_InformationDetails !== null &&
+                                stateSafety_InformationDetails !== undefined &&
+                                stateSafety_InformationDetails.length !== 0 &&
+                                <Faqs data={stateSafety_InformationDetails} />
 
-
-                            <Faqs data={stateSafety_InformationDetails} />
-
-
+                            }
                         </Grid>
 
                     </Grid>
@@ -1019,7 +1075,6 @@ const ActiveProductView = (user) => {
                                     <Grid container spacing={1}>
 
                                         {keyIngredient &&
-
                                             keyIngredient &&
                                             keyIngredient !== null &&
                                             keyIngredient !== undefined &&
@@ -1218,7 +1273,7 @@ const ActiveProductView = (user) => {
                                                 productPimCodeData?.productDetails.map((tab, index) => (
                                                     <StyledTab label={
                                                         tab?.attributeSet?.charAt(0).toUpperCase() +
-                                                        tab?.attributeSet.slice(1).toLowerCase()
+                                                        tab?.attributeSet?.slice(1).toLowerCase()
                                                     }
                                                         value={index}
                                                         key={index} />
