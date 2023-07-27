@@ -128,7 +128,7 @@ const ActiveProducts = () => {
       query: { PimCodeId: PimCodeId, ActiveProduct: ProductName },
     });
 
-    dispatch(productDetailsApi(PimCodeId));
+    // dispatch(productDetailsApi(PimCodeId));// call one time on landing on product view page
   }
   const download = function (data) {
     const blob = new Blob([data], { type: "text/csv" });
