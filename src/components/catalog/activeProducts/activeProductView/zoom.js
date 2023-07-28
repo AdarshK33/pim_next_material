@@ -58,19 +58,19 @@ const CombinedImageDisplay = ({ images }) => {
                         position: "absolute",
                         left: magnifiedImageLeft,
                         top: 0,
-                        zIndex: "1500",
+                        zIndex: "9",
                         transition: "left 0.2s ease-in-out",
                     }}
                 >
                     <ReactImageMagnify
                         {...{
                             smallImage: {
-                                // alt: images[selectedImageIndex].alt,
+                                // alt: images[selectedImageIndex]?.alt,
                                 isFluidWidth: true,
-                                src: images[selectedImageIndex].original,
+                                src: images[selectedImageIndex]?.original,
                             },
                             largeImage: {
-                                src: images[selectedImageIndex].original,
+                                src: images[selectedImageIndex]?.original,
                                 width: 1000,
                                 height: 480,
                             },

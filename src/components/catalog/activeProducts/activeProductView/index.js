@@ -57,7 +57,7 @@ const ActiveProductView = (user) => {
         return state.loginReducer;
     });
 
-    var he = require('he');
+    // var he = require('he');
 
     const router = useRouter();
 
