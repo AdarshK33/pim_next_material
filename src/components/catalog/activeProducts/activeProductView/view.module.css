@@ -105,6 +105,20 @@
   font-size: 13px;
   margin-top: 2px;
 }
+.question{
+  font-size: 12px !important;
+  font-weight: 600;
+}
 .answer{
-  font-size: 13px !important;
+  font-size: 12px !important;
+  font-weight: 500;
+
+}
+.question_bold{
+  font-size: 14px;
+  font-weight: 700 !important;
+}
+.answer_bold{
+  font-size: 14px;
+  font-weight: 700 !important;
 }

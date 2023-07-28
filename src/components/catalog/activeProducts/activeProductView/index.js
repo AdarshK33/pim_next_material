@@ -18,6 +18,7 @@ import {
     Typography,
     TextField,
     List,
+    Strong,
     ListItem,
     ListItemText,
     InputLabel,
@@ -946,8 +947,8 @@ const ActiveProductView = (user) => {
         const cleanedAnswer = answer.replace(/<\/?div>/g, '');
         return (
             <div>
-                <h5>{question}</h5>
-                <p className={styles.answer}>{cleanedAnswer}</p>
+                <h5 className={styles.question}><span className={styles.question_bold}>Question:</span> {question}</h5>
+                <p className={styles.answer}><span className={styles.answer_bold}>Answer:</span> {cleanedAnswer}</p>
             </div>
         )
     }
